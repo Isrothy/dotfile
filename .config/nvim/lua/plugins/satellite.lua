@@ -1,0 +1,37 @@
+local M = {
+    "lewis6991/satellite.nvim",
+    event = "BufReadPost",
+}
+
+M.config = function()
+    require("satellite").setup({
+        current_only = false,
+        winblend = 50,
+        zindex = 40,
+        excluded_filetypes = {
+            "prompt",
+            "TelescopePrompt",
+            "neo-tree",
+            "alpha",
+            "dashboard",
+        },
+        width = 2,
+        handlers = {
+            search = {
+                enable = true,
+            },
+            diagnostic = {
+                enable = true,
+            },
+            gitsigns = {
+                enable = true,
+            },
+            marks = {
+                enable = false,
+                show_builtins = false, -- shows the builtin marks like [ ] < >
+            },
+        },
+    })
+end
+
+return M

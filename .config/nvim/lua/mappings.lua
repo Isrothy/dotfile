@@ -1,0 +1,56 @@
+local default_options = { noremap = true, silent = true }
+local expr_options = { expr = true, silent = true }
+
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", default_options)
+vim.g.mapleader = " "
+
+vim.keymap.set({ "n", "v", "i" }, "<UP>", "<NOP>", default_options)
+vim.keymap.set({ "n", "v", "i" }, "<DOWN>", "<NOP>", default_options)
+vim.keymap.set({ "n", "v", "i" }, "<LEFT>", "<NOP>", default_options)
+vim.keymap.set({ "n", "v", "i" }, "<RIGHT>", "<NOP>", default_options)
+
+vim.keymap.set("v", "<", "<gv", default_options)
+vim.keymap.set("v", ">", ">gv", default_options)
+
+vim.keymap.set({ "n", "v" }, "k", "v:count == 0 ? 'gk' : 'k'", expr_options)
+vim.keymap.set({ "n", "v" }, "j", "v:count == 0 ? 'gj' : 'j'", expr_options)
+
+vim.keymap.set("x", "K", ":move '<-2<CR>gv-gv", default_options)
+vim.keymap.set("x", "J", ":move '>+1<CR>gv-gv", default_options)
+
+vim.keymap.set({ "n" }, "<c-h>", "<c-w>h", default_options)
+vim.keymap.set({ "n" }, "<c-j>", "<c-w>j", default_options)
+vim.keymap.set({ "n" }, "<c-k>", "<c-w>k", default_options)
+vim.keymap.set({ "n" }, "<c-l>", "<c-w>l", default_options)
+vim.keymap.set({ "n" }, "<c-v>", "<c-w>v", default_options)
+vim.keymap.set({ "n" }, "<c-s>", "<c-w>s", default_options)
+vim.keymap.set({ "n" }, "<c-c>", "<c-w>c", default_options)
+vim.keymap.set({ "n" }, "<c-o>", "<c-w>o", default_options)
+vim.keymap.set({ "n" }, "<c-=>", "<c-w>+", default_options)
+vim.keymap.set({ "n" }, "<c-->", "<c-w>-", default_options)
+vim.keymap.set({ "n" }, "<c-.>", "<c-w>>", default_options)
+vim.keymap.set({ "n" }, "<c-,>", "<c-w><", default_options)
+vim.keymap.set({ "n" }, "<leader>=", "<c-w>=", default_options)
+vim.keymap.set({ "n" }, "<leader>-", "<c-w>_", default_options)
+vim.keymap.set({ "n" }, "<leader>|", "<c-w>\\", default_options)
+
+vim.keymap.set("n", "<esc>", ":nohlsearch<cr>")
+
+vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], default_options)
+vim.keymap.set("t", "<c-h>", [[<c-\><c-n><c-w>h]], default_options)
+vim.keymap.set("t", "<c-j>", [[<c-\><c-n><c-w>j]], default_options)
+vim.keymap.set("t", "<c-k>", [[<c-\><c-n><c-w>k]], default_options)
+vim.keymap.set("t", "<c-l>", [[<c-\><c-n><c-w>l]], default_options)
+
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, default_options)
+vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, default_options)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, default_options)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, default_options)
+
+-- vim.keymap.set("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", { noremap = true, silent = true })
+-- vim.keymap.set("n", "<F10>", "<cmd>lua require'dap'.step_over()<cr>", { noremap = true, silent = true })
+-- vim.keymap.set("n", "<F11>", "<cmd>lua require'dap'.step_into()<cr>", { noremap = true, silent = true })
+-- vim.keymap.set("n", "<F12>", "<cmd>lua require'dap'.step_out()<cr>", { noremap = true, silent = true })
+-- vim.keymap.set("n", "<Leader>b", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { noremap = true, silent = true })
+-- vim.keymap.set("n", "<Leader>B", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: ')))<cr>",
+-- 	{ noremap = true, silent = true })
