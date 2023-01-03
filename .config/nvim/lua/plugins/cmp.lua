@@ -28,6 +28,10 @@ M.dependencies = {
 	{
 		"lukas-reineke/cmp-under-comparator",
 	},
+	{
+		"onsails/lspkind-nvim",
+		dependencies = "famiu/bufdelete.nvim",
+	},
 }
 
 M.config = function()

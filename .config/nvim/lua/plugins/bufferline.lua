@@ -1,6 +1,7 @@
 local M = {
 	"akinsho/bufferline.nvim",
-	event = "BufReadPre",
+	version = "v3.*",
+	event = { "BufReadPost", "BufNewFile" },
 	dependencies = "kyazdani42/nvim-web-devicons",
 }
 
@@ -65,6 +66,5 @@ M.config = function()
 	end
 	vim.keymap.set("n", "<leader>$", "<Cmd>BufferLineGoToBuffer -1<CR>", { noremap = true, silent = true })
 end
-
 
 return M

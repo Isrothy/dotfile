@@ -1,134 +1,155 @@
 local M = {
-    "nvim-telescope/telescope.nvim",
-    cmd = { "Telescope" },
-    dependencies = {
-        { "nvim-lua/plenary.nvim" },
-        { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-        { "nvim-telescope/telescope-file-browser.nvim" },
-        { "nvim-telescope/telescope-z.nvim" },
-        { "nvim-telescope/telescope-symbols.nvim" },
-        { "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
-        { "jvgrootveld/telescope-zoxide" },
-        { "debugloop/telescope-undo.nvim" },
-    },
-    branch = "0.1.x",
+	"nvim-telescope/telescope.nvim",
+	cmd = { "Telescope" },
+	dependencies = {
+		{ "nvim-lua/plenary.nvim" },
+		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		{ "nvim-telescope/telescope-file-browser.nvim" },
+		{ "nvim-telescope/telescope-z.nvim" },
+		{ "nvim-telescope/telescope-symbols.nvim" },
+		{ "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
+		{ "jvgrootveld/telescope-zoxide" },
+		{ "debugloop/telescope-undo.nvim" },
+	},
+	branch = "0.1.x",
 }
 
 M.keys = {
-    { "<leader><leader>f", "<cmd>Telescope find_files<cr>" },
-    { "<leader><leader>g", "<cmd>Telescope live_grep<cr>" },
-    { "<leader><leader>b", "<cmd>Telescope buffers<cr>" },
-    { "<leader><leader>h", "<cmd>Telescope help_tags<cr>" },
-    { "<leader><leader>o", "<cmd>Telescope oldfiles<cr>" },
-    { "<leader><leader>s", "<cmd>Telescope lsp_document_symbols<cr>" },
-    { "<leader><leader>w", "<cmd>Telescope lsp_workspace_symbols<cr>" },
-    { "<leader><leader>c", "<cmd>Telescope commands<cr>" },
-    { "<leader><leader>m", "<cmd>Telescope marks<cr>" },
-    { "<leader><leader>t", "<cmd>Telescope treesitter<cr>" },
-    { "<leader><leader>q", "<cmd>Telescope quickfix<cr>" },
-    { "<leader><leader>l", "<cmd>Telescope loclist<cr>" },
-    { "<leader><leader>r", "<cmd>Telescope registers<cr>" },
-    { "<leader><leader>n", "<cmd>Telescope file_browser<cr>" },
-    { "<leader><leader>u", "<cmd>Telescope undo<cr>" },
-    { "<leader><leader>k", "<cmd>Telescope keymaps<cr>" },
-    { "<leader><leader>a", "<cmd>Telescope autocommands<cr>" },
-    { "<leader><leader>v", "<cmd>Telescope vim_options<cr>" },
-    { "<leader><leader>d", "<cmd>Telescope dotfiles<cr>" },
-    { "<leader><leader>e", "<cmd>Telescope filetypes<cr>" },
-    { "<leader><leader>p", "<cmd>Telescope projects<cr>" },
-    { "<leader><leader>z", "<cmd>Telescope zoxide<cr>" },
+	{ "<leader><leader>f", "<cmd>Telescope find_files<cr>" },
+	{ "<leader><leader>g", "<cmd>Telescope live_grep<cr>" },
+	{ "<leader><leader>b", "<cmd>Telescope buffers<cr>" },
+	{ "<leader><leader>h", "<cmd>Telescope help_tags<cr>" },
+	{ "<leader><leader>o", "<cmd>Telescope oldfiles<cr>" },
+	{ "<leader><leader>s", "<cmd>Telescope lsp_document_symbols<cr>" },
+	{ "<leader><leader>w", "<cmd>Telescope lsp_workspace_symbols<cr>" },
+	{ "<leader><leader>c", "<cmd>Telescope commands<cr>" },
+	{ "<leader><leader>m", "<cmd>Telescope marks<cr>" },
+	{ "<leader><leader>t", "<cmd>Telescope treesitter<cr>" },
+	{ "<leader><leader>q", "<cmd>Telescope quickfix<cr>" },
+	{ "<leader><leader>l", "<cmd>Telescope loclist<cr>" },
+	{ "<leader><leader>r", "<cmd>Telescope registers<cr>" },
+	{ "<leader><leader>n", "<cmd>Telescope file_browser<cr>" },
+	{ "<leader><leader>u", "<cmd>Telescope undo<cr>" },
+	{ "<leader><leader>k", "<cmd>Telescope keymaps<cr>" },
+	{ "<leader><leader>a", "<cmd>Telescope autocommands<cr>" },
+	{ "<leader><leader>v", "<cmd>Telescope vim_options<cr>" },
+	{ "<leader><leader>d", "<cmd>Telescope dotfiles<cr>" },
+	{ "<leader><leader>e", "<cmd>Telescope filetypes<cr>" },
+	{ "<leader><leader>p", "<cmd>Telescope projects<cr>" },
+	{ "<leader><leader>z", "<cmd>Telescope zoxide<cr>" },
 }
 
 M.config = function()
-    -- local command_center = require("command_center")
-    local previewers = require("telescope.previewers")
-    local action_layout = require("telescope.actions.layout")
-    local Job = require("plenary.job")
+	-- local command_center = require("command_center")
+	local previewers = require("telescope.previewers")
+	local action_layout = require("telescope.actions.layout")
+	local Job = require("plenary.job")
 
-    local new_maker = function(filepath, bufnr, opts)
-        filepath = vim.fn.expand(filepath)
-        Job:new({
-            command = "file",
-            args = { "--mime-type", "-b", filepath },
-            on_exit = function(j)
-                local mime_type = vim.split(j:result()[1], "/")[1]
-                if mime_type == "text" then
-                    previewers.buffer_previewer_maker(filepath, bufnr, opts)
-                else
-                    -- maybe we want to write something to the buffer here
-                    vim.schedule(function()
-                        vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
-                    end)
-                end
-            end,
-        }):sync()
-    end
+	local new_maker = function(filepath, bufnr, opts)
+		filepath = vim.fn.expand(filepath)
+		Job:new({
+			command = "file",
+			args = { "--mime-type", "-b", filepath },
+			on_exit = function(j)
+				local mime_type = vim.split(j:result()[1], "/")[1]
+				if mime_type == "text" then
+					previewers.buffer_previewer_maker(filepath, bufnr, opts)
+				else
+					-- maybe we want to write something to the buffer here
+					vim.schedule(function()
+						vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
+					end)
+				end
+			end,
+		}):sync()
+	end
 
-    require("telescope").setup({
-        pickers = {
-            lsp_references = {
-                theme = "dropdown",
-            },
-            find_files = {
-                find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
-            },
-        },
-        defaults = {
-            buffer_previewer_maker = new_maker,
-        },
-        vimgrep_arguments = {
-            "rg",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case",
-            "--trim", -- add this value
-        },
-        extensions = {
-            file_browser = {
-                theme = "ivy",
-            },
-            ["ui-select"] = {
-                require("telescope.themes").get_dropdown({}),
-            },
-            fzf = {
-                fuzzy = true, -- false will only do exact matching
-                override_generic_sorter = true, -- override the generic sorter
-                override_file_sorter = true, -- override the file sorter
-                case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-                -- the default case_mode is "smart_case"
-            },
-            aerial = {
-                -- Display symbols as <root>.<parent>.<symbol>
-                show_nesting = true,
-            },
-            zoxide = {
-                prompt_title = "[ Walking on the shoulders of TJ ]",
-                list_command = "zoxide query -ls",
-                mappings = {
-                    default = {
-                        action = function(selection)
-                            vim.cmd("cd " .. selection.path)
-                        end,
-                        after_action = function(selection)
-                            print("Directory changed to " .. selection.path)
-                        end,
-                    },
-                },
-            },
-        },
-    })
+	require("telescope").setup({
+		pickers = {
+			lsp_references = {
+				theme = "dropdown",
+			},
+			find_files = {
+				find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+			},
+		},
+		defaults = {
+			buffer_previewer_maker = new_maker,
+		},
+		vimgrep_arguments = {
+			"rg",
+			"--color=never",
+			"--no-heading",
+			"--with-filename",
+			"--line-number",
+			"--column",
+			"--smart-case",
+			"--trim", -- add this value
+		},
+		extensions = {
+			file_browser = {
+				theme = "ivy",
+			},
+			["ui-select"] = {
+				-- require("telescope.themes").get_dropdown({}),
+				require("telescope.themes").get_cursor({}),
+			},
+			fzf = {
+				fuzzy = true, -- false will only do exact matching
+				override_generic_sorter = true, -- override the generic sorter
+				override_file_sorter = true, -- override the file sorter
+				case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+				-- the default case_mode is "smart_case"
+			},
+			aerial = {
+				-- Display symbols as <root>.<parent>.<symbol>
+				show_nesting = true,
+			},
+			undo = {
+				use_delta = true,
+				side_by_side = true,
+				layout_strategy = "vertical",
+				layout_config = {
+					preview_height = 0.8,
+				},
+				mappings = { -- this whole table is the default
+					i = {
+						-- IMPORTANT: Note that telescope-undo must be available when telescope is configured if
+						-- you want to use the following actions. This means installing as a dependency of
+						-- telescope in it's `requirements` and loading this extension from there instead of
+						-- having the separate plugin definition as outlined above. See issue #6.
+						["<cr>"] = require("telescope-undo.actions").yank_additions,
+						["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
+						["<C-cr>"] = require("telescope-undo.actions").restore,
+					},
+				},
+			},
+			zoxide = {
+				prompt_title = "[ Walking on the shoulders of TJ ]",
+				list_command = "zoxide query -ls",
+				mappings = {
+					default = {
+						action = function(selection)
+							vim.cmd("cd " .. selection.path)
+						end,
+						after_action = function(selection)
+							print("Directory changed to " .. selection.path)
+						end,
+					},
+				},
+			},
+		},
+	})
 
-    require("telescope").load_extension("notify")
-    require("telescope").load_extension("ui-select")
-    require("telescope").load_extension("fzf")
-    require("telescope").load_extension("file_browser")
-    require("telescope").load_extension("zoxide")
-    require("telescope").load_extension("frecency")
-    require("telescope").load_extension("aerial")
-    require("telescope").load_extension("noice")
+	require("telescope").load_extension("notify")
+	require("telescope").load_extension("ui-select")
+	require("telescope").load_extension("fzf")
+	require("telescope").load_extension("file_browser")
+	require("telescope").load_extension("zoxide")
+	require("telescope").load_extension("frecency")
+	require("telescope").load_extension("aerial")
+	require("telescope").load_extension("noice")
+	require("telescope").load_extension("undo")
 end
 
 return M

@@ -1,5 +1,6 @@
 local M = {
 	"gbprod/nord.nvim",
+	priority = 100,
 	lazy = false,
 }
 

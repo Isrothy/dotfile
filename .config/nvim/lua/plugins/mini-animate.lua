@@ -13,7 +13,7 @@ function M.config()
 			timing = animate.gen_timing.quartic({ ease = "in-out", duration = 250, unit = "total" }),
 		},
 		scroll = {
-			enable = false,
+			enable = true,
 			timing = animate.gen_timing.quartic({ ease = "in-out", duration = 250, unit = "total" }),
 			subscroll = animate.gen_subscroll.equal({ max_output_steps = 121 }),
 		},

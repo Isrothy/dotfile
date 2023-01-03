@@ -18,3 +18,11 @@ require("mappings")
 require("autocmd")
 require("usercmd")
 require("lazy_plugin")
+
+vim.cmd([[
+if exists("g:neovide")
+	" set guifont=Fira\ Code:h15
+	let g:neovide_input_macos_alt_is_meta = v:true
+	let g:neovide_cursor_vfx_mode = "railgun"
+endif
+]])

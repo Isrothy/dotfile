@@ -111,6 +111,8 @@ M.config = function()
 		ca = "Lsp code action",
 		rn = "Lsp rename",
 		f = "Lsp format",
+		q = "Diagnostics to quickfix",
+		d = "Float diagnostic window",
 		w = {
 			name = "Lsp work space",
 			a = "Lsp add work space",
@@ -119,7 +121,6 @@ M.config = function()
 		},
 		a = "Swap next parameter",
 		A = "Swap previous parameter",
-		e = "Float diagnostic window",
 	}, {
 		prefix = "<leader>",
 	})
@@ -136,6 +137,28 @@ M.config = function()
 			D = "Toggle delete",
 		},
 	})
+
+	wk.register({
+		["<leader>r"] = {
+			name = "Rename / SearchReplaceSingleBuffer",
+			s = "SearchReplaceSingleBuffer [s]elction list",
+			o = "[o]pen",
+			w = "[w]ord",
+			W = "[W]ORD",
+			e = "[e]xpr",
+			f = "[f]ile",
+			b = {
+				name = "SearchReplaceMultiBuffer",
+				s = "SearchReplaceMultiBuffer [s]elction list",
+				o = "[o]pen",
+				w = "[w]ord",
+				W = "[W]ORD",
+				e = "[e]xpr",
+				f = "[f]ile",
+			},
+		},
+	})
+
 end
 
 return M

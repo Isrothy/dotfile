@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+/Users/jiangjoshua/.config/nvim/.test/workspace/.metadata/.plugins/org.eclipse.jdt.core
+2560037975.index
+1865797976.index
+3842426239.index

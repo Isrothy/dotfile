@@ -1,6 +1,6 @@
 return {
     "Darazaki/indent-o-matic",
-    event = "BufReadPre",
+    event = {"BufReadPre", "BufNewFile"},
     config = function()
         require("indent-o-matic").setup({
             -- The values indicated here are the defaults

@@ -2,7 +2,7 @@ local M = {
 	"m-demare/hlargs.nvim",
 	enabled = false,
 	dependencies = { "nvim-treesitter/nvim-treesitter" },
-	event = "BufReadPost",
+	event = {"BufReadPost", "BufNewFile"},
 }
 
 M.config = function()

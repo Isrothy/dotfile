@@ -1,6 +1,6 @@
 local M = {
     "akinsho/nvim-toggleterm.lua",
-    keys = "<C-`>",
+    keys = "<c-`>",
     cmd = {
         "ToggleTerm",
         "ToggleTermToggleAll",

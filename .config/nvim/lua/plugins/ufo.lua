@@ -8,7 +8,7 @@ local M = {
 	-- event = "BufRead",
 	-- event = "BufReadPost",
 	enabled = false,
-	lazy = false,
+	-- lazy = false,
 }
 
 M.config = function()

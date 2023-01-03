@@ -1,6 +1,6 @@
 local M = {
     "NvChad/nvim-colorizer.lua",
-    event = "BufReadPre",
+    event = {"BufReadPre", "BufNewFile"},
 
 }
 

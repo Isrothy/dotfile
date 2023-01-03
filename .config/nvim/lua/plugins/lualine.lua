@@ -182,36 +182,6 @@ M.config = function()
 		return data
 	end
 
-	local c = require("nord.colors")
-	local myNord = {}
-
-	myNord.normal = {
-		a = { fg = c.polar_night.bright, bg = c.frost.ice },
-		b = { fg = c.snow_storm.brighter, bg = c.polar_night.brightest },
-		c = { fg = c.snow_storm.brighter, bg = c.polar_night.bright },
-	}
-
-	myNord.insert = {
-		a = { fg = c.polar_night.bright, bg = c.snow_storm.brightest },
-	}
-
-	myNord.visual = {
-		a = { fg = c.polar_night.bright, bg = c.frost.polar_water },
-	}
-
-	myNord.replace = {
-		a = { fg = c.polar_night.bright, bg = c.aurora.yellow },
-	}
-
-	myNord.command = {
-		a = { fg = c.polar_night.bright, bg = c.aurora.purple },
-	}
-
-	myNord.inactive = {
-		a = { fg = c.snow_storm.origin, bg = c.polar_night.brighter },
-		b = { fg = c.snow_storm.origin, bg = c.polar_night.bright },
-		c = { fg = c.snow_storm.origin, bg = c.polar_night.origin },
-	}
 	require("lualine").setup({
 		options = {
 			icons_enabled = true,
@@ -227,6 +197,12 @@ M.config = function()
 					"aerial",
 					"packer",
 					"alpha",
+					"dap-repl",
+					"dapui_watches",
+					"dapui_stacks",
+					"dapui_breakpoints",
+					"dapui_scopes",
+					"dapui_colsole",
 					"toggleterm",
 					"",
 				},
