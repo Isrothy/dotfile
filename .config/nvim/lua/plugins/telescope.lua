@@ -1,4 +1,4 @@
-local M = {
+local telescope = {
 	"nvim-telescope/telescope.nvim",
 	cmd = { "Telescope" },
 	dependencies = {
@@ -14,7 +14,7 @@ local M = {
 	branch = "0.1.x",
 }
 
-M.keys = {
+telescope.keys = {
 	{ "<leader><leader>f", "<cmd>Telescope find_files<cr>" },
 	{ "<leader><leader>g", "<cmd>Telescope live_grep<cr>" },
 	{ "<leader><leader>b", "<cmd>Telescope buffers<cr>" },
@@ -39,10 +39,9 @@ M.keys = {
 	{ "<leader><leader>z", "<cmd>Telescope zoxide<cr>" },
 }
 
-M.config = function()
+telescope.config = function()
 	-- local command_center = require("command_center")
 	local previewers = require("telescope.previewers")
-	local action_layout = require("telescope.actions.layout")
 	local Job = require("plenary.job")
 
 	local new_maker = function(filepath, bufnr, opts)
@@ -91,8 +90,8 @@ M.config = function()
 				theme = "ivy",
 			},
 			["ui-select"] = {
-				-- require("telescope.themes").get_dropdown({}),
-				require("telescope.themes").get_cursor({}),
+				require("telescope.themes").get_dropdown({}),
+				-- require("telescope.themes").get_cursor({}),
 			},
 			fzf = {
 				fuzzy = true, -- false will only do exact matching
@@ -138,6 +137,22 @@ M.config = function()
 					},
 				},
 			},
+			lazy = {
+				-- Optional theme (the extension doesn't set a default theme)
+				theme = "ivy",
+				-- Whether or not to show the icon in the first column
+				show_icon = true,
+				-- Mappings for the actions
+				mappings = {
+					open_in_browser = "<C-o>",
+					open_in_find_files = "<C-f>",
+					open_in_live_grep = "<C-g>",
+					open_plugins_picker = "<C-b>", -- Works only after having called first another action
+					open_lazy_root_find_files = "<C-r>f",
+					open_lazy_root_live_grep = "<C-r>g",
+				},
+				-- Other telescope configuration options
+			},
 		},
 	})
 
@@ -152,4 +167,24 @@ M.config = function()
 	require("telescope").load_extension("undo")
 end
 
-return M
+return {
+	telescope,
+	{
+		"luc-tielen/telescope_hoogle",
+		ft = "haskell",
+		cmd = { "Telescope" },
+		dependencies = {
+			"nvim-telescope/telescope.nvim",
+		},
+		config = function()
+			require("telescope").load_extension("hoogle")
+		end,
+	},
+	{
+		"nvim-telescope/telescope-ui-select.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"nvim-telescope/telescope.nvim",
+		},
+	},
+}

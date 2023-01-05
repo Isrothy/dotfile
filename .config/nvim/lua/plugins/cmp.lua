@@ -1,9 +1,9 @@
-local M = {
+local CMP = {
 	"hrsh7th/nvim-cmp",
 	event = { "InsertEnter", "CmdlineEnter" },
 }
 
-M.dependencies = {
+CMP.dependencies = {
 	"hrsh7th/cmp-nvim-lsp",
 	"hrsh7th/cmp-nvim-lsp-document-symbol",
 	"hrsh7th/cmp-nvim-lsp-signature-help",
@@ -34,7 +34,7 @@ M.dependencies = {
 	},
 }
 
-M.config = function()
+CMP.config = function()
 	local has_words_before = function()
 		local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 		return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
@@ -205,4 +205,38 @@ M.config = function()
 	-- ]])
 end
 
-return M
+local LuaSnip = {
+	"L3MON4D3/LuaSnip",
+	version = "v1.1.x",
+	dependencies = {
+		"rafamadriz/friendly-snippets",
+	},
+	config = function()
+		require("luasnip.loaders.from_vscode").lazy_load({
+			include = {
+				"bash",
+				"c",
+				"cpp",
+				"css",
+				"html",
+				"java",
+				"javascript",
+				"javascriptreact",
+				"json",
+				"kotlin",
+				"lua",
+				"objective-c",
+				"python",
+				"rust",
+				"swift",
+				"typescript",
+				"typescriptreact",
+			},
+		})
+	end,
+}
+
+return {
+	CMP,
+	LuaSnip,
+}

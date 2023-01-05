@@ -1,15 +1,26 @@
 local M = {
 	"kevinhwang91/nvim-ufo",
+	version = "v1.*",
 	dependencies = {
 		"kevinhwang91/promise-async",
 		"nvim-treesitter/nvim-treesitter",
 	},
-	-- event = "BufReadPre",
-	-- event = "BufRead",
-	-- event = "BufReadPost",
+	-- event = { "BufReadPost", "BufNewFile" },
 	enabled = false,
 	-- lazy = false,
+	-- event = "User isfolded",
 }
+
+-- vim.init = function()
+-- 	local fn = vim.fn
+-- 	local fastfoldtimer
+-- 	fastfoldtimer = fn.timer_start(2000, function()
+-- 		if #fn.filter(fn.range(1, fn.line("$")), "foldlevel(v:val)>0") > 0 then
+-- 			vim.cmd("doautocmd User isfolded")
+-- 			fn.timer_stop(fastfoldtimer)
+-- 		end
+-- 	end, { ["repeat"] = -1 })
+-- end
 
 M.config = function()
 	local handler = function(virtText, lnum, endLnum, width, truncate)

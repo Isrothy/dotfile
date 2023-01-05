@@ -1,6 +1,5 @@
 local M = {
 	"stevearc/aerial.nvim",
-	lazy = true,
 }
 
 M.config = function()

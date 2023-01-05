@@ -44,8 +44,13 @@ vim.keymap.set("t", "<c-l>", [[<c-\><c-n><c-w>l]], default_options)
 
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, default_options)
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, default_options)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, default_options)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, default_options)
+vim.keymap.set(
+	"n",
+	"[d",
+	vim.diagnostic.goto_prev,
+	{ noremap = true, silent = true, desc = "Go to previous diagnostic" }
+)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { noremap = true, silent = true, desc = "Go to next diagnostic" })
 
 -- vim.keymap.set("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", { noremap = true, silent = true })
 -- vim.keymap.set("n", "<F10>", "<cmd>lua require'dap'.step_over()<cr>", { noremap = true, silent = true })
