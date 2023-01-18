@@ -1,7 +1,7 @@
 local M = {
     "NvChad/nvim-colorizer.lua",
     event = {"BufReadPre", "BufNewFile"},
-
+    -- enabled = false,
 }
 
 M.config = function()

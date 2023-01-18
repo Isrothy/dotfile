@@ -1,5 +1,6 @@
 local M = {
     "tversteeg/registers.nvim",
+    enabled = false,
     event = "VeryLazy",
 }
 

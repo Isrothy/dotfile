@@ -1,6 +1,7 @@
 local M = {
 	"akinsho/bufferline.nvim",
 	version = "v3.*",
+	-- enabled = false,
 	event = { "BufReadPost", "BufNewFile" },
 	dependencies = "kyazdani42/nvim-web-devicons",
 }
@@ -55,8 +56,8 @@ M.config = function()
 		highlights = require("nord.plugins.bufferline").akinsho(),
 	})
 
-	vim.keymap.set({ "n" }, "<M-h>", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true })
-	vim.keymap.set({ "n" }, "<M-l>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true })
+	vim.keymap.set({ "n" }, "<M-,>", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true })
+	vim.keymap.set({ "n" }, "<M-.>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true })
 	for i = 1, 9 do
 		vim.keymap.set(
 			"n",

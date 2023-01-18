@@ -1,6 +1,7 @@
 local M = {
 	"gaoDean/autolist.nvim",
 	ft = { "markdown" },
+	-- enabled = false,
 }
 
 M.config = function()

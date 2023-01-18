@@ -1,6 +1,6 @@
 local lightbulb = {
 	"kosayoda/nvim-lightbulb",
-	dependencies = "antoinemadec/FixCursorHold.nvim",
+	-- dependencies = "antoinemadec/FixCursorHold.nvim",
 	event = "VeryLazy",
 	config = function()
 		require("nvim-lightbulb").setup({

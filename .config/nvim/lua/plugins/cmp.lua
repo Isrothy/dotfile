@@ -1,5 +1,6 @@
 local CMP = {
 	"hrsh7th/nvim-cmp",
+	-- enabled = false,
 	event = { "InsertEnter", "CmdlineEnter" },
 }
 
@@ -107,7 +108,9 @@ CMP.config = function()
 				end,
 			}),
 		},
+
 		sources = cmp.config.sources({
+			-- { name = "copilot" },
 			{ name = "nvim_lsp" },
 			{ name = "nvim_lsp_signature_help" },
 			{ name = "nvim_lsp_document_symbol" },
@@ -183,7 +186,7 @@ CMP.config = function()
 
 	-- vim.api.nvim_create_autocmd({ "InsertEnter", "CursorHoldI" }, {
 	-- 	callback = function(ev)
-	-- 		cmp.complete()
+	-- 		cmp.complete({})
 	-- 	end,
 	-- })
 	-- vim.cmd([[
@@ -207,6 +210,7 @@ end
 
 local LuaSnip = {
 	"L3MON4D3/LuaSnip",
+	-- enabled = false,
 	version = "v1.1.x",
 	dependencies = {
 		"rafamadriz/friendly-snippets",
@@ -239,4 +243,22 @@ local LuaSnip = {
 return {
 	CMP,
 	LuaSnip,
+	{
+		"zbirenbaum/copilot-cmp",
+		enabled = false,
+		dependencies = {
+			"zbirenbaum/copilot.lua",
+		},
+		event = "InsertEnter",
+		config = function()
+			require("copilot_cmp").setup({
+				method = "getCompletionsCycling",
+				formatters = {
+					label = require("copilot_cmp.format").format_label_text,
+					insert_text = require("copilot_cmp.format").format_insert_text,
+					preview = require("copilot_cmp.format").deindent,
+				},
+			})
+		end,
+	},
 }

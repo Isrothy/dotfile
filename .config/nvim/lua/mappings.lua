@@ -9,14 +9,14 @@ vim.keymap.set({ "n", "v", "i" }, "<DOWN>", "<NOP>", default_options)
 vim.keymap.set({ "n", "v", "i" }, "<LEFT>", "<NOP>", default_options)
 vim.keymap.set({ "n", "v", "i" }, "<RIGHT>", "<NOP>", default_options)
 
-vim.keymap.set("v", "<", "<gv", default_options)
-vim.keymap.set("v", ">", ">gv", default_options)
+-- vim.keymap.set("v", "<", "<gv", default_options)
+-- vim.keymap.set("v", ">", ">gv", default_options)
+-- vim.keymap.set("x", "K", ":move '<-2<CR>gv-gv", default_options)
+-- vim.keymap.set("x", "J", ":move '>+1<CR>gv-gv", default_options)
 
 vim.keymap.set({ "n", "v" }, "k", "v:count == 0 ? 'gk' : 'k'", expr_options)
 vim.keymap.set({ "n", "v" }, "j", "v:count == 0 ? 'gj' : 'j'", expr_options)
 
-vim.keymap.set("x", "K", ":move '<-2<CR>gv-gv", default_options)
-vim.keymap.set("x", "J", ":move '>+1<CR>gv-gv", default_options)
 
 vim.keymap.set({ "n" }, "<c-h>", "<c-w>h", default_options)
 vim.keymap.set({ "n" }, "<c-j>", "<c-w>j", default_options)
@@ -30,9 +30,9 @@ vim.keymap.set({ "n" }, "<c-=>", "<c-w>+", default_options)
 vim.keymap.set({ "n" }, "<c-->", "<c-w>-", default_options)
 vim.keymap.set({ "n" }, "<c-.>", "<c-w>>", default_options)
 vim.keymap.set({ "n" }, "<c-,>", "<c-w><", default_options)
-vim.keymap.set({ "n" }, "<leader>=", "<c-w>=", default_options)
+vim.keymap.set({ "n" }, "<leader>+", "<c-w>=", default_options)
 vim.keymap.set({ "n" }, "<leader>-", "<c-w>_", default_options)
-vim.keymap.set({ "n" }, "<leader>|", "<c-w>\\", default_options)
+vim.keymap.set({ "n" }, "<leader>\\", "<c-w>\\", default_options)
 
 vim.keymap.set("n", "<esc>", ":nohlsearch<cr>")
 

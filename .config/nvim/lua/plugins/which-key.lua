@@ -2,6 +2,7 @@ local M = {
 	"folke/which-key.nvim",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
+		"echasnovski/mini.ai",
 		"numToStr/Comment.nvim",
 		"kylechui/nvim-surround",
 	},
@@ -9,12 +10,41 @@ local M = {
 }
 
 M.config = function()
+	local custom_textobjects = require("plugins.text-objects").custom_textobjects
+	local objects = require("which-key.plugins.presets").objects
+	local motions = require("which-key.plugins.presets").motions
+	objects["an"] = { name = "around next" }
+	objects["in"] = { name = "inside next" }
+	objects["al"] = { name = "around last" }
+	objects["il"] = { name = "inside last" }
+	for k, v in pairs(custom_textobjects) do
+		local cat = function(t)
+			if type(t) == "table" then
+				return table.concat(t, ", ")
+			else
+				return t
+			end
+		end
+
+		objects["a" .. k] = cat(v.a)
+		objects["an" .. k] = cat(v.a)
+		objects["al" .. k] = cat(v.a)
+		objects["i" .. k] = cat(v.i)
+		objects["in" .. k] = cat(v.i)
+		objects["il" .. k] = cat(v.i)
+		motions["g[" .. k] = cat(v.a)
+		motions["g]" .. k] = cat(v.a)
+	end
+
+	objects["ih"] = { name = "inside hunk" }
+
+
 	require("which-key").setup({
 		plugins = {
 			marks = true, -- shows a list of your marks on ' and `
-			registers = false, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+			registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
 			spelling = {
-				enabled = false, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+				enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
 				suggestions = 20, -- how many suggestions should be shown in the list?
 			},
 			-- the presets plugin, adds help for a bunch of default keybindings in Neovim
@@ -58,7 +88,7 @@ M.config = function()
 			scroll_up = "<c-u>", -- binding to scroll up inside the popup
 		},
 		window = {
-			border = "single", -- none, single, double, shadow
+			border = "rounded", -- none, single, double, shadow
 			position = "bottom", -- bottom, top
 			margin = { 1, 1, 1, 1 }, -- extra window margin [top, right, bottom, left]
 			padding = { 1, 0, 1, 0 }, -- extra window padding [top, right, bottom, left]
@@ -80,8 +110,8 @@ M.config = function()
 			-- list of mode / prefixes that should never be hooked by WhichKey
 			-- this is mostly relevant for key maps that start with a native binding
 			-- most people should not need to change this
-			i = { "j", "k" },
-			v = { "j", "k" },
+			-- i = { "j", "k" },
+			-- v = { "j", "k" },
 		},
 		disable = {
 			buftypes = {},
@@ -96,14 +126,14 @@ M.config = function()
 		d = "Lsp foto defination",
 		i = "Lsp goto implentation",
 		r = "Lsp goto reference",
-		f = "Folder Preview",
+		f = "Folder preview",
 	}, {
 		prefix = "g",
 	})
 
 	wk.register({
 		["<leader><leader>"] = {
-			name = "Telescope find",
+			name = "Telescope",
 		},
 	})
 
@@ -121,6 +151,7 @@ M.config = function()
 		},
 		a = "Swap next parameter",
 		A = "Swap previous parameter",
+		p = "Pick a window",
 	}, {
 		prefix = "<leader>",
 	})
@@ -128,6 +159,8 @@ M.config = function()
 	wk.register({
 		["<leader>h"] = {
 			name = "hunk",
+			s = "Stage hunk",
+			r = "Reset hunk",
 			S = "Stage buffer",
 			u = "Undo stage buffer",
 			R = "Reset buffer",
@@ -158,7 +191,6 @@ M.config = function()
 			},
 		},
 	})
-
 end
 
 return M

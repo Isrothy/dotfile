@@ -1,50 +1,20 @@
 local M = {
 	"stevearc/aerial.nvim",
 }
-
 M.config = function()
-	-- Call the setup function to change the default behavior
 	require("aerial").setup({
-		-- Priority list of preferred backends for aerial.
-		-- This can be a filetype map (see :help aerial-filetype-map)
 		backends = { "markdown", "lsp", "treesitter", "man" },
 
 		layout = {
-			-- These control the width of the aerial window.
-			-- They can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-			-- min_width and max_width can be a list of mixed types.
-			-- max_width = {40, 0.2} means "the lesser of 40 columns or 20% of total"
 			max_width = { 40, 0.2 },
 			width = nil,
 			min_width = 14,
-
-			-- Determines the default direction to open the aerial window. The 'prefer'
-			-- options will open the window in the other direction *if* there is a
-			-- different buffer in the way of the preferred direction
-			-- Enum: prefer_right, prefer_left, right, left, float
 			default_direction = "right",
-
-			-- Determines where the aerial window will be opened
-			--   edge   - open aerial at the far right/left of the editor
-			--   window - open aerial to the right/left of the current window
 			placement = "window",
 		},
 
-		-- Determines how the aerial window decides which buffer to display symbols for
-		--   window - aerial window will display symbols for the buffer in the window from which it was opened
-		--   global - aerial window will display symbols for the current window
 		attach_mode = "global",
-
-		-- List of enum values that configure when to auto-close the aerial window
-		--   unfocus       - close aerial when you leave the original source window
-		--   switch_buffer - close aerial when you change buffers in the source window
-		--   unsupported   - close aerial when attaching to a buffer that has no symbol source
 		close_automatic_events = {},
-
-		-- Keymaps in aerial window. Can be any value that `vim.keymap.set` accepts.
-		-- Additionally, if it is a string that matches "aerial.<name>",
-		-- it will use the function at require("aerial.action").<name>
-		-- Set to `false` to remove a keymap
 		keymaps = {
 			["?"] = "actions.show_help",
 			["g?"] = "actions.show_help",
@@ -176,83 +146,8 @@ M.config = function()
 			Operator = "+",
 			TypeParameter = "𝙏",
 		},
-
-		-- Control which windows and buffers aerial should ignore.
-		-- If attach_mode is "global", focusing an ignored window/buffer will
-		-- not cause the aerial window to update.
-		-- If open_automatic is true, focusing an ignored window/buffer will not
-		-- cause an aerial window to open.
-		-- If open_automatic is a function, ignore rules have no effect on aerial
-		-- window opening behavior; it's entirely handled by the open_automatic
-		-- function.
-		ignore = {
-			-- Ignore unlisted buffers. See :help buflisted
-			unlisted_buffers = true,
-
-			-- List of filetypes to ignore.
-			filetypes = {},
-
-			-- Ignored buftypes.
-			-- Can be one of the following:
-			-- false or nil - No buftypes are ignored.
-			-- "special"    - All buffers other than normal buffers are ignored.
-			-- table        - A list of buftypes to ignore. See :help buftype for the
-			--                possible values.
-			-- function     - A function that returns true if the buffer should be
-			--                ignored or false if it should not be ignored.
-			--                Takes two arguments, `bufnr` and `buftype`.
-			buftypes = "special",
-
-			-- Ignored wintypes.
-			-- Can be one of the following:
-			-- false or nil - No wintypes are ignored.
-			-- "special"    - All windows other than normal windows are ignored.
-			-- table        - A list of wintypes to ignore. See :help win_gettype() for the
-			--                possible values.
-			-- function     - A function that returns true if the window should be
-			--                ignored or false if it should not be ignored.
-			--                Takes two arguments, `winid` and `wintype`.
-			wintypes = "special",
-		},
-		-- Use symbol tree for folding. Set to true or false to enable/disable
-		-- Set to "auto" to manage folds if your previous foldmethod was 'manual'
-		-- This can be a filetype map (see :help aerial-filetype-map)
-		manage_folds = true,
-
-		-- When you fold code with za, zo, or zc, update the aerial tree as well.
-		-- Only works when manage_folds = true
-		link_folds_to_tree = true,
-
-		-- Fold code when you open/collapse symbols in the tree.
-		-- Only works when manage_folds = true
-		link_tree_to_folds = true,
-
-		-- Set default symbol icons to use patched font icons (see https://www.nerdfonts.com/)
-		-- "auto" will set it to true if nvim-web-devicons or lspkind-nvim is installed.
-		nerd_font = "auto",
-
-		-- Call this function when aerial attaches to a buffer.
-		on_attach = function(bufnr) end,
-
-		-- Call this function when aerial first sets symbols on a buffer.
-		on_first_symbols = function(bufnr) end,
-
-		-- Automatically open aerial when entering supported buffers.
-		-- This can be a function (see :help aerial-open-automatic)
-		open_automatic = false,
-
-		-- Run this command after jumping to a symbol (false will disable)
-		post_jump_cmd = "normal! zz",
-
-		-- When true, aerial will automatically close after jumping to a symbol
-		close_on_select = false,
-
-		-- The autocmds that trigger symbols update (not used for LSP backend)
-		update_events = "TextChanged,InsertLeave",
-
 		-- Show box drawing characters for the tree hierarchy
 		show_guides = true,
-
 		-- Customize the characters used when show_guides = true
 		guides = {
 			-- When the child item has a sibling below it
@@ -264,57 +159,20 @@ M.config = function()
 			-- Raw indentation
 			whitespace = "  ",
 		},
-
-		-- Options for opening aerial in a floating win
-		float = {
-			-- Controls border appearance. Passed to nvim_open_win
-			border = "rounded",
-
-			-- Determines location of floating window
-			--   cursor - Opens float on top of the cursor
-			--   editor - Opens float centered in the editor
-			--   win    - Opens float centered in the window
-			relative = "cursor",
-
-			-- These control the height of the floating window.
-			-- They can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-			-- min_height and max_height can be a list of mixed types.
-			-- min_height = {8, 0.1} means "the greater of 8 rows or 10% of total"
-			max_height = 0.9,
-			height = nil,
-			min_height = { 8, 0.1 },
-
-			override = function(conf, source_winid)
-				-- This is the config that will be passed to nvim_open_win.
-				-- Change values here to customize the layout
-				return conf
-			end,
-		},
-
 		lsp = {
-			-- Fetch document symbols when LSP diagnostics update.
-			-- If false, will update on buffer changes.
 			diagnostics_trigger_update = true,
-
-			-- Set to false to not update the symbols when there are LSP errors
 			update_when_errors = true,
-
-			-- How long to wait (in ms) after a buffer change before updating
-			-- Only used when diagnostics_trigger_update = false
 			update_delay = 300,
 		},
 
 		treesitter = {
-			-- How long to wait (in ms) after a buffer change before updating
 			update_delay = 300,
 		},
 
 		markdown = {
-			-- How long to wait (in ms) after a buffer change before updating
 			update_delay = 300,
 		},
 		man = {
-			-- How long to wait (in ms) after a buffer change before updating
 			update_delay = 300,
 		},
 	})

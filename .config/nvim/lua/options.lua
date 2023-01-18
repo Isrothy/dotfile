@@ -9,12 +9,13 @@ vim.opt.relativenumber = true
 vim.opt.numberwidth = 2
 vim.opt.cursorline = true
 vim.opt.signcolumn = "yes"
-vim.o.foldcolumn = "0" -- '0' is not bad
+vim.o.foldcolumn = "1"
 vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = -1
-vim.o.foldenable = false
-vim.opt.foldmethod = "syntax"
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+-- vim.opt.foldmethod = "syntax"
 -- vim.opt.foldmethod = "manual"
+-- vim.opt.foldmethod = "indent"
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.undofile = true
@@ -35,14 +36,15 @@ vim.opt.fillchars = {
 	foldclose = "▸",
 }
 
+-- vim.opt.stc = "%C %s%=%{v:relnum?v:relnum:v:lnum} "
+
 vim.opt.virtualedit = { "block", "onemore" }
-vim.opt.wrap = false
-vim.opt.linebreak = false
+vim.opt.wrap = true
+vim.opt.linebreak = true
 -- vim.opt.textwidth = 0
--- vim.opt.wrapmargin = 30
-vim.opt.scrolloff = 6
-vim.opt.sidescroll = 40
-vim.opt.sidescrolloff = 20
+-- vim.opt.wrapmargin = 40
+vim.opt.scrolloff = 10
+-- vim.opt.sidescrolloff = 10
 vim.opt.history = 2000
 vim.opt.ttimeoutlen = 0
 vim.opt.belloff = "all"

@@ -1,17 +1,16 @@
 local M = {
 	"kevinhwang91/nvim-ufo",
-	version = "v1.*",
 	dependencies = {
 		"kevinhwang91/promise-async",
 		"nvim-treesitter/nvim-treesitter",
 	},
 	-- event = { "BufReadPost", "BufNewFile" },
-	enabled = false,
-	-- lazy = false,
+	enabled = true,
+	lazy = false,
 	-- event = "User isfolded",
 }
 
--- vim.init = function()
+-- M.init = function()
 -- 	local fn = vim.fn
 -- 	local fastfoldtimer
 -- 	fastfoldtimer = fn.timer_start(2000, function()
@@ -52,9 +51,9 @@ M.config = function()
 	end
 
 	require("ufo").setup({
-		-- provider_selector = function(bufnr, filetype, buftype)
-		-- 	return { "treesitter", "indent" }
-		-- end,
+		provider_selector = function(bufnr, filetype, buftype)
+			return { "treesitter", "indent" }
+		end,
 		fold_virt_text_handler = handler,
 		enable_get_fold_end_virt_text = true,
 		preview = {

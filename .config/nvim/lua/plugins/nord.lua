@@ -34,7 +34,9 @@ M.config = function()
 			highlights.MarkSignNumHL = { fg = colors.aurora.green }
 			highlights.WhichKeyFloat = { bg = colors.polar_night.origin }
 			highlights.WhichKeyBorder = { bg = colors.polar_night.origin }
-			highlights.MatchParen = { underline = true }
+			-- highlights.MatchParen = { underline = true }
+			highlights.MatchParen = { standout = true }
+			-- highlights.MatchParen = { bg = colors.polar_night.brightest }
 			highlights.NoiceLspProgressClient = { fg = colors.frost.ice }
 			highlights.NoiceLspProgressTitle = { fg = colors.polar_night.light }
 			highlights.NeoTreeFloatTitle = { bg = colors.polar_night.origin }
@@ -45,6 +47,16 @@ M.config = function()
 			highlights.NormalFloat = { bg = colors.polar_night.bright }
 			highlights.FloatBorder = { bg = colors.polar_night.bright }
 			highlights.Folded = { fg = colors.frost.artic_water, bg = colors.polar_night.brighter }
+
+			highlights.TSRainbowRed = { fg = colors.aurora.red }
+			highlights.TSRainbowYellow = { fg = colors.aurora.yellow }
+			highlights.TSRainbowBlue = { fg = colors.frost.artic_ocean }
+			highlights.TSRainbowGreen = { fg = colors.aurora.green }
+			highlights.TSRainbowOrange = { fg = colors.aurora.orange }
+			highlights.TSRainbowCyan = { fg = colors.frost.ice }
+			highlights.TSRainbowViolet = { fg = colors.aurora.purple }
+			highlights.TSRainbowWhite = { fg = colors.snow_storm.origin }
+
 			-- highlights.InclineNormal = { bg = colors.polar_night.brighter, bold = true }
 			-- highlights.InclineNormalNC = { bg = colors.polar_night.brighter }
 			-- highlights.Headline1 = { bg = utils.darken(colors.aurora.green, 0.2), bold = true }

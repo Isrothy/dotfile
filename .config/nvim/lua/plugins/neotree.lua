@@ -11,7 +11,7 @@ local M = {
 	keys = {
 		{ "<F2>", "<cmd>Neotree git_status toggle<cr>", mode = { "n", "v" } },
 		{ "<F3>", "<cmd>Neotree buffers toggle<cr>", mode = { "n", "v" } },
-		{ "<F4>", "<cmd>Neotree filesystem toggle <cr>", mode = { "n", "v" } },
+		{ "<F4>", "<cmd>Neotree filesystem toggle<cr>", mode = { "n", "v" } },
 	},
 }
 

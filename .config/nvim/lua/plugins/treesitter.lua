@@ -5,7 +5,7 @@ local TS = {
 	config = function()
 		require("nvim-treesitter.configs").setup({
 			-- One of "all", "maintained" (parsers with maintainers), or a list of languages
-			ensure_installed = { "c", "cpp", "java" },
+			-- ensure_installed = { "c", "cpp", "java" },
 
 			-- Install languages synchronously (only applied to `ensure_installed`)
 			sync_install = false,
@@ -25,8 +25,17 @@ local TS = {
 				-- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
 				extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
 				max_file_lines = nil, -- Do not enable for files with more than n lines, int
-				-- colors = {}, -- table of hex strings
-				-- termcolors = {} -- table of colour name strings
+				query = { "rainbow-parens", html = "rainbow-tags" },
+				hlgroups = {
+					"TSRainbowRed",
+					"TSRainbowYellow",
+					"TSRainbowBlue",
+					"TSRainbowGreen",
+					"TSRainbowCyan",
+					"TSRainbowOrange",
+					"TSRainbowViolet",
+					"TSRainbowWhite",
+				},
 			},
 			incremental_selection = {
 				enable = true,
@@ -44,15 +53,15 @@ local TS = {
 				enable = true,
 				enable_autocmd = false,
 			},
-			-- autotag = {
-			-- 	enable = true,
-			-- },
+			autotag = {
+				enable = true,
+			},
 			endwise = {
 				enable = true,
 			},
 			textobjects = {
 				select = {
-					enable = true,
+					enable = false,
 
 					-- Automatically jump forward to textobj, similar to targets.vim
 					lookahead = true,
@@ -65,6 +74,8 @@ local TS = {
 						["ic"] = "@class.inner",
 						["ab"] = "@block.outer",
 						["ib"] = "@block.inner",
+						["a#"] = "@condition.outer",
+						["i#"] = "@condition.inner",
 					},
 				},
 				swap = {
@@ -77,7 +88,7 @@ local TS = {
 					},
 				},
 				move = {
-					enable = true,
+					enable = false,
 					set_jumps = true, -- whether to set jumps in the jumplist
 					goto_next_start = {
 						["]m"] = "@function.outer",
@@ -105,55 +116,42 @@ local TS = {
 	end,
 }
 
-local hlarg = {
-	"m-demare/hlargs.nvim",
-	enabled = false,
-	dependencies = { "nvim-treesitter/nvim-treesitter" },
-	event = { "BufReadPost", "BufNewFile" },
-	config = function()
-		require("hlargs").setup({
-			-- color = "#A3BE8C",
-			highlight = { fg = "#D8DEE9", italic = true },
-			excluded_filetypes = {},
-			paint_arg_declarations = true,
-			paint_arg_usages = true,
-			paint_catch_blocks = {
-				declarations = true,
-				usages = true,
-			},
-			extras = {
-				named_parameters = true,
-			},
-			hl_priority = 10000,
-			excluded_argnames = {
-				declarations = {},
-				usages = {
-					python = { "self", "cls" },
-					lua = { "self" },
-				},
-			},
-			performance = {
-				parse_delay = 1,
-				slow_parse_delay = 50,
-				max_iterations = 400,
-				max_concurrent_partial_parses = 30,
-				debounce = {
-					partial_parse = 3,
-					partial_insert_mode = 100,
-					total_parse = 700,
-					slow_parse = 5000,
-				},
-			},
-		})
+
+local node_action = {
+	"ckolkey/ts-node-action",
+	-- keys = {
+	-- 	{ "<leader>n", "<Cmd>lua require('ts-node-action').node_action() <cr>", mode = "n", desc = "Trigger node action" },
+	-- },
+	init = function()
+		vim.keymap.set(
+			{ "n" },
+			"<leader>n",
+			[[<cmd>lua require'ts-node-action'.node_action() <cr>]],
+			{ desc = "Trigger Node Action" }
+		)
 	end,
+
+	dependencies = { "nvim-treesitter" },
+	config = function() -- Optional
+		require("ts-node-action").setup({})
+	end,
+	-- lazy = false,
 }
 
 return {
 	TS,
-	hlarg,
+	node_action,
+	-- {
+	-- 	"mrjones2014/nvim-ts-rainbow",
+	-- 	enabled = false,
+	-- 	event = { "BufReadPost", "BufNewFile" },
+	-- },
+	-- {
+	-- 	"HiPhish/nvim-ts-rainbow2",
+	-- 	event = { "BufReadPost", "BufNewFile" },
+	-- },
 	{
-		"mrjones2014/nvim-ts-rainbow",
-		enabled = true,
+		"RRethy/nvim-treesitter-endwise",
 		event = { "BufReadPost", "BufNewFile" },
 	},
 	{
@@ -171,17 +169,48 @@ return {
 							jsx_attribute = "// %s",
 							comment = "// %s",
 						},
-						typescript = {
-							__default = "// %s",
-							__multiline = "/* %s */",
-						},
+						typescript = { __default = "// %s", __multiline = "/* %s */" },
 					},
 				},
 			})
 		end,
 	},
+
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			vim.opt.list = true
+			-- vim.opt.listchars:append("space:⋅")
+			-- vim.opt.listchars:append("eol:↴")
+
+			require("indent_blankline").setup({
+				char = "▎",
+				char_blankline = "▎",
+				context_char = "▎",
+				-- space_char_blankline = " ",
+				use_treesitter_scope = true,
+				show_current_context = true,
+				show_current_context_start = true,
+			})
+
+			-- vim.cmd[[
+			-- 	 let g:indent_blankline_char = '▎'
+			-- ]]
+		end,
+	},
 	{
 		"windwp/nvim-ts-autotag",
 		event = "InsertEnter",
+	},
+	{
+		"danymat/neogen",
+		dependencies = "nvim-treesitter/nvim-treesitter",
+		cmd = "Neogen",
+		config = function()
+			require("neogen").setup({
+				snippet_engine = "luasnip",
+			})
+		end,
 	},
 }

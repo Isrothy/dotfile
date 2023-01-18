@@ -3,7 +3,6 @@ local M = {
 	event = "VeryLazy",
 	dependencies = {
 		{ "kyazdani42/nvim-web-devicons" },
-		"folke/noice.nvim",
 	},
 }
 
@@ -151,36 +150,36 @@ M.config = function()
 		end
 	end
 
-	--- Changing filename color based on modified status
-	local custom_fname = require("lualine.components.filename"):extend()
-	local default_status_colors = { saved = "#D8DEE9", modified = "#EBCB8B" }
+	-- --- Changing filename color based on modified status
+	-- local custom_fname = require("lualine.components.filename"):extend()
+	-- local default_status_colors = { saved = "#D8DEE9", modified = "#EBCB8B" }
 
-	function custom_fname:init(options)
-		custom_fname.super.init(self, options)
-		self.status_colors = {
-			saved = highlight.create_component_highlight_group(
-				{ fg = default_status_colors.saved },
-				"filename_status_saved",
-				self.options
-			),
-			modified = highlight.create_component_highlight_group(
-				{ fg = default_status_colors.modified },
-				"filename_status_modified",
-				self.options
-			),
-		}
-		if self.options.color == nil then
-			self.options.color = ""
-		end
-	end
+	-- function custom_fname:init(options)
+	-- 	custom_fname.super.init(self, options)
+	-- 	self.status_colors = {
+	-- 		saved = highlight.create_component_highlight_group(
+	-- 			{ fg = default_status_colors.saved },
+	-- 			"filename_status_saved",
+	-- 			self.options
+	-- 		),
+	-- 		modified = highlight.create_component_highlight_group(
+	-- 			{ fg = default_status_colors.modified },
+	-- 			"filename_status_modified",
+	-- 			self.options
+	-- 		),
+	-- 	}
+	-- 	if self.options.color == nil then
+	-- 		self.options.color = ""
+	-- 	end
+	-- end
 
-	function custom_fname:update_status()
-		local data = custom_fname.super.update_status(self)
-		data = highlight.component_format_highlight(
-			vim.bo.modified and self.status_colors.modified or self.status_colors.saved
-		) .. data
-		return data
-	end
+	-- function custom_fname:update_status()
+	-- 	local data = custom_fname.super.update_status(self)
+	-- 	data = highlight.component_format_highlight(
+	-- 		vim.bo.modified and self.status_colors.modified or self.status_colors.saved
+	-- 	) .. data
+	-- 	return data
+	-- end
 
 	require("lualine").setup({
 		options = {
@@ -202,7 +201,7 @@ M.config = function()
 					"dapui_stacks",
 					"dapui_breakpoints",
 					"dapui_scopes",
-					"dapui_colsole",
+					"dapui_colsoles",
 					"toggleterm",
 					"",
 				},
@@ -213,6 +212,8 @@ M.config = function()
 		sections = {
 			lualine_a = {
 				{ "mode" },
+				{ require("recorder").recordingStatus },
+				{ require("recorder").displaySlots },
 				{
 					require("noice").api.statusline.command.get,
 					cond = require("noice").api.statusline.command.has,
@@ -269,7 +270,11 @@ M.config = function()
 				},
 			},
 			lualine_y = { "filetype" },
-			lualine_z = { "searchcount", "location", "filesize" },
+			lualine_z = {
+				"searchcount",
+				"location",
+				"filesize",
+			},
 		},
 		inactive_sections = {
 			lualine_a = {},
@@ -327,7 +332,7 @@ M.config = function()
 		},
 		tabline = {},
 		extensions = {
-			"aerial",
+			-- "aerial",
 			"toggleterm",
 			"neo-tree",
 			"quickfix",

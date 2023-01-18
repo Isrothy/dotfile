@@ -17,6 +17,7 @@ local make_capabilities = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 	capabilities.textDocument.completion.completionItem.snippetSupport = true
+	capabilities.semanticTokensProvider = nil
 end
 
 local hl_word = function(client, bufnr)
@@ -397,7 +398,7 @@ local haskell_tools = {
 					vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, opts)
 					vim.keymap.set("n", "<leader>s", ht.hoogle.hoogle_signature, opts)
 				end,
-				-- single_file_support = true,
+				single_file_support = true,
 				-- settings = {
 				haskell = { -- haskell-language-server options
 					formattingProvider = "ormolu",
@@ -472,7 +473,7 @@ local rust_tools = {
 					-- whether to align to the extreme right or not
 					right_align = false,
 
-					-- padding from the right if right_align is true
+					-- padding from the right if pight_align is true
 					right_align_padding = 7,
 
 					-- The color of the hints
@@ -532,10 +533,10 @@ local null_ls = {
 				-- null_ls.builtins.diagnostics.yamllint,
 				null_ls.builtins.diagnostics.zsh,
 
-				null_ls.builtins.code_actions.shellcheck,
+				-- null_ls.builtins.code_actions.shellcheck,
 
 				-- null_ls.builtins.formatting.autopep8,
-				null_ls.builtins.formatting.clang_format,
+				-- null_ls.builtins.formatting.clang_format,
 				null_ls.builtins.formatting.cmake_format,
 				null_ls.builtins.formatting.markdownlint,
 				null_ls.builtins.formatting.prettierd.with({
@@ -588,10 +589,10 @@ local copilot = {
 					auto_trigger = true,
 					debounce = 75,
 					keymap = {
-						accept = "<M-j>",
+						accept = "<M-;>",
 						next = "<M-]>",
 						prev = "<M-[>",
-						dismiss = "<C-]>",
+						dismiss = "<M-'>",
 					},
 				},
 				filetypes = {
