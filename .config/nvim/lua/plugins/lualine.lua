@@ -1,95 +1,16 @@
 local M = {
 	"nvim-lualine/lualine.nvim",
 	event = "VeryLazy",
+	enabled = true,
 	dependencies = {
-		{ "kyazdani42/nvim-web-devicons" },
+		"nvim-tree/nvim-web-devicons",
+		"Isrothy/lualine-diagnostic-message",
 	},
 }
 
 M.config = function()
-	local utils = require("lualine.utils.utils")
-	local highlight = require("lualine.highlight")
-
 	local function tab_size()
 		return (vim.bo.expandtab and "SP" or "TAB") .. vim.bo.tabstop
-	end
-
-	local diagnostics_message = require("lualine.component"):extend()
-
-	diagnostics_message.default = {
-		colors = {
-			error = utils.extract_color_from_hllist(
-				{ "fg", "sp" },
-				{ "DiagnosticError", "LspDiagnosticsDefaultError", "DiffDelete" },
-				"#e32636"
-			),
-			warn = utils.extract_color_from_hllist(
-				{ "fg", "sp" },
-				{ "DiagnosticWarn", "LspDiagnosticsDefaultWarning", "DiffText" },
-				"#ffa500"
-			),
-			info = utils.extract_color_from_hllist(
-				{ "fg", "sp" },
-				{ "DiagnosticInfo", "LspDiagnosticsDefaultInformation", "DiffChange" },
-				"#ffffff"
-			),
-			hint = utils.extract_color_from_hllist(
-				{ "fg", "sp" },
-				{ "DiagnosticHint", "LspDiagnosticsDefaultHint", "DiffAdd" },
-				"#273faf"
-			),
-		},
-	}
-	function diagnostics_message:init(options)
-		diagnostics_message.super:init(options)
-		self.options.colors = vim.tbl_extend("force", diagnostics_message.default.colors, self.options.colors or {})
-		self.highlights = { error = "", warn = "", info = "", hint = "" }
-		self.highlights.error = highlight.create_component_highlight_group(
-			{ fg = self.options.colors.error },
-			"diagnostics_message_error",
-			self.options
-		)
-		self.highlights.warn = highlight.create_component_highlight_group(
-			{ fg = self.options.colors.warn },
-			"diagnostics_message_warn",
-			self.options
-		)
-		self.highlights.info = highlight.create_component_highlight_group(
-			{ fg = self.options.colors.info },
-			"diagnostics_message_info",
-			self.options
-		)
-		self.highlights.hint = highlight.create_component_highlight_group(
-			{ fg = self.options.colors.hint },
-			"diagnostics_message_hint",
-			self.options
-		)
-	end
-
-	function diagnostics_message:update_status(is_focused)
-		local r, _ = unpack(vim.api.nvim_win_get_cursor(0))
-		local diagnostics = vim.diagnostic.get(0, { lnum = r - 1 })
-		if #diagnostics > 0 then
-			local top = diagnostics[1]
-			for _, d in ipairs(diagnostics) do
-				if d.severity < top.severity then
-					top = d
-				end
-			end
-			local icons = { " ", " ", " ", " " }
-			local hl = {
-				self.highlights.error,
-				self.highlights.warn,
-				self.highlights.info,
-				self.highlights.hint,
-			}
-			return highlight.component_format_highlight(hl[top.severity])
-				.. icons[top.severity]
-				.. " "
-				.. utils.stl_escape(top.message)
-		else
-			return ""
-		end
 	end
 
 	--- Trailing whitespaces
@@ -150,42 +71,42 @@ M.config = function()
 		end
 	end
 
-	-- --- Changing filename color based on modified status
-	-- local custom_fname = require("lualine.components.filename"):extend()
-	-- local default_status_colors = { saved = "#D8DEE9", modified = "#EBCB8B" }
+	local c = require("nord.colors").palette
 
-	-- function custom_fname:init(options)
-	-- 	custom_fname.super.init(self, options)
-	-- 	self.status_colors = {
-	-- 		saved = highlight.create_component_highlight_group(
-	-- 			{ fg = default_status_colors.saved },
-	-- 			"filename_status_saved",
-	-- 			self.options
-	-- 		),
-	-- 		modified = highlight.create_component_highlight_group(
-	-- 			{ fg = default_status_colors.modified },
-	-- 			"filename_status_modified",
-	-- 			self.options
-	-- 		),
-	-- 	}
-	-- 	if self.options.color == nil then
-	-- 		self.options.color = ""
-	-- 	end
-	-- end
+	local myNord = {}
 
-	-- function custom_fname:update_status()
-	-- 	local data = custom_fname.super.update_status(self)
-	-- 	data = highlight.component_format_highlight(
-	-- 		vim.bo.modified and self.status_colors.modified or self.status_colors.saved
-	-- 	) .. data
-	-- 	return data
-	-- end
+	myNord.normal = {
+		a = { fg = c.polar_night.bright, bg = c.frost.ice },
+		b = { fg = c.snow_storm.brighter, bg = c.polar_night.bright },
+		c = { fg = c.snow_storm.brighter, bg = c.polar_night.brighter },
+	}
+
+	myNord.insert = {
+		a = { fg = c.polar_night.bright, bg = c.snow_storm.brightest },
+	}
+
+	myNord.visual = {
+		a = { fg = c.polar_night.bright, bg = c.frost.polar_water },
+	}
+
+	myNord.replace = {
+		a = { fg = c.polar_night.bright, bg = c.aurora.yellow },
+	}
+
+	myNord.command = {
+		a = { fg = c.polar_night.bright, bg = c.aurora.purple },
+	}
+
+	myNord.inactive = {
+		a = { fg = c.snow_storm.origin, bg = c.polar_night.origin },
+		b = { fg = c.snow_storm.origin, bg = c.polar_night.bright },
+		c = { fg = c.snow_storm.origin, bg = c.polar_night.origin },
+	}
 
 	require("lualine").setup({
 		options = {
 			icons_enabled = true,
-			-- theme = myNord,
-			theme = "nord",
+			theme = myNord,
 			-- component_separators = { left = '╲', right = '╱' },
 			component_separators = "",
 			section_separators = { left = "", right = "" },
@@ -202,7 +123,8 @@ M.config = function()
 					"dapui_breakpoints",
 					"dapui_scopes",
 					"dapui_colsoles",
-					"toggleterm",
+					-- "toggleterm",
+					-- "BufTerm",
 					"",
 				},
 			},
@@ -233,7 +155,6 @@ M.config = function()
 			lualine_c = {
 				{
 					"filename",
-					-- custom_fname,
 					file_status = true,
 					newfile_status = true,
 					symbols = {
@@ -245,7 +166,7 @@ M.config = function()
 					fmt = trunc(90, 30, 50),
 				},
 				{
-					diagnostics_message,
+					"diagnostic-message",
 					-- colors = {
 					-- 	error = "#BF616A",
 					-- 	warn = "#EBCB8B",
@@ -255,8 +176,8 @@ M.config = function()
 				},
 			},
 			lualine_x = {
-				mixed_indent,
-				trailing_whitespace,
+				-- mixed_indent,
+				-- trailing_whitespace,
 				tab_size,
 				"encoding",
 				{
@@ -332,12 +253,15 @@ M.config = function()
 		},
 		tabline = {},
 		extensions = {
-			-- "aerial",
+			"aerial",
 			"toggleterm",
+			-- "BufTerm",
 			"neo-tree",
 			"quickfix",
 		},
 	})
 end
 
-return M
+return {
+	M,
+}

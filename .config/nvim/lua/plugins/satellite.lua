@@ -1,6 +1,6 @@
 local M = {
 	"lewis6991/satellite.nvim",
-	event = {"BufReadPost", "BufNewFile"},
+	event = { "BufReadPost", "BufNewFile" },
 }
 M.config = function()
 	require("satellite").setup({
@@ -24,9 +24,15 @@ M.config = function()
 			},
 			gitsigns = {
 				enable = true,
+				signs = { -- can only be a single character (multibyte is okay)
+					add = "│",
+					change = "│",
+					delete = "-",
+				},
 			},
 			marks = {
 				enable = false,
+				key = "m",
 				show_builtins = true, -- shows the builtin marks like [ ] < >
 			},
 		},

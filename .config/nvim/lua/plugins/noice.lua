@@ -20,7 +20,6 @@ M.config = function()
 				-- icon_hl_group: optional hl_group for the icon
 				-- title: set to anything or empty string to hide
 				cmdline = { pattern = "^:", icon = "", lang = "vim" },
-				-- cmdline = { pattern = "^:", icon = "", lang = "vim" },
 				search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
 				search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
 				filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
@@ -39,13 +38,15 @@ M.config = function()
 			view_error = "notify", -- view for errors
 			view_warn = "notify", -- view for warnings
 			view_history = "messages", -- view for :messages
+			-- view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
 			view_search = false, -- view for search count messages. Set to `false` to disable
 		},
 
 		popupmenu = {
 			enabled = true, -- enables the Noice popupmenu UI
 			---@type 'nui'|'cmp'
-			backend = "nui", -- backend to use to show regular cmdline completions
+			backend = "cmp", -- backend to use to show regular cmdline completions
+			---@type NoicePopupmenuItemKind|false
 			-- Icons for completion item kinds (see defaults at noice.config.icons.kinds)
 			kind_icons = {}, -- set to `false` to disable icons
 		},
@@ -211,14 +212,14 @@ M.config = function()
 				},
 				opts = { skip = true },
 			},
-			{
-				filter = {
-					event = "msg_show",
-					kind = "",
-					find = "RPC[Error]",
-				},
-				opts = { skip = true },
-			},
+			-- {
+			-- 	filter = {
+			-- 		event = "msg_show",
+			-- 		kind = "",
+			-- 		find = "RPC[Error]",
+			-- 	},
+			-- 	opts = { skip = true },
+			-- },
 			{
 				filter = {
 					event = "msg_show",

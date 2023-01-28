@@ -10,33 +10,38 @@ local telescope = {
 		{ "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
 		{ "jvgrootveld/telescope-zoxide" },
 		{ "debugloop/telescope-undo.nvim" },
+		{ "gbprod/yanky.nvim" },
 	},
 	branch = "0.1.x",
 }
 
 telescope.keys = {
+	{ "<leader><leader>a", "<cmd>Telescope autocommands<cr>" },
+	{ "<leader><leader>b", "<cmd>Telescope file_browser<cr>" },
+	{ "<leader><leader>c", "<cmd>Telescope commands<cr>" },
+	{ "<leader><leader>d", "<cmd>Telescope dotfiles<cr>" },
+
 	{ "<leader><leader>f", "<cmd>Telescope find_files<cr>" },
 	{ "<leader><leader>g", "<cmd>Telescope live_grep<cr>" },
-	{ "<leader><leader>b", "<cmd>Telescope buffers<cr>" },
 	{ "<leader><leader>h", "<cmd>Telescope help_tags<cr>" },
-	{ "<leader><leader>o", "<cmd>Telescope oldfiles<cr>" },
-	{ "<leader><leader>s", "<cmd>Telescope lsp_document_symbols<cr>" },
-	{ "<leader><leader>w", "<cmd>Telescope lsp_workspace_symbols<cr>" },
-	{ "<leader><leader>c", "<cmd>Telescope commands<cr>" },
-	{ "<leader><leader>m", "<cmd>Telescope marks<cr>" },
-	{ "<leader><leader>t", "<cmd>Telescope treesitter<cr>" },
-	{ "<leader><leader>q", "<cmd>Telescope quickfix<cr>" },
-	{ "<leader><leader>l", "<cmd>Telescope loclist<cr>" },
-	{ "<leader><leader>r", "<cmd>Telescope registers<cr>" },
-	{ "<leader><leader>n", "<cmd>Telescope file_browser<cr>" },
-	{ "<leader><leader>u", "<cmd>Telescope undo<cr>" },
+
+	{ "<leader><leader>j", "<cmd>Telescope jumplist<cr>" },
 	{ "<leader><leader>k", "<cmd>Telescope keymaps<cr>" },
-	{ "<leader><leader>a", "<cmd>Telescope autocommands<cr>" },
-	{ "<leader><leader>v", "<cmd>Telescope vim_options<cr>" },
-	{ "<leader><leader>d", "<cmd>Telescope dotfiles<cr>" },
-	{ "<leader><leader>e", "<cmd>Telescope filetypes<cr>" },
+	{ "<leader><leader>l", "<cmd>Telescope loclist<cr>" },
+	{ "<leader><leader>m", "<cmd>Telescope marks<cr>" },
+	{ "<leader><leader>n", "<cmd>Telescope noice<cr>" },
+	{ "<leader><leader>o", "<cmd>Telescope frecency<cr>" },
 	{ "<leader><leader>p", "<cmd>Telescope projects<cr>" },
-	{ "<leader><leader>z", "<cmd>Telescope zoxide<cr>" },
+	{ "<leader><leader>q", "<cmd>Telescope quickfix<cr>" },
+	{ "<leader><leader>r", "<cmd>Telescope registers<cr>" },
+	{ "<leader><leader>s", "<cmd>Telescope smart_open<cr>" },
+	{ "<leader><leader>t", "<cmd>Telescope treesitter<cr>" },
+	{ "<leader><leader>u", "<cmd>Telescope undo<cr>" },
+	{ "<leader><leader>v", "<cmd>Telescope vim_options<cr>" },
+	{ "<leader><leader>w", "<cmd>Telescope lsp_workspace_diagnostics<cr>" },
+	{ "<leader><leader>x", "<cmd>Telescope lsp_document_diagnostics<cr>" },
+	{ "<leader><leader>y", "<cmd>Telescope yank_history<cr>" },
+	{ "<leader><leader>z", "<cmd>Telescope zoxide list<cr>" },
 }
 
 telescope.config = function()
@@ -74,6 +79,7 @@ telescope.config = function()
 		},
 		defaults = {
 			buffer_previewer_maker = new_maker,
+			dynamic_preview_title = true,
 		},
 		vimgrep_arguments = {
 			"rg",
@@ -165,6 +171,7 @@ telescope.config = function()
 	require("telescope").load_extension("aerial")
 	require("telescope").load_extension("noice")
 	require("telescope").load_extension("undo")
+	require("telescope").load_extension("smart_open")
 end
 
 return {
@@ -186,5 +193,10 @@ return {
 		dependencies = {
 			"nvim-telescope/telescope.nvim",
 		},
+	},
+	{
+		"danielfalk/smart-open.nvim",
+		branch = "0.1.x",
+		dependencies = { "kkharji/sqlite.lua" },
 	},
 }

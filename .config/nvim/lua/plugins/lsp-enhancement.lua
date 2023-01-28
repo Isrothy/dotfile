@@ -1,6 +1,6 @@
 local lightbulb = {
 	"kosayoda/nvim-lightbulb",
-	-- dependencies = "antoinemadec/FixCursorHold.nvim",
+	enabled = true,
 	event = "VeryLazy",
 	config = function()
 		require("nvim-lightbulb").setup({
@@ -65,6 +65,7 @@ local lightbulb = {
 
 local inc_rename = {
 	"smjonas/inc-rename.nvim",
+	enabled = true,
 	event = "VeryLazy",
 	keys = {
 		{
@@ -83,10 +84,12 @@ local inc_rename = {
 local neo_dim = {
 	"zbirenbaum/neodim",
 	event = "BufRead",
+	enabled = true,
 	config = function()
+		local c = require("nord.colors").palette
 		require("neodim").setup({
 			alpha = 0.5,
-			blend_color = "#2E3440",
+			blend_color = c.polar_night.origin,
 			update_in_insert = {
 				enable = true,
 				delay = 100,
@@ -102,13 +105,14 @@ local neo_dim = {
 
 local trouble = {
 	"folke/trouble.nvim",
+	enabled = true,
 	cmd = {
 		"TroubleToggle",
 		"Trouble",
 		"TroubleRefresh",
 		"TroubleClose",
 	},
-	dependencies = "kyazdani42/nvim-web-devicons",
+	dependencies = "nvim-tree/nvim-web-devicons",
 	keys = {
 		{ "<leader>xx", ":TroubleToggle<cr>", noremap = true },
 		{ "<leader>xw", ":TroubleToggle lsp_workspace_diagnostics<cr>", noremap = true },

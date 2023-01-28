@@ -53,7 +53,6 @@ return {
 			---Example: Use '^$' to ignore empty lines
 			---@type string|fun():string
 			ignore = nil,
-
 			---LHS of toggle mappings in NORMAL + VISUAL mode
 			---@type table
 			toggler = {

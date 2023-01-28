@@ -4,9 +4,9 @@ return {
 	-- enabled = false,
 	config = function()
 		require("nvim-autopairs").setup({
-			check_ts = true,
 			map_bs = true,
 			map_c_h = true,
+			check_ts = true,
 			map_c_w = true,
 			disable_filetype = { "TelescopePrompt" },
 		})

@@ -2,6 +2,7 @@ return {
 	{
 		"akinsho/nvim-toggleterm.lua",
 		keys = "<c-`>",
+		enabled = true,
 		cmd = {
 			"ToggleTerm",
 			"ToggleTermToggleAll",
@@ -25,7 +26,7 @@ return {
 				insert_mappings = true, -- whether or not the open mapping applies in insert mode
 				terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
 				persist_size = false,
-				direction = "horizontal",
+				-- direction = "horizontal",
 				close_on_exit = true, -- close the terminal window when the process exits
 				shell = vim.o.shell, -- change the default shell
 				-- This field is only relevant if direction is set to 'float'
@@ -39,11 +40,57 @@ return {
 					height = 20,
 					winblend = 3,
 				},
+				-- winbar = {
+				-- 	enabled = true,
+				-- 	name_formatter = function(term) --  term: Terminal
+				-- 		return term.name
+				-- 	end,
+				-- },
 			})
+		end,
+	},
+	{
+		"boltlessengineer/bufterm.nvim",
+		cmd = {
+			"BufTermEnter",
+			"BufTermNext",
+			"BufTermPrev",
+		},
+		enabled = false,
+		config = function()
+			require("bufterm").setup({
+				save_native_terms = true, -- integrate native terminals from `:terminal` command
+				start_in_insert = true, -- start terminal in insert mode
+				remember_mode = true, -- remember vi_mode of terminal buffer
+				enable_ctrl_w = true, -- use <C-w> for window navigating in terminal mode (like vim8)
+				terminal = { -- default terminal settings
+					buflisted = false, -- whether to set 'buflisted' option
+					fallback_on_exit = true, -- prevent auto-closing window on terminal exit
+				},
+			})
+			-- local term = require("bufterm.terminal")
+			-- local ui = require("bufterm.ui")
+
+			-- vim.keymap.set({ "n", "t" }, "<C-t>", function()
+			-- 	local recent_term = term.get_recent_term()
+			-- 	ui.toggle_float(recent_term.bufnr)
+			-- end, {
+			-- 	desc = "Toggle floating window with terminal buffers",
+			-- })
 		end,
 	},
 	{
 		"samjwill/nvim-unception",
 		event = "TermOpen",
+	},
+	{
+		"chomosuke/term-edit.nvim",
+		ft = { "toggleterm", "BufTerm" },
+		version = "1.*",
+		config = function()
+			require("term-edit").setup({
+				prompt_end = "❯ ",
+			})
+		end,
 	},
 }

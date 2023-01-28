@@ -221,5 +221,13 @@ return {
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		event = { "BufReadPost", "BufNewFile" },
 	},
+	{
+		"Julian/vim-textobj-variable-segment",
+		enabled = false,
+		dependencies = {
+			"kana/vim-textobj-user",
+		},
+		event = { "BufReadPost", "BufNewFile" },
+	},
 	custom_textobjects = custom_textobjects,
 }

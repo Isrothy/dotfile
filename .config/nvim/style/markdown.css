@@ -1,34 +1,34 @@
 root {
-  --color-text-primary: #3B4252;
-  --color-text-tertiary: #4C566A;
-  --color-text-link: #5E81AC;
-  --color-bg-primary: #ECEFF4;
-  --color-bg-secondary: #E5E9F0;
-  --color-bg-tertiary: #D8DEE9;
+  --color-text-primary: #3b4252;
+  --color-text-tertiary: #4c566a;
+  --color-text-link: #5e81ac;
+  --color-bg-primary: #eceff4;
+  --color-bg-secondary: #e5e9f0;
+  --color-bg-tertiary: #d8dee9;
   --color-border-primary: #ddd;
   --color-border-secondary: #eaecef;
   --color-border-tertiary: #d1d5da;
   --color-kbd-foreground: #444d56;
-  --color-markdown-blockquote-border: #D8DEE9;
-  --color-markdown-table-border: #E5E9F0;
-  --color-markdown-table-tr-border: #D8DEE9;
-  --color-markdown-code-bg: #3B4252;
+  --color-markdown-blockquote-border: #d8dee9;
+  --color-markdown-table-border: #e5e9f0;
+  --color-markdown-table-tr-border: #d8dee9;
+  --color-markdown-code-bg: #3b4252;
 }
 [data-theme="dark"] {
-  --color-text-primary: #ECEFF4;
-  --color-text-tertiary: #4C566A;
-  --color-text-link: #81A1C1;
-  --color-bg-primary: #2E3440;
-  --color-bg-secondary: #2E3440;
-  --color-bg-tertiary: #3B4252;
-  --color-border-primary: #2E3440;
-  --color-border-secondary: #2E3440;
-  --color-border-tertiary: #3B4252;
-  --color-kbd-foreground: #E5E9F0;
-  --color-markdown-blockquote-border: #3B4252;
-  --color-markdown-table-border: #3B4252;
-  --color-markdown-table-tr-border: #2E3440;
-  --color-markdown-code-bg: #4C566A;
+  --color-text-primary: #eceff4;
+  --color-text-tertiary: #4c566a;
+  --color-text-link: #81a1c1;
+  --color-bg-primary: #2e3440;
+  --color-bg-secondary: #2e3440;
+  --color-bg-tertiary: #3b4252;
+  --color-border-primary: #2e3440;
+  --color-border-secondary: #2e3440;
+  --color-border-tertiary: #3b4252;
+  --color-kbd-foreground: #e5e9f0;
+  --color-markdown-blockquote-border: #3b4252;
+  --color-markdown-table-border: #3b4252;
+  --color-markdown-table-tr-border: #2e3440;
+  --color-markdown-code-bg: #4c566a;
 }
 
 .markdown-body ol ol,
@@ -44,7 +44,8 @@ root {
 }
 
 .markdown-body {
-  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
   color: var(--color-text-primary);
   line-height: 1.6;
@@ -56,11 +57,11 @@ root {
   border-radius: 0 0 3px 3px;
 }
 
-.markdown-body>*:first-child {
+.markdown-body > *:first-child {
   margin-top: 0 !important;
 }
 
-.markdown-body>*:last-child {
+.markdown-body > *:last-child {
   margin-bottom: 0 !important;
 }
 
@@ -68,7 +69,7 @@ root {
   list-style: none;
 }
 
-.markdown-body .table-of-contents>ol {
+.markdown-body .table-of-contents > ol {
   padding-left: 0;
 }
 
@@ -190,7 +191,7 @@ root {
 }
 
 .markdown-body dl {
-  margin-bottom: 1.3em
+  margin-bottom: 1.3em;
 }
 
 .markdown-body dl dt {
@@ -330,7 +331,8 @@ root {
 }
 
 .task-list-item input {
-  font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   margin: 0 0.35em 0.25em -1.6em;
   vertical-align: middle;
 }

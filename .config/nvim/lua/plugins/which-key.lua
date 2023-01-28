@@ -5,6 +5,8 @@ local M = {
 		"echasnovski/mini.ai",
 		"numToStr/Comment.nvim",
 		"kylechui/nvim-surround",
+		"gbprod/yanky.nvim",
+		"gbprod/substitute.nvim",
 	},
 	event = "VeryLazy",
 }
@@ -38,7 +40,6 @@ M.config = function()
 
 	objects["ih"] = { name = "inside hunk" }
 
-
 	require("which-key").setup({
 		plugins = {
 			marks = true, -- shows a list of your marks on ' and `
@@ -62,14 +63,17 @@ M.config = function()
 		-- add operators that will trigger motion and text object completion
 		-- to enable all native operators, set the preset / operators plugin above
 		operators = {
-			gc = "Comment",
-			gb = "Comment",
-			ys = "surround",
-			yss = "surround",
-			yS = "surround",
-			ySS = "surround",
+			gc = "Comments",
+			gb = "Comments",
+			gs = "surround",
+			gss = "surround",
+			gS = "surround",
+			gSS = "surround",
 			ds = "surround",
 			cs = "surround",
+			y = "yanky",
+			s = "substitute",
+			S = "substitute",
 		},
 		key_labels = {
 			-- override the label used to display some keys. It doesn't effect WK in any other way.
@@ -92,7 +96,7 @@ M.config = function()
 			position = "bottom", -- bottom, top
 			margin = { 1, 1, 1, 1 }, -- extra window margin [top, right, bottom, left]
 			padding = { 1, 0, 1, 0 }, -- extra window padding [top, right, bottom, left]
-			winblend = 0,
+			winblend = 20,
 		},
 		layout = {
 			height = { min = 4, max = 25 }, -- min and max height of the columns
@@ -121,12 +125,14 @@ M.config = function()
 
 	local wk = require("which-key")
 	wk.register({
-		l = "Lsp goto declaration",
+		["<c-d>"] = "Lsp goto declaration",
 		D = "Lsp goto type defination",
 		d = "Lsp foto defination",
 		i = "Lsp goto implentation",
 		r = "Lsp goto reference",
 		f = "Folder preview",
+		l = "Leap forward",
+		L = "Leap backward",
 	}, {
 		prefix = "g",
 	})
@@ -139,19 +145,19 @@ M.config = function()
 
 	wk.register({
 		ca = "Lsp code action",
+		cr = "Run code",
 		rn = "Lsp rename",
 		f = "Lsp format",
 		q = "Diagnostics to quickfix",
 		d = "Float diagnostic window",
 		w = {
-			name = "Lsp work space",
 			a = "Lsp add work space",
 			r = "Lsp remove work space",
 			l = "Lsp watch work space",
+			p = "Pick a windpw",
 		},
 		a = "Swap next parameter",
 		A = "Swap previous parameter",
-		p = "Pick a window",
 	}, {
 		prefix = "<leader>",
 	})
@@ -189,6 +195,15 @@ M.config = function()
 				e = "[e]xpr",
 				f = "[f]ile",
 			},
+		},
+	})
+
+	wk.register({
+		["<leader>b"] = {
+			h = "Swap with the left buffer",
+			l = "Swap with the right buffer",
+			j = "Swap with the bottom buffer",
+			k = "Swap with the top buffer",
 		},
 	})
 end

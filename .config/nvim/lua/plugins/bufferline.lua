@@ -3,15 +3,16 @@ local M = {
 	version = "v3.*",
 	-- enabled = false,
 	event = { "BufReadPost", "BufNewFile" },
-	dependencies = "kyazdani42/nvim-web-devicons",
+	dependencies = "nvim-tree/nvim-web-devicons",
 }
 
 M.config = function()
 	require("bufferline").setup({
 		options = {
 			mode = "buffers", -- set to "tabs" to only show tabpages instead
+			-- numbers = "id",
 			-- numbers = function(opts)
-			-- 	return string.format("%s|%s", opts.id, opts.raise(opts.ordinal))
+			-- 	return string.format("%s|%s", opts.ordinal, opts.raise(opts.id))
 			-- end,
 			indicator = {
 				icon = "▎", -- this should be omitted if indicator style is not 'icon'
@@ -56,16 +57,26 @@ M.config = function()
 		highlights = require("nord.plugins.bufferline").akinsho(),
 	})
 
-	vim.keymap.set({ "n" }, "<M-,>", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true })
-	vim.keymap.set({ "n" }, "<M-.>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true })
-	for i = 1, 9 do
+	vim.keymap.set({ "n" }, "<s-tab>", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true })
+	vim.keymap.set({ "n" }, "<tab>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true })
+	vim.keymap.set({ "n" }, "<M-left>", "<cmd>BufferLineMovePrev<cr>", { noremap = true, silent = true })
+	vim.keymap.set({ "n" }, "<M-right>", "<cmd>BufferLineMoveNext<cr>", { noremap = true, silent = true })
+	vim.keymap.set({ "n" }, "<leader>bp", "<cmd>BufferLinePick<cr>", { noremap = true, silent = true })
+	vim.keymap.set({ "n" }, "<leader>bc", "<cmd>BufferLinePickClose<cr>", { noremap = true, silent = true })
+	for i = 1, 10 do
 		vim.keymap.set(
 			"n",
-			string.format("<leader>%d", i),
-			string.format("<cmd>BufferLineGoToBuffer %d<cr>", i, { noremap = true, silent = true })
+			string.format("<leader>%d", i % 10),
+			string.format("<cmd>lua require('bufferline').go_to_buffer(%d, false)<cr>", i),
+			{ noremap = true, silent = true, desc = string.format("Go to buffer %d", i) }
 		)
 	end
-	vim.keymap.set("n", "<leader>$", "<Cmd>BufferLineGoToBuffer -1<CR>", { noremap = true, silent = true })
+	vim.keymap.set(
+		"n",
+		"<leader>$",
+		"<Cmd>lua require('bufferline').go_to_buffer(-1, false)<CR>",
+		{ noremap = true, silent = true, desc = string.format("Go to last buffer") }
+	)
 end
 
 return M

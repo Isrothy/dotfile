@@ -2,9 +2,9 @@ local M = {
 	"kevinhwang91/nvim-ufo",
 	dependencies = {
 		"kevinhwang91/promise-async",
-		"nvim-treesitter/nvim-treesitter",
+		-- "nvim-treesitter/nvim-treesitter",
 	},
-	-- event = { "BufReadPost", "BufNewFile" },
+	event = { "BufReadPost", "BufNewFile" },
 	enabled = true,
 	lazy = false,
 	-- event = "User isfolded",
@@ -84,7 +84,7 @@ M.config = function()
 			vim.api.nvim_echo({ { msg:match(":(.*)$"), "ErrorMsg" } }, false, {})
 			return
 		end
-		require("hlslens").start()
+		-- require("hlslens").start()
 		require("ufo").peekFoldedLinesUnderCursor()
 	end
 

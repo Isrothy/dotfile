@@ -30,10 +30,11 @@ M.config = function()
 
 	dashboard.section.buttons.val = {
 		dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-		dashboard.button("r", "  Recently opened files", ":Telescope frecency<CR>"),
+		-- dashboard.button("s", "  Recently opened files", ":Telescope smart_open<CR>"),
+		dashboard.button("s", "🜛 Smart open", ":Telescope smart_open<CR>"),
 		dashboard.button("b", "  File browser", ":Telescope file_browser<CR>"),
 		dashboard.button("f", "  Find file", ":Telescope find_files<CR>"),
-		dashboard.button("w", "  Find word", ":Telescope live_grep<CR>"),
+		dashboard.button("g", "  Find word", ":Telescope live_grep<CR>"),
 		dashboard.button("c", "  Load current dir session", ":SessionManage load_current_dir_session<CR>"),
 		dashboard.button("l", "  Load session", ":SessionManage load_session<CR>"),
 		-- dashboard.button("h", "  Neovim Check health", ":checkhealth<CR>"),

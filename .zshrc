@@ -30,12 +30,16 @@ plugins=(
 ZSH_COLORIZE_TOOL=chroma
 
 source $ZSH/oh-my-zsh.sh
+source /opt/homebrew/share/zsh-autopair/autopair.zsh
 
 source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-alias python=/opt/homebrew/bin/python3
+alias python="/opt/homebrew/bin/python3.11"
+alias python3="/opt/homebrew/bin/python3.11"
+alias pip="/opt/homebrew/bin/pip3.11"
+alias pip3="/opt/homebrew/bin/pip3.11"
 
 alias ls='lsd'
 alias l='ls -l'
@@ -76,6 +80,6 @@ alias config='/usr/bin/git --git-dir=/Users/jiangjoshua/.cfg/ --work-tree=/Users
 
 eval "$(zoxide init zsh --cmd cd)"
 
-[ -f "/Users/jiangjoshua/.ghcup/env" ] && source "/Users/jiangjoshua/.ghcup/env" # ghcup-env
-
 export PATH="/opt/homebrew/opt/node@16/bin:$PATH"
+
+[ -f "/Users/jiangjoshua/.ghcup/env" ] && source "/Users/jiangjoshua/.ghcup/env" # ghcup-env

@@ -1,5 +1,5 @@
 local M = {
-	"gbprod/nord.nvim",
+	"Isrothy/nord.nvim",
 	priority = 100,
 	lazy = false,
 }
@@ -11,8 +11,8 @@ M.config = function()
 		-- your configuration comes here
 		-- or leave it empty to use the default settings
 		transparent = false, -- Enable this to disable setting the background color
-		terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
-		diff = { mode = "bg" }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
+		terminal_colors = true, -- Configure the colors used khen opening a `:terminal` in Neovim
+		diff = { mode = "bg" }, -- enables/disables colorful backgrounds khen used in diff mode. values : [bg|fg]
 		borders = true, -- Enable the border between verticaly split windows visible
 		errors = { mode = "none" }, -- Display mode for errors and diagnostics
 		-- values : [bg|fg|none]
@@ -28,24 +28,38 @@ M.config = function()
 				modified = { italic = true },
 			},
 		},
+		colorblind = {
+			enable = true,
+			severity = {
+				protan = 0.7,
+				deutan = 1.0,
+				tritan = 0.4,
+			},
+		},
 		on_highlights = function(highlights, colors)
 			highlights.CursorLineNr = { fg = colors.frost.artic_water }
+
 			highlights.MarkSignHL = { fg = colors.aurora.green }
-			highlights.MarkSignNumHL = { fg = colors.aurora.green }
+			highlights.MarkSignNumHL = { link = "NONE" }
+
 			highlights.WhichKeyFloat = { bg = colors.polar_night.origin }
 			highlights.WhichKeyBorder = { bg = colors.polar_night.origin }
-			-- highlights.MatchParen = { underline = true }
+
 			highlights.MatchParen = { standout = true }
-			-- highlights.MatchParen = { bg = colors.polar_night.brightest }
+
 			highlights.NoiceLspProgressClient = { fg = colors.frost.ice }
 			highlights.NoiceLspProgressTitle = { fg = colors.polar_night.light }
+
 			highlights.NeoTreeFloatTitle = { bg = colors.polar_night.origin }
 			highlights.NeoTreeFloatBorder = { bg = colors.polar_night.origin }
 			highlights.NeoTreeFloatNormal = { bg = colors.polar_night.origin }
+
 			highlights.ErrorMsg = { link = "Normal" }
 			highlights.WarningMsg = { link = "Normal" }
+
 			highlights.NormalFloat = { bg = colors.polar_night.bright }
 			highlights.FloatBorder = { bg = colors.polar_night.bright }
+
 			highlights.Folded = { fg = colors.frost.artic_water, bg = colors.polar_night.brighter }
 
 			highlights.TSRainbowRed = { fg = colors.aurora.red }
@@ -56,6 +70,9 @@ M.config = function()
 			highlights.TSRainbowCyan = { fg = colors.frost.ice }
 			highlights.TSRainbowViolet = { fg = colors.aurora.purple }
 			highlights.TSRainbowWhite = { fg = colors.snow_storm.origin }
+
+			highlights.EyelinerPrimary = { fg = colors.aurora.orange, bold = true }
+			highlights.EyelinerSecondary = { fg = colors.frost.ice, bold = true }
 
 			-- highlights.InclineNormal = { bg = colors.polar_night.brighter, bold = true }
 			-- highlights.InclineNormalNC = { bg = colors.polar_night.brighter }

@@ -50,7 +50,7 @@ end
 
 local set_key_map = function(client, bufnr)
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	vim.keymap.set("n", "gl", vim.lsp.buf.declaration, bufopts)
+	vim.keymap.set("n", "g<c-d>", vim.lsp.buf.declaration, bufopts)
 	vim.keymap.set("n", "gD", function()
 		require("telescope.builtin").lsp_type_definitions({ jump_type = "never" })
 	end, bufopts)
@@ -85,6 +85,7 @@ local offset_encoding = "utf-8"
 local Lspconfig = {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
+	enabled = true,
 	config = function()
 		vim.diagnostic.config({
 			virtual_text = false,
@@ -96,7 +97,7 @@ local Lspconfig = {
 		local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 		for type, icon in pairs(signs) do
 			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "NONE" })
 		end
 
 		require("lspconfig").bashls.setup({
@@ -244,6 +245,7 @@ local Lspconfig = {
 
 local clangd = {
 	"p00f/clangd_extensions.nvim",
+	enabled = true,
 	ft = { "c", "cpp", "objc", "objcpp" },
 	config = function()
 		local clangd_capabilities = make_capabilities()
@@ -257,6 +259,7 @@ local clangd = {
 				on_attach = function(client, bufnr)
 					set_key_map(client, bufnr)
 					hl_word(client, bufnr)
+					client.server_capabilities.documentFormattingProvider = false
 				end,
 				cmd = {
 					"clangd",
@@ -340,10 +343,12 @@ local clangd = {
 local haskell_tools = {
 	"MrcJkb/haskell-tools.nvim",
 	ft = { "haskell" },
+	branch = "1.x.x",
 	dependencies = {
 		"neovim/nvim-lspconfig",
 		"nvim-lua/plenary.nvim",
 	},
+	enabled = true,
 	config = function()
 		local ht = require("haskell-tools")
 		ht.setup({
@@ -407,12 +412,14 @@ local haskell_tools = {
 				},
 			},
 		})
+		require("telescope").load_extension("ht")
 	end,
 }
 
 local rust_tools = {
 	"simrat39/rust-tools.nvim",
 	ft = { "rust" },
+	enabled = true,
 	config = function()
 		local rt = require("rust-tools")
 		rt.setup({
@@ -498,6 +505,7 @@ local rust_tools = {
 local sqls = {
 	"nanotee/sqls.nvim",
 	ft = { "sql", "mysql" },
+	enabled = true,
 	config = function()
 		require("lspconfig").sqls.setup({
 			capabilities = make_capabilities(),
@@ -514,6 +522,7 @@ local sqls = {
 local null_ls = {
 	"jose-elias-alvarez/null-ls.nvim",
 	event = { "BufReadPre", "BufNewFile" },
+	enabled = true,
 	config = function()
 		local null_ls = require("null-ls")
 
@@ -536,7 +545,7 @@ local null_ls = {
 				-- null_ls.builtins.code_actions.shellcheck,
 
 				-- null_ls.builtins.formatting.autopep8,
-				-- null_ls.builtins.formatting.clang_format,
+				null_ls.builtins.formatting.clang_format,
 				null_ls.builtins.formatting.cmake_format,
 				null_ls.builtins.formatting.markdownlint,
 				null_ls.builtins.formatting.prettierd.with({
@@ -558,18 +567,27 @@ local null_ls = {
 					},
 				}),
 				null_ls.builtins.formatting.stylua,
-				-- null_ls.builtins.formatting.swiftformat,
+				null_ls.builtins.formatting.swiftformat,
 
 				-- null_ls.builtins.formatting.yamlfmt,
 				null_ls.builtins.formatting.xmllint,
 			},
 		})
+		-- require("null-ls").register({
+		-- 	name = "more_actions",
+		-- 	method = { require("null-ls").methods.CODE_ACTION },
+		-- 	filetypes = { "_all" },
+		-- 	generator = {
+		-- 		fn = require("ts-node-action").available_actions,
+		-- 	},
+		-- })
 	end,
 }
 
 local copilot = {
 	"zbirenbaum/copilot.lua",
 	event = "VeryLazy",
+	enabled = true,
 	config = function()
 		vim.defer_fn(function()
 			require("copilot").setup({
@@ -624,6 +642,7 @@ local copilot = {
 
 local jsonls = {
 	"b0o/schemastore.nvim",
+	enabled = true,
 	ft = { "json", "jsonc" },
 	config = function()
 		require("lspconfig").jsonls.setup({

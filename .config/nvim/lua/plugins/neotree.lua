@@ -4,7 +4,7 @@ local M = {
 	cmd = { "Neotree" },
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"kyazdani42/nvim-web-devicons",
+		"nvim-tree/nvim-web-devicons",
 		"MunifTanjim/nui.nvim",
 		"s1n7ax/nvim-window-picker",
 	},
@@ -234,17 +234,6 @@ M.config = function()
 
 		close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
 		popup_border_style = "rounded",
-		-- popup_border_style = "solid",
-		-- popup_border_style = {
-		-- 	{ " ", "FloatBorder" },
-		-- 	{ " ", "FloatBorder" },
-		-- 	{ " ", "FloatBorder" },
-		-- 	{ " ", "FloatBorder" },
-		-- 	{ " ", "FloatBorder" },
-		-- 	{ " ", "FloatBorder" },
-		-- 	{ " ", "FloatBorder" },
-		-- 	{ " ", "FloatBorder" },
-		-- },
 		enable_git_status = true,
 		enable_diagnostics = true,
 		default_component_configs = {
@@ -311,8 +300,8 @@ M.config = function()
 				},
 				["o"] = "open_with_window_picker",
 				["t"] = "open_tabnew",
-				["S"] = "split_with_window_picker",
-				["s"] = "vsplit_with_window_picker",
+				["s"] = "split_with_window_picker",
+				["v"] = "vsplit_with_window_picker",
 				["<tab>"] = function(state)
 					state.commands["open_with_window_picker"](state)
 					vim.cmd("Neotree reveal")
@@ -322,7 +311,7 @@ M.config = function()
 					"add",
 					-- some commands may take optional config options, see `:h neo-tree-mappings` for details
 					config = {
-						show_path = "none", -- "none", "relative", "absolute"
+						show_path = "relative", -- "none", "relative", "absolute"
 					},
 				},
 				["A"] = "add_directory",
@@ -407,6 +396,13 @@ M.config = function()
 					["<c-x>"] = "clear_filter",
 					["[c"] = "prev_git_modified",
 					["]c"] = "next_git_modified",
+					["gA"] = "git_add_all",
+					["gu"] = "git_unstage_file",
+					["ga"] = "git_add_file",
+					["gr"] = "git_revert_file",
+					["gc"] = "git_commit",
+					["gp"] = "git_push",
+					["gg"] = "git_commit_and_push",
 				},
 			},
 		},
@@ -420,13 +416,20 @@ M.config = function()
 					["bd"] = "buffer_delete",
 					["<bs>"] = "navigate_up",
 					["."] = "set_root",
+					["gA"] = "git_add_all",
+					["gu"] = "git_unstage_file",
+					["ga"] = "git_add_file",
+					["gr"] = "git_revert_file",
+					["gc"] = "git_commit",
+					["gp"] = "git_push",
+					["gg"] = "git_commit_and_push",
 				},
 			},
 		},
 		git_status = {
 			window = {
 				mappings = {
-					["A"] = "git_add_all",
+					["gA"] = "git_add_all",
 					["gu"] = "git_unstage_file",
 					["ga"] = "git_add_file",
 					["gr"] = "git_revert_file",
