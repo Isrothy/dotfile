@@ -9,9 +9,9 @@ local M = {
 		"s1n7ax/nvim-window-picker",
 	},
 	keys = {
-		{ "<F2>", "<cmd>Neotree git_status toggle<cr>", mode = { "n", "v" } },
-		{ "<F3>", "<cmd>Neotree buffers toggle<cr>", mode = { "n", "v" } },
-		{ "<F4>", "<cmd>Neotree filesystem toggle<cr>", mode = { "n", "v" } },
+		{ "<F2>", "<cmd>Neotree filesystem toggle<cr>" },
+		{ "<F3>", "<cmd>Neotree buffers toggle<cr>" },
+		{ "<F4>", "<cmd>Neotree git_status toggle<cr>" },
 	},
 }
 
@@ -214,7 +214,6 @@ M.config = function()
 	-- Expand all folders. Set depthlevel to the deepest node level.
 	local function neotree_zR(state)
 		local top_level_nodes = state.tree:get_nodes()
-
 		local max_depth = 1
 		for _, node in ipairs(top_level_nodes) do
 			max_depth = math.max(max_depth, recursive_open(state, node))
@@ -229,13 +228,52 @@ M.config = function()
 			"filesystem",
 			"buffers",
 			"git_status",
-			-- "diagnostics",
 		},
-
 		close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+		close_floats_on_escape_key = true,
 		popup_border_style = "rounded",
 		enable_git_status = true,
 		enable_diagnostics = true,
+		use_popups_for_input = true,
+		source_selector = {
+			winbar = true, -- toggle to show selector on winbar
+			statusline = false, -- toggle to show selector on statusline
+			show_scrolled_off_parent_node = false, -- this will replace the tabs with the parent path
+			-- of the top visible node when scrolled down.
+			tab_labels = { -- falls back to source_name if nil
+				filesystem = "  Files ",
+				buffers = "  Buffers ",
+				git_status = "  Git ",
+				diagnostics = " 裂Diagnostics ",
+			},
+			content_layout = "center", -- only with `tabs_layout` = "equal", "focus"
+			--                start  : |/ 裡 bufname     \/...
+			--                end    : |/     裡 bufname \/...
+			--                center : |/   裡 bufname   \/...
+			tabs_layout = "equal", -- start, end, center, equal, focus
+			--             start  : |/  a  \/  b  \/  c  \            |
+			--             end    : |            /  a  \/  b  \/  c  \|
+			--             center : |      /  a  \/  b  \/  c  \      |
+			--             equal  : |/    a    \/    b    \/    c    \|
+			--             active : |/  focused tab    \/  b  \/  c  \|
+			truncation_character = "…", -- character to use when truncating the tab label
+			tabs_min_width = nil, -- nil | int: if int padding is added based on `content_layout`
+			tabs_max_width = nil, -- this will truncate text even if `text_trunc_to_fit = false`
+			padding = 0, -- can be int or table
+			-- padding = { left = 2, right = 0 },
+			-- separator = { left = "", right = "" },
+			separator = "", -- can be string or table, see below
+			-- separator = { left = "▏", right = "▕" },
+			-- separator = { left = "/", right = "\\", override = nil }, -- |/  a  \/  b  \/  c  \...
+			-- separator = { left = "/", right = "\\", override = "right" }, -- |/  a  \  b  \  c  \...
+			-- separator = { left = "/", right = "\\", override = "left" },  -- |/  a  /  b  /  c  /...
+			-- separator = { left = "/", right = "\\", override = "active" },-- |/  a  / b:active \  c  \...
+			-- separator = "|",                                              -- ||  a  |  b  |  c  |...
+			separator_active = nil, -- set separators around the active tab. nil falls back to `source_selector.separator`
+			show_separator_on_edge = false,
+			--                       true  : |/    a    \/    b    \/    c    \|
+			--                       false : |     a    \/    b    \/    c     |
+		},
 		default_component_configs = {
 			container = {
 				enable_character_fade = true,
@@ -289,6 +327,7 @@ M.config = function()
 		window = {
 			position = "left",
 			width = 40,
+			auto_expand_width = false,
 			mapping_options = {
 				noremap = true,
 				nowait = true,
@@ -296,16 +335,21 @@ M.config = function()
 			mappings = {
 				["<space>"] = {
 					"toggle_node",
-					nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
+					nowait = true, -- disable `nowait` if you have existing combos starting with this char that you want to use
 				},
+				["<tab>"] = function(state)
+					local node = state.tree:get_node()
+					if require("neo-tree.utils").is_expandable(node) then
+						state.commands["toggle_node"](state)
+					else
+						state.commands["open_with_window_picker"](state)
+						vim.cmd("Neotree reveal")
+					end
+				end,
 				["o"] = "open_with_window_picker",
 				["t"] = "open_tabnew",
 				["s"] = "split_with_window_picker",
 				["v"] = "vsplit_with_window_picker",
-				["<tab>"] = function(state)
-					state.commands["open_with_window_picker"](state)
-					vim.cmd("Neotree reveal")
-				end,
 				["C"] = "close_node",
 				["a"] = {
 					"add",
@@ -379,7 +423,7 @@ M.config = function()
 			follow_current_file = false, -- This will find and focus the file in the active buffer every
 			-- time the current file is changed while the tree is open.
 			group_empty_dirs = false, -- when true, empty folders will be grouped together
-			hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
+			hijack_netrw_behavior = "disabled", -- netrw disabled, opening a directory opens neo-tree
 			-- in whatever position is specified in window.position
 			-- "open_current",  -- netrw disabled, opening a directory opens within the
 			-- window like netrw would, regardless of window.position

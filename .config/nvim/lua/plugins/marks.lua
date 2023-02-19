@@ -32,6 +32,7 @@ M.config = function()
 			"noice",
 			"help",
 			"registers",
+			"toggleterm",
 			"dap-repl",
 			"dapui_watches",
 			"dapui_stacks",

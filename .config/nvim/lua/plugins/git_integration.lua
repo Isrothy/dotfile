@@ -2,7 +2,6 @@ return {
 	{
 		"lewis6991/gitsigns.nvim",
 		event = { "BufReadPre", "BufNewFile" },
-		enabled = true,
 		config = function()
 			require("gitsigns").setup({
 				signs = {
@@ -71,7 +70,9 @@ return {
 					-- Text object
 					map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
 				end,
+				trouble = false,
 			})
+			require("nap").nap("h", "Gitsigns next_hunk", "Gitsigns prev_hunk", "Next diff", "Previous diff")
 		end,
 	},
 

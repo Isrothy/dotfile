@@ -4,18 +4,8 @@ local expr_options = { expr = true, silent = true }
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", default_options)
 vim.g.mapleader = " "
 
-vim.keymap.set({ "n", "v", "i" }, "<UP>", "<NOP>", default_options)
-vim.keymap.set({ "n", "v", "i" }, "<DOWN>", "<NOP>", default_options)
-vim.keymap.set({ "n", "v", "i" }, "<LEFT>", "<NOP>", default_options)
-vim.keymap.set({ "n", "v", "i" }, "<RIGHT>", "<NOP>", default_options)
-
-vim.keymap.set(
-	"n",
-	"gO",
-	"<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>",
-	{ desc = "append line before" }
-)
-vim.keymap.set("n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { desc = "append line after" })
+vim.keymap.set("n", "gO", "<cmd>call append(line('.') -1, repeat([''], v:count1))<cr>", { desc = "append line before" })
+vim.keymap.set("n", "go", "<cmd>call append(line('.'),   repeat([''], v:count1))<cr>", { desc = "append line after" })
 
 -- vim.keymap.set("v", "<", "<gv", default_options)
 -- vim.keymap.set("v", ">", ">gv", default_options)
@@ -25,18 +15,40 @@ vim.keymap.set("n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1
 vim.keymap.set({ "n", "v" }, "k", "v:count == 0 ? 'gk' : 'k'", expr_options)
 vim.keymap.set({ "n", "v" }, "j", "v:count == 0 ? 'gj' : 'j'", expr_options)
 
-vim.keymap.set({ "n" }, "<c-h>", "<c-w>h", default_options)
-vim.keymap.set({ "n" }, "<c-j>", "<c-w>j", default_options)
-vim.keymap.set({ "n" }, "<c-k>", "<c-w>k", default_options)
-vim.keymap.set({ "n" }, "<c-l>", "<c-w>l", default_options)
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Focus on left window" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Focus on below window" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Focus on above window" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Focus on right window" })
+
 vim.keymap.set({ "n" }, "<c-v>", "<c-w>v", default_options)
 vim.keymap.set({ "n" }, "<c-s>", "<c-w>s", default_options)
 vim.keymap.set({ "n" }, "<c-c>", "<c-w>c", default_options)
 vim.keymap.set({ "n" }, "<c-o>", "<c-w>o", default_options)
-vim.keymap.set({ "n" }, "<c-=>", "<c-w>+", default_options)
-vim.keymap.set({ "n" }, "<c-->", "<c-w>-", default_options)
-vim.keymap.set({ "n" }, "<c-.>", "<c-w>>", default_options)
-vim.keymap.set({ "n" }, "<c-,>", "<c-w><", default_options)
+
+vim.keymap.set(
+	"n",
+	"<C-Left>",
+	'"<Cmd>vertical resize -" . v:count1 . "<CR>"',
+	{ expr = true, desc = "Decrease window width" }
+)
+vim.keymap.set(
+	"n",
+	"<C-Down>",
+	'"<Cmd>resize -"          . v:count1 . "<CR>"',
+	{ expr = true, desc = "Decrease window height" }
+)
+vim.keymap.set(
+	"n",
+	"<C-Up>",
+	'"<Cmd>resize +"          . v:count1 . "<CR>"',
+	{ expr = true, desc = "Increase window height" }
+)
+vim.keymap.set(
+	"n",
+	"<C-Right>",
+	'"<Cmd>vertical resize +" . v:count1 . "<CR>"',
+	{ expr = true, desc = "Increase window width" }
+)
 
 vim.keymap.set("n", "<esc>", ":nohlsearch<cr>")
 
@@ -46,15 +58,33 @@ vim.keymap.set("t", "<c-j>", [[<c-\><c-n><c-w>j]], default_options)
 vim.keymap.set("t", "<c-k>", [[<c-\><c-n><c-w>k]], default_options)
 vim.keymap.set("t", "<c-l>", [[<c-\><c-n><c-w>l]], default_options)
 
+vim.keymap.set("c", "<M-h>", "<Left>", { silent = false, desc = "Left" })
+vim.keymap.set("c", "<M-l>", "<Right>", { silent = false, desc = "Right" })
+
+-- Don't `noremap` in insert mode to have these keybindings behave exactly
+-- like arrows (crucial inside TelescopePrompt)
+vim.keymap.set("i", "<M-h>", "<Left>", { noremap = false, desc = "Left" })
+vim.keymap.set("i", "<M-j>", "<Down>", { noremap = false, desc = "Down" })
+vim.keymap.set("i", "<M-k>", "<Up>", { noremap = false, desc = "Up" })
+vim.keymap.set("i", "<M-l>", "<Right>", { noremap = false, desc = "Right" })
+
+vim.keymap.set("t", "<M-h>", "<Left>", { desc = "Left" })
+vim.keymap.set("t", "<M-j>", "<Down>", { desc = "Down" })
+vim.keymap.set("t", "<M-k>", "<Up>", { desc = "Up" })
+vim.keymap.set("t", "<M-l>", "<Right>", { desc = "Right" })
+
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, default_options)
-vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, default_options)
-vim.keymap.set(
-	"n",
-	"[d",
-	vim.diagnostic.goto_prev,
-	{ noremap = true, silent = true, desc = "Go to previous diagnostic" }
-)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { noremap = true, silent = true, desc = "Go to next diagnostic" })
+vim.keymap.set("n", "<leader>d", function()
+	vim.diagnostic.open_float({ border = "rounded"})
+end, default_options)
+
+-- vim.keymap.set(
+-- 	"n",
+-- 	"[d",
+-- 	vim.diagnostic.goto_prev,
+-- 	{ noremap = true, silent = true, desc = "Go to previous diagnostic" }
+-- )
+-- vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { noremap = true, silent = true, desc = "Go to next diagnostic" })
 
 -- vim.keymap.set("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", { noremap = true, silent = true })
 -- vim.keymap.set("n", "<F10>", "<cmd>lua require'dap'.step_over()<cr>", { noremap = true, silent = true })

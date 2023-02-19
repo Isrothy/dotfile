@@ -39,7 +39,7 @@ M.config = function()
 				},
 			},
 		},
-		other_win_hl_color = c.aurora.red,
+		other_win_hl_color = c.frost.ice,
 	})
 end
 return M

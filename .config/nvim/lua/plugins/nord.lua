@@ -1,5 +1,6 @@
 local M = {
-	"Isrothy/nord.nvim",
+	"gbprod/nord.nvim",
+	-- "Isrothy/nord.nvim",
 	priority = 100,
 	lazy = false,
 }
@@ -30,6 +31,7 @@ M.config = function()
 		},
 		colorblind = {
 			enable = true,
+			preserve_background = false,
 			severity = {
 				protan = 0.7,
 				deutan = 1.0,
@@ -39,8 +41,10 @@ M.config = function()
 		on_highlights = function(highlights, colors)
 			highlights.CursorLineNr = { fg = colors.frost.artic_water }
 
+			highlights.CmpDocumentation = { bg = colors.polar_night.brighter }
+
 			highlights.MarkSignHL = { fg = colors.aurora.green }
-			highlights.MarkSignNumHL = { link = "NONE" }
+			highlights.MarkSignNumHL = { fg = colors.aurora.green, bold = true }
 
 			highlights.WhichKeyFloat = { bg = colors.polar_night.origin }
 			highlights.WhichKeyBorder = { bg = colors.polar_night.origin }
@@ -57,8 +61,11 @@ M.config = function()
 			highlights.ErrorMsg = { link = "Normal" }
 			highlights.WarningMsg = { link = "Normal" }
 
-			highlights.NormalFloat = { bg = colors.polar_night.bright }
-			highlights.FloatBorder = { bg = colors.polar_night.bright }
+			-- highlights.NormalFloat = { bg = colors.polar_night.bright }
+			-- highlights.FloatBorder = {
+			-- bg = colors.polar_night.bright,
+			-- fg = colors.polar_night.bright,
+			-- }
 
 			highlights.Folded = { fg = colors.frost.artic_water, bg = colors.polar_night.brighter }
 
@@ -73,6 +80,13 @@ M.config = function()
 
 			highlights.EyelinerPrimary = { fg = colors.aurora.orange, bold = true }
 			highlights.EyelinerSecondary = { fg = colors.frost.ice, bold = true }
+
+			highlights.DiagnosticLineNrError = { fg = colors.aurora.red, bold = true }
+			highlights.DiagnosticLineNrWarn = { fg = colors.aurora.yellow, bold = true }
+			highlights.DiagnosticLineNrInfo = { fg = colors.frost.ice, bold = true }
+			highlights.DiagnosticLineNrHint = { fg = colors.frost.artic_water, bold = true }
+
+			highlights.QuickFixLine = { bg = colors.polar_night.brighter }
 
 			-- highlights.InclineNormal = { bg = colors.polar_night.brighter, bold = true }
 			-- highlights.InclineNormalNC = { bg = colors.polar_night.brighter }

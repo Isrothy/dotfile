@@ -1,7 +1,6 @@
 local M = {
 	"akinsho/bufferline.nvim",
 	version = "v3.*",
-	-- enabled = false,
 	event = { "BufReadPost", "BufNewFile" },
 	dependencies = "nvim-tree/nvim-web-devicons",
 }
@@ -63,6 +62,8 @@ M.config = function()
 	vim.keymap.set({ "n" }, "<M-right>", "<cmd>BufferLineMoveNext<cr>", { noremap = true, silent = true })
 	vim.keymap.set({ "n" }, "<leader>bp", "<cmd>BufferLinePick<cr>", { noremap = true, silent = true })
 	vim.keymap.set({ "n" }, "<leader>bc", "<cmd>BufferLinePickClose<cr>", { noremap = true, silent = true })
+	vim.keymap.set({ "n" }, "<leader>bl", "<cmd>BufferLineCloseLeft<cr>", { noremap = true, silent = true })
+	vim.keymap.set({ "n" }, "<leader>br", "<cmd>BufferLineCloseRight<cr>", { noremap = true, silent = true })
 	for i = 1, 10 do
 		vim.keymap.set(
 			"n",

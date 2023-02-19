@@ -3,8 +3,6 @@ local M = {
 	ft = "qf",
 	-- enabled = false,
 	-- lazy = false,
-	-- event = "QuickFixCmdPre",
-	-- event = "VeryLazy",
 	config = function()
 		require("bqf").setup({
 			auto_enable = true,

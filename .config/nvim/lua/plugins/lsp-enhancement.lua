@@ -1,14 +1,13 @@
 local lightbulb = {
 	"kosayoda/nvim-lightbulb",
-	enabled = true,
-	event = "VeryLazy",
+	event = { "BufReadPost", "BufNewFile" },
 	config = function()
 		require("nvim-lightbulb").setup({
 			-- LSP client names to ignore
 			-- Example: {"sumneko_lua", "null-ls"}
 			ignore = {},
 			sign = {
-				enabled = false,
+				enabled = true,
 				-- Priority of the gutter sign
 				priority = 10,
 			},
@@ -30,10 +29,13 @@ local lightbulb = {
 				-- - offset_y   y-axis offset of the floating window
 				-- - anchor     corner of float to place at the cursor (NW, NE, SW, SE)
 				-- - winblend   transparency of the window (0-100)
-				win_opts = {},
+				win_opts = {
+					border = "none",
+					winblend = 100,
+				},
 			},
 			virtual_text = {
-				enabled = true,
+				enabled = false,
 				-- Text to show at virtual text
 				text = "💡",
 				-- highlight mode to use for virtual text (replace, combine, blend), see :help nvim_buf_set_extmark() for reference
@@ -52,13 +54,26 @@ local lightbulb = {
 				pattern = { "*" },
 				-- see :help autocmd-events
 				events = { "CursorHold", "CursorHoldI" },
+				-- events = { "WinEnter", "CursorMoved", "CursorMovedI" },
 			},
 		})
 
-		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-			callback = function()
-				require("nvim-lightbulb").update_lightbulb()
-			end,
+		vim.fn.sign_define("LightBulbSign", { text = "💡", texthl = "", linehl = "", numhl = "" })
+		-- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+		-- 	callback = function()
+		-- 		require("nvim-lightbulb").update_lightbulb()
+		-- 	end,
+		-- })
+	end,
+}
+
+local actionHint = {
+	"roobert/statusline-action-hints.nvim",
+	enabled = false,
+	config = function()
+		require("statusline-action-hints").setup({
+			definition_identifier = "gd",
+			template = "%s ref:%s",
 		})
 	end,
 }
@@ -83,7 +98,7 @@ local inc_rename = {
 
 local neo_dim = {
 	"zbirenbaum/neodim",
-	event = "BufRead",
+	event = { "BufRead", "BufNewFile" },
 	enabled = true,
 	config = function()
 		local c = require("nord.colors").palette
@@ -105,7 +120,6 @@ local neo_dim = {
 
 local trouble = {
 	"folke/trouble.nvim",
-	enabled = true,
 	cmd = {
 		"TroubleToggle",
 		"Trouble",
@@ -161,20 +175,20 @@ local trouble = {
 			auto_jump = { "lsp_definitions" }, -- for the given modes, automatically jump if there is only a single result
 			signs = {
 				-- icons / text used for a diagnostic
-				error = "",
-				warning = "",
-				hint = "",
-				information = "",
+				error = " ",
+				warning = " ",
+				hint = " ",
+				information = " ",
 				other = "﫠",
 			},
-			use_diagnostic_signs = false, -- enabling this will use the signs defined in your lsp client
+			use_diagnostic_signs = true, -- enabling this will use the signs defined in your lsp client
 		})
 	end,
 }
-
 return {
 	lightbulb,
 	inc_rename,
+	-- actionHint,
 	neo_dim,
 	trouble,
 }

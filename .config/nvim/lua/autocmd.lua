@@ -1,12 +1,3 @@
--- local group = vim.api.nvim_create_augroup("user_cmds", { clear = true })
--- vim.api.nvim_create_autocmd("TextYankPost", {
--- 	group = group,
--- 	desc = "Highlight on yank",
--- 	callback = function()
--- 		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 500 })
--- 	end,
--- })
---
 vim.api.nvim_create_autocmd("BufReadPost", {
 	callback = function()
 		local mark = vim.api.nvim_buf_get_mark(0, '"')
@@ -28,3 +19,39 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		vim.go.backupext = backup
 	end,
 })
+
+vim.api.nvim_create_autocmd({ "TermOpen" }, {
+	callback = function()
+		vim.wo.statuscolumn = ""
+		vim.wo.colorcolumn = ""
+	end,
+})
+
+-- vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+-- 	group = vim.api.nvim_create_augroup("ScrollEOF", { clear = true }),
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		local filetype = vim.bo.filetype
+-- 		local ignore_filetype = {
+-- 			"quickfix",
+-- 			"nofile",
+-- 			"help",
+-- 			"terminal",
+-- 			"toggleterm",
+-- 			"",
+-- 		}
+-- 		if vim.tbl_contains(ignore_filetype, filetype) then
+-- 			return
+-- 		end
+-- 		local win_height = vim.api.nvim_win_get_height(0)
+-- 		local win_view = vim.fn.winsaveview()
+-- 		local scrolloff = math.min(vim.o.scrolloff, math.floor(win_height / 2))
+-- 		local scrolloff_line_count = win_height - (vim.fn.line("w$") - win_view.topline + 1)
+-- 		local distance_to_last_line = vim.fn.line("$") - win_view.lnum
+--
+-- 		if distance_to_last_line < scrolloff and scrolloff_line_count + distance_to_last_line < scrolloff then
+-- 			win_view.topline = win_view.topline + scrolloff - (scrolloff_line_count + distance_to_last_line)
+-- 			vim.fn.winrestview(win_view)
+-- 		end
+-- 	end,
+-- })

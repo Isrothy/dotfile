@@ -31,7 +31,7 @@ M.config = function()
 	dashboard.section.buttons.val = {
 		dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
 		-- dashboard.button("s", "  Recently opened files", ":Telescope smart_open<CR>"),
-		dashboard.button("s", "🜛 Smart open", ":Telescope smart_open<CR>"),
+		dashboard.button("s", "🜛  Smart open", ":Telescope smart_open<CR>"),
 		dashboard.button("b", "  File browser", ":Telescope file_browser<CR>"),
 		dashboard.button("f", "  Find file", ":Telescope find_files<CR>"),
 		dashboard.button("g", "  Find word", ":Telescope live_grep<CR>"),

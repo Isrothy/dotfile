@@ -36,6 +36,9 @@ vim.opt.fillchars = {
 	foldclose = "▸",
 }
 
+vim.g.virtcolumn_char = "▕"
+vim.g.virtcolumn_priority = 20
+
 vim.opt.virtualedit = { "block", "onemore" }
 vim.opt.wrap = false
 vim.opt.linebreak = true
@@ -78,7 +81,6 @@ vim.opt.shiftwidth = 0
 vim.opt.cinoptions = "g0,(0,l1"
 vim.opt.backspace = { "indent", "eol", "start" }
 vim.g.html_indent_autotags = "html,head,body"
--- vim.g.do_filetype_lua = 1
 
 vim.opt.laststatus = 3
 

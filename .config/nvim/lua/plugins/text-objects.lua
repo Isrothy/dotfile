@@ -151,6 +151,7 @@ return {
 			local oneMaps = {
 				nearEoL = "n",
 				restOfParagraph = "r",
+				restOfIndentation = "R",
 				diagnostic = "!",
 				column = "|",
 				entireBuffer = "gG",

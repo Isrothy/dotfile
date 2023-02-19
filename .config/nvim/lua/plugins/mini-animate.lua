@@ -1,8 +1,7 @@
 return {
 	"echasnovski/mini.animate",
-	-- "echasnovski/mini.nvim",
 	-- branch = "stable",
-	enabled = true,
+	enabled = false,
 	event = "VeryLazy",
 	config = function()
 		local animate = require("mini.animate")

@@ -1,18 +1,26 @@
 local M = {
 	"stevearc/aerial.nvim",
 }
+
+M.init = function()
+	vim.keymap.set("n", "<F5>", "<cmd>AerialToggle<CR>", { noremap = true, silent = true })
+end
+
 M.config = function()
 	require("aerial").setup({
 		backends = { "markdown", "lsp", "treesitter", "man" },
 
 		layout = {
-			max_width = { 40, 0.2 },
+			max_width = 0.2,
 			width = nil,
-			min_width = 14,
+			min_width = 0.15,
 			default_direction = "right",
-			placement = "window",
+			-- placement = "window",
+			placement = "edge",
+			preserve_equality = true,
 		},
 
+		-- attach_mode = "window",
 		attach_mode = "global",
 		close_automatic_events = {},
 		keymaps = {
@@ -119,32 +127,35 @@ M.config = function()
 		-- If you have lspkind-nvim installed, it will be the default icon set.
 		-- This can be a filetype map (see :help aerial-filetype-map)
 		icons = {
-			File = "",
-			Module = "",
+			File = "",
+			Module = "",
 			Namespace = "",
 			Package = "",
-			Class = "𝓒",
-			Method = "ƒ",
-			Property = "",
-			Field = "",
-			Constructor = "",
-			Enum = "ℰ",
-			Interface = "ﰮ",
-			Function = "",
-			Variable = "",
+			Class = "ﴯ",
+			Method = "",
+			Variable = "",
+			Field = "",
+			Unit = "",
+			Value = "",
+			Interface = "",
+			Function = "",
 			Constant = "",
+			Constructor = "",
 			String = "𝓐",
 			Number = "#",
 			Boolean = "⊨",
 			Array = "",
 			Object = "⦿",
+			Enum = "",
+			Property = "ﰠ",
 			Key = "🔐",
 			Null = "NULL",
 			EnumMember = "",
-			Struct = "𝓢",
-			Event = "🗲",
-			Operator = "+",
-			TypeParameter = "𝙏",
+			Struct = "",
+			Event = "",
+			Operator = "",
+			TypeParameter = "",
+			Text = "  ",
 		},
 		-- Show box drawing characters for the tree hierarchy
 		show_guides = true,
@@ -176,6 +187,7 @@ M.config = function()
 			update_delay = 300,
 		},
 	})
+	require("nap").nap("o", "AerialNext", "AerialPrev", "Next outline symbol", "Previous outline symbol")
 end
 
 return M

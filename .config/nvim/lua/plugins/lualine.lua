@@ -71,42 +71,10 @@ M.config = function()
 		end
 	end
 
-	local c = require("nord.colors").palette
-
-	local myNord = {}
-
-	myNord.normal = {
-		a = { fg = c.polar_night.bright, bg = c.frost.ice },
-		b = { fg = c.snow_storm.brighter, bg = c.polar_night.bright },
-		c = { fg = c.snow_storm.brighter, bg = c.polar_night.brighter },
-	}
-
-	myNord.insert = {
-		a = { fg = c.polar_night.bright, bg = c.snow_storm.brightest },
-	}
-
-	myNord.visual = {
-		a = { fg = c.polar_night.bright, bg = c.frost.polar_water },
-	}
-
-	myNord.replace = {
-		a = { fg = c.polar_night.bright, bg = c.aurora.yellow },
-	}
-
-	myNord.command = {
-		a = { fg = c.polar_night.bright, bg = c.aurora.purple },
-	}
-
-	myNord.inactive = {
-		a = { fg = c.snow_storm.origin, bg = c.polar_night.origin },
-		b = { fg = c.snow_storm.origin, bg = c.polar_night.bright },
-		c = { fg = c.snow_storm.origin, bg = c.polar_night.origin },
-	}
-
 	require("lualine").setup({
 		options = {
 			icons_enabled = true,
-			theme = myNord,
+			theme = "nord",
 			-- component_separators = { left = '╲', right = '╱' },
 			component_separators = "",
 			section_separators = { left = "", right = "" },
@@ -134,8 +102,8 @@ M.config = function()
 		sections = {
 			lualine_a = {
 				{ "mode" },
-				{ require("recorder").recordingStatus },
-				{ require("recorder").displaySlots },
+				-- { require("recorder").recordingStatus },
+				-- { require("recorder").displaySlots },
 				{
 					require("noice").api.statusline.command.get,
 					cond = require("noice").api.statusline.command.has,
@@ -167,12 +135,6 @@ M.config = function()
 				},
 				{
 					"diagnostic-message",
-					-- colors = {
-					-- 	error = "#BF616A",
-					-- 	warn = "#EBCB8B",
-					-- 	info = "#A3BE8C",
-					-- 	hint = "#88C0D0",
-					-- },
 				},
 			},
 			lualine_x = {
@@ -255,7 +217,6 @@ M.config = function()
 		extensions = {
 			"aerial",
 			"toggleterm",
-			-- "BufTerm",
 			"neo-tree",
 			"quickfix",
 		},

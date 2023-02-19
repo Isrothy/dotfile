@@ -118,11 +118,11 @@ M.config = function()
 			},
 			override = {
 				-- override the default lsp markdown formatter with Noice
-				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+				["vim.lsp.util.convert_input_to_markdown_lines"] = false,
 				-- override the lsp markdown formatter with Noice
 				["vim.lsp.util.stylize_markdown"] = false,
 				-- override cmp documentation with Noice (needs the other options to work)
-				["cmp.entry.get_documentation"] = true,
+				["cmp.entry.get_documentation"] = false,
 			},
 			hover = {
 				enabled = true,
@@ -130,7 +130,7 @@ M.config = function()
 				opts = {}, -- merged with defaults from documentation
 			},
 			signature = {
-				enabled = true,
+				enabled = false,
 				auto_open = {
 					enabled = true,
 					trigger = false, -- Automatically show signature help when typing a trigger character from the LSP
@@ -188,7 +188,7 @@ M.config = function()
 			command_palette = false, -- position the cmdline and popupmenu together
 			long_message_to_split = true, -- long messages will be sent to a split
 			inc_rename = true, -- enables an input dialog for inc-rename.nvim
-			lsp_doc_border = true, -- add a border to hover docs and signature help
+			lsp_doc_border = false, -- add a border to hover docs and signature help
 		},
 		throttle = 1000 / 60, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
 

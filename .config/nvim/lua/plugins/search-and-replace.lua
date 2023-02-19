@@ -81,7 +81,7 @@ return {
 	{
 		"kevinhwang91/nvim-hlslens",
 		event = { "BufReadPre", "BufNewFile" },
-		enabled = false,
+		enabled = true,
 		config = function()
 			require("hlslens").setup({
 				virt_priority = 1,

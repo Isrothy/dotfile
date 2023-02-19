@@ -4,9 +4,9 @@ local M = {
 		"nvim-lua/plenary.nvim",
 		"echasnovski/mini.ai",
 		"numToStr/Comment.nvim",
-		"kylechui/nvim-surround",
-		"gbprod/yanky.nvim",
-		"gbprod/substitute.nvim",
+		-- "kylechui/nvim-surround",
+		-- "gbprod/yanky.nvim",
+		-- "gbprod/substitute.nvim",
 	},
 	event = "VeryLazy",
 }
@@ -65,12 +65,6 @@ M.config = function()
 		operators = {
 			gc = "Comments",
 			gb = "Comments",
-			gs = "surround",
-			gss = "surround",
-			gS = "surround",
-			gSS = "surround",
-			ds = "surround",
-			cs = "surround",
 			y = "yanky",
 			s = "substitute",
 			S = "substitute",
@@ -176,7 +170,6 @@ M.config = function()
 			D = "Toggle delete",
 		},
 	})
-
 	wk.register({
 		["<leader>r"] = {
 			name = "Rename / SearchReplaceSingleBuffer",
@@ -197,13 +190,17 @@ M.config = function()
 			},
 		},
 	})
-
 	wk.register({
 		["<leader>b"] = {
 			h = "Swap with the left buffer",
 			l = "Swap with the right buffer",
 			j = "Swap with the bottom buffer",
 			k = "Swap with the top buffer",
+		},
+	})
+	wk.register({
+		["<leader>i"] = {
+			name = "ISwap",
 		},
 	})
 end

@@ -69,7 +69,7 @@ return {
 					alpha = 0.25, -- amount of dimming
 					-- we try to get the foreground from the highlight groups or fallback color
 					color = { "Normal", "#ECEFF4" },
-					term_bg = "#2E3440", -- if guibg=NONE, this will be used to calculate text color
+					term_bg = "#2E3141", -- if guibg=NONE, this will be used to calculate text color
 					inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
 				},
 				context = 10, -- amount of lines we will try to show around the current line

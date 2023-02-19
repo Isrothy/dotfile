@@ -1,6 +1,5 @@
 local CMP = {
 	"hrsh7th/nvim-cmp",
-	enabled = true,
 	event = { "InsertEnter", "CmdlineEnter" },
 }
 
@@ -31,7 +30,6 @@ CMP.dependencies = {
 	},
 	{
 		"onsails/lspkind-nvim",
-		dependencies = "famiu/bufdelete.nvim",
 	},
 }
 
@@ -41,9 +39,37 @@ CMP.config = function()
 		return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 	end
 
+	local kind_icons = {
+		Copilot = "",
+		Text = "",
+		Method = "",
+		Function = "",
+		Constructor = "",
+		Field = "",
+		Variable = "",
+		Class = "ﴯ",
+		Interface = "",
+		Module = "",
+		Property = "ﰠ",
+		Unit = "",
+		Value = "",
+		Enum = "",
+		Keyword = "",
+		Snippet = "",
+		Color = "",
+		File = "",
+		Reference = "",
+		Folder = "",
+		EnumMember = "",
+		Constant = "",
+		Struct = "",
+		Event = "",
+		Operator = "",
+		TypeParameter = "",
+	}
+
 	-- nvim-cmp setup
 	local cmp = require("cmp")
-	local lspkind = require("lspkind")
 	local compare = require("cmp.config.compare")
 	local luasnip = require("luasnip")
 
@@ -56,7 +82,11 @@ CMP.config = function()
 
 		window = {
 			-- completion = cmp.config.window.bordered(),
-			-- documentation = cmp.config.window.bordered(),
+			documentation = cmp.config.window.bordered(),
+			-- completion = {
+			-- 	col_offset = -3,
+			-- 	side_padding = 0,
+			-- },
 		},
 		mapping = cmp.mapping.preset.insert({
 			["<c-b>"] = cmp.mapping.scroll_docs(-4),
@@ -90,23 +120,32 @@ CMP.config = function()
 			end, { "i", "s" }),
 		}),
 		formatting = {
-			format = lspkind.cmp_format({
-				mode = "symbol_text",
-				maxwidth = 50,
-				menu = {
-					buffer = "",
-					nvim_lsp = "",
-					spell = "",
-					look = "",
-				},
-				symbol_map = { Copilot = "" },
-				before = function(entry, vim_item)
-					if entry.source.name == "nvim_lsp" then
-						vim_item.dup = 0
-					end
-					return vim_item
-				end,
-			}),
+			format = function(entry, vim_item)
+				vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+				vim_item.menu = ({
+					buffer = "[Buf]",
+					nvim_lsp = "[LSP]",
+					luasnip = "[LuaSnip]",
+					nvim_lua = "[Lua]",
+					latex_symbols = "[LaTeX]",
+					treesitter = "[TS]",
+					fuzzy_buffer = "[FZ]",
+					fuzzy_path = "[FZ]",
+					path = "[Path]",
+					calc = "[Calc]",
+				})[entry.source.name]
+
+				local kind = require("lspkind").cmp_format({
+					with_text = false,
+					maxwidth = 64,
+					mode = "symbol_text",
+					ellipsis_char = "...",
+				})(entry, vim_item)
+				-- local strings = vim.split(kind.kind, "%s", { trimempty = true })
+				-- kind.kind = " " .. (strings[1] or "") .. " "
+				-- kind.menu = "    (" .. (strings[2] or "") .. ")"
+				return kind
+			end,
 		},
 
 		sources = cmp.config.sources({
@@ -147,6 +186,7 @@ CMP.config = function()
 				compare.score,
 				require("cmp-under-comparator").under,
 				compare.recently_used,
+				require("clangd_extensions.cmp_scores"),
 				compare.kind,
 				compare.sort_text,
 				compare.length,
@@ -210,7 +250,6 @@ end
 
 local LuaSnip = {
 	"L3MON4D3/LuaSnip",
-	-- enabled = false,
 	version = "v1.1.x",
 	dependencies = {
 		"rafamadriz/friendly-snippets",
@@ -240,25 +279,27 @@ local LuaSnip = {
 	end,
 }
 
+local copilot = {
+	"zbirenbaum/copilot-cmp",
+	enabled = false,
+	dependencies = {
+		"zbirenbaum/copilot.lua",
+	},
+	event = "InsertEnter",
+	config = function()
+		require("copilot_cmp").setup({
+			method = "getCompletionsCycling",
+			formatters = {
+				label = require("copilot_cmp.format").format_label_text,
+				insert_text = require("copilot_cmp.format").format_insert_text,
+				preview = require("copilot_cmp.format").deindent,
+			},
+		})
+	end,
+}
+
 return {
 	CMP,
 	LuaSnip,
-	{
-		"zbirenbaum/copilot-cmp",
-		enabled = false,
-		dependencies = {
-			"zbirenbaum/copilot.lua",
-		},
-		event = "InsertEnter",
-		config = function()
-			require("copilot_cmp").setup({
-				method = "getCompletionsCycling",
-				formatters = {
-					label = require("copilot_cmp.format").format_label_text,
-					insert_text = require("copilot_cmp.format").format_insert_text,
-					preview = require("copilot_cmp.format").deindent,
-				},
-			})
-		end,
-	},
+	copilot,
 }

@@ -5,12 +5,9 @@ local telescope = {
 		{ "nvim-lua/plenary.nvim" },
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		{ "nvim-telescope/telescope-file-browser.nvim" },
-		{ "nvim-telescope/telescope-z.nvim" },
-		{ "nvim-telescope/telescope-symbols.nvim" },
 		{ "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
 		{ "jvgrootveld/telescope-zoxide" },
 		{ "debugloop/telescope-undo.nvim" },
-		{ "gbprod/yanky.nvim" },
 	},
 	branch = "0.1.x",
 }
@@ -19,7 +16,7 @@ telescope.keys = {
 	{ "<leader><leader>a", "<cmd>Telescope autocommands<cr>" },
 	{ "<leader><leader>b", "<cmd>Telescope file_browser<cr>" },
 	{ "<leader><leader>c", "<cmd>Telescope commands<cr>" },
-	{ "<leader><leader>d", "<cmd>Telescope dotfiles<cr>" },
+	{ "<leader><leader>d", "<cmd>Telescope diagnostics<cr>" },
 
 	{ "<leader><leader>f", "<cmd>Telescope find_files<cr>" },
 	{ "<leader><leader>g", "<cmd>Telescope live_grep<cr>" },
@@ -38,8 +35,8 @@ telescope.keys = {
 	{ "<leader><leader>t", "<cmd>Telescope treesitter<cr>" },
 	{ "<leader><leader>u", "<cmd>Telescope undo<cr>" },
 	{ "<leader><leader>v", "<cmd>Telescope vim_options<cr>" },
-	{ "<leader><leader>w", "<cmd>Telescope lsp_workspace_diagnostics<cr>" },
-	{ "<leader><leader>x", "<cmd>Telescope lsp_document_diagnostics<cr>" },
+	{ "<leader><leader>w", "<cmd>Telescope lsp_workspace_symbols<cr>" },
+
 	{ "<leader><leader>y", "<cmd>Telescope yank_history<cr>" },
 	{ "<leader><leader>z", "<cmd>Telescope zoxide list<cr>" },
 }
@@ -70,9 +67,6 @@ telescope.config = function()
 
 	require("telescope").setup({
 		pickers = {
-			lsp_references = {
-				theme = "dropdown",
-			},
 			find_files = {
 				find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
 			},

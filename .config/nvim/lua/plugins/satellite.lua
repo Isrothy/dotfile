@@ -1,6 +1,7 @@
 local M = {
 	"lewis6991/satellite.nvim",
 	event = { "BufReadPost", "BufNewFile" },
+	enabled = true,
 }
 M.config = function()
 	require("satellite").setup({

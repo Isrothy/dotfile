@@ -1,6 +1,7 @@
 return {
 	"chrisgrieser/nvim-recorder",
 	keys = { { "q" }, { "Q" }, { "<C-q>" }, { "cq" }, { "yq" } },
+	enabled = false,
 	config = function()
 		require("recorder").setup({
 			-- Named registers where macros are saved. The first register is the default

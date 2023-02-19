@@ -1,7 +1,7 @@
 local M = {
 	"Civitasv/cmake-tools.nvim",
 	ft = { "cmake", "cpp", "c" },
-	-- enabled = false,
+	enabled = false,
 }
 
 M.config = function()

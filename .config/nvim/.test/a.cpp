@@ -1,10 +1,17 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstdlib>
+#include <cwchar>
+#include <string>
 #include <vector>
 
 int add(int x, int y) {
     printf("%d\n", x + y);
+    return x + y;
+}
+
+double add(double x, double y) {
+    printf("%f\n", x + y);
     return x + y;
 }
 
@@ -26,13 +33,13 @@ struct A {
     }
 };
 
+
 int main() {
     int a, b;
     scanf("%d %d", &a, &b);
     printf("%d\n", a + b);
     int n = 10;
-    auto D = add(1, 2);
-
+    int D = add(double(a), double(b));
     switch (D) {
         case 0: {
         }

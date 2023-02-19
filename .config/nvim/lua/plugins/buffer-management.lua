@@ -2,8 +2,27 @@ return {
 	{
 		"echasnovski/mini.bufremove",
 		event = "BufDelete",
+		enabled = false,
 		config = function()
 			require("mini.bufremove").setup()
+		end,
+	},
+	{
+		"famiu/bufdelete.nvim",
+		cmd = { "Bdelete", "Bwipeout" },
+		init = function()
+			vim.keymap.set(
+				"n",
+				"<leader>bd",
+				"<cmd>Bdelete<CR>",
+				{ noremap = true, silent = true, desc = "Delete buffer" }
+			)
+			vim.keymap.set(
+				"n",
+				"<leader>bw",
+				"<cmd>Bwipeout<CR>",
+				{ noremap = true, silent = true, desc = "Wipeout buffer" }
+			)
 		end,
 	},
 	{

@@ -1,13 +1,14 @@
-local border = {
-	{ "", "FloatBorder" },
-	{ "", "FloatBorder" },
-	{ "", "FloatBorder" },
-	{ " ", "FloatBorder" },
-	{ "", "FloatBorder" },
-	{ "", "FloatBorder" },
-	{ "", "FloatBorder" },
-	{ " ", "FloatBorder" },
-}
+-- local border = {
+-- 	{ "", "FloatBorder" },
+-- 	{ "", "FloatBorder" },
+-- 	{ "", "FloatBorder" },
+-- 	{ " ", "FloatBorder" },
+-- 	{ "", "FloatBorder" },
+-- 	{ "", "FloatBorder" },
+-- 	{ "", "FloatBorder" },
+-- 	{ " ", "FloatBorder" },
+-- }
+local border = "rounded"
 local handlers = {
 	["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
 	["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
@@ -17,17 +18,19 @@ local make_capabilities = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 	capabilities.textDocument.completion.completionItem.snippetSupport = true
-	capabilities.semanticTokensProvider = nil
+	return capabilities
 end
 
 local hl_word = function(client, bufnr)
+	local c = require("nord.colors").palette
 	if client.server_capabilities.documentHighlightProvider then
-		vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#4C566A", fg = "NONE" })
-		vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#4C566A", fg = "NONE" })
-		vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#4C566A", fg = "NONE" })
+		vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = c.polar_night.brightest, fg = "NONE" })
+		vim.api.nvim_set_hl(0, "LspReferenceText", { bg = c.polar_night.brightest, fg = "NONE" })
+		vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = c.polar_night.brightest, fg = "NONE" })
 		-- vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "NONE", fg = "NONE", underline = true })
 		-- vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "NONE", fg = "NONE", underline = true })
 		-- vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "NONE", fg = "NONE", underline = true })
+
 		vim.api.nvim_create_augroup("lsp_document_highlight", {
 			clear = false,
 		})
@@ -74,17 +77,16 @@ local set_key_map = function(client, bufnr)
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, bufopts)
 	-- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
+	vim.keymap.set({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, bufopts)
 	vim.keymap.set("n", "<leader>f", function()
 		vim.lsp.buf.format({ async = true })
 	end, bufopts)
 end
 
-local offset_encoding = "utf-8"
-
 local Lspconfig = {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
+
 	enabled = true,
 	config = function()
 		vim.diagnostic.config({
@@ -94,16 +96,27 @@ local Lspconfig = {
 			update_in_insert = true,
 			severity_sort = false,
 		})
-		local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+		local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "NONE" })
+			local sign = "DiagnosticSign" .. type
+			vim.fn.sign_define(sign, {
+				text = icon,
+				texthl = "DiagnosticSign" .. type,
+				numhl = "DiagnosticLineNr" .. type,
+			})
 		end
+		require("lspconfig.ui.windows").default_options.border = "rounded"
+
+		vim.api.nvim_create_autocmd("LspAttach", {
+			callback = function(args)
+				local client = vim.lsp.get_client_by_id(args.data.client_id)
+				client.server_capabilities.semanticTokensProvider = nil
+			end,
+		})
 
 		require("lspconfig").bashls.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				hl_word(client, bufnr)
 			end,
@@ -111,7 +124,6 @@ local Lspconfig = {
 		require("lspconfig").cmake.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				set_key_map(client, bufnr)
 				hl_word(client, bufnr)
@@ -121,7 +133,6 @@ local Lspconfig = {
 		require("lspconfig").cssls.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				set_key_map(client, bufnr)
 				hl_word(client, bufnr)
@@ -130,7 +141,6 @@ local Lspconfig = {
 		require("lspconfig").dockerls.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				set_key_map(client, bufnr)
 				hl_word(client, bufnr)
@@ -139,12 +149,10 @@ local Lspconfig = {
 		require("lspconfig").emmet_ls.setup({
 			handlers = handlers,
 			capabilities = make_capabilities(),
-			offset_encoding = offset_encoding,
 		})
 		require("lspconfig").eslint.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				set_key_map(client, bufnr)
 				hl_word(client, bufnr)
@@ -153,7 +161,6 @@ local Lspconfig = {
 		require("lspconfig").gradle_ls.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				set_key_map(client, bufnr)
 				hl_word(client, bufnr)
@@ -162,13 +169,11 @@ local Lspconfig = {
 		require("lspconfig").html.setup({
 			handlers = handlers,
 			capabilities = make_capabilities(),
-			offset_encoding = offset_encoding,
 		})
 
 		require("lspconfig").jdtls.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				hl_word(client, bufnr)
 				set_key_map(client, bufnr)
@@ -178,7 +183,6 @@ local Lspconfig = {
 			capabilities = make_capabilities(),
 			handlers = handlers,
 			single_file_support = true,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				hl_word(client, bufnr)
 				set_key_map(client, bufnr)
@@ -187,24 +191,40 @@ local Lspconfig = {
 		require("lspconfig").pylsp.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				hl_word(client, bufnr)
 				set_key_map(client, bufnr)
 			end,
+			settings = {
+				pylsp = {
+					plugins = {
+						flake8 = {
+							enabled = true,
+						},
+						pyflakes = {
+							enabled = false,
+						},
+						pylint = {
+							enabled = false,
+						},
+						mccabe = {
+							enabled = false,
+						},
+					},
+				},
+			},
 		})
 		-- require("lspconfig").pyright.setup({
-		-- 	capabilities = util.capabilities,
-		-- 	handlers = util.handlers,
+		-- 	capabilities = make_capabilities(),
+		-- 	handlers = handlers,
 		-- 	on_attach = function(client, bufnr)
-		-- 		util.set_key_map(client, bufnr)
-		-- 		util.hl_word(client, bufnr)
+		-- 		set_key_map(client, bufnr)
+		-- 		hl_word(client, bufnr)
 		-- 	end,
 		-- })
 		require("lspconfig").r_language_server.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				set_key_map(client, bufnr)
 				hl_word(client, bufnr)
@@ -215,26 +235,35 @@ local Lspconfig = {
 			single_file_support = true,
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				set_key_map(client, bufnr)
 				hl_word(client, bufnr)
 			end,
 		})
-		require("lspconfig").sumneko_lua.setup({
+		require("lspconfig").lua_ls.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				hl_word(client, bufnr)
 				set_key_map(client, bufnr)
 				client.server_capabilities.documentFormattingProvider = false
 			end,
+			settings = {
+				Lua = {
+					runtime = {
+						-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+						version = "LuaJIT",
+					},
+					diagnostics = {
+						-- Get the language server to recognize the `vim` global
+						globals = { "vim" },
+					},
+				},
+			},
 		})
 		require("lspconfig").vimls.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			on_attach = function(client, bufnr)
 				set_key_map(client, bufnr)
 				hl_word(client, bufnr)
@@ -249,17 +278,15 @@ local clangd = {
 	ft = { "c", "cpp", "objc", "objcpp" },
 	config = function()
 		local clangd_capabilities = make_capabilities()
-
-		-- clangd_capabilities.offsetEncoding = { "utf-16" }
+		clangd_capabilities.offsetEncoding = "utf-16"
 		require("clangd_extensions").setup({
 			server = {
 				capabilities = clangd_capabilities,
 				handlers = handlers,
-				offset_encoding = offset_encoding,
+				-- offset_encoding = "utf-16",
 				on_attach = function(client, bufnr)
 					set_key_map(client, bufnr)
 					hl_word(client, bufnr)
-					client.server_capabilities.documentFormattingProvider = false
 				end,
 				cmd = {
 					"clangd",
@@ -393,8 +420,6 @@ local haskell_tools = {
 			hls = {
 				capabilities = make_capabilities(),
 				handlers = handlers,
-				offset_encoding = offset_encoding,
-				-- See nvim-lspconfig's  suggested configuration for keymaps, etc.
 				on_attach = function(client, bufnr)
 					local opts = { noremap = true, silent = true, buffer = bufnr }
 					set_key_map(client, bufnr)
@@ -404,11 +429,11 @@ local haskell_tools = {
 					vim.keymap.set("n", "<leader>s", ht.hoogle.hoogle_signature, opts)
 				end,
 				single_file_support = true,
-				-- settings = {
-				haskell = { -- haskell-language-server options
-					formattingProvider = "ormolu",
-					checkProject = true, -- Setting this to true could have a performance impact on large mono repos.
-					-- ...
+				default_settings = {
+					haskell = { -- haskell-language-server options
+						formattingProvider = "ormolu",
+						checkProject = true, -- Setting this to true could have a performance impact on large mono repos.
+					},
 				},
 			},
 		})
@@ -426,7 +451,6 @@ local rust_tools = {
 			server = {
 				capabilities = make_capabilities(),
 				handlers = handlers,
-				offset_encoding = offset_encoding,
 				on_attach = function(client, bufnr)
 					set_key_map(client, bufnr)
 					hl_word(client, bufnr)
@@ -522,14 +546,11 @@ local sqls = {
 local null_ls = {
 	"jose-elias-alvarez/null-ls.nvim",
 	event = { "BufReadPre", "BufNewFile" },
-	enabled = true,
 	config = function()
 		local null_ls = require("null-ls")
 
 		null_ls.setup({
-			on_init = function(new_client, _)
-				new_client.offset_encoding = offset_encoding
-			end,
+			border = "rounded",
 			on_attach = function(client, bufnr)
 				set_key_map(client, bufnr)
 				hl_word(client, bufnr)
@@ -545,7 +566,7 @@ local null_ls = {
 				-- null_ls.builtins.code_actions.shellcheck,
 
 				-- null_ls.builtins.formatting.autopep8,
-				null_ls.builtins.formatting.clang_format,
+				-- null_ls.builtins.formatting.clang_format,
 				null_ls.builtins.formatting.cmake_format,
 				null_ls.builtins.formatting.markdownlint,
 				null_ls.builtins.formatting.prettierd.with({
@@ -627,7 +648,6 @@ local copilot = {
 				copilot_node_command = "node", -- Node version must be < 18
 				server_opts_overrides = {
 					trace = "verbose",
-					offset_encoding = offset_encoding,
 					settings = {
 						advanced = {
 							listCount = 10, -- #completions for panel
@@ -648,7 +668,6 @@ local jsonls = {
 		require("lspconfig").jsonls.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
-			offset_encoding = offset_encoding,
 			settings = {
 				json = {
 					schemas = require("schemastore").json.schemas(),
