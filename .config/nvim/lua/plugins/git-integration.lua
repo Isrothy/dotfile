@@ -72,7 +72,7 @@ return {
 				end,
 				trouble = false,
 			})
-			require("nap").nap("h", "Gitsigns next_hunk", "Gitsigns prev_hunk", "Next diff", "Previous diff")
+			-- require("nap").nap("h", "Gitsigns next_hunk", "Gitsigns prev_hunk", "Next diff", "Previous diff")
 		end,
 	},
 

@@ -1,3 +1,3 @@
 vim.bo.cinoptions = vim.bo.cinoptions .. "L0"
 vim.bo.formatoptions = vim.bo.formatoptions .. "ro"
-vim.wo.colorcolumn = "100"
+vim.wo.colorcolumn = "101"

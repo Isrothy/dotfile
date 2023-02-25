@@ -128,12 +128,13 @@ local trouble = {
 	},
 	dependencies = "nvim-tree/nvim-web-devicons",
 	keys = {
-		{ "<leader>xx", ":TroubleToggle<cr>", noremap = true },
-		{ "<leader>xw", ":TroubleToggle lsp_workspace_diagnostics<cr>", noremap = true },
-		{ "<leader>xd", ":TroubleToggle lsp_document_diagnostics<cr>", noremap = true },
-		{ "<leader>xl", ":TroubleToggle loclist<cr>", noremap = true },
-		{ "<leader>xq", ":TroubleToggle quickfix<cr>", noremap = true },
-		{ "<leader>xr", ":TroubleToggle lsp_references<cr>", noremap = true },
+		{ "<F6>", "<cmd>TroubleToggle<cr>", noremap = true },
+		{ "<leader>xx", "<cmd>TroubleToggle<cr>", noremap = true },
+		{ "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", noremap = true },
+		{ "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", noremap = true },
+		{ "<leader>xl", "<cmd>TroubleToggle loclist<cr>", noremap = true },
+		{ "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", noremap = true },
+		{ "<leader>xr", "<cmd>TroubleToggle lsp_references<cr>", noremap = true },
 	},
 	config = function()
 		require("trouble").setup({

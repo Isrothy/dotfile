@@ -4,7 +4,7 @@ local M = {
 		"kevinhwang91/promise-async",
 	},
 	event = { "BufReadPost", "BufNewFile" },
-	-- lazy = true,
+	lazy = false,
 	-- event = "User isfolded",
 }
 

@@ -51,8 +51,9 @@ M.config = function()
 
 			highlights.MatchParen = { standout = true }
 
-			highlights.NoiceLspProgressClient = { fg = colors.frost.ice }
-			highlights.NoiceLspProgressTitle = { fg = colors.polar_night.light }
+			highlights.NoiceLspProgressClient = { fg = colors.frost.ice, italic = true }
+			highlights.NoiceLspProgressTitle = { fg = colors.snow_storm.origin }
+			highlights.NoiceMini = { bg = colors.polar_night.bright }
 
 			highlights.NeoTreeFloatTitle = { bg = colors.polar_night.origin }
 			highlights.NeoTreeFloatBorder = { bg = colors.polar_night.origin }
@@ -61,11 +62,13 @@ M.config = function()
 			highlights.ErrorMsg = { link = "Normal" }
 			highlights.WarningMsg = { link = "Normal" }
 
+			highlights.ColorColumn = { bg = colors.polar_night.brightest }
+
 			-- highlights.NormalFloat = { bg = colors.polar_night.bright }
-			-- highlights.FloatBorder = {
-			-- bg = colors.polar_night.bright,
-			-- fg = colors.polar_night.bright,
-			-- }
+			highlights.FloatBorder = {
+				-- bg = colors.polar_night.bright,
+				fg = colors.snow_storm.origin,
+			}
 
 			highlights.Folded = { fg = colors.frost.artic_water, bg = colors.polar_night.brighter }
 

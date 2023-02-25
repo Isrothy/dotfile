@@ -3,7 +3,7 @@ return {
 		"lukas-reineke/virt-column.nvim",
 		-- event = "VeryLazy",
 		-- event = { "BufNewFile", "BufReadPre" },
-		enabled = true,
+		enabled = false,
 		lazy = false,
 		config = function()
 			require("virt-column").setup()

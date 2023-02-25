@@ -58,7 +58,7 @@ return {
 	{
 		"nacro90/numb.nvim",
 		event = "CmdlineEnter",
-		enabled = true,
+		enabled = false,
 		config = function()
 			require("numb").setup({
 				show_numbers = true, -- Enable 'number' for the window while peeking

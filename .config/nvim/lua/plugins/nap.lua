@@ -1,7 +1,7 @@
 return {
 	"liangxianzhe/nap.nvim",
 	keys = { "[", "]" },
-	-- lazy = false,
+	lazy = false,
 	config = function()
 		local nap = require("nap")
 		nap.setup({

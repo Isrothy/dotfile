@@ -1,15 +1,15 @@
 vim.opt.termguicolors = true
-vim.opt.syntax = "on"
 vim.opt.mouse = ""
+vim.opt.syntax = "on"
 vim.opt.cmdheight = 0
 vim.opt.showcmd = true
-vim.opt.ruler = true
-vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.numberwidth = 2
 vim.opt.cursorline = true
-vim.opt.signcolumn = "yes"
-vim.o.foldcolumn = "0"
+
+vim.o.pumheight = 10
+
+--fold
+vim.o.foldcolumn = "1"
 vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
@@ -18,6 +18,7 @@ vim.o.foldenable = true
 -- vim.opt.foldmethod = "indent"
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+
 vim.opt.undofile = true
 vim.opt.nrformats = { "alpha", "bin", "octal", "hex" }
 
@@ -35,9 +36,6 @@ vim.opt.fillchars = {
 	foldsep = "│",
 	foldclose = "▸",
 }
-
-vim.g.virtcolumn_char = "▕"
-vim.g.virtcolumn_priority = 20
 
 vim.opt.virtualedit = { "block", "onemore" }
 vim.opt.wrap = false
@@ -57,8 +55,6 @@ vim.opt.wildmenu = true
 -- vim.opt.spelllang = { 'en_us' }
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
-vim.opt.undofile = true
-
 -- buffer settings
 vim.opt.autoread = true
 vim.opt.confirm = true
@@ -68,6 +64,7 @@ vim.opt.hidden = true
 vim.opt.encoding = "utf-8"
 vim.opt.termencoding = "utf-8"
 
+--session
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 -- indentation & format settings

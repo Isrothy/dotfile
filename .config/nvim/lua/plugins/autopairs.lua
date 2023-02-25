@@ -35,8 +35,19 @@ return {
 					enable = true,
 					autoclose = true,
 					multichar = {
-						markdown = { { "```", "```", pair = true, noalpha = true, next = true } },
-						lua = { { "then", "end" }, { "do", "end" } },
+						markdown = {
+							{
+								"```",
+								"```",
+								pair = true,
+								noalpha = true,
+								next = true,
+							},
+						},
+						lua = {
+							{ "then", "end" },
+							{ "do", "end" },
+						},
 					},
 					addsemi = {
 						"c",

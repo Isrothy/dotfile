@@ -25,30 +25,10 @@ vim.keymap.set({ "n" }, "<c-s>", "<c-w>s", default_options)
 vim.keymap.set({ "n" }, "<c-c>", "<c-w>c", default_options)
 vim.keymap.set({ "n" }, "<c-o>", "<c-w>o", default_options)
 
-vim.keymap.set(
-	"n",
-	"<C-Left>",
-	'"<Cmd>vertical resize -" . v:count1 . "<CR>"',
-	{ expr = true, desc = "Decrease window width" }
-)
-vim.keymap.set(
-	"n",
-	"<C-Down>",
-	'"<Cmd>resize -"          . v:count1 . "<CR>"',
-	{ expr = true, desc = "Decrease window height" }
-)
-vim.keymap.set(
-	"n",
-	"<C-Up>",
-	'"<Cmd>resize +"          . v:count1 . "<CR>"',
-	{ expr = true, desc = "Increase window height" }
-)
-vim.keymap.set(
-	"n",
-	"<C-Right>",
-	'"<Cmd>vertical resize +" . v:count1 . "<CR>"',
-	{ expr = true, desc = "Increase window width" }
-)
+vim.keymap.set("n", "<c-,>", "<c-w><", { noremap = true, desc = "Decrease window width" })
+vim.keymap.set("n", "<c-.>", "<c-w>>", { noremap = true, desc = "Decrease window height" })
+vim.keymap.set("n", "<c-=>", "<c-w>+", { noremap = true, desc = "Increase window height" })
+vim.keymap.set("n", "<c-->", "<c-w>-", { noremap = true, desc = "Increase window width" })
 
 vim.keymap.set("n", "<esc>", ":nohlsearch<cr>")
 
@@ -74,17 +54,22 @@ vim.keymap.set("t", "<M-k>", "<Up>", { desc = "Up" })
 vim.keymap.set("t", "<M-l>", "<Right>", { desc = "Right" })
 
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, default_options)
-vim.keymap.set("n", "<leader>d", function()
-	vim.diagnostic.open_float({ border = "rounded"})
-end, default_options)
+-- vim.keymap.set("n", "<leader>d", function()
+-- 	vim.diagnostic.open_float({ border = "rounded" })
+-- end, default_options)
 
 -- vim.keymap.set(
 -- 	"n",
--- 	"[d",
--- 	vim.diagnostic.goto_prev,
--- 	{ noremap = true, silent = true, desc = "Go to previous diagnostic" }
+-- 	"]d",
+-- 	"<cmd>lua vim.diagnostic.goto_next({float={border = 'rounded'}})<cr>",
+-- 	{ noremap = true, silent = true, desc = "Diagnostic forward" }
 -- )
--- vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { noremap = true, silent = true, desc = "Go to next diagnostic" })
+-- vim.keymap.set(
+-- 	"n",
+-- 	"[d",
+-- 	"<cmd> lua vim.diagnostic.goto_prev({float={border = 'rounded'}})<cr>",
+-- 	{ noremap = true, silent = true, desc = "Diagnostic backward" }
+-- )
 
 -- vim.keymap.set("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", { noremap = true, silent = true })
 -- vim.keymap.set("n", "<F10>", "<cmd>lua require'dap'.step_over()<cr>", { noremap = true, silent = true })

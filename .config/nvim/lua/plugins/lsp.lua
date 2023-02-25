@@ -41,6 +41,7 @@ local hl_word = function(client, bufnr)
 		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 			group = "lsp_document_highlight",
 			buffer = bufnr,
+			-- dfs
 			callback = vim.lsp.buf.document_highlight,
 		})
 		vim.api.nvim_create_autocmd("CursorMoved", {
@@ -94,7 +95,8 @@ local Lspconfig = {
 			signs = true,
 			underline = true,
 			update_in_insert = true,
-			severity_sort = false,
+			severity_sort = true,
+			float = { border = "rounded" },
 		})
 		local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 		for type, icon in pairs(signs) do
@@ -105,7 +107,7 @@ local Lspconfig = {
 				numhl = "DiagnosticLineNr" .. type,
 			})
 		end
-		require("lspconfig.ui.windows").default_options.border = "rounded"
+		-- require("lspconfig.ui.windows").default_options.border = "rounded"
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			callback = function(args)

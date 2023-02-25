@@ -3,7 +3,7 @@ local M = {
 }
 
 M.init = function()
-	vim.keymap.set("n", "<F5>", "<cmd>AerialToggle<CR>", { noremap = true, silent = true })
+	vim.keymap.set("n", "<F9>", "<cmd>AerialToggle<CR>", { noremap = true, silent = true })
 end
 
 M.config = function()
@@ -187,7 +187,7 @@ M.config = function()
 			update_delay = 300,
 		},
 	})
-	require("nap").nap("o", "AerialNext", "AerialPrev", "Next outline symbol", "Previous outline symbol")
+	-- require("nap").nap("o", "AerialNext", "AerialPrev", "Next outline symbol", "Previous outline symbol")
 end
 
 return M
