@@ -6,7 +6,7 @@ local M = {
 }
 
 M.config = function()
-	local utils = require("nord.utils")
+	-- local utils = require("nord.utils")
 
 	require("nord").setup({
 		-- your configuration comes here
@@ -55,14 +55,14 @@ M.config = function()
 			highlights.NoiceLspProgressTitle = { fg = colors.snow_storm.origin }
 			highlights.NoiceMini = { bg = colors.polar_night.bright }
 
-			highlights.NeoTreeFloatTitle = { bg = colors.polar_night.origin }
-			highlights.NeoTreeFloatBorder = { bg = colors.polar_night.origin }
-			highlights.NeoTreeFloatNormal = { bg = colors.polar_night.origin }
-
+			-- highlights.NeoTreeFloatTitle = { bg = colors.polar_night.origin }
+			-- highlights.NeoTreeFloatBorder = { bg = colors.polar_night.origin }
+			-- highlights.NeoTreeFloatNormal = { bg = colors.polar_night.origin }
+			--
 			highlights.ErrorMsg = { link = "Normal" }
 			highlights.WarningMsg = { link = "Normal" }
 
-			highlights.ColorColumn = { bg = colors.polar_night.brightest }
+			highlights.ColorColumn = { bg = colors.polar_night.brighter }
 
 			-- highlights.NormalFloat = { bg = colors.polar_night.bright }
 			highlights.FloatBorder = {

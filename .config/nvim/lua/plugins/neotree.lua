@@ -416,7 +416,7 @@ M.config = function()
 					--"*.meta"
 				},
 				never_show = { -- remains hidden even if visible is toggled to true
-					--".DS_Store",
+					".DS_Store",
 					--"thumbs.db"
 				},
 			},
@@ -503,24 +503,24 @@ M.config = function()
 				},
 			},
 		},
-		event_handlers = {
-			{
-				event = "neo_tree_window_after_open",
-				handler = function(args)
-					if args.position == "left" or args.position == "right" then
-						vim.cmd("wincmd =")
-					end
-				end,
-			},
-			{
-				event = "neo_tree_window_after_close",
-				handler = function(args)
-					if args.position == "left" or args.position == "right" then
-						vim.cmd("wincmd =")
-					end
-				end,
-			},
-		},
+		-- event_handlers = {
+		-- 	{
+		-- 		event = "neo_tree_window_after_open",
+		-- 		handler = function(args)
+		-- 			if args.position == "left" or args.position == "right" then
+		-- 				vim.cmd("wincmd =")
+		-- 			end
+		-- 		end,
+		-- 	},
+		-- 	{
+		-- 		event = "neo_tree_window_after_close",
+		-- 		handler = function(args)
+		-- 			if args.position == "left" or args.position == "right" then
+		-- 				vim.cmd("wincmd =")
+		-- 			end
+		-- 		end,
+		-- 	},
+		-- },
 	})
 
 	vim.g.neo_tree_remove_legacy_commands = 1

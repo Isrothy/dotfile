@@ -4,7 +4,6 @@ local telescope = {
 	dependencies = {
 		{ "nvim-lua/plenary.nvim" },
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-		{ "nvim-telescope/telescope-file-browser.nvim" },
 		{ "nvim-telescope/telescope-frecency.nvim", dependencies = { "kkharji/sqlite.lua" } },
 		{ "jvgrootveld/telescope-zoxide" },
 		{ "debugloop/telescope-undo.nvim" },
@@ -14,7 +13,7 @@ local telescope = {
 
 telescope.keys = {
 	{ "<leader><leader>a", "<cmd>Telescope autocommands<cr>" },
-	{ "<leader><leader>b", "<cmd>Telescope file_browser<cr>" },
+	{ "<leader><leader>b", "<cmd>Telescope buffers<cr>" },
 	{ "<leader><leader>c", "<cmd>Telescope commands<cr>" },
 	{ "<leader><leader>d", "<cmd>Telescope diagnostics<cr>" },
 
@@ -86,9 +85,6 @@ telescope.config = function()
 			"--trim", -- add this value
 		},
 		extensions = {
-			file_browser = {
-				theme = "ivy",
-			},
 			["ui-select"] = {
 				require("telescope.themes").get_dropdown({}),
 				-- require("telescope.themes").get_cursor({}),
@@ -159,7 +155,6 @@ telescope.config = function()
 	require("telescope").load_extension("notify")
 	require("telescope").load_extension("ui-select")
 	require("telescope").load_extension("fzf")
-	require("telescope").load_extension("file_browser")
 	require("telescope").load_extension("zoxide")
 	require("telescope").load_extension("frecency")
 	require("telescope").load_extension("aerial")

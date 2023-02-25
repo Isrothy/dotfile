@@ -9,7 +9,7 @@ vim.opt.cursorline = true
 vim.o.pumheight = 10
 
 --fold
-vim.o.foldcolumn = "1"
+vim.o.foldcolumn = "0"
 vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
@@ -20,6 +20,7 @@ vim.o.foldenable = true
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 vim.opt.undofile = true
+
 vim.opt.nrformats = { "alpha", "bin", "octal", "hex" }
 
 vim.o.matchpairs = vim.o.matchpairs .. ",<:>"
@@ -77,7 +78,6 @@ vim.opt.softtabstop = -1
 vim.opt.shiftwidth = 0
 vim.opt.cinoptions = "g0,(0,l1"
 vim.opt.backspace = { "indent", "eol", "start" }
-vim.g.html_indent_autotags = "html,head,body"
 
 vim.opt.laststatus = 3
 
@@ -88,3 +88,5 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
+vim.g.html_indent_autotags = "html,head,body"

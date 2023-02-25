@@ -62,22 +62,16 @@ _G.get_statuscol = function()
 	local parts = {
 		["fold"] = "%{% foldlevel(v:lnum) ? '%C' : '|' %}",
 		["gitsigns"] = "%{%v:lua.get_statuscol_gitsign(bufnr(), v:lnum)%}",
-		["num"] = "%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . ' ' : v:lnum) : ''}",
-		-- ["num"] = "%l",
+		["num"] = "%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}",
 		["sep"] = "%=",
-		-- ["signcol"] = "%s",
 		["signcol"] = "%{%v:lua.get_my_signcol(bufnr(), v:lnum)%}",
 		["space"] = " ",
 	}
 	local order = {
-		-- "space",
+		"space",
 		"signcol",
 		"sep",
-		-- "space",
 		"num",
-		"space",
-		-- "sep",
-		-- "fold",
 		"gitsigns",
 	}
 
@@ -92,5 +86,4 @@ vim.o.statuscolumn = "%!v:lua.get_statuscol()"
 vim.opt.ruler = true
 vim.opt.number = true
 
--- vim.opt.numberwidth = 3
--- vim.opt.statuscolumn = "%s%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}%="
+vim.opt.numberwidth = 4

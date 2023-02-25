@@ -41,7 +41,6 @@ local hl_word = function(client, bufnr)
 		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 			group = "lsp_document_highlight",
 			buffer = bufnr,
-			-- dfs
 			callback = vim.lsp.buf.document_highlight,
 		})
 		vim.api.nvim_create_autocmd("CursorMoved", {
@@ -52,7 +51,7 @@ local hl_word = function(client, bufnr)
 	end
 end
 
-local set_key_map = function(client, bufnr)
+local set_key_map = function(_, bufnr)
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	vim.keymap.set("n", "g<c-d>", vim.lsp.buf.declaration, bufopts)
 	vim.keymap.set("n", "gD", function()
@@ -98,7 +97,7 @@ local Lspconfig = {
 			severity_sort = true,
 			float = { border = "rounded" },
 		})
-		local signs = { Error = "", Warn = "", Hint = "", Info = "" }
+		local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 		for type, icon in pairs(signs) do
 			local sign = "DiagnosticSign" .. type
 			vim.fn.sign_define(sign, {
@@ -107,7 +106,7 @@ local Lspconfig = {
 				numhl = "DiagnosticLineNr" .. type,
 			})
 		end
-		-- require("lspconfig.ui.windows").default_options.border = "rounded"
+		require("lspconfig.ui.windows").default_options.border = "rounded"
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			callback = function(args)
@@ -545,6 +544,27 @@ local sqls = {
 	end,
 }
 
+local jsonls = {
+	"b0o/schemastore.nvim",
+	enabled = true,
+	ft = { "json", "jsonc" },
+	config = function()
+		require("lspconfig").jsonls.setup({
+			capabilities = make_capabilities(),
+			handlers = handlers,
+			settings = {
+				json = {
+					schemas = require("schemastore").json.schemas(),
+				},
+			},
+			on_attach = function(client, bufnr)
+				hl_word(client, bufnr)
+				set_key_map(client, bufnr)
+			end,
+		})
+	end,
+}
+
 local null_ls = {
 	"jose-elias-alvarez/null-ls.nvim",
 	event = { "BufReadPre", "BufNewFile" },
@@ -662,34 +682,13 @@ local copilot = {
 	end,
 }
 
-local jsonls = {
-	"b0o/schemastore.nvim",
-	enabled = true,
-	ft = { "json", "jsonc" },
-	config = function()
-		require("lspconfig").jsonls.setup({
-			capabilities = make_capabilities(),
-			handlers = handlers,
-			settings = {
-				json = {
-					schemas = require("schemastore").json.schemas(),
-				},
-			},
-			on_attach = function(client, bufnr)
-				hl_word(client, bufnr)
-				set_key_map(client, bufnr)
-			end,
-		})
-	end,
-}
-
 return {
 	Lspconfig,
 	clangd,
 	haskell_tools,
 	rust_tools,
 	null_ls,
-	copilot,
 	sqls,
 	jsonls,
+	copilot,
 }

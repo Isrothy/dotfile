@@ -75,19 +75,6 @@ M.config = function()
 	vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
 	vim.keymap.set("n", "zm", require("ufo").closeFoldsWith)
 	vim.keymap.set("n", "gf", require("ufo").peekFoldedLinesUnderCursor)
-
-	-- function _G.nN(c)
-	-- 	local ok, msg = pcall(vim.cmd, "norm!" .. vim.v.count1 .. c)
-	-- 	if not ok then
-	-- 		vim.api.nvim_echo({ { msg:match(":(.*)$"), "ErrorMsg" } }, false, {})
-	-- 		return
-	-- 	end
-	-- 	require("hlslens").start()
-	-- 	require("ufo").peekFoldedLinesUnderCursor()
-	-- end
-	--
-	-- vim.api.nvim_set_keymap("n", "n", '<Cmd>lua _G.nN("n")<CR>', {})
-	-- vim.api.nvim_set_keymap("n", "N", '<Cmd>lua _G.nN("N")<CR>', {})
 end
 
 return M
