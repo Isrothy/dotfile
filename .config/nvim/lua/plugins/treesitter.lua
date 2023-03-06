@@ -231,7 +231,7 @@ local indent_blankline = {
 	config = function()
 		vim.opt.list = true
 		-- vim.opt.listchars:append("space:•")
-		vim.opt.listchars:append("eol:↴")
+		-- vim.opt.listchars:append("eol:↴")
 
 		require("indent_blankline").setup({
 			char = "▎",
@@ -287,6 +287,22 @@ local femaco = {
 		require("femaco").setup({})
 	end,
 }
+local node_marker = {
+	"atusy/tsnode-marker.nvim",
+	lazy = true,
+	init = function()
+		vim.api.nvim_create_autocmd("FileType", {
+			group = vim.api.nvim_create_augroup("tsnode-marker-markdown", {}),
+			pattern = "markdown",
+			callback = function(ctx)
+				require("tsnode-marker").set_automark(ctx.buf, {
+					target = { "code_fence_content" }, -- list of target node types
+					hl_group = "CursorLine", -- highlight group
+				})
+			end,
+		})
+	end,
+}
 --
 -- local local_highlight = {
 -- 	"tzachar/local-highlight.nvim",
@@ -310,5 +326,6 @@ return {
 	endwise,
 	autotag,
 	neogen,
+	node_marker,
 	-- local_highlight,
 }

@@ -29,10 +29,10 @@ vim.o.splitkeep = "screen"
 
 vim.opt.fillchars = {
 	vert = "│",
-	fold = "⠀",
 	eob = " ", -- suppress ~ at EndOfBuffer
-	diff = "⣿", -- alternatives = ⣿ ░ ─ ╱
+	diff = "╱", -- alternatives = ⣿ ░ ─ ╱
 	msgsep = "‾",
+	fold = "⠀",
 	foldopen = "▾",
 	foldsep = "│",
 	foldclose = "▸",

@@ -97,7 +97,7 @@ local Lspconfig = {
 			severity_sort = true,
 			float = { border = "rounded" },
 		})
-		local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+		local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 		for type, icon in pairs(signs) do
 			local sign = "DiagnosticSign" .. type
 			vim.fn.sign_define(sign, {
@@ -275,7 +275,6 @@ local Lspconfig = {
 
 local clangd = {
 	"p00f/clangd_extensions.nvim",
-	enabled = true,
 	ft = { "c", "cpp", "objc", "objcpp" },
 	config = function()
 		local clangd_capabilities = make_capabilities()
@@ -376,7 +375,6 @@ local haskell_tools = {
 		"neovim/nvim-lspconfig",
 		"nvim-lua/plenary.nvim",
 	},
-	enabled = true,
 	config = function()
 		local ht = require("haskell-tools")
 		ht.setup({
@@ -406,7 +404,7 @@ local haskell_tools = {
 				hover = {
 					-- Whether to disable haskell-tools hover and use the builtin lsp's default handler
 					disable = false,
-					border = border,
+					-- border = ,
 					stylize_markdown = true,
 					-- Whether to automatically switch to the hover window
 					auto_focus = false,

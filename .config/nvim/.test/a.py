@@ -1,4 +1,3 @@
-import math
 import numpy
 
 x = 10

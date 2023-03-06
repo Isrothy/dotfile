@@ -40,6 +40,7 @@ local custom_textobjects = {
 return {
 	{
 		"kiyoon/treesitter-indent-object.nvim",
+		enabled = false,
 		dependencies = {
 			"lukas-reineke/indent-blankline.nvim",
 		},
@@ -73,103 +74,10 @@ return {
 	{
 		"chrisgrieser/nvim-various-textobjs",
 		event = { "BufRead", "BufNewFile" },
-		-- lazy = true,
-		-- keys = {
-		-- 	{ "iN", mode = { "x", "o" }, desc = "inner number textobj" },
-		-- 	{ "aN", mode = { "x", "o" }, desc = "outer number textobj" },
-		-- 	{ "iv", mode = { "x", "o" }, desc = "inner value textobj" },
-		-- 	{ "av", mode = { "x", "o" }, desc = "outer value textobj" },
-		-- 	{ "ik", mode = { "x", "o" }, desc = "innver key textobj" },
-		-- 	{ "ak", mode = { "x", "o" }, desc = "outer key textobj" },
-		-- 	{ "iS", mode = { "x", "o" }, desc = "inner subword textobj" },
-		-- 	{ "aS", mode = { "x", "o" }, desc = "outer subword textobj" },
-		-- 	{ "n", mode = { "x", "o" }, desc = "nearEol textobj" },
-		-- 	{ "r", mode = { "x", "o" }, desc = "restOfParagraph textobj" },
-		-- 	{ "!", mode = { "x", "o" }, desc = "diagnostic textobj" },
-		-- 	{ "|", mode = { "x", "o" }, desc = "column textobj" },
-		-- 	{ "gG", mode = { "x", "o" }, desc = "entireBuffer textobj" },
-		-- 	{ "L", mode = { "x", "o" }, desc = "url textobj" },
-		-- },
-		init = function()
-			local ftMaps = {
-				{
-					map = { jsRegex = "/" },
-					fts = { "javascript", "typescript" },
-				},
-				{
-					map = { mdlink = "l" },
-					fts = { "markdown", "toml" },
-				},
-				{
-					map = { mdFencedCodeBlock = "C" },
-					fts = { "markdown" },
-				},
-				{
-					map = { doubleSquareBrackets = "D" },
-					fts = { "lua", "norg", "sh", "fish", "zsh", "bash", "markdown" },
-				},
-				{
-					map = { cssSelector = "c" },
-					fts = { "css", "scss" },
-				},
-				{
-					map = { shellPipe = "P" },
-					fts = { "sh", "bash", "zsh", "fish" },
-				},
-			}
-			local keymap = vim.keymap.set
-			vim.api.nvim_create_augroup("VariousTextobjs", {})
-			for _, textobj in pairs(ftMaps) do
-				vim.api.nvim_create_autocmd("FileType", {
-					group = "VariousTextobjs",
-					pattern = textobj.fts,
-					callback = function()
-						for objName, map in pairs(textobj.map) do
-							local name = " " .. objName .. " textobj"
-							keymap({ "o", "x" }, "a" .. map, function()
-								require("various-textobjs")[objName](false)
-							end, { desc = "outer" .. name, buffer = true })
-							keymap({ "o", "x" }, "i" .. map, function()
-								require("various-textobjs")[objName](true)
-							end, { desc = "inner" .. name, buffer = true })
-						end
-					end,
-				})
-			end
-		end,
-
 		config = function()
 			require("various-textobjs").setup({
-				useDefaultKeymaps = false,
+				useDefaultKeymaps = true,
 			})
-			local innerOuterMaps = {
-				number = "N",
-				value = "v",
-				key = "k",
-				subword = "S",
-			}
-			local oneMaps = {
-				nearEoL = "n",
-				restOfParagraph = "r",
-				restOfIndentation = "R",
-				diagnostic = "!",
-				column = "|",
-				entireBuffer = "gG",
-				url = "L", -- uppercase to avoid conflict with some comments plugin mapping `u` to comments textobjs for undoing
-			}
-			local keymap = vim.keymap.set
-			for objName, map in pairs(innerOuterMaps) do
-				local name = " " .. objName .. " textobj"
-				keymap({ "o", "x" }, "a" .. map, function()
-					require("various-textobjs")[objName](false)
-				end, { desc = "outer" .. name })
-				keymap({ "o", "x" }, "i" .. map, function()
-					require("various-textobjs")[objName](true)
-				end, { desc = "inner" .. name })
-			end
-			for objName, map in pairs(oneMaps) do
-				keymap({ "o", "x" }, map, require("various-textobjs")[objName], { desc = objName .. " textobj" })
-			end
 		end,
 	},
 	{

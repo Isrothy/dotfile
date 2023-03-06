@@ -230,7 +230,7 @@ M.config = function()
 			"git_status",
 		},
 		close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
-		close_floats_on_escape_key = true,
+		close_floats_on_escape_key = false,
 		popup_border_style = "rounded",
 		enable_git_status = true,
 		enable_diagnostics = true,
@@ -333,10 +333,7 @@ M.config = function()
 				nowait = true,
 			},
 			mappings = {
-				["<space>"] = {
-					"toggle_node",
-					nowait = true, -- disable `nowait` if you have existing combos starting with this char that you want to use
-				},
+				["<space>"] = "none",
 				["<tab>"] = function(state)
 					local node = state.tree:get_node()
 					if require("neo-tree.utils").is_expandable(node) then

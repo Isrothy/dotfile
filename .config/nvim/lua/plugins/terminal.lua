@@ -21,6 +21,7 @@ return {
 					end
 				end,
 				open_mapping = [[<F5>]],
+				-- open_mapping = [[<c-`>]],
 				hide_numbers = true, -- hide the number column in toggleterm buffers
 				shade_filetypes = {},
 				shade_terminals = false,

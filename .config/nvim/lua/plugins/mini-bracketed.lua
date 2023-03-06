@@ -5,7 +5,7 @@ return {
 	config = function()
 		require("mini.bracketed").setup({
 			buffer = { suffix = "", options = {} },
-			comment = { suffix = "c", options = {} },
+			comment = { suffix = "k", options = {} },
 			conflict = { suffix = "x", options = {} },
 			diagnostic = {
 				suffix = "d",

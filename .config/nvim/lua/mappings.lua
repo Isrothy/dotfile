@@ -28,7 +28,7 @@ vim.keymap.set("n", "<C-.>", "<C-w>>", default_options)
 vim.keymap.set("n", "<C-=>", "<C-w>+", default_options)
 vim.keymap.set("n", "<C-->", "<C-w>-", default_options)
 
-vim.keymap.set("n", "<esc>", ":nohlsearch<cr>")
+vim.keymap.set("n", "<esc>", ":nohlsearch<cr>", default_options)
 
 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], default_options)
 vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], default_options)

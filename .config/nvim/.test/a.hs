@@ -8,4 +8,5 @@ x = sum 1 23
 
 main :: IO ()
 main = do
-    print x
+  print x
+

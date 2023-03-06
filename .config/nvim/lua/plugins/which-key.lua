@@ -99,7 +99,8 @@ M.config = function()
 			align = "left", -- align columns left, center or right
 		},
 		ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
-		hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
+		-- hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
+		hidden = {},
 		show_help = true, -- show help message on the command line when the popup is visible
 		show_keys = true, -- show the currently pressed key and its label as a message in the command line
 		triggers = "auto", -- automatically setup triggers
@@ -202,6 +203,12 @@ M.config = function()
 		["<leader>i"] = {
 			name = "ISwap",
 		},
+	})
+	wk.register({
+		[']h'] = "Next hunk",
+		['[h'] = "Previous hunk",
+		[']c'] = "Next diff",
+		['[c'] = "Previous diff",
 	})
 end
 

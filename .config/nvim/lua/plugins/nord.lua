@@ -6,7 +6,7 @@ local M = {
 }
 
 M.config = function()
-	-- local utils = require("nord.utils")
+	local utils = require("nord.utils")
 
 	require("nord").setup({
 		-- your configuration comes here
@@ -39,7 +39,7 @@ M.config = function()
 			},
 		},
 		on_highlights = function(highlights, colors)
-			highlights.CursorLineNr = { fg = colors.frost.artic_water }
+			highlights.CursorLineNr = { fg = colors.frost.artic_water, bold = true }
 
 			highlights.CmpDocumentation = { bg = colors.polar_night.brighter }
 
@@ -91,6 +91,11 @@ M.config = function()
 
 			highlights.QuickFixLine = { bg = colors.polar_night.brighter }
 
+			highlights.DiffAdd = { bg = utils.darken(colors.aurora.green, 0.15) }
+			highlights.DiffChange = { bg = utils.darken(colors.aurora.purple, 0.2) }
+			highlights.DiffDelete = { bg = utils.darken(colors.aurora.red, 0.3) }
+			highlights.DiffText = { fg = colors.frost.artic_water, bg = "NONE", reverse = true }
+
 			-- highlights.InclineNormal = { bg = colors.polar_night.brighter, bold = true }
 			-- highlights.InclineNormalNC = { bg = colors.polar_night.brighter }
 			-- highlights.Headline1 = { bg = utils.darken(colors.aurora.green, 0.2), bold = true }
@@ -100,6 +105,8 @@ M.config = function()
 			-- highlights.Headline5 = { bg = utils.darken(colors.frost.artic_water, 0.2), bold = true }
 			-- highlights.Headline6 = { bg = utils.darken(colors.aurora.purple, 0.2), bold = true }
 			-- highlights.Dash = { fg = colors.polar_night.brightest }
+
+			highlights.rainbowcol7 = { fg = colors.polar_night.light }
 		end,
 	})
 
