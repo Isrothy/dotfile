@@ -1,6 +1,5 @@
 local M = {
 	"gbprod/nord.nvim",
-	-- "Isrothy/nord.nvim",
 	priority = 100,
 	lazy = false,
 }
@@ -47,26 +46,19 @@ M.config = function()
 			highlights.MarkSignNumHL = { fg = colors.aurora.green, bold = true }
 
 			highlights.WhichKeyFloat = { bg = colors.polar_night.origin }
-			highlights.WhichKeyBorder = { bg = colors.polar_night.origin }
 
-			highlights.MatchParen = { standout = true }
+			highlights.MatchParen = { bg = colors.polar_night.origin, standout = true }
 
 			highlights.NoiceLspProgressClient = { fg = colors.frost.ice, italic = true }
 			highlights.NoiceLspProgressTitle = { fg = colors.snow_storm.origin }
 			highlights.NoiceMini = { bg = colors.polar_night.bright }
 
-			-- highlights.NeoTreeFloatTitle = { bg = colors.polar_night.origin }
-			-- highlights.NeoTreeFloatBorder = { bg = colors.polar_night.origin }
-			-- highlights.NeoTreeFloatNormal = { bg = colors.polar_night.origin }
-			--
 			highlights.ErrorMsg = { link = "Normal" }
 			highlights.WarningMsg = { link = "Normal" }
 
 			highlights.ColorColumn = { bg = colors.polar_night.brighter }
 
-			-- highlights.NormalFloat = { bg = colors.polar_night.bright }
 			highlights.FloatBorder = {
-				-- bg = colors.polar_night.bright,
 				fg = colors.snow_storm.origin,
 			}
 
@@ -106,7 +98,18 @@ M.config = function()
 			-- highlights.Headline6 = { bg = utils.darken(colors.aurora.purple, 0.2), bold = true }
 			-- highlights.Dash = { fg = colors.polar_night.brightest }
 
-			highlights.rainbowcol7 = { fg = colors.polar_night.light }
+			highlights.rainbowcol7 = { fg = colors.aurora.orange }
+
+			highlights["@lsp.type.enum"] = { link = "@type" }
+			highlights["@lsp.type.enumMember"] = { fg = colors.frost.ice }
+			highlights["@lsp.type.keyword"] = { link = "@keyword" }
+			highlights["@lsp.type.namespace"] = { link = "@namespace" }
+			highlights["@lsp.type.property"] = { link = "@property" }
+			highlights["@lsp.type.variable"] = { link = "@variable" }
+			highlights["@lsp.typemod.function.defaultLibrary"] = { link = "Special" }
+			highlights["@lsp.typemod.variable.readonly"] = { link = "@constant" }
+			highlights["@lsp.mod.readonly"] = { italic = true }
+			-- highlights["@lsp.mod.functionScope"] = { fg = colors.aurora.orange }
 		end,
 	})
 

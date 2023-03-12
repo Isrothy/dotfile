@@ -132,6 +132,7 @@ M.config = function()
 						newfile = "[New]",
 					},
 					fmt = trunc(90, 30, 50),
+					path = 1,
 				},
 				{
 					"diagnostic-message",

@@ -60,6 +60,9 @@ local TS = {
 			endwise = {
 				enable = true,
 			},
+			matchup = {
+				enable = true,
+			},
 			textobjects = {
 				select = {
 					enable = false,
@@ -315,9 +318,23 @@ local node_marker = {
 -- 	end,
 -- }
 
+local treesj = {
+	"Wansmer/treesj",
+	keys = {
+		{ "<leader>s", desc = "Split lines" },
+		{ "<leader>j", desc = "Join lines" },
+		{ "<leader>m", desc = "Toggle split/join" },
+	},
+	config = function()
+		require("treesj").setup({
+			use_default_keymaps = true,
+			max_join_length = 0xffffffff,
+		})
+	end,
+}
 return {
 	TS,
-	node_action,
+	-- node_action,
 	iswap,
 	commentstring,
 	indent_blankline,
@@ -327,5 +344,6 @@ return {
 	autotag,
 	neogen,
 	node_marker,
+	treesj,
 	-- local_highlight,
 }

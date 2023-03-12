@@ -16,20 +16,19 @@ double add(double x, double y) {
 }
 
 struct A {
-  private:
-    double x, y;
-
-  public:
-    A(A &&) = delete;
     A(const A &) = delete;
+    A(A &&) = default;
     A &operator=(const A &) = default;
     A &operator=(A &&) = default;
-    A(double x, double y) : x(x), y(y) {}
-    double getX() const {
-        return x;
-    }
-    double getY() const {
-        return y;
+    explicit A(double x) : x(x) {}
+    static const int y;
+
+  private:
+    double x;
+
+  public:
+    double add(int z) const {
+        return x + y + z;
     }
 };
 

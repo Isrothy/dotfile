@@ -155,7 +155,7 @@ M.config = function()
 			Event = "",
 			Operator = "",
 			TypeParameter = "",
-			Text = "  ",
+			Text = "",
 		},
 		-- Show box drawing characters for the tree hierarchy
 		show_guides = true,

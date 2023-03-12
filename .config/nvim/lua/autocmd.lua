@@ -27,6 +27,34 @@ vim.api.nvim_create_autocmd({ "TermOpen" }, {
 	end,
 })
 
+local ccfiletypes = {
+	c = "101",
+	cpp = "101",
+	java = "101",
+	javascript = "101",
+	javascriptreact = "101",
+	kotlin = "101",
+	lua = "121",
+	typescript = "101",
+	typescriptreact = "101",
+	rust = "101",
+	swift = "101",
+}
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	group = vim.api.nvim_create_augroup("colorcolumn", { clear = true }),
+	callback = function(event)
+		local filetype = event.match
+		local matched = false
+		if ccfiletypes[filetype] then
+			vim.wo.colorcolumn = ccfiletypes[filetype]
+			matched = true
+		end
+		if not matched then
+			vim.wo.colorcolumn = ""
+		end
+	end,
+})
+
 -- vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 -- 	group = vim.api.nvim_create_augroup("ScrollEOF", { clear = true }),
 -- 	pattern = "*",

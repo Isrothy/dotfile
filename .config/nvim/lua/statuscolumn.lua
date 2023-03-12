@@ -67,13 +67,7 @@ _G.get_statuscol = function()
 		["signcol"] = "%{%v:lua.get_my_signcol(bufnr(), v:lnum)%}",
 		["space"] = " ",
 	}
-	local order = {
-		"space",
-		"signcol",
-		"sep",
-		"num",
-		"gitsigns",
-	}
+	local order = { "space", "signcol", "sep", "num", "gitsigns" }
 
 	for _, val in ipairs(order) do
 		table.insert(str_table, parts[val])

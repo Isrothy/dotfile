@@ -108,12 +108,12 @@ local Lspconfig = {
 		end
 		require("lspconfig.ui.windows").default_options.border = "rounded"
 
-		vim.api.nvim_create_autocmd("LspAttach", {
-			callback = function(args)
-				local client = vim.lsp.get_client_by_id(args.data.client_id)
-				client.server_capabilities.semanticTokensProvider = nil
-			end,
-		})
+		-- vim.api.nvim_create_autocmd("LspAttach", {
+		-- callback = function(args)
+		-- local client = vim.lsp.get_client_by_id(args.data.client_id)
+		-- client.server_capabilities.semanticTokensProvider = nil
+		-- end,
+		-- })
 
 		require("lspconfig").bashls.setup({
 			capabilities = make_capabilities(),
@@ -614,14 +614,6 @@ local null_ls = {
 				null_ls.builtins.formatting.xmllint,
 			},
 		})
-		-- require("null-ls").register({
-		-- 	name = "more_actions",
-		-- 	method = { require("null-ls").methods.CODE_ACTION },
-		-- 	filetypes = { "_all" },
-		-- 	generator = {
-		-- 		fn = require("ts-node-action").available_actions,
-		-- 	},
-		-- })
 	end,
 }
 

@@ -74,10 +74,99 @@ return {
 	{
 		"chrisgrieser/nvim-various-textobjs",
 		event = { "BufRead", "BufNewFile" },
+		init = function()
+			local ftMaps = {
+				{
+					map = { jsRegex = "/" },
+					fts = { "javascript", "typescript" },
+				},
+				{
+					map = { mdlink = "l" },
+					fts = { "markdown", "toml" },
+				},
+				{
+					map = { mdFencedCodeBlock = "C" },
+					fts = { "markdown" },
+				},
+				{
+					map = { doubleSquareBrackets = "D" },
+					fts = { "lua", "norg", "sh", "fish", "zsh", "bash", "markdown" },
+				},
+				{
+					map = { cssSelector = "c" },
+					fts = { "css", "scss" },
+				},
+				{
+					map = { shellPipe = "P" },
+					fts = { "sh", "bash", "zsh", "fish" },
+				},
+			}
+			local keymap = vim.keymap.set
+			vim.api.nvim_create_augroup("VariousTextobjs", {})
+			for _, textobj in pairs(ftMaps) do
+				vim.api.nvim_create_autocmd("FileType", {
+					group = "VariousTextobjs",
+					pattern = textobj.fts,
+					callback = function()
+						for objName, map in pairs(textobj.map) do
+							local name = " " .. objName .. " textobj"
+							keymap({ "o", "x" }, "a" .. map, function()
+								require("various-textobjs")[objName](false)
+							end, { desc = "outer" .. name, buffer = true })
+							keymap({ "o", "x" }, "i" .. map, function()
+								require("various-textobjs")[objName](true)
+							end, { desc = "inner" .. name, buffer = true })
+						end
+					end,
+				})
+			end
+		end,
+
 		config = function()
 			require("various-textobjs").setup({
-				useDefaultKeymaps = true,
+				useDefaultKeymaps = false,
 			})
+			local innerOuterMaps = {
+				number = "N",
+				value = "v",
+				key = "k",
+				subword = "S",
+			}
+			local oneMaps = {
+				nearEoL = "n",
+				restOfParagraph = "r",
+				restOfIndentation = "R",
+				diagnostic = "!",
+				column = "|",
+				entireBuffer = "gG",
+				url = "L", -- uppercase to avoid conflict with some comments plugin mapping `u` to comments textobjs for undoing
+			}
+			local keymap = vim.keymap.set
+			for objName, map in pairs(innerOuterMaps) do
+				local name = " " .. objName .. " textobj"
+				keymap({ "o", "x" }, "a" .. map, function()
+					require("various-textobjs")[objName](false)
+				end, { desc = "outer" .. name })
+				keymap({ "o", "x" }, "i" .. map, function()
+					require("various-textobjs")[objName](true)
+				end, { desc = "inner" .. name })
+			end
+			for objName, map in pairs(oneMaps) do
+				keymap({ "o", "x" }, map, require("various-textobjs")[objName], { desc = objName .. " textobj" })
+			end
+
+			keymap({ "o", "x" }, "ii", function()
+				require("various-textobjs").indentation(true, true)
+			end, { desc = "inner-inner indentation textobj" })
+			keymap({ "o", "x" }, "ai", function()
+				require("various-textobjs").indentation(false, true)
+			end, { desc = "outer-inner indentation textobj" })
+			keymap({ "o", "x" }, "iI", function()
+				require("various-textobjs").indentation(true, true)
+			end, { desc = "inner-inner indentation textobj" })
+			keymap({ "o", "x" }, "aI", function()
+				require("various-textobjs").indentation(false, false)
+			end, { desc = "outer-outer indentation textobj" })
 		end,
 	},
 	{
