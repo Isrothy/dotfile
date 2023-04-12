@@ -30,6 +30,8 @@ require("lazy").setup("plugins", {
 				"matchit",
 				"matchparen",
 				"netrwPlugin",
+				"spellfile",
+				"shada",
 				"tarPlugin",
 				"tohtml",
 				"tutor",

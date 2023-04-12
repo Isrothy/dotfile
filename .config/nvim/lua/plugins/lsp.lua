@@ -13,7 +13,6 @@ local handlers = {
 	["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
 	["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
 }
-
 local make_capabilities = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
@@ -28,9 +27,6 @@ local hl_word = function(client, bufnr)
 
 		vim.api.nvim_set_hl(0, "LspReferenceText", { bg = c.polar_night.brightest, fg = "NONE" })
 		vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = c.polar_night.brightest, fg = "NONE" })
-		-- vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "NONE", fg = "NONE", underline = true })
-		-- vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "NONE", fg = "NONE", underline = true })
-		-- vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "NONE", fg = "NONE", underline = true })
 
 		vim.api.nvim_create_augroup("lsp_document_highlight", {
 			clear = false,
@@ -54,33 +50,55 @@ end
 
 local set_key_map = function(_, bufnr)
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	vim.keymap.set("n", "g<c-d>", vim.lsp.buf.declaration, bufopts)
-	vim.keymap.set("n", "gD", function()
+	local map = vim.keymap.set
+	map("n", "g<c-d>", vim.lsp.buf.declaration, bufopts)
+	map("n", "gD", function()
 		require("telescope.builtin").lsp_type_definitions({ jump_type = "never" })
 	end, bufopts)
 
-	vim.keymap.set("n", "gd", function()
+	map("n", "gd", function()
 		require("telescope.builtin").lsp_definitions({ jump_type = "never" })
 	end, bufopts)
 
-	vim.keymap.set("n", "gi", function()
+	map("n", "gi", function()
 		require("telescope.builtin").lsp_implementations({ jump_type = "never" })
 	end, bufopts)
 
-	vim.keymap.set("n", "gr", function()
+	map("n", "gr", function()
 		require("telescope.builtin").lsp_references({ jump_type = "never" })
 	end, bufopts)
 
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-	vim.keymap.set("n", "<Leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-	vim.keymap.set("n", "<Leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-	vim.keymap.set("n", "<Leader>wl", function()
+	-- map("n", "K", vim.lsp.buf.hover, bufopts)
+	map("n", "K", '<cmd>lua require("pretty_hover").hover()<cr>', bufopts)
+	map("n", "<Leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+	map("n", "<Leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+	map("n", "<Leader>wl", function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, bufopts)
 	-- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-	vim.keymap.set({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, bufopts)
-	vim.keymap.set("n", "<leader>f", function()
+	map("n", "<leader>rn", function()
+		return ":IncRename " .. vim.fn.expand("<cword>")
+	end, {
+		noremap = true,
+		silent = true,
+		buffer = bufnr,
+		expr = true,
+	})
+	map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, bufopts)
+	map("n", "<leader>f", function()
 		vim.lsp.buf.format({ async = true })
+	end, bufopts)
+	-- range format
+	map("v", "<leader>f", function()
+		local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
+		local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
+		vim.lsp.buf.format({
+			range = {
+				["start"] = { start_row, 0 },
+				["end"] = { end_row, 0 },
+			},
+			async = true,
+		})
 	end, bufopts)
 end
 
@@ -114,17 +132,11 @@ local Lspconfig = {
 		end
 		require("lspconfig.ui.windows").default_options.border = "rounded"
 
-		-- vim.api.nvim_create_autocmd("LspAttach", {
-		-- callback = function(args)
-		-- local client = vim.lsp.get_client_by_id(args.data.client_id)
-		-- client.server_capabilities.semanticTokensProvider = nil
-		-- end,
-		-- })
-
 		require("lspconfig").bashls.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
 			on_attach = function(client, bufnr)
+				set_key_map(client, bufnr)
 				hl_word(client, bufnr)
 			end,
 		})
@@ -182,8 +194,8 @@ local Lspconfig = {
 			capabilities = make_capabilities(),
 			handlers = handlers,
 			on_attach = function(client, bufnr)
-				hl_word(client, bufnr)
 				set_key_map(client, bufnr)
+				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").kotlin_language_server.setup({
@@ -191,52 +203,74 @@ local Lspconfig = {
 			handlers = handlers,
 			single_file_support = true,
 			on_attach = function(client, bufnr)
-				hl_word(client, bufnr)
 				set_key_map(client, bufnr)
+				hl_word(client, bufnr)
 			end,
 		})
-		require("lspconfig").pylsp.setup({
+		-- require("lspconfig").pylsp.setup({
+		-- 	capabilities = make_capabilities(),
+		-- 	handlers = handlers,
+		-- 	on_attach = function(client, bufnr)
+		-- 		-- hl_word(client, bufnr)
+		-- 		set_key_map(client, bufnr)
+		-- 	end,
+		-- 	settings = {
+		-- 		pylsp = {
+		-- 			plugins = {
+		-- 				flake8 = {
+		-- 					enabled = false,
+		-- 				},
+		-- 				pyflakes = {
+		-- 					enabled = false,
+		-- 				},
+		-- 				pylint = {
+		-- 					enabled = false,
+		-- 				},
+		-- 			},
+		-- 		},
+		-- 	},
+		-- })
+		-- require("lspconfig").pyright.setup({
+		-- 	-- capabilities = make_capabilities(),
+		-- 	handlers = handlers,
+		-- 	on_attach = function(client, bufnr)
+		-- 		set_key_map(client, bufnr)
+		-- 		-- hl_word(client, bufnr)
+		-- 	end,
+		-- 	settings = {
+		-- 		python = {
+		-- 			analysis = {
+		-- 				autoSearchPaths = true,
+		-- 				diagnosticMode = "workspace",
+		-- 				useLibraryCodeForTypes = true,
+		-- 			},
+		-- 		},
+		-- 	},
+		-- })
+		require("lspconfig").jedi_language_server.setup({
 			capabilities = make_capabilities(),
 			handlers = handlers,
 			on_attach = function(client, bufnr)
-				hl_word(client, bufnr)
 				set_key_map(client, bufnr)
 			end,
-			settings = {
-				pylsp = {
-					plugins = {
-						flake8 = {
-							enabled = true,
-						},
-						pyflakes = {
-							enabled = false,
-						},
-						pylint = {
-							enabled = false,
-						},
-						mccabe = {
-							enabled = false,
-						},
-					},
-				},
-			},
 		})
-		-- require("lspconfig").pyright.setup({
+		-- require("lspconfig").pylyzer.setup({
+		-- 	filetypes = { "python" },
 		-- 	capabilities = make_capabilities(),
 		-- 	handlers = handlers,
 		-- 	on_attach = function(client, bufnr)
 		-- 		set_key_map(client, bufnr)
 		-- 		hl_word(client, bufnr)
 		-- 	end,
+		-- 	settings = {
+		-- 		python = {
+		-- 			checkOnType = true,
+		-- 			diagnostics = true,
+		-- 			inlayHints = true,
+		-- 			smartCompletion = true,
+		-- 		},
+		-- 	},
 		-- })
-		require("lspconfig").r_language_server.setup({
-			capabilities = make_capabilities(),
-			handlers = handlers,
-			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
-				hl_word(client, bufnr)
-			end,
-		})
 		require("lspconfig").sourcekit.setup({
 			filetypes = { "swift", "objective-c" },
 			single_file_support = true,
@@ -251,8 +285,8 @@ local Lspconfig = {
 			capabilities = make_capabilities(),
 			handlers = handlers,
 			on_attach = function(client, bufnr)
-				hl_word(client, bufnr)
 				set_key_map(client, bufnr)
+				hl_word(client, bufnr)
 				client.server_capabilities.documentFormattingProvider = false
 			end,
 			settings = {
@@ -541,6 +575,7 @@ local sqls = {
 			handlers = handlers,
 			on_attach = function(client, bufnr)
 				require("sqls").on_attach(client, bufnr)
+				hl_word(client, bufnr)
 				set_key_map(client, bufnr)
 				client.server_capabilities.documentFormattingProvider = false
 			end,
@@ -585,13 +620,22 @@ local null_ls = {
 				null_ls.builtins.diagnostics.checkmake,
 				null_ls.builtins.diagnostics.hadolint,
 				null_ls.builtins.diagnostics.gitlint,
+				null_ls.builtins.diagnostics.pylint.with({
+					args = {
+						"--from-stdin",
+						"$FILENAME",
+						"-f",
+						"json",
+						"--errors-only",
+					},
+				}),
 				-- null_ls.builtins.diagnostics.swiftlint,
 				-- null_ls.builtins.diagnostics.yamllint,
 				null_ls.builtins.diagnostics.zsh,
 
 				-- null_ls.builtins.code_actions.shellcheck,
 
-				-- null_ls.builtins.formatting.autopep8,
+				null_ls.builtins.formatting.autopep8,
 				-- null_ls.builtins.formatting.clang_format,
 				null_ls.builtins.formatting.cmake_format,
 				null_ls.builtins.formatting.markdownlint,

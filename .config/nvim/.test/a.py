@@ -1,3 +1,4 @@
+import array
 import numpy
 
 x = 10
@@ -13,6 +14,3 @@ for i in range(0, 10):
 while True:
     print("Hello World")
     break
-
-
-# Path: .test/b.py

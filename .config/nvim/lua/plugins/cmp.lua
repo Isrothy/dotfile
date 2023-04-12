@@ -3,12 +3,12 @@ local CMP = {
 	event = { "InsertEnter", "CmdlineEnter" },
 	enabled = true,
 	-- init = function()
-		-- vim.api.nvim_create_autocmd({ "InsertEnter", "CursorHoldI" }, {
-		-- 	callback = function(_)
-		-- 		local cmp = require("cmp")
-		-- 		cmp.complete()
-		-- 	end,
-		-- })
+	-- vim.api.nvim_create_autocmd({ "InsertEnter", "CursorHoldI" }, {
+	-- 	callback = function(_)
+	-- 		local cmp = require("cmp")
+	-- 		cmp.complete()
+	-- 	end,
+	-- })
 	-- end,
 }
 
@@ -49,33 +49,32 @@ CMP.config = function()
 	end
 
 	local kind_icons = {
-		Copilot = "  ",
-		Codeium = "{…}",
-		Text = "  ",
-		Method = "  ",
-		Function = "  ",
-		Constructor = "  ",
-		Field = "  ",
-		Variable = "  ",
-		Class = " ﴯ ",
-		Interface = "  ",
-		Module = "  ",
-		Property = " ﰠ ",
-		Unit = "  ",
-		Value = "  ",
-		Enum = "  ",
-		Keyword = "  ",
-		Snippet = "  ",
-		Color = "  ",
-		File = "  ",
-		Reference = "  ",
-		Folder = "  ",
-		EnumMember = "  ",
-		Constant = "  ",
-		Struct = "  ",
-		Event = "  ",
-		Operator = "  ",
-		TypeParameter = "  ",
+		Copilot = "",
+		Text = "",
+		Method = "",
+		Function = "",
+		Constructor = "",
+		Field = "",
+		Variable = "",
+		Class = "ﴯ",
+		Interface = "",
+		Module = "",
+		Property = "ﰠ",
+		Unit = "",
+		Value = "",
+		Enum = "",
+		Keyword = "",
+		Snippet = "",
+		Color = "",
+		File = "",
+		Reference = "",
+		Folder = "",
+		EnumMember = "",
+		Constant = "",
+		Struct = "",
+		Event = "",
+		Operator = "",
+		TypeParameter = "",
 	}
 
 	-- nvim-cmp setup
@@ -280,7 +279,6 @@ CMP.config = function()
 	-- endfunction
 	-- ]])
 end
-
 local LuaSnip = {
 	"L3MON4D3/LuaSnip",
 	version = "v1.1.x",

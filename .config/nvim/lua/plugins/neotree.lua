@@ -10,8 +10,8 @@ local M = {
 	},
 	keys = {
 		{ "<F2>", "<cmd>Neotree filesystem toggle<cr>" },
-		{ "<F3>", "<cmd>Neotree buffers toggle<cr>" },
-		{ "<F4>", "<cmd>Neotree git_status toggle<cr>" },
+		{ "<F3>", "<cmd>Neotree buffers toggle <cr>" },
+		{ "<F4>", "<cmd>Neotree git_status toggle <cr>" },
 	},
 }
 
@@ -366,24 +366,8 @@ M.config = function()
 				["q"] = "close_window",
 				["R"] = "refresh",
 				["?"] = "show_help",
-				["h"] = function(state)
-					local node = state.tree:get_node()
-					if node.type == "directory" and node:is_expanded() then
-						require("neo-tree.sources.filesystem").toggle_directory(state, node)
-					else
-						require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
-					end
-				end,
-				["l"] = function(state)
-					local node = state.tree:get_node()
-					if node.type == "directory" then
-						if not node:is_expanded() then
-							require("neo-tree.sources.filesystem").toggle_directory(state, node)
-						elseif node:has_children() then
-							require("neo-tree.ui.renderer").focus_node(state, node:get_child_ids()[1])
-						end
-					end
-				end,
+				["h"] = "",
+				["l"] = "",
 
 				["z"] = "none",
 
@@ -399,6 +383,10 @@ M.config = function()
 				["zM"] = neotree_zM,
 				["zr"] = neotree_zr,
 				["zR"] = neotree_zR,
+				["<m-h>"] = "none",
+				["<m-j>"] = "none",
+				["<m-k>"] = "none",
+				["<m-l>"] = "none",
 			},
 		},
 		nesting_rules = {},
@@ -448,7 +436,7 @@ M.config = function()
 			},
 		},
 		buffers = {
-			follow_current_file = true, -- This will find and focus the file in the active buffer every
+			follow_current_file = false, -- This will find and focus the file in the active buffer every
 			-- time the current file is changed while the tree is open.
 			group_empty_dirs = true, -- when true, empty folders will be grouped together
 			show_unloaded = true,
@@ -500,24 +488,6 @@ M.config = function()
 				},
 			},
 		},
-		-- event_handlers = {
-		-- 	{
-		-- 		event = "neo_tree_window_after_open",
-		-- 		handler = function(args)
-		-- 			if args.position == "left" or args.position == "right" then
-		-- 				vim.cmd("wincmd =")
-		-- 			end
-		-- 		end,
-		-- 	},
-		-- 	{
-		-- 		event = "neo_tree_window_after_close",
-		-- 		handler = function(args)
-		-- 			if args.position == "left" or args.position == "right" then
-		-- 				vim.cmd("wincmd =")
-		-- 			end
-		-- 		end,
-		-- 	},
-		-- },
 	})
 
 	vim.g.neo_tree_remove_legacy_commands = 1

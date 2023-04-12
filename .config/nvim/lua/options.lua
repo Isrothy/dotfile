@@ -14,8 +14,9 @@ vim.o.foldenable = true
 -- vim.opt.foldmethod = "syntax"
 -- vim.opt.foldmethod = "manual"
 -- vim.opt.foldmethod = "indent"
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.opt.foldtext = "v:folddashes.substitute(getline(v:foldstart),'/\\*\\|\\*/\\|{{{\\d\\=','','g')"
 
 vim.opt.undofile = true
 
@@ -64,7 +65,7 @@ vim.opt.encoding = "utf-8"
 vim.opt.termencoding = "utf-8"
 
 --session
-vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,localoptions"
 
 -- indentation & format settings
 vim.opt.autoindent = true

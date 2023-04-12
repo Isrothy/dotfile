@@ -1,5 +1,6 @@
 local TS = {
 	"nvim-treesitter/nvim-treesitter",
+	enabled = true,
 	event = { "BufReadPost", "BufNewFile" },
 	build = ":TSUpdate",
 
@@ -26,6 +27,9 @@ local TS = {
 				-- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
 				extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
 				max_file_lines = nil, -- Do not enable for files with more than n lines, int
+
+				-- query = "rainbow-parens",
+				-- strategy = require("ts-rainbow").strategy.global,
 			},
 			incremental_selection = {
 				enable = true,
@@ -47,7 +51,7 @@ local TS = {
 				enable = true,
 			},
 			endwise = {
-				enable = false,
+				enable = true,
 			},
 			matchup = {
 				enable = false,
@@ -242,18 +246,21 @@ local rainbow = {
 	enabled = true,
 	event = { "BufReadPost", "BufNewFile" },
 }
-
+-- local rainbow = {
+-- 	"HiPhish/nvim-ts-rainbow2",
+-- 	event = { "BufReadPost", "BufNewFile" },
+-- }
 local endwise = {
 	"RRethy/nvim-treesitter-endwise",
-	event = { "BufReadPost", "BufNewFile" },
-	ft = {
-		"lua",
-		"vim",
-		"ruby",
-		"bash",
-		"zsh",
-		"sh",
-	},
+	event = { "InsertEnter" },
+	-- ft = {
+	-- 	"lua",
+	-- 	"vim",
+	-- 	"ruby",
+	-- 	"bash",
+	-- 	"zsh",
+	-- 	"sh",
+	-- },
 }
 
 local autotag = {
@@ -295,17 +302,17 @@ local node_marker = {
 		})
 	end,
 }
---
--- local local_highlight = {
--- 	"tzachar/local-highlight.nvim",
--- 	event = { "BufReadPost", "BufNewFile" },
--- 	enabled = false,
--- 	config = function()
--- 		require("local-highlight").setup({
--- 			hlgroup = "TSDefinitionUsage",
--- 		})
--- 	end,
--- }
+local local_highlight = {
+	"tzachar/local-highlight.nvim",
+	event = { "BufReadPost", "BufNewFile" },
+	enabled = false,
+	config = function()
+		require("local-highlight").setup({
+			hlgroup = "TSDefinitionUsage",
+			cw_hlgroup = "TSDefinitionUsage",
+		})
+	end,
+}
 
 local treesj = {
 	"Wansmer/treesj",
@@ -322,6 +329,63 @@ local treesj = {
 	end,
 }
 
+local regexplainer = {
+	"bennypowers/nvim-regexplainer",
+	keys = "gR",
+	requires = {
+		"nvim-treesitter/nvim-treesitter",
+		"MunifTanjim/nui.nvim",
+	},
+	config = function()
+		require("regexplainer").setup({
+			-- 'narrative'
+			mode = "narrative", -- TODO: 'ascii', 'graphical'
+
+			-- automatically show the explainer when the cursor enters a regexp
+			auto = false,
+
+			-- filetypes (i.e. extensions) in which to run the autocommand
+			filetypes = {
+				"html",
+				"js",
+				"cjs",
+				"mjs",
+				"ts",
+				"jsx",
+				"tsx",
+				"cjsx",
+				"mjsx",
+				"swift",
+			},
+
+			-- Whether to log debug messages
+			debug = false,
+
+			-- 'split', 'popup'
+			display = "popup",
+
+			mappings = {
+				toggle = "gR",
+				-- examples, not defaults:
+				-- show = 'gS',
+				-- hide = 'gH',
+				-- show_split = 'gP',
+				-- show_popup = 'gU',
+			},
+			popup = {
+				border = {
+					padding = { 0, 0 },
+					style = "rounded",
+				},
+			},
+
+			narrative = {
+				separator = "\n",
+			},
+		})
+	end,
+}
+
 return {
 	TS,
 	iswap,
@@ -329,8 +393,11 @@ return {
 	indent_blankline,
 	rainbow,
 	femaco,
+	endwise,
+	local_highlight,
 	autotag,
 	neogen,
 	node_marker,
 	treesj,
+	regexplainer,
 }

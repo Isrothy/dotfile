@@ -5,7 +5,7 @@ local M = {
 	},
 	event = { "BufReadPost", "BufNewFile" },
 	lazy = false,
-	enabled = true,
+	enabled = false,
 	-- event = "User isfolded",
 }
 

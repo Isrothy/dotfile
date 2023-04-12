@@ -30,82 +30,117 @@ return {
 					space = true,
 					multichar = true,
 					fallback = nil,
+					extensions = require("ultimate-autopair.maps.bs").default_extensions,
 				},
 				cr = {
 					enable = true,
 					autoclose = true,
 					multichar = {
-						markdown = {
-							{
-								"```",
-								"```",
-								pair = true,
-								noalpha = true,
-								next = true,
-							},
-						},
-						lua = {
-							{ "then", "end" },
-							{ "do", "end" },
-						},
+						enable = true,
+						markdown = { { "```", "```", pair = true, noalpha = true, next = true } },
 					},
-					addsemi = {
-						"c",
-						"cpp",
-						"java",
-						"javascript",
-						"javascriptreact",
-						"typescript",
-						"typescriptreact",
-						"rust",
-					},
+					addsemi = { "c", "cpp", "rust" },
 					fallback = nil,
+					extensions = require("ultimate-autopair.maps.cr").default_extensions,
 				},
 				space = {
 					enable = true,
 					fallback = nil,
 				},
 				fastwarp = {
-					enable = true,
-					map = "<m-e>",
-					Wmap = "<m-E>",
-					cmap = "<m-e>",
-					Wcmap = "<m-E>",
+					enable = false,
+					hopout = false,
+					map = "<M-e>",
+					rmap = "<M-E>",
+					Wmap = "<M-C-e>",
+					cmap = "<M-e>",
+					rcmap = "<M-E>",
+					Wcmap = "<M-C-e>",
+					multiline = true,
 					fallback = nil,
+					extensions = require("ultimate-autopair.maps.fastwarp").default_extensions,
+					endextensions = require("ultimate-autopair.maps.fastwarp").default_endextensions,
+					rextensions = require("ultimate-autopair.maps.rfastwarp").default_extensions,
+					rendextensions = require("ultimate-autopair.maps.rfastwarp").default_endextensions,
 				},
 				fastend = {
 					enable = true,
-					map = "<m-$>",
-					cmap = "<m-$>",
+					map = "<M-$>",
+					cmap = "<M-$>",
+					smart = false,
 					fallback = nil,
 				},
+				-- _default_beg_filter = M.default_beg_filter,
+				-- _default_end_filter = M.default_end_filter,
 				extensions = {
 					{ "cmdtype", { "/", "?", "@" } },
-					--'indentblock',
 					"multichar",
 					"string",
 					{ "treenode", { inside = { "comment" } } },
-					"escape",
+					{ "escape", { filter = true } },
 					"rules",
 					"filetype",
 					{ "alpha", { before = { "'" } } },
 					{ "suround", { '"', "'" } },
-					{ "fly", { ")", "}", "]", " " } },
+					{ "fly", { ")", "}", "]", " ", match = nil, nofilter = false } },
 				},
-				{ "(", ")" },
-				{ "'", "'", rules = { { "when", { "option", "lisp" }, { "instring" } } } },
-				rules = { --only runs if the extension rules is loaded
-					{ [[\']], [[\']], rules = { { "not", { "or", { "next", "'" }, { "previous", "\\", 2 } } } } },
-					{ [[\"]], [[\"]], rules = { { "not", { "or", { "next", '"' }, { "previous", "\\", 2 } } } } },
-				},
-				ft = {
-					markdown = {
-						{ "```", "```" },
-						{ "<!--", "-->" },
+				internal_pairs = {
+					{ "(", ")" },
+					{ "'", "'", rules = { { "when", { "option", "lisp" }, { "instring" } } } },
+					{ "'", "'", rules = { { "not", { "filetype", "tex" } } } },
+					rules = { --only runs if the extension rules is loaded
+						{
+							[[\']],
+							[[\']],
+							rules = {
+								{
+									"and",
+									{ "not", { "or", { "next", "'" }, { "previous", "\\", 2 } } },
+									{
+										"instring",
+									},
+								},
+							},
+						},
+						{
+							[[\"]],
+							[[\"]],
+							rules = {
+								{
+									"and",
+									{ "not", { "or", { "next", '"' }, { "previous", "\\", 2 } } },
+									{
+										"instring",
+									},
+								},
+							},
+						},
 					},
-					---more...
+					ft = {
+						markdown = {
+							{ "```", "```" },
+							{ "<!--", "-->" },
+						},
+						TelescopePrompt = { disable = true },
+					},
 				},
-				---more...
+			})
+		end,
+	},
+	{
+		"altermo/npairs-integrate-upair",
+		dependencies = { "windwp/nvim-autopairs", "altermo/ultimate-autopair.nvim" },
+		event = { "InsertEnter", "CmdlineEnter" },
+		enabled = false,
+		config = function()
+			require("npairs-int-upair").setup({
+				map = "n", --which of them should be the insert mode autopair
+				cmap = "u", --which of them should be the cmd mode autopair (only 'u' supported)
+				bs = "n", --which of them should be the backspace
+				cr = "n", --which of them should be the newline
+				space = "u", --which of them should be the space (only 'u' supported)
+				c_h = "n", --which of them should be the <C-h> (only 'n' supported)
+				c_w = "n", --which of them should be the <C-w> (only 'n' supported)
 			})
 		end,
 	},

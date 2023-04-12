@@ -44,6 +44,16 @@ long long ex_gcd(long long a, long long b, long long &x, long long &y) {
     return d;
 }
 
+/**
+ *
+ * @param a aa
+ * @param p pp
+ * @return inverse
+ * @author Firstname Lastname
+ * @date 2020/12/14
+ * @description
+ * @version 1.0
+ */
 long long inv(long long a, long long p) {
     long long x, y;
     ex_gcd(a, p, x, y);

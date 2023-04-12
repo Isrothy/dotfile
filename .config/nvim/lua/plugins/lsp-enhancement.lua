@@ -1,6 +1,6 @@
 local lightbulb = {
 	"kosayoda/nvim-lightbulb",
-	event = { "BufReadPost", "BufNewFile" },
+	event = { "LspAttach" },
 	config = function()
 		require("nvim-lightbulb").setup({
 			-- LSP client names to ignore
@@ -81,16 +81,15 @@ local actionHint = {
 local inc_rename = {
 	"smjonas/inc-rename.nvim",
 	enabled = true,
-	event = "VeryLazy",
-	keys = {
-		{
-			"<leader>rn",
-			function()
-				return ":IncRename " .. vim.fn.expand("<cword>")
-			end,
-			expr = true,
-		},
-	},
+	-- keys = {
+	-- 	{
+	-- 		"<leader>rn",
+	-- 		function()
+	-- 			return ":IncRename " .. vim.fn.expand("<cword>")
+	-- 		end,
+	-- 		expr = true,
+	-- 	},
+	-- },
 	config = function()
 		require("inc_rename").setup()
 	end,
@@ -98,7 +97,7 @@ local inc_rename = {
 
 local neo_dim = {
 	"zbirenbaum/neodim",
-	event = { "BufRead", "BufNewFile" },
+	event = { "LspAttach" },
 	enabled = true,
 	config = function()
 		local c = require("nord.colors").palette
@@ -128,7 +127,8 @@ local trouble = {
 	},
 	dependencies = "nvim-tree/nvim-web-devicons",
 	keys = {
-		{ "<F6>", "<cmd>TroubleToggle<cr>", noremap = true },
+		{ "<F5>", "<cmd>TroubleClose<cr>", noremap = true },
+		{ "<F6>", "<cmd>Trouble workspace_diagnostics<cr>", noremap = true },
 		{ "<leader>xx", "<cmd>TroubleToggle<cr>", noremap = true },
 		{ "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", noremap = true },
 		{ "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", noremap = true },
@@ -189,7 +189,7 @@ local trouble = {
 
 local lsp_lens = {
 	"VidocqH/lsp-lens.nvim",
-	event = { "BufReadPost", "BufNewFile" },
+	event = { "LspAttach" },
 	config = function()
 		require("lsp-lens").setup({
 			enable = true,
@@ -204,10 +204,36 @@ local lsp_lens = {
 	end,
 }
 
+local pretty_hover = {
+	"Fildo7525/pretty_hover",
+	config = function()
+		require("pretty_hover").setup({
+			line = {
+				"@brief",
+			},
+			word = {
+				"@param",
+				"@tparam",
+				"@see",
+			},
+			header = {
+				"@class",
+			},
+			stylers = {
+				line = "**",
+				word = "`",
+				header = "###",
+			},
+			border = "rounded",
+		})
+	end,
+}
+
 return {
 	lightbulb,
 	inc_rename,
 	neo_dim,
 	trouble,
-	lsp_lens,
+	-- lsp_lens,
+	pretty_hover,
 }

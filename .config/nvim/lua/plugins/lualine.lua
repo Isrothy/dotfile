@@ -14,39 +14,6 @@ M.config = function()
 		return (vim.bo.expandtab and "SP" or "TAB") .. vim.bo.tabstop
 	end
 
-	--- Trailing whitespaces
-	local function trailing_whitespace()
-		local space = vim.fn.search([[\s\+$]], "nwc")
-		return space ~= 0 and "TW:" .. space or ""
-	end
-
-	--- Mixed indent
-	local function mixed_indent()
-		local space_pat = [[\v^ +]]
-		local tab_pat = [[\v^\t+]]
-		local space_indent = vim.fn.search(space_pat, "nwc")
-		local tab_indent = vim.fn.search(tab_pat, "nwc")
-		local mixed = (space_indent > 0 and tab_indent > 0)
-		local mixed_same_line
-		if not mixed then
-			mixed_same_line = vim.fn.search([[\v^(\t+ | +\t)]], "nwc")
-			mixed = mixed_same_line > 0
-		end
-		if not mixed then
-			return ""
-		end
-		if mixed_same_line ~= nil and mixed_same_line > 0 then
-			return "MI:" .. mixed_same_line
-		end
-		local space_indent_cnt = vim.fn.searchcount({ pattern = space_pat, max_count = 1e3 }).total
-		local tab_indent_cnt = vim.fn.searchcount({ pattern = tab_pat, max_count = 1e3 }).total
-		if space_indent_cnt > tab_indent_cnt then
-			return "MI:" .. tab_indent
-		else
-			return "MI:" .. space_indent
-		end
-	end
-
 	---- Truncating components in smaller window
 	local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
 		return function(str)
@@ -70,10 +37,6 @@ M.config = function()
 				removed = gitsigns.removed,
 			}
 		end
-	end
-
-	local function codeiumIcon()
-		return "{…}"
 	end
 
 	local c = require("nord.colors").palette
@@ -109,8 +72,6 @@ M.config = function()
 		sections = {
 			lualine_a = {
 				{ "fancy_mode", width = 6 },
-				-- { require("recorder").recordingStatus },
-				-- { require("recorder").displaySlots },
 				{
 					"fancy_macro",
 					icon = { "⏺" },
@@ -129,6 +90,11 @@ M.config = function()
 					"diff",
 					source = diff_source,
 					colored = true,
+					symbols = {
+						added = " ",
+						modified = " ",
+						removed = " ",
+					},
 				},
 			},
 			lualine_c = {
@@ -173,7 +139,9 @@ M.config = function()
 			lualine_y = {
 				"fancy_filetype",
 				"fancy_lsp_servers",
-				codeiumIcon,
+				function()
+					return "{…}"
+				end,
 				"%3{codeium#GetStatusString()}",
 			},
 			lualine_z = {
@@ -181,7 +149,17 @@ M.config = function()
 					"fancy_searchcount",
 					icon = { "󰱽", color = { fg = c.snow_storm.origin } },
 				},
-				"location",
+				{
+					"selectioncount",
+				},
+				{
+					"fancy_location",
+					icon = {
+						"󰍒",
+						color = { fg = c.polar_night.brighter },
+						align = "right",
+					},
+				},
 				"filesize",
 			},
 		},
@@ -250,12 +228,12 @@ M.config = function()
 		extensions = {
 			"aerial",
 			"toggleterm",
+			"lazy",
 			"neo-tree",
+			"trouble",
 			"quickfix",
 		},
 	})
 end
 
-return {
-	M,
-}
+return M

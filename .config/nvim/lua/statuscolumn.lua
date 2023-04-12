@@ -22,7 +22,6 @@ local function make_sign_col(name)
 	local sign_defined = vim.fn.sign_getdefined(name)[1]
 	local sign_text = sign_defined.text
 	local texthl = sign_defined.texthl or "NONE"
-	-- vim.api.nvim_echo({ { vim.inspect(sign_defined), "WarningMsg" } }, true, {})
 	return mk_hl(texthl, sign_text)
 end
 
@@ -35,7 +34,6 @@ _G.get_statuscol_gitsign = function(bufnum, lnum)
 	if selected == nil then
 		return "  "
 	end
-	-- vim.api.nvim_echo({ { vim.inspect(selected), "WarningMsg" } }, true, {})
 	return make_sign_col(selected.name)
 end
 
@@ -54,7 +52,6 @@ _G.get_my_signcol = function(bufnum, lnum)
 	if selected == nil then
 		return "%2.2\\  "
 	end
-	-- vim.api.nvim_echo({ { vim.inspect(selected), "WarningMsg" } }, true, {})
 	return make_sign_col(selected.name)
 end
 
@@ -89,5 +86,5 @@ end
 -- vim.opt.number = true
 -- vim.opt.relativenumber = true
 -- vim.opt.numberwidth = 4
---
+
 vim.o.statuscolumn = "%!v:lua.get_statuscol()"

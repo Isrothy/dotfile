@@ -1,3 +1,5 @@
+local map = vim.keymap.set
+
 local yanky = {
 	"gbprod/yanky.nvim",
 	event = "VeryLazy",
@@ -45,28 +47,28 @@ local yanky = {
 				enabled = true,
 			},
 		})
-		vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-		vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-		vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-		vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+		map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+		map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+		map({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+		map({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
 
-		vim.keymap.set("n", "<M-n>", "<Plug>(YankyCycleForward)")
-		vim.keymap.set("n", "<M-p>", "<Plug>(YankyCycleBackward)")
+		map("n", "<M-n>", "<Plug>(YankyCycleForward)")
+		map("n", "<M-p>", "<Plug>(YankyCycleBackward)")
 
-		vim.keymap.set({ "n", "x" }, "y", "<Plug>(YankyYank)")
+		map({ "n", "x" }, "y", "<Plug>(YankyYank)")
 
-		vim.keymap.set("n", "]p", "<Plug>(YankyPutIndentAfterLinewise)")
-		vim.keymap.set("n", "[p", "<Plug>(YankyPutIndentBeforeLinewise)")
-		vim.keymap.set("n", "]P", "<Plug>(YankyPutIndentAfterLinewise)")
-		vim.keymap.set("n", "[P", "<Plug>(YankyPutIndentBeforeLinewise)")
+		map("n", "]p", "<Plug>(YankyPutIndentAfterLinewise)")
+		map("n", "[p", "<Plug>(YankyPutIndentBeforeLinewise)")
+		map("n", "]P", "<Plug>(YankyPutIndentAfterLinewise)")
+		map("n", "[P", "<Plug>(YankyPutIndentBeforeLinewise)")
 
-		vim.keymap.set("n", ">p", "<Plug>(YankyPutIndentAfterShiftRight)")
-		vim.keymap.set("n", "<p", "<Plug>(YankyPutIndentAfterShiftLeft)")
-		vim.keymap.set("n", ">P", "<Plug>(YankyPutIndentBeforeShiftRight)")
-		vim.keymap.set("n", "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)")
+		map("n", ">p", "<Plug>(YankyPutIndentAfterShiftRight)")
+		map("n", "<p", "<Plug>(YankyPutIndentAfterShiftLeft)")
+		map("n", ">P", "<Plug>(YankyPutIndentBeforeShiftRight)")
+		map("n", "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)")
 
-		vim.keymap.set("n", "=p", "<Plug>(YankyPutAfterFilter)")
-		vim.keymap.set("n", "=P", "<Plug>(YankyPutBeforeFilter)")
+		map("n", "=p", "<Plug>(YankyPutAfterFilter)")
+		map("n", "=P", "<Plug>(YankyPutBeforeFilter)")
 		require("telescope").load_extension("yank_history")
 	end,
 }
@@ -75,15 +77,15 @@ local substitute = {
 	"gbprod/substitute.nvim",
 	event = "VeryLazy",
 	init = function()
-		vim.keymap.set("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
-		vim.keymap.set("n", "ss", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
-		vim.keymap.set("n", "S", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
-		vim.keymap.set("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
+		map("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
+		map("n", "ss", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
+		map("n", "S", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
+		map("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
 
-		vim.keymap.set("n", "sx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
-		vim.keymap.set("n", "sxx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
-		vim.keymap.set("x", "X", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
-		vim.keymap.set("n", "sxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
+		map("n", "sx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
+		map("n", "sxx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
+		map("x", "X", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
+		map("n", "sxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
 	end,
 	config = function()
 		require("substitute").setup({
@@ -217,37 +219,37 @@ local dial = {
 			},
 		})
 
-		vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
-		vim.keymap.set("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true })
-		vim.keymap.set("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })
-		vim.keymap.set("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
-		vim.keymap.set("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
-		vim.keymap.set("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
+		map("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
+		map("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true })
+		map("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })
+		map("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
+		map("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
+		map("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
 	end,
 }
 
 local mini_move = {
 	"echasnovski/mini.move",
 	keys = {
-		{ "<M-j>", mode = { "n", "x" } },
-		{ "<M-k>", mode = { "n", "x" } },
-		{ "<M-h>", mode = { "n", "x" } },
-		{ "<M-l>", mode = { "n", "x" } },
+		{ "<M-left>", mode = { "n", "x" } },
+		{ "<M-right>", mode = { "n", "x" } },
+		{ "<M-up>", mode = { "n", "x" } },
+		{ "<M-down>", mode = { "n", "x" } },
 	},
 	config = function()
 		require("mini.move").setup({
 			mappings = {
 				-- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
-				left = "<M-h>",
-				right = "<M-l>",
-				down = "<M-j>",
-				up = "<M-k>",
+				left = "<M-left>",
+				right = "<M-right>",
+				down = "<M-down>",
+				up = "<M-up>",
 
 				-- Move current line in Normal mode
-				line_left = "<M-h>",
-				line_right = "<M-l>",
-				line_down = "<M-j>",
-				line_up = "<M-k>",
+				line_left = "<M-left>",
+				line_right = "<M-right>",
+				line_down = "<M-down>",
+				line_up = "<M-up>",
 			},
 		})
 	end,

@@ -56,48 +56,38 @@ M.config = function()
 		},
 		highlights = require("nord.plugins.bufferline").akinsho(),
 	})
-
-	vim.keymap.set({ "n" }, "<s-tab>", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true })
-	vim.keymap.set({ "n" }, "<tab>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true })
-	vim.keymap.set({ "n" }, "<M-,>", "<cmd>BufferLineMovePrev<cr>", { noremap = true, silent = true })
-	vim.keymap.set({ "n" }, "<M-.>", "<cmd>BufferLineMoveNext<cr>", { noremap = true, silent = true })
-	vim.keymap.set({ "n" }, "<leader>bp", "<cmd>BufferLinePick<cr>", { noremap = true, silent = true })
-	vim.keymap.set({ "n" }, "<leader>bc", "<cmd>BufferLinePickClose<cr>", { noremap = true, silent = true })
-	vim.keymap.set({ "n" }, "<leader>bl", "<cmd>BufferLineCloseLeft<cr>", { noremap = true, silent = true })
-	vim.keymap.set({ "n" }, "<leader>br", "<cmd>BufferLineCloseRight<cr>", { noremap = true, silent = true })
+	local map = vim.keymap.set
+	map({ "n" }, "<s-tab>", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true })
+	map({ "n" }, "<tab>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true })
+	map({ "n" }, "<M-,>", "<cmd>BufferLineMovePrev<cr>", { noremap = true, silent = true })
+	map({ "n" }, "<M-.>", "<cmd>BufferLineMoveNext<cr>", { noremap = true, silent = true })
+	map({ "n" }, "<leader>bc", "<cmd>BufferLinePickClose<cr>", { noremap = true, silent = true })
+	map({ "n" }, "<leader>bp", "<cmd>BufferLinePick<cr>", { noremap = true, silent = true })
+	map({ "n" }, "<leader>bl", "<cmd>BufferLineCloseLeft<cr>", { noremap = true, silent = true })
+	map({ "n" }, "<leader>br", "<cmd>BufferLineCloseRight<cr>", { noremap = true, silent = true })
 	for i = 1, 10 do
-		vim.keymap.set(
+		map(
 			"n",
 			string.format("<leader>%d", i % 10),
 			string.format("<cmd>lua require('bufferline').go_to_buffer(%d, false)<cr>", i),
 			{ noremap = true, silent = true, desc = string.format("Go to buffer %d", i) }
 		)
 	end
-	vim.keymap.set(
+	map(
 		"n",
 		"<leader>$",
 		"<Cmd>lua require('bufferline').go_to_buffer(-1, false)<CR>",
 		{ noremap = true, silent = true, desc = string.format("Go to last buffer") }
 	)
-	vim.keymap.set(
-		{ "n" },
-		"]b",
-		"<cmd>BufferLineCycleNext<cr>",
-		{ noremap = true, silent = true, desc = "Buffer forward" }
-	)
-	vim.keymap.set(
-		{ "n" },
-		"[b",
-		"<cmd>BufferLineCyclePrev<cr>",
-		{ noremap = true, silent = true, desc = "Buffer backward" }
-	)
-	vim.keymap.set(
+	map({ "n" }, "]b", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true, desc = "Buffer forward" })
+	map({ "n" }, "[b", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true, desc = "Buffer backward" })
+	map(
 		{ "n" },
 		"]B",
 		"<cmd>lua require('bufferline').go_to_buffer(-1, false<cr>)",
 		{ noremap = true, silent = true, desc = "Buffer last" }
 	)
-	vim.keymap.set(
+	map(
 		{ "n" },
 		"[B",
 		"<cmd>lua require('bufferline').go_to_buffer(1, false)<cr>",

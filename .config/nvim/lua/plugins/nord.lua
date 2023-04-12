@@ -74,6 +74,8 @@ M.config = function()
 			highlights.TSRainbowViolet = { fg = colors.aurora.purple }
 			highlights.TSRainbowWhite = { fg = colors.snow_storm.origin }
 
+			highlights.TSDefinitionUsage = { bg = colors.polar_night.brightest }
+
 			highlights.EyelinerPrimary = { fg = colors.aurora.orange, bold = true }
 			highlights.EyelinerSecondary = { fg = colors.frost.ice, bold = true }
 
