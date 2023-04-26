@@ -3,6 +3,7 @@ local map = vim.keymap.set
 local yanky = {
 	"gbprod/yanky.nvim",
 	event = "VeryLazy",
+	enabled = true,
 	config = function()
 		local utils = require("yanky.utils")
 		local mapping = require("yanky.telescope.mapping")

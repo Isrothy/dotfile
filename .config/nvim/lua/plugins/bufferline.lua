@@ -1,6 +1,6 @@
 local M = {
 	"akinsho/bufferline.nvim",
-	version = "v3.*",
+	version = "v4.*",
 	enabled = true,
 	event = { "BufReadPost", "BufNewFile" },
 	dependencies = "nvim-tree/nvim-web-devicons",
@@ -42,13 +42,10 @@ M.config = function()
 			end,
 
 			color_icons = true,
-			show_buffer_icons = true,
 			show_buffer_close_icons = false,
-			show_buffer_default_icon = true,
 			show_close_icon = false,
 			show_tab_indicators = true,
 			show_duplicate_prefix = true,
-
 			separator_style = "thin",
 			-- separator_style = "slant",
 			enforce_regular_tabs = false,

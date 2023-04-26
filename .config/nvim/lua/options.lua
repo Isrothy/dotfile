@@ -38,7 +38,7 @@ vim.opt.fillchars = {
 }
 
 vim.opt.virtualedit = { "block", "onemore" }
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.linebreak = true
 -- vim.opt.textwidth = 0
 -- vim.opt.wrapmargin =40

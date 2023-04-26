@@ -240,11 +240,19 @@ M.config = function()
 			statusline = false, -- toggle to show selector on statusline
 			show_scrolled_off_parent_node = false, -- this will replace the tabs with the parent path
 			-- of the top visible node when scrolled down.
-			tab_labels = { -- falls back to source_name if nil
-				filesystem = "  Files ",
-				buffers = "  Buffers ",
-				git_status = "  Git ",
-				diagnostics = " 裂Diagnostics ",
+			sources = { -- falls back to source_name if nil
+				{
+					source = "filesystem", -- string
+					display_name = "  Files ", -- string | nil
+				},
+				{
+					source = "buffers", -- string
+					display_name = "  Buffers ", -- string | nil
+				},
+				{
+					source = "git_status", -- string
+					display_name = "  Git ", -- string | nil
+				},
 			},
 			content_layout = "center", -- only with `tabs_layout` = "equal", "focus"
 			--                start  : |/ 裡 bufname     \/...

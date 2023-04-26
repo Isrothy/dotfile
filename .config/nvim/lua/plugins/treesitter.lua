@@ -234,7 +234,7 @@ local indent_blankline = {
 			char_blankline = "▎",
 			context_char = "▎",
 			-- space_char_blankline = " ",
-			use_treesitter_scope = true,
+			use_treesitter_scope = false,
 			show_current_context = true,
 			show_current_context_start = true,
 		})
@@ -316,6 +316,7 @@ local local_highlight = {
 
 local treesj = {
 	"Wansmer/treesj",
+	enabled = true,
 	keys = {
 		{ "<leader>s", desc = "Split lines" },
 		{ "<leader>j", desc = "Join lines" },
@@ -386,11 +387,24 @@ local regexplainer = {
 	end,
 }
 
+-- local identmini = {
+-- 	"nvimdev/indentmini.nvim",
+-- 	event = "BufEnter",
+-- 	config = function()
+-- 		require("indentmini").setup({
+-- 			char = "|",
+-- 		})
+-- 		vim.cmd.highlight("default link IndentLine Comment")
+-- 	end,
+-- 	-- this is no required but if you want indent blanklink line this is needed
+-- 	dependencies = { "nvim-treesitter/nvim-treesitter" },
+-- }
+
 return {
 	TS,
 	iswap,
 	commentstring,
-	indent_blankline,
+	-- indent_blankline,
 	rainbow,
 	femaco,
 	endwise,
@@ -400,4 +414,5 @@ return {
 	node_marker,
 	treesj,
 	regexplainer,
+	-- identmini,
 }

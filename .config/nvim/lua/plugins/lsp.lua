@@ -410,6 +410,7 @@ local clangd = {
 local haskell_tools = {
 	"MrcJkb/haskell-tools.nvim",
 	ft = { "haskell" },
+	enabled = true,
 	branch = "1.x.x",
 	dependencies = {
 		"neovim/nvim-lspconfig",
@@ -778,6 +779,5 @@ return {
 	null_ls,
 	sqls,
 	jsonls,
-	-- copilot,
 	codium,
 }

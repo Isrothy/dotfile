@@ -47,7 +47,8 @@ M.config = function()
 			theme = "nord",
 			-- component_separators = { left = '╲', right = '╱' },
 			component_separators = "",
-			section_separators = { left = "", right = "" },
+			-- section_separators = { left = "", right = "" },
+			section_separators = "",
 			disabled_filetypes = {
 				statusline = {},
 				winbar = {
@@ -61,8 +62,6 @@ M.config = function()
 					"dapui_breakpoints",
 					"dapui_scopes",
 					"dapui_colsoles",
-					-- "toggleterm",
-					-- "BufTerm",
 					"",
 				},
 			},
@@ -72,10 +71,6 @@ M.config = function()
 		sections = {
 			lualine_a = {
 				{ "fancy_mode", width = 6 },
-				{
-					"fancy_macro",
-					icon = { "⏺" },
-				},
 				{
 					require("noice").api.statusline.command.get,
 					cond = require("noice").api.statusline.command.has,
@@ -98,6 +93,7 @@ M.config = function()
 				},
 			},
 			lualine_c = {
+				{ require("NeoComposer.ui").status_recording },
 				{
 					"filename",
 					file_status = true,
@@ -109,7 +105,7 @@ M.config = function()
 						newfile = "[New]",
 					},
 					fmt = trunc(90, 30, 50),
-					path = 1,
+					path = 0,
 				},
 				{
 					"diagnostic-message",
@@ -204,7 +200,6 @@ M.config = function()
 						info = " ",
 					},
 				},
-				-- "fancy_diagnostics"
 			},
 			lualine_y = {
 				{ "filetype", icon_only = true },

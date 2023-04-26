@@ -40,7 +40,7 @@ local custom_textobjects = {
 return {
 	{
 		"kiyoon/treesitter-indent-object.nvim",
-		enabled = false,
+		enabled = true,
 		dependencies = {
 			"lukas-reineke/indent-blankline.nvim",
 		},
@@ -118,30 +118,30 @@ return {
 					fts = { "html", "css", "scss", "xml" },
 				},
 			}
-			keymap(
-				{ "o", "x" },
-				"ii",
-				"<cmd>lua require('various-textobjs').indentation(true, true)<CR>",
-				{ noremap = true, desc = "inner-inner indentation textobj" }
-			)
-			keymap(
-				{ "o", "x" },
-				"ai",
-				"<cmd>lua require('various-textobjs').indentation(false, true)<CR>",
-				{ noremap = true, desc = "outer-inner indentation textobj" }
-			)
-			keymap(
-				{ "o", "x" },
-				"iI",
-				"<cmd>lua require('various-textobjs').indentation(true, true)<CR>",
-				{ noremap = true, desc = "inner-inner indentation textobj" }
-			)
-			keymap(
-				{ "o", "x" },
-				"aI",
-				"<cmd>lua require('various-textobjs').indentation(false, false)<CR>",
-				{ noremap = true, desc = "outer-outer indentation textobj" }
-			)
+			-- keymap(
+			-- 	{ "o", "x" },
+			-- 	"ii",
+			-- 	"<cmd>lua require('various-textobjs').indentation(true, true)<CR>",
+			-- 	{ noremap = true, desc = "inner-inner indentation textobj" }
+			-- )
+			-- keymap(
+			-- 	{ "o", "x" },
+			-- 	"ai",
+			-- 	"<cmd>lua require('various-textobjs').indentation(false, true)<CR>",
+			-- 	{ noremap = true, desc = "outer-inner indentation textobj" }
+			-- )
+			-- keymap(
+			-- 	{ "o", "x" },
+			-- 	"iI",
+			-- 	"<cmd>lua require('various-textobjs').indentation(true, true)<CR>",
+			-- 	{ noremap = true, desc = "inner-inner indentation textobj" }
+			-- )
+			-- keymap(
+			-- 	{ "o", "x" },
+			-- 	"aI",
+			-- 	"<cmd>lua require('various-textobjs').indentation(false, false)<CR>",
+			-- 	{ noremap = true, desc = "outer-outer indentation textobj" }
+			-- )
 
 			for objName, map in pairs(innerOuterMaps) do
 				local name = " " .. objName .. " textobj"

@@ -48,25 +48,25 @@ return {
 			{
 				"<C-h>",
 				"<cmd>lua require('smart-splits').move_cursor_left()<cr>",
-				mode = { "n", "t" },
+				mode = { "n" },
 				desc = "Move cursor left",
 			},
 			{
 				"<C-j>",
 				"<cmd>lua require('smart-splits').move_cursor_down()<cr>",
-				mode = { "n", "t" },
+				mode = { "n" },
 				desc = "Move cursor down",
 			},
 			{
 				"<C-k>",
 				"<cmd>lua require('smart-splits').move_cursor_up()<cr>",
-				mode = { "n", "t" },
+				mode = { "n" },
 				desc = "Move cursor up",
 			},
 			{
 				"<C-l>",
 				"<cmd>lua require('smart-splits').move_cursor_right()<cr>",
-				mode = { "n", "t" },
+				mode = { "n" },
 				desc = "Move cursor right",
 			},
 
@@ -92,10 +92,16 @@ return {
 				ignored_buftypes = { "NvimTree" },
 				-- the default number of lines/columns to resize by at a time
 				default_amount = 1,
-				-- whether to wrap to opposite side when cursor is at an edge
-				-- e.g. by default, moving left at the left edge will jump
-				-- to the rightmost window, and vice versa, same for up/down.
-				wrap_at_edge = true,
+
+				-- Desired behavior when your cursor is at an edge and you
+				-- are moving towards that same edge:
+				-- 'wrap' => Wrap to opposite side
+				-- 'split' => Create a new split in the desired direction
+				-- 'stop' => Do nothing
+				-- NOTE: `at_edge = 'wrap'` is not supported on Kitty terminal
+				-- multiplexer, as there is no way to determine layout via the CLI
+				at_edge = "wrap",
+
 				-- when moving cursor between splits left or right,
 				-- place the cursor on the same row of the *screen*
 				-- regardless of line numbers. False by default.

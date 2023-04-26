@@ -16,6 +16,7 @@ struct A {
     A &operator=(const A &) = default;
     A &operator=(A &&) = default;
     explicit A(double x) : x(x) {}
+
     static const int y;
 
   private:
