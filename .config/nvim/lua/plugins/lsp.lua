@@ -8,11 +8,9 @@
 -- 	{ "", "FloatBorder" },
 -- 	{ " ", "FloatBorder" },
 -- }
+local map = vim.keymap.set
+
 local border = "rounded"
-local handlers = {
-	["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
-	["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
-}
 local make_capabilities = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
@@ -48,9 +46,8 @@ local hl_word = function(client, bufnr)
 	end
 end
 
-local set_key_map = function(_, bufnr)
+local set_keymap = function(_, bufnr)
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	local map = vim.keymap.set
 	map("n", "g<c-d>", vim.lsp.buf.declaration, bufopts)
 	map("n", "gD", function()
 		require("telescope.builtin").lsp_type_definitions({ jump_type = "never" })
@@ -65,7 +62,11 @@ local set_key_map = function(_, bufnr)
 	end, bufopts)
 
 	map("n", "gr", function()
-		require("telescope.builtin").lsp_references({ jump_type = "never" })
+		require("telescope.builtin").lsp_references({
+			include_declaration = false,
+			include_current_line = false,
+			jump_type = "never",
+		})
 	end, bufopts)
 
 	-- map("n", "K", vim.lsp.buf.hover, bufopts)
@@ -134,82 +135,71 @@ local Lspconfig = {
 
 		require("lspconfig").bashls.setup({
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").cmake.setup({
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 				hl_word(client, bufnr)
 			end,
 		})
 
 		require("lspconfig").cssls.setup({
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").dockerls.setup({
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").emmet_ls.setup({
-			handlers = handlers,
 			capabilities = make_capabilities(),
 		})
 		require("lspconfig").eslint.setup({
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").gradle_ls.setup({
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").html.setup({
-			handlers = handlers,
 			capabilities = make_capabilities(),
 		})
 
-		require("lspconfig").jdtls.setup({
-			capabilities = make_capabilities(),
-			handlers = handlers,
-			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
-				hl_word(client, bufnr)
-			end,
-		})
+		-- require("lspconfig").jdtls.setup({
+		-- 	capabilities = make_capabilities(),
+		-- 	on_attach = function(client, bufnr)
+		-- 		set_key_map(client, bufnr)
+		-- 		hl_word(client, bufnr)
+		-- 	end,
+		-- })
 		require("lspconfig").kotlin_language_server.setup({
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			single_file_support = true,
 			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 				hl_word(client, bufnr)
 			end,
 		})
 		-- require("lspconfig").pylsp.setup({
 		-- 	capabilities = make_capabilities(),
-		-- 	handlers = handlers,
 		-- 	on_attach = function(client, bufnr)
 		-- 		-- hl_word(client, bufnr)
 		-- 		set_key_map(client, bufnr)
@@ -232,7 +222,6 @@ local Lspconfig = {
 		-- })
 		-- require("lspconfig").pyright.setup({
 		-- 	-- capabilities = make_capabilities(),
-		-- 	handlers = handlers,
 		-- 	on_attach = function(client, bufnr)
 		-- 		set_key_map(client, bufnr)
 		-- 		-- hl_word(client, bufnr)
@@ -249,15 +238,13 @@ local Lspconfig = {
 		-- })
 		require("lspconfig").jedi_language_server.setup({
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 			end,
 		})
 		-- require("lspconfig").pylyzer.setup({
 		-- 	filetypes = { "python" },
 		-- 	capabilities = make_capabilities(),
-		-- 	handlers = handlers,
 		-- 	on_attach = function(client, bufnr)
 		-- 		set_key_map(client, bufnr)
 		-- 		hl_word(client, bufnr)
@@ -275,17 +262,15 @@ local Lspconfig = {
 			filetypes = { "swift", "objective-c" },
 			single_file_support = true,
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").lua_ls.setup({
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 				hl_word(client, bufnr)
 				client.server_capabilities.documentFormattingProvider = false
 			end,
@@ -304,9 +289,8 @@ local Lspconfig = {
 		})
 		require("lspconfig").vimls.setup({
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 				hl_word(client, bufnr)
 			end,
 		})
@@ -322,10 +306,9 @@ local clangd = {
 		require("clangd_extensions").setup({
 			server = {
 				capabilities = clangd_capabilities,
-				handlers = handlers,
 				-- offset_encoding = "utf-16",
 				on_attach = function(client, bufnr)
-					set_key_map(client, bufnr)
+					set_keymap(client, bufnr)
 					hl_word(client, bufnr)
 				end,
 				cmd = {
@@ -407,6 +390,211 @@ local clangd = {
 	end,
 }
 
+local jdtls = {
+	"mfussenegger/nvim-jdtls",
+	ft = { "java" },
+	init = function()
+		-- create autocmd on filetypes java
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "java",
+			callback = function()
+				local home = os.getenv("HOME")
+				local jdtls_install_location = "/opt/homebrew/Cellar/jdtls/1.23.0/"
+				local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h")
+				local workspace_dir = home .. "/.local/share/eclipse/" .. project_name
+				local javadebug_dir = home .. "/.local/share/javadebug/"
+
+				local set_jdtls_keymap = function(_, bufnr)
+					local bufopts = { noremap = true, silent = true, buffer = bufnr }
+					map("n", "g<c-d>", vim.lsp.buf.declaration, bufopts)
+					map("n", "gD", function()
+						require("telescope.builtin").lsp_type_definitions({ jump_type = "never" })
+					end, bufopts)
+
+					map("n", "gd", function()
+						require("telescope.builtin").lsp_definitions({ jump_type = "never" })
+					end, bufopts)
+
+					map("n", "gi", function()
+						require("telescope.builtin").lsp_implementations({ jump_type = "never" })
+					end, bufopts)
+
+					map("n", "gr", function()
+						require("telescope.builtin").lsp_references({
+							include_declaration = false,
+							include_current_line = false,
+							jump_type = "never",
+						})
+					end, bufopts)
+
+					map("n", "K", vim.lsp.buf.hover, bufopts)
+					map("n", "<Leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+					map("n", "<Leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+					map("n", "<Leader>wl", function()
+						print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+					end, bufopts)
+					-- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+					map("n", "<leader>rn", function()
+						return ":IncRename " .. vim.fn.expand("<cword>")
+					end, {
+						noremap = true,
+						silent = true,
+						buffer = bufnr,
+						expr = true,
+					})
+					map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, bufopts)
+					map("n", "<leader>f", function()
+						vim.lsp.buf.format({ async = true })
+						require("jdtls").organize_imports()
+					end, bufopts)
+					-- range format
+					map("v", "<leader>f", function()
+						local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
+						local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
+						vim.lsp.buf.format({
+							range = {
+								["start"] = { start_row, 0 },
+								["end"] = { end_row, 0 },
+							},
+							async = true,
+						})
+					end, bufopts)
+
+					map("n", "<leader>tc", "<Cmd>lua require'jdtls'.test_class()<CR>", bufopts)
+					map("n", "<leader>tm", "<Cmd>lua require'jdtls'.test_nearest_method()<CR>", bufopts)
+					map("v", "<leader>ee", "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", bufopts)
+					map("n", "<leader>ev", "<Cmd>lua require('jdtls').extract_variable()<CR>", bufopts)
+					map("v", "<leader>em", "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", bufopts)
+				end
+
+				-- This starts a new client & server,
+				-- or attaches to an existing client & server depending on the `root_dir`.
+				-- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
+				local config = {
+					-- The command that starts the language server
+					-- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
+					cmd = {
+
+						-- 💀
+						"java", -- or '/path/to/java17_or_newer/bin/java'
+						-- depends on if `java` is in your $PATH env variable and if it points to the right version.
+
+						"-Declipse.application=org.eclipse.jdt.ls.core.id1",
+						"-Dosgi.bundles.defaultStartLevel=4",
+						"-Declipse.product=org.eclipse.jdt.ls.core.product",
+						"-Dlog.protocol=true",
+						"-Dlog.level=ALL",
+						"-Xmx1g",
+						"--add-modules=ALL-SYSTEM",
+						"--add-opens",
+						"java.base/java.util=ALL-UNNAMED",
+						"--add-opens",
+						"java.base/java.lang=ALL-UNNAMED",
+
+						-- 💀
+						"-jar",
+						jdtls_install_location
+							.. "libexec/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar",
+						-- "/path/to/jdtls_install_location/plugins/org.eclipse.equinox.launcher_VERSION_NUMBER.jar",
+						-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
+						-- Must point to the                                                     Change this to
+						-- eclipse.jdt.ls installation                                           the actual version
+
+						-- 💀
+						"-configuration",
+						jdtls_install_location .. "libexec/config_mac",
+						-- "/path/to/jdtls_install_location/config_SYSTEM",
+						-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
+						-- Must point to the                      Change to one of `linux`, `win` or `mac`
+						-- eclipse.jdt.ls installation            Depending on your system.
+
+						-- 💀
+						-- See `data directory configuration` section in the README
+						"-data",
+						workspace_dir,
+					},
+
+					-- 💀
+					-- This is the default if not provided, you can remove it. Or adjust as needed.
+					-- One dedicated LSP server & client will be started per unique root_dir
+					root_dir = require("jdtls.setup").find_root({ "mvnw", "gradlew" }),
+
+					-- Here you can configure eclipse.jdt.ls specific settings
+					-- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+					-- for a list of options
+					settings = {
+						java = {
+							signatureHelp = { enabled = true },
+							contentProvider = { preferred = "fernflower" },
+							completion = {
+								favoriteStaticMembers = {
+									"org.hamcrest.MatcherAssert.assertThat",
+									"org.hamcrest.Matchers.*",
+									"org.hamcrest.CoreMatchers.*",
+									"org.junit.jupiter.api.Assertions.*",
+									"java.util.Objects.requireNonNull",
+									"java.util.Objects.requireNonNullElse",
+									"org.mockito.Mockito.*",
+								},
+								filteredTypes = {
+									"com.sun.*",
+									"io.micrometer.shaded.*",
+									"java.awt.*",
+									"jdk.*",
+									"sun.*",
+								},
+							},
+							sources = {
+								organizeImports = {
+									starThreshold = 9999,
+									staticStarThreshold = 9999,
+								},
+							},
+							codeGeneration = {
+								toString = {
+									template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+								},
+							},
+						},
+					},
+
+					-- Language server `initializationOptions`
+					-- You need to extend the `bundles` with paths to jar files
+					-- if you want to use additional eclipse.jdt.ls plugins.
+					--
+					-- See https://github.com/mfussenegger/nvim-jdtls#java-debug-installation
+					--
+					-- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
+					init_options = {
+						bundles = {
+							vim.fn.glob(
+								javadebug_dir
+									.. "com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.45.0.jar",
+								1
+							),
+						},
+					},
+					capabilities = make_capabilities(),
+					on_attach = function(client, bufnr)
+						set_jdtls_keymap(client, bufnr)
+						hl_word(client, bufnr)
+						require("jdtls").setup_dap({ hotcodereplace = "auto" })
+						vim.cmd([[
+							command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)
+							command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)
+							command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config()
+							command! -buffer JdtJol lua require('jdtls').jol()
+							command! -buffer JdtBytecode lua require('jdtls').javap()
+							command! -buffer JdtJshell lua require('jdtls').jshell()
+						]])
+					end,
+				}
+				require("jdtls").start_or_attach(config)
+			end,
+		})
+	end,
+}
+
 local haskell_tools = {
 	"MrcJkb/haskell-tools.nvim",
 	ft = { "haskell" },
@@ -459,14 +647,13 @@ local haskell_tools = {
 			},
 			hls = {
 				capabilities = make_capabilities(),
-				handlers = handlers,
 				on_attach = function(client, bufnr)
 					local opts = { noremap = true, silent = true, buffer = bufnr }
-					set_key_map(client, bufnr)
+					set_keymap(client, bufnr)
 					hl_word(client, bufnr)
 					require("telescope").load_extension("ht")
-					vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, opts)
-					vim.keymap.set("n", "<leader>s", ht.hoogle.hoogle_signature, opts)
+					map("n", "<leader>cl", vim.lsp.codelens.run, opts)
+					map("n", "<leader>s", ht.hoogle.hoogle_signature, opts)
 				end,
 				single_file_support = true,
 				default_settings = {
@@ -490,9 +677,8 @@ local rust_tools = {
 		rt.setup({
 			server = {
 				capabilities = make_capabilities(),
-				handlers = handlers,
 				on_attach = function(client, bufnr)
-					set_key_map(client, bufnr)
+					set_keymap(client, bufnr)
 					hl_word(client, bufnr)
 					vim.keymap.set("n", "gh", rt.hover_actions.hover_actions, { buffer = bufnr })
 					vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
@@ -573,11 +759,10 @@ local sqls = {
 	config = function()
 		require("lspconfig").sqls.setup({
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			on_attach = function(client, bufnr)
 				require("sqls").on_attach(client, bufnr)
 				hl_word(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 				client.server_capabilities.documentFormattingProvider = false
 			end,
 		})
@@ -591,7 +776,6 @@ local jsonls = {
 	config = function()
 		require("lspconfig").jsonls.setup({
 			capabilities = make_capabilities(),
-			handlers = handlers,
 			settings = {
 				json = {
 					schemas = require("schemastore").json.schemas(),
@@ -599,7 +783,7 @@ local jsonls = {
 			},
 			on_attach = function(client, bufnr)
 				hl_word(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 			end,
 		})
 	end,
@@ -614,7 +798,7 @@ local null_ls = {
 		null_ls.setup({
 			border = "rounded",
 			on_attach = function(client, bufnr)
-				set_key_map(client, bufnr)
+				set_keymap(client, bufnr)
 				hl_word(client, bufnr)
 			end,
 			sources = {
@@ -774,6 +958,7 @@ local codium = {
 return {
 	Lspconfig,
 	clangd,
+	jdtls,
 	haskell_tools,
 	rust_tools,
 	null_ls,

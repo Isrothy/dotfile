@@ -100,7 +100,7 @@ return {
 				-- 'stop' => Do nothing
 				-- NOTE: `at_edge = 'wrap'` is not supported on Kitty terminal
 				-- multiplexer, as there is no way to determine layout via the CLI
-				at_edge = "wrap",
+				at_edge = "stop",
 
 				-- when moving cursor between splits left or right,
 				-- place the cursor on the same row of the *screen*

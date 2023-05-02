@@ -1,6 +1,7 @@
 return {
 	"numToStr/Comment.nvim",
 	enabled = true,
+	lazy = true,
 	depenencies = {
 		{
 			"JoosepAlviste/nvim-ts-context-commentstring",
@@ -32,7 +33,7 @@ return {
 		{ "gc", mode = { "n", "v" } },
 		{ "gb", mode = { "n", "v" } },
 		"gcc",
-		"gbc",
+		"gbb",
 		"gcA",
 		"gcO",
 		"gco",
@@ -59,7 +60,7 @@ return {
 				---Line-comment toggle keymap
 				line = "gcc",
 				---Block-comment toggle keymap
-				block = "gbc",
+				block = "gbb",
 			},
 
 			---LHS of operator-pending mappings in NORMAL + VISUAL mode

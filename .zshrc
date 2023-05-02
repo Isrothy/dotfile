@@ -8,29 +8,36 @@ fi
 
 export ZSH="$HOME/.oh-my-zsh"
 
-zstyle ':omz:update' frequency 1
+zstyle ':omz:update' frequency 7
+zstyle ':omz:update' mode auto
+
 
 plugins=(
-    aliases
-    autoupdate
-    brew
-    colored-man-pages
-    colorize
-	# git
-    macos
-    # pip
-    python
-    sudo
-    vi-mode
-    vscode
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-	)
+  aliases
+  brew
+  colored-man-pages
+  colorize
+  fast-syntax-highlighting
+  macos
+  sudo
+  zsh-autosuggestions
+  zsh-vi-mode
+)
+
+FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+rm -f ~/.zcompdump; compinit
+chmod -R go-w "$(brew --prefix)/share"
+
 
 ZSH_COLORIZE_TOOL=chroma
+ENABLE_CORRECTION=true
 
 source $ZSH/oh-my-zsh.sh
-source /opt/homebrew/share/zsh-autopair/autopair.zsh
+
+# source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# bindkey '\t' menu-complete "$terminfo[kcbt]" reverse-menu-complete
+# zstyle ':autocomplete:*' add-space \
+    # executables aliases functions builtins reserved-words commands
 
 source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -62,6 +69,7 @@ export PATH="/opt/homebrew/opt/node@16/bin:$PATH"
 export PATH=$PATH:$HOME/.local/bin
 
 
+# export JAVA_HOME=/opt/homebrew/Cellar/openjdk@17/17.0.7/libexec/openjdk.jdk/Contents/Home
 export JAVA_HOME=$(/usr/libexec/java_home)
 export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"

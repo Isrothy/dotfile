@@ -1,4 +1,4 @@
-local M = {
+﻿local M = {
 	"nvim-lualine/lualine.nvim",
 	event = "VeryLazy",
 	enabled = true,
@@ -11,7 +11,7 @@ local M = {
 
 M.config = function()
 	local function tab_size()
-		return (vim.bo.expandtab and "SP" or "TAB") .. vim.bo.tabstop
+		return (vim.bo.expandtab and "␠" or "␉") .. vim.bo.tabstop
 	end
 
 	---- Truncating components in smaller window
@@ -70,7 +70,7 @@ M.config = function()
 		},
 		sections = {
 			lualine_a = {
-				{ "fancy_mode", width = 6 },
+				{ "mode", fmt = trunc(80, 4, nil, true) },
 				{
 					require("noice").api.statusline.command.get,
 					cond = require("noice").api.statusline.command.has,
@@ -126,9 +126,9 @@ M.config = function()
 					"fileformat",
 					icons_enabled = true,
 					symbols = {
-						unix = "LF",
-						dos = "CRLF",
-						mac = "CR",
+						unix = " LF",
+						dos = " CRLF",
+						mac = " CR",
 					},
 				},
 			},

@@ -179,7 +179,7 @@ M.config = function()
 			command_palette = false, -- position the cmdline and popupmenu together
 			long_message_to_split = true, -- long messages will be sent to a split
 			inc_rename = true, -- enables an input dialog for inc-rename.nvim
-			lsp_doc_border = false, -- add a border to hover docs and signature help
+			lsp_doc_border = true, -- add a border to hover docs and signature help
 		},
 		throttle = 1000 / 60, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
 
@@ -203,14 +203,13 @@ M.config = function()
 				},
 				opts = { skip = true },
 			},
-			-- {
-			-- 	filter = {
-			-- 		event = "msg_show",
-			-- 		kind = "",
-			-- 		find = "RPC[Error]",
-			-- 	},
-			-- 	opts = { skip = true },
-			-- },
+			{
+				filter = {
+					event = "msg_show",
+					find = "^nil$",
+				},
+				opts = { skip = true },
+			},
 			{
 				filter = {
 					event = "msg_show",

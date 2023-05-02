@@ -6,6 +6,7 @@ int add(int x, int y) {
     printf("%d\n", x + y);
     return x + y;
 }
+
 double add(double x, double y) {
     printf("%lf\n", x + y);
     return x + y;
@@ -87,5 +88,8 @@ int main() {
             printf("%d\n", i);
         }
     }
+    do {
+
+    } while (false);
     return 0;
 }

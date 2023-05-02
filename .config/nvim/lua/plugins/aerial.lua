@@ -3,9 +3,11 @@ local M = {
 	enabled = true,
 }
 
-M.init = function()
-	vim.keymap.set("n", "<F9>", "<cmd>AerialToggle<CR>", { noremap = true, silent = true })
-end
+-- M.init = function()
+-- 	vim.keymap.set("n", "<F9>", "<cmd>AerialToggle<CR>", { noremap = true, silent = true })
+-- end
+
+M.cmd = { "AerialToggle" }
 
 M.config = function()
 	require("aerial").setup({
@@ -58,7 +60,6 @@ M.config = function()
 			["zx"] = "actions.tree_sync_folds",
 			["zX"] = "actions.tree_sync_folds",
 		},
-
 
 		-- When true, don't load aerial until a command or function is called
 		-- Defaults to true, unless `on_attach` is provided, then it defaults to false

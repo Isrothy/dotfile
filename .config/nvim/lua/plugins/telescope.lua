@@ -105,8 +105,9 @@ telescope.config = function()
 				use_delta = true,
 				side_by_side = true,
 				layout_strategy = "vertical",
+				diff_context_lines = vim.o.scrolloff,
 				layout_config = {
-					preview_height = 0.8,
+					-- preview_height = 0.8,
 				},
 				mappings = { -- this whole table is the default
 					i = {

@@ -1,14 +1,16 @@
 return {
 	{
 		"akinsho/nvim-toggleterm.lua",
-		keys = "<c-`>",
+		keys = [[<c-\>]],
 		cmd = {
-			"ToggleTerm",
-			"ToggleTermToggleAll",
 			"TermExec",
+			"TermSelect",
+			"ToggleTerm",
 			"ToggleTermSendCurrentLine",
 			"ToggleTermSendVisualLines",
 			"ToggleTermSendVisualSelection",
+			"ToggleTermSetName",
+			"ToggleTermToggleAll",
 		},
 		config = function()
 			require("toggleterm").setup({
@@ -20,14 +22,13 @@ return {
 						return vim.o.columns * 0.4
 					end
 				end,
-				-- open_mapping = [[<F5>]],
-				open_mapping = [[<c-`>]],
+				open_mapping = [[<c-\>]],
 				hide_numbers = true, -- hide the number column in toggleterm buffers
 				shade_filetypes = {},
 				shade_terminals = false,
 				start_in_insert = false,
-				insert_mappings = true, -- whether or not the open mapping applies in insert mode
-				terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
+				insert_mappings = false, -- whether or not the open mapping applies in insert mode
+				terminal_mappings = false, -- whether or not the open mapping applies in the opened terminals
 				persist_size = true,
 				-- direction = "horizontal",
 				close_on_exit = true, -- close the terminal window when the process exits
@@ -84,20 +85,29 @@ return {
 	},
 	{
 		"willothy/flatten.nvim",
-		-- enabled = true,
 		lazy = false,
-		-- event = "VeryLazy",
+		priority = 1001,
 		opts = {
+			window = {
+				open = "tab",
+			},
 			callbacks = {
 				pre_open = function()
 					-- Close toggleterm when an external open request is received
 					require("toggleterm").toggle(0)
 				end,
-				post_open = function(bufnr, winnr, ft)
+				post_open = function(bufnr, winnr, ft, is_blocking)
+					if is_blocking then
+						-- Hide the terminal while it's blocking
+						require("toggleterm").toggle(0)
+					else
+						-- If it's a normal file, just switch to its window
+						vim.api.nvim_set_current_win(winnr)
+					end
+
+					-- If the file is a git commit, create one-shot autocmd to delete its buffer on write
+					-- If you just want the toggleable terminal integration, ignore this bit
 					if ft == "gitcommit" then
-						-- If the file is a git commit, create one-shot autocmd to delete it on write
-						-- If you just want the toggleable terminal integration, ignore this bit and only use the
-						-- code in the else block
 						vim.api.nvim_create_autocmd("BufWritePost", {
 							buffer = bufnr,
 							once = true,
@@ -109,11 +119,6 @@ return {
 								end, 50)
 							end,
 						})
-					else
-						-- If it's a normal file, then reopen the terminal, then switch back to the newly opened window
-						-- This gives the appearance of the window opening independently of the terminal
-						require("toggleterm").toggle(0)
-						vim.api.nvim_set_current_win(winnr)
 					end
 				end,
 				block_end = function()

@@ -27,6 +27,18 @@ M.config = function()
 			truncate_names = true,
 			tab_size = 18,
 
+			custom_filter = function(buf_number, buf_numbers)
+				-- filter out filetypes you don't want to see
+				if vim.bo[buf_number].filetype == "qf" then
+					return false
+				end
+				-- filter out by buffer name
+				if vim.fn.bufname(buf_number) == "quickfix" then
+					return false
+				end
+				return true
+			end,
+
 			diagnostics = nil,
 			-- diagnostics = "nvim_lsp",
 			diagnostics_update_in_insert = true,

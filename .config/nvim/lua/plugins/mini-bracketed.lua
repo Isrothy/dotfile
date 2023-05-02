@@ -7,12 +7,7 @@ return {
 			buffer = { suffix = "", options = {} },
 			comment = { suffix = "k", options = {} },
 			conflict = { suffix = "x", options = {} },
-			diagnostic = {
-				suffix = "d",
-				options = {
-					severity = vim.diagnostic.severity.ERROR,
-				},
-			},
+			diagnostic = { suffix = "e", options = {}, },
 			file = { suffix = "f", options = {} },
 			indent = { suffix = "i", options = {} },
 			jump = { suffix = "j", options = {} },

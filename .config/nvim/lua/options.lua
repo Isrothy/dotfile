@@ -14,8 +14,8 @@ vim.o.foldenable = true
 -- vim.opt.foldmethod = "syntax"
 -- vim.opt.foldmethod = "manual"
 -- vim.opt.foldmethod = "indent"
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 -- vim.opt.foldtext = "v:folddashes.substitute(getline(v:foldstart),'/\\*\\|\\*/\\|{{{\\d\\=','','g')"
 
 vim.opt.undofile = true

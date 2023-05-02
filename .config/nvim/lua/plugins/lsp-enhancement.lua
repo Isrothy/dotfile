@@ -81,15 +81,7 @@ local actionHint = {
 local inc_rename = {
 	"smjonas/inc-rename.nvim",
 	enabled = true,
-	-- keys = {
-	-- 	{
-	-- 		"<leader>rn",
-	-- 		function()
-	-- 			return ":IncRename " .. vim.fn.expand("<cword>")
-	-- 		end,
-	-- 		expr = true,
-	-- 	},
-	-- },
+	event = { "LspAttach" },
 	config = function()
 		require("inc_rename").setup()
 	end,
@@ -119,6 +111,7 @@ local neo_dim = {
 
 local trouble = {
 	"folke/trouble.nvim",
+	enabled = false,
 	cmd = {
 		"TroubleToggle",
 		"Trouble",
@@ -234,6 +227,6 @@ return {
 	inc_rename,
 	neo_dim,
 	trouble,
-	-- lsp_lens,
+	lsp_lens,
 	pretty_hover,
 }

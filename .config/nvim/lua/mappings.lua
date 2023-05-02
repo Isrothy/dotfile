@@ -40,8 +40,8 @@ map("t", "<esc>", [[<C-\><C-n>]], default_options)
 -- map("t", "<M-k>", "<Up>", { desc = "Up" })
 -- map("t", "<M-l>", "<Right>", { desc = "Right" })
 
-map("n", "<leader>q", vim.diagnostic.setloclist, default_options)
-map("n", "<leader>d", vim.diagnostic.open_float, default_options)
+map("n", "<leader>qd", vim.diagnostic.setloclist, { noremap = true, silent = true, desc = "Quickfix diagnostics" })
+map("n", "<leader>e", vim.diagnostic.open_float, { noremap = true, silent = true, desc = "Lsp diagnostics" })
 
 -- map("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", { noremap = true, silent = true })
 -- map("n", "<F10>", "<cmd>lua require'dap'.step_over()<cr>", { noremap = true, silent = true })

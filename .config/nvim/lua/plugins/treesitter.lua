@@ -54,7 +54,7 @@ local TS = {
 				enable = true,
 			},
 			matchup = {
-				enable = false,
+				enable = true,
 			},
 			textobjects = {
 				select = {
@@ -387,24 +387,10 @@ local regexplainer = {
 	end,
 }
 
--- local identmini = {
--- 	"nvimdev/indentmini.nvim",
--- 	event = "BufEnter",
--- 	config = function()
--- 		require("indentmini").setup({
--- 			char = "|",
--- 		})
--- 		vim.cmd.highlight("default link IndentLine Comment")
--- 	end,
--- 	-- this is no required but if you want indent blanklink line this is needed
--- 	dependencies = { "nvim-treesitter/nvim-treesitter" },
--- }
-
 return {
 	TS,
 	iswap,
 	commentstring,
-	-- indent_blankline,
 	rainbow,
 	femaco,
 	endwise,
@@ -414,5 +400,4 @@ return {
 	node_marker,
 	treesj,
 	regexplainer,
-	-- identmini,
 }

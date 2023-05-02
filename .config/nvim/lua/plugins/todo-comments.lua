@@ -5,9 +5,9 @@ local M = {
 	enabled = true,
 }
 
-M.keys = {
-	{ "<F7>", "<cmd>TodoTrouble<CR>", { noremap = true, silent = true } },
-}
+-- M.keys = {
+-- 	{ "<F7>", "<cmd>TodoTrouble<CR>", { noremap = true, silent = true } },
+-- }
 
 M.config = function()
 	require("todo-comments").setup({
@@ -83,6 +83,7 @@ M.config = function()
 	vim.keymap.set("n", "[t", function()
 		require("todo-comments").jump_prev()
 	end, { desc = "Previous todo comment" })
+	vim.keymap.set("n", "<leader>qt", "<cmd>TodoQuickFix<cr>", { desc = "Quickfix todolist" })
 end
 
 return M

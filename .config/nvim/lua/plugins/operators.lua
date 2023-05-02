@@ -2,15 +2,85 @@ local map = vim.keymap.set
 
 local yanky = {
 	"gbprod/yanky.nvim",
-	event = "VeryLazy",
+	dependencies = {
+		"kkharji/sqlite.lua",
+	},
 	enabled = true,
+	event = "VeryLazy",
+	keys = {
+		{ "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Yanky put after" },
+		{ "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Yanky put before" },
+		{ "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "Yanky gput after" },
+		{ "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "Yanky gput before" },
+		{
+			"]p",
+			"<Plug>(YankyPutIndentAfterLinewise)",
+			mode = "n",
+			desc = "Yanky put indent after linewise",
+		},
+		{
+			"[p",
+			"<Plug>(YankyPutIndentBeforeLinewise)",
+			mode = "n",
+			desc = "Yanky put indent before linewise",
+		},
+		{ "]P", "<Plug>(YankyPutIndentAfterLinewise)", mode = { "n", "x" }, desc = "Yanky put indent after linewise" },
+		{
+			"[P",
+			"<Plug>(YankyPutIndentBeforeLinewise)",
+			mode = "n",
+			desc = "Yanky put indent before linewise",
+		},
+		{
+			">p",
+			"<Plug>(YankyPutIndentAfterShiftRight)",
+			mode = "n",
+			desc = "Yanky put indent after shift right",
+		},
+		{
+			"<p",
+			"<Plug>(YankyPutIndentAfterShiftLeft)",
+			mode = "n",
+			desc = "Yanky put indent after shift left",
+		},
+		{
+			">P",
+			"<Plug>(YankyPutIndentBeforeShiftRight)",
+			mode = "n",
+			desc = "Yanky put indent before shift right",
+		},
+		{
+			"<P",
+			"<Plug>(YankyPutIndentBeforeShiftLeft)",
+			mode = "n",
+			desc = "Yanky put indent before shift left",
+		},
+		{
+			"=p",
+			"<Plug>(YankyPutAfterFilter)",
+			mode = "n",
+			desc = "Yanky put after filter",
+		},
+		{
+			"=P",
+			"<Plug>(YankyPutBeforeFilter)",
+			mode = "n",
+			desc = "Yanky put before filter",
+		},
+		{
+			"y",
+			"<Plug>(YankyYank)",
+			mode = { "n", "x" },
+			desc = "Yanky yank",
+		},
+	},
 	config = function()
 		local utils = require("yanky.utils")
 		local mapping = require("yanky.telescope.mapping")
 		require("yanky").setup({
 			ring = {
 				history_length = 128,
-				storage = "shada",
+				storage = "sqlite",
 				sync_with_numbered_registers = true,
 				cancel_event = "update",
 			},
@@ -48,35 +118,13 @@ local yanky = {
 				enabled = true,
 			},
 		})
-		map({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-		map({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-		map({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-		map({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
-
-		map("n", "<M-n>", "<Plug>(YankyCycleForward)")
-		map("n", "<M-p>", "<Plug>(YankyCycleBackward)")
-
-		map({ "n", "x" }, "y", "<Plug>(YankyYank)")
-
-		map("n", "]p", "<Plug>(YankyPutIndentAfterLinewise)")
-		map("n", "[p", "<Plug>(YankyPutIndentBeforeLinewise)")
-		map("n", "]P", "<Plug>(YankyPutIndentAfterLinewise)")
-		map("n", "[P", "<Plug>(YankyPutIndentBeforeLinewise)")
-
-		map("n", ">p", "<Plug>(YankyPutIndentAfterShiftRight)")
-		map("n", "<p", "<Plug>(YankyPutIndentAfterShiftLeft)")
-		map("n", ">P", "<Plug>(YankyPutIndentBeforeShiftRight)")
-		map("n", "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)")
-
-		map("n", "=p", "<Plug>(YankyPutAfterFilter)")
-		map("n", "=P", "<Plug>(YankyPutBeforeFilter)")
+		-- vim.keymap.set({ "n", "x" }, "y", "<Plug>(YankyYank)")
 		require("telescope").load_extension("yank_history")
 	end,
 }
 
 local substitute = {
 	"gbprod/substitute.nvim",
-	event = "VeryLazy",
 	init = function()
 		map("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
 		map("n", "ss", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
@@ -94,6 +142,10 @@ local substitute = {
 				require("yanky").init_ring("p", event.register, event.count, event.vmode:match("[vV�]"))
 			end,
 			yank_substituted_text = false,
+			highlight_substituted_text = {
+				enabled = true,
+				timer = 500,
+			},
 			range = {
 				prefix = "s",
 				prompt_current_text = false,
@@ -146,12 +198,12 @@ local dial = {
 	"monaqa/dial.nvim",
 	enabled = true,
 	keys = {
-		{ "<C-a>", mode = "n" },
-		{ "<C-x>", mode = "n" },
-		{ "<C-a>", mode = "v" },
-		{ "<C-x>", mode = "v" },
-		{ "g<C-a>", mode = "v" },
-		{ "g<C-x>", mode = "v" },
+		{ "<C-a>", mode = "n", desc = "Increment" },
+		{ "<C-x>", mode = "n", desc = "Decrement" },
+		{ "<C-a>", mode = "v", desc = "Increment" },
+		{ "<C-x>", mode = "v", desc = "Decrement" },
+		{ "g<C-a>", mode = "v", desc = "G increment" },
+		{ "g<C-x>", mode = "v", desc = "G decrement" },
 	},
 	config = function()
 		local augend = require("dial.augend")
@@ -232,10 +284,10 @@ local dial = {
 local mini_move = {
 	"echasnovski/mini.move",
 	keys = {
-		{ "<M-left>", mode = { "n", "x" } },
-		{ "<M-right>", mode = { "n", "x" } },
-		{ "<M-up>", mode = { "n", "x" } },
-		{ "<M-down>", mode = { "n", "x" } },
+		{ "<M-left>", mode = { "n", "x" }, desc = "Move left" },
+		{ "<M-right>", mode = { "n", "x" }, desc = "Move right" },
+		{ "<M-up>", mode = { "n", "x" }, desc = "Move up" },
+		{ "<M-down>", mode = { "n", "x" }, desc = "Move down" },
 	},
 	config = function()
 		require("mini.move").setup({
@@ -293,7 +345,7 @@ return {
 	yanky,
 	substitute,
 	stay_in_place,
-	-- cutlass,
+	cutlass,
 	dial,
 	mini_move,
 	surround,

@@ -1,6 +1,11 @@
 return {
 	"shortcuts/no-neck-pain.nvim",
-	cmd = { "NoNeckPain", "NoNeckPainResize", "NoNeckPainWidthUp", "NoNeckPainWidthDown" },
+	cmd = {
+		"NoNeckPain",
+		"NoNeckPainResize",
+		"NoNeckPainWidthUp",
+		"NoNeckPainWidthDown",
+	},
 	-- keys = { {"<Leader>np", desc = "NoNeckPain"}, "<Leader>n=", "<Leader>n-" },
 	enabled = false,
 	config = function()

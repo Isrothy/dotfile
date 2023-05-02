@@ -1,15 +1,19 @@
-public class A implements Inter
-{
+public class A implements Inter {
     private static final String FOO = "foo";
 
     private static final String BAR = "bar";
 
+    /**
+     * @param args
+     */
     public static void main(final String[] args) {
-        final int n = 10;
+        int n = 10;
         System.out.println(n);
         for (int i = 0; i < n; i++) {
             System.out.println(i);
         }
+        System.out.println(FOO);
+        System.out.println(BAR);
     }
 
     public String getFoo() {

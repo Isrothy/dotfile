@@ -4,7 +4,6 @@ local M = {
 	enabled = true,
 	lazy = false,
 }
-
 M.config = function()
 	local utils = require("nord.utils")
 
@@ -59,9 +58,7 @@ M.config = function()
 
 			highlights.ColorColumn = { bg = colors.polar_night.brighter }
 
-			highlights.FloatBorder = {
-				fg = colors.snow_storm.origin,
-			}
+			highlights.FloatBorder = { fg = colors.snow_storm.origin }
 
 			highlights.Folded = { fg = colors.frost.artic_water, bg = colors.polar_night.brighter }
 
@@ -84,10 +81,10 @@ M.config = function()
 			highlights.DiagnosticLineNrInfo = { fg = colors.frost.ice, bold = true }
 			highlights.DiagnosticLineNrHint = { fg = colors.frost.artic_water, bold = true }
 
-			-- highlights.LspLens = { fg = colors.frost.artic_water, bg = "NONE", italic = true }
-			highlights.LspLens = { link = "Concel" }
+			highlights.LspLens = { fg = colors.polar_night.light }
 
-			highlights.QuickFixLine = { bg = colors.polar_night.brighter }
+			highlights.QuickFixLine = { bg = "NONE" }
+			-- highlights.QuickFixLine = { bg = colors.polar_night.brighter }
 
 			highlights.DiffAdd = { bg = utils.darken(colors.aurora.green, 0.15) }
 			highlights.DiffChange = { bg = utils.darken(colors.aurora.purple, 0.2) }
@@ -105,6 +102,9 @@ M.config = function()
 			-- highlights.Dash = { fg = colors.polar_night.brightest }
 
 			highlights.rainbowcol7 = { fg = colors.aurora.orange }
+
+			highlights.DapStoppedLine = { bg = colors.polar_night.brightest }
+			highlights.DebugPC = { bg = colors.polar_night.brightest }
 		end,
 	})
 
