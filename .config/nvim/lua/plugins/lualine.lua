@@ -9,36 +9,36 @@
 	},
 }
 
+local function tab_size()
+	return (vim.bo.expandtab and "␠" or "␉") .. vim.bo.tabstop
+end
+
+---- Truncating components in smaller window
+local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
+	return function(str)
+		local win_width = vim.fn.winwidth(0)
+		if hide_width and win_width < hide_width then
+			return ""
+		elseif trunc_width and trunc_len and win_width < trunc_width and #str > trunc_len then
+			return str:sub(1, trunc_len) .. (no_ellipsis and "" or "...")
+		end
+		return str
+	end
+end
+
+--- Using external source for diff
+local function diff_source()
+	local gitsigns = vim.b.gitsigns_status_dict
+	if gitsigns then
+		return {
+			added = gitsigns.added,
+			modified = gitsigns.changed,
+			removed = gitsigns.removed,
+		}
+	end
+end
+
 M.config = function()
-	local function tab_size()
-		return (vim.bo.expandtab and "␠" or "␉") .. vim.bo.tabstop
-	end
-
-	---- Truncating components in smaller window
-	local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
-		return function(str)
-			local win_width = vim.fn.winwidth(0)
-			if hide_width and win_width < hide_width then
-				return ""
-			elseif trunc_width and trunc_len and win_width < trunc_width and #str > trunc_len then
-				return str:sub(1, trunc_len) .. (no_ellipsis and "" or "...")
-			end
-			return str
-		end
-	end
-
-	--- Using external source for diff
-	local function diff_source()
-		local gitsigns = vim.b.gitsigns_status_dict
-		if gitsigns then
-			return {
-				added = gitsigns.added,
-				modified = gitsigns.changed,
-				removed = gitsigns.removed,
-			}
-		end
-	end
-
 	local c = require("nord.colors").palette
 
 	require("lualine").setup({

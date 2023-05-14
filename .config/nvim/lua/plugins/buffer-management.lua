@@ -2,7 +2,6 @@ return {
 	{
 		"famiu/bufdelete.nvim",
 		cmd = { "Bdelete", "Bwipeout" },
-		enabled = true,
 		init = function()
 			vim.keymap.set(
 				"n",
@@ -21,7 +20,6 @@ return {
 	{
 		"stevearc/stickybuf.nvim",
 		-- event = "BufWinEnter",
-		lazy = false,
 		enabled = false,
 		config = function()
 			require("stickybuf").setup({})

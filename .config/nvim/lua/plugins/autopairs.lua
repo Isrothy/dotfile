@@ -3,14 +3,15 @@ return {
 		"windwp/nvim-autopairs",
 		event = { "InsertEnter", "CmdlineEnter" },
 		enabled = true,
-		config = function()
-			require("nvim-autopairs").setup({
-				map_bs = true,
-				map_c_h = true,
-				check_ts = true,
-				map_c_w = true,
-				disable_filetype = { "TelescopePrompt" },
-			})
+		opts = {
+			map_bs = true,
+			map_c_h = true,
+			check_ts = true,
+			map_c_w = true,
+			disable_filetype = { "TelescopePrompt" },
+		},
+		config = function(_, opts)
+			require("nvim-autopairs").setup(opts)
 			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 			local cmp = require("cmp")
 			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())

@@ -9,7 +9,6 @@ local telescope = {
 		{ "jvgrootveld/telescope-zoxide" },
 		{ "debugloop/telescope-undo.nvim" },
 	},
-	branch = "0.1.x",
 }
 
 telescope.keys = {
@@ -19,12 +18,12 @@ telescope.keys = {
 	{ "<leader><leader>d", "<cmd>Telescope diagnostics<cr>" },
 
 	{ "<leader><leader>f", "<cmd>Telescope find_files<cr>" },
-	{ "<leader><leader>g", "<cmd>Telescope live_grep<cr>" },
+	{ "<leader><leader>g", "<cmd>Telescope grep_string<cr>" },
 	{ "<leader><leader>h", "<cmd>Telescope help_tags<cr>" },
 
 	{ "<leader><leader>j", "<cmd>Telescope jumplist<cr>" },
 	{ "<leader><leader>k", "<cmd>Telescope keymaps<cr>" },
-	{ "<leader><leader>l", "<cmd>Telescope loclist<cr>" },
+	{ "<leader><leader>l", "<cmd>Telescope live_grep<cr>" },
 	{ "<leader><leader>m", "<cmd>Telescope marks<cr>" },
 	{ "<leader><leader>n", "<cmd>Telescope noice<cr>" },
 	{ "<leader><leader>o", "<cmd>Telescope frecency<cr>" },
@@ -35,7 +34,6 @@ telescope.keys = {
 	{ "<leader><leader>t", "<cmd>Telescope treesitter<cr>" },
 	{ "<leader><leader>u", "<cmd>Telescope undo<cr>" },
 	{ "<leader><leader>v", "<cmd>Telescope vim_options<cr>" },
-	{ "<leader><leader>w", "<cmd>Telescope lsp_workspace_symbols<cr>" },
 
 	{ "<leader><leader>y", "<cmd>Telescope yank_history<cr>" },
 	{ "<leader><leader>z", "<cmd>Telescope zoxide list<cr>" },
@@ -74,16 +72,16 @@ telescope.config = function()
 		defaults = {
 			buffer_previewer_maker = new_maker,
 			dynamic_preview_title = true,
-		},
-		vimgrep_arguments = {
-			"rg",
-			"--color=never",
-			"--no-heading",
-			"--with-filename",
-			"--line-number",
-			"--column",
-			"--smart-case",
-			"--trim", -- add this value
+			vimgrep_arguments = {
+				"rg",
+				"--color=never",
+				"--no-heading",
+				"--with-filename",
+				"--line-number",
+				"--column",
+				"--smart-case",
+				"--trim",
+			},
 		},
 		extensions = {
 			["ui-select"] = {

@@ -1,10 +1,8 @@
-local M = {
+return {
 	"chentoast/marks.nvim",
 	event = { "BufReadPost", "BufNewFile" },
-}
+	opts = {
 
-M.config = function()
-	require("marks").setup({
 		-- whether to map keybinds or not. default true
 		default_mappings = true,
 		-- which builtin marks to show. default {}
@@ -41,7 +39,5 @@ M.config = function()
 			"dapui_colsole",
 			"ssr",
 		},
-	})
-end
-
-return M
+	},
+}

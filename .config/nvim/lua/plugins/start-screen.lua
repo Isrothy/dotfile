@@ -42,11 +42,10 @@ return {
 			dashboard.section.buttons.val = {
 				dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
 				dashboard.button("s", "⛶  Smart open", ":Telescope smart_open<CR>"),
-				dashboard.button("f", "  Find file", ":Telescope find_files<CR>"),
-				dashboard.button("g", "  Find word", ":Telescope live_grep<CR>"),
+				dashboard.button("f", "󰈞  Find file", ":Telescope find_files<CR>"),
+				dashboard.button("l", "󰈬  Live grep", ":Telescope live_grep<CR>"),
 				dashboard.button("c", "  Load current dir session", ":SessionManage load_current_dir_session<CR>"),
-				dashboard.button("l", "  Load session", ":SessionManage load_session<CR>"),
-				dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
+				dashboard.button("q", "󰅚  Quit NVIM", ":qa<CR>"),
 			}
 			dashboard.config.opts.noautocmd = false
 			alpha.setup(dashboard.config)

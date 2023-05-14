@@ -1,10 +1,7 @@
-local M = {
+return {
 	"NvChad/nvim-colorizer.lua",
 	event = { "BufReadPre", "BufNewFile" },
-}
-
-M.config = function()
-	require("colorizer").setup({
+	opts = {
 		filetypes = {
 			"*",
 			"!qf",
@@ -42,7 +39,6 @@ M.config = function()
 			"!prompt",
 			"!popup",
 		},
-	})
-end
+	},
+}
 
-return M

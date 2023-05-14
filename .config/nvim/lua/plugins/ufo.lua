@@ -20,10 +20,14 @@ local M = {
 -- 	end, { ["repeat"] = -1 })
 -- end
 
-M.config = function()
-	local handler = function(virtText, lnum, endLnum, width, truncate)
+
+M.opts = {
+	provider_selector = function(bufnr, filetype, buftype)
+		return { "treesitter", "indent" }
+	end,
+	fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
 		local newVirtText = {}
-		local suffix = ("  %d "):format(endLnum - lnum)
+		local suffix = (" 󰦸 %d "):format(endLnum - lnum)
 		local sufWidth = vim.fn.strdisplaywidth(suffix)
 		local targetWidth = width - sufWidth
 		local curWidth = 0
@@ -47,29 +51,26 @@ M.config = function()
 		end
 		table.insert(newVirtText, { suffix, "MoreMsg" })
 		return newVirtText
-	end
+	end,
+	enable_get_fold_end_virt_text = true,
+	preview = {
 
-	require("ufo").setup({
-		provider_selector = function(bufnr, filetype, buftype)
-			return { "treesitter", "indent" }
-		end,
-		fold_virt_text_handler = handler,
-		enable_get_fold_end_virt_text = true,
-		preview = {
-
-			win_config = {
-				border = "none",
-				winhighlight = "Normal:Folded",
-				winblend = 0,
-			},
-			mappings = {
-				scrollB = "<C-b>",
-				scrollF = "<C-f>",
-				scrollU = "<C-u>",
-				scrollD = "<C-d>",
-			},
+		win_config = {
+			border = "none",
+			winhighlight = "Normal:Folded",
+			winblend = 0,
 		},
-	})
+		mappings = {
+			scrollB = "<C-b>",
+			scrollF = "<C-f>",
+			scrollU = "<C-u>",
+			scrollD = "<C-d>",
+		},
+	},
+}
+
+M.config = function(_, opts)
+	require("ufo").setup(opts)
 
 	vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 	vim.keymap.set("n", "zM", require("ufo").closeAllFolds)

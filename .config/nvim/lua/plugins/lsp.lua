@@ -69,8 +69,8 @@ local set_keymap = function(_, bufnr)
 		})
 	end, bufopts)
 
-	-- map("n", "K", vim.lsp.buf.hover, bufopts)
-	map("n", "K", '<cmd>lua require("pretty_hover").hover()<cr>', bufopts)
+	map("n", "K", vim.lsp.buf.hover, bufopts)
+	-- map("n", "K", '<cmd>lua require("pretty_hover").hover()<cr>', bufopts)
 	map("n", "<Leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
 	map("n", "<Leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
 	map("n", "<Leader>wl", function()
@@ -357,22 +357,22 @@ local clangd = {
 				},
 				ast = {
 					role_icons = {
-						type = "",
-						declaration = "ﭝ",
-						expression = "ﰊ",
-						specifier = "炙",
-						statement = "ﰉ",
+						type = "󰉺",
+						declaration = "󰙞",
+						expression = "󰜌",
+						specifier = "󰓼",
+						statement = "󰜋",
 						["template argument"] = "",
 					},
 
 					kind_icons = {
-						Compound = "ﯶ",
+						Compound = "󰛸",
 						Recovery = "",
 						TranslationUnit = "",
 						PackExpansion = "",
-						TemplateTypeParm = "",
-						TemplateTemplateParm = "",
-						TemplateParamObject = "",
+						TemplateTypeParm = "󰆦",
+						TemplateTemplateParm = "󰆩",
+						TemplateParamObject = "󰆧",
 					},
 
 					highlights = {
@@ -907,6 +907,50 @@ local copilot = {
 	end,
 }
 
+local zk = {
+	"mickael-menu/zk-nvim",
+	enabled = false,
+	cmd = {
+		"ZkIndex",
+		"ZkNotes",
+		"ZkNew",
+		"ZkNewFromTitleSelection",
+		"ZkNewFromContentSelection",
+		"ZkCd",
+		"ZkBacklinks",
+		"ZkLinks",
+		"ZkInsertLink",
+		"ZkMatch",
+		"ZkTags",
+	},
+	config = function()
+		require("zk").setup({
+			-- can be "telescope", "fzf" or "select" (`vim.ui.select`)
+			-- it's recommended to use "telescope" or "fzf"
+			picker = "telescope",
+
+			lsp = {
+				-- `config` is passed to `vim.lsp.start_client(config)`
+				config = {
+					cmd = { "zk", "lsp" },
+					name = "zk",
+					on_attach = function(client, bufnr)
+						hl_word(client, bufnr)
+						set_keymap(client, bufnr)
+					end,
+				},
+
+				-- automatically attach buffers in a zk notebook that match the given filetypes
+				auto_attach = {
+					enabled = false,
+					filetypes = { "markdown" },
+				},
+			},
+		})
+		require("telescope").load_extension("zk")
+	end,
+}
+
 -- local copilot = {
 -- 	"github/copilot.vim",
 -- 	event = "VeryLazy",
@@ -964,5 +1008,6 @@ return {
 	null_ls,
 	sqls,
 	jsonls,
+	zk,
 	codium,
 }

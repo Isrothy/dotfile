@@ -1,34 +1,8 @@
 return {
 	"numToStr/Comment.nvim",
-	enabled = true,
-	lazy = true,
-	depenencies = {
-		{
-			"JoosepAlviste/nvim-ts-context-commentstring",
-			config = function()
-				require("nvim-treesitter.configs").setup({
-					context_commentstring = {
-						enable = true,
-						config = {
-							css = "/* %s */",
-							javascript = {
-								__default = "// %s",
-								jsx_element = "{/* %s */}",
-								jsx_fragment = "{/* %s */}",
-								jsx_attribute = "// %s",
-								comment = "// %s",
-							},
-							typescript = {
-								__default = "// %s",
-								__multiline = "/* %s */",
-							},
-						},
-					},
-				})
-			end,
-		},
+	dependencies = {
+		"JoosepAlviste/nvim-ts-context-commentstring",
 	},
-
 	keys = {
 		{ "gc", mode = { "n", "v" } },
 		{ "gb", mode = { "n", "v" } },

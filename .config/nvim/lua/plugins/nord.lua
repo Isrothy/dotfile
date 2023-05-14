@@ -91,6 +91,8 @@ M.config = function()
 			highlights.DiffDelete = { bg = utils.darken(colors.aurora.red, 0.3) }
 			highlights.DiffText = { fg = colors.frost.artic_water, bg = "NONE", reverse = true }
 
+			highlights["@error"] = {}
+
 			-- highlights.InclineNormal = { bg = colors.polar_night.brighter, bold = true }
 			-- highlights.InclineNormalNC = { bg = colors.polar_night.brighter }
 			-- highlights.Headline1 = { bg = utils.darken(colors.aurora.green, 0.2), bold = true }

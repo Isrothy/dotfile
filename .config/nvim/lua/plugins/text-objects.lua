@@ -186,12 +186,9 @@ return {
 				})
 			end
 		end,
-
-		config = function()
-			require("various-textobjs").setup({
-				useDefaultKeymaps = false,
-			})
-		end,
+		opts = {
+			useDefaultKeymaps = false,
+		},
 	},
 	{
 		"echasnovski/mini.ai",

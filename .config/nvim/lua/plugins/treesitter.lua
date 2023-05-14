@@ -3,7 +3,6 @@ local TS = {
 	enabled = true,
 	event = { "BufReadPost", "BufNewFile" },
 	build = ":TSUpdate",
-
 	config = function()
 		require("nvim-treesitter.configs").setup({
 			-- One of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -20,7 +19,7 @@ local TS = {
 				-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
 				-- Using this option may slow down your editor, and you may see some duplicate highlights.
 				-- Instead of true it can also be a list of languages
-				additional_vim_regex_highlighting = false,
+				additional_vim_regex_highlighting = true,
 			},
 			rainbow = {
 				enable = true,
@@ -45,7 +44,18 @@ local TS = {
 			},
 			context_commentstring = {
 				enable = true,
-				enable_autocmd = true,
+				enable_autocmd = false,
+				config = {
+					css = "/* %s */",
+					javascript = {
+						__default = "// %s",
+						jsx_element = "{/* %s */}",
+						jsx_fragment = "{/* %s */}",
+						jsx_attribute = "// %s",
+						comment = "// %s",
+					},
+					typescript = { __default = "// %s", __multiline = "/* %s */" },
+				},
 			},
 			autotag = {
 				enable = true,
@@ -128,9 +138,7 @@ local node_action = {
 	end,
 
 	dependencies = { "nvim-treesitter" },
-	config = function()
-		require("ts-node-action").setup({})
-	end,
+	opts = {},
 }
 
 local iswap = {
@@ -151,94 +159,48 @@ local iswap = {
 		vim.keymap.set({ "n" }, "<m-i>", [[<cmd>ISwapNodeWithLeft<cr>]], { desc = "ISwap node with left" })
 		vim.keymap.set({ "n" }, "<m-o>", [[<cmd>ISwapNodeWithRight<cr>]], { desc = "ISwap node with right" })
 	end,
-	config = function()
-		require("iswap").setup({
-			-- The keys that will be used as a selection, in order
-			-- ('asdfghjklqwertyuiopzxcvbnm' by default)
-			keys = "qwertyuiop",
+	opts = {
+		-- The keys that will be used as a selection, in order
+		-- ('asdfghjklqwertyuiopzxcvbnm' by default)
+		keys = "qwertyuiop",
 
-			-- Grey out the rest of the text when making a selection
-			-- (enabled by default)
-			grey = "disable",
+		-- Grey out the rest of the text when making a selection
+		-- (enabled by default)
+		grey = "disable",
 
-			-- Highlight group for the sniping value (asdf etc.)
-			-- default 'Search'
-			hl_snipe = "Search",
+		-- Highlight group for the sniping value (asdf etc.)
+		-- default 'Search'
+		hl_snipe = "Search",
 
-			-- Highlight group for the visual selection of terms
-			-- default 'Visual'
-			hl_selection = "Visual",
+		-- Highlight group for the visual selection of terms
+		-- default 'Visual'
+		hl_selection = "Visual",
 
-			-- Highlight group for the greyed background
-			-- default 'Comment'
-			hl_grey = "Comment",
+		-- Highlight group for the greyed background
+		-- default 'Comment'
+		hl_grey = "Comment",
 
-			-- Post-operation flashing highlight style,
-			-- either 'simultaneous' or 'sequential', or false to disable
-			-- default 'sequential'
-			flash_style = "simultaneous",
+		-- Post-operation flashing highlight style,
+		-- either 'simultaneous' or 'sequential', or false to disable
+		-- default 'sequential'
+		flash_style = "simultaneous",
 
-			-- Highlight group for flashing highlight afterward
-			-- default 'IncSearch'
-			hl_flash = "IncSearch",
+		-- Highlight group for flashing highlight afterward
+		-- default 'IncSearch'
+		hl_flash = "IncSearch",
 
-			-- Move cursor to the other element in ISwap*With commands
-			-- default false
-			move_cursor = true,
+		-- Move cursor to the other element in ISwap*With commands
+		-- default false
+		move_cursor = true,
 
-			-- Automatically swap with only two arguments
-			-- default nil
-			autoswap = true,
+		-- Automatically swap with only two arguments
+		-- default nil
+		autoswap = true,
 
-			-- Other default options you probably should not change:
-			debug = nil,
-			hl_grey_priority = "1000",
-		})
-	end,
-}
-
-local commentstring = {
-	"JoosepAlviste/nvim-ts-context-commentstring",
-	enabled = true,
-	config = function()
-		require("nvim-treesitter.configs").setup({
-			context_commentstring = {
-				enable = true,
-				config = {
-					css = "/* %s */",
-					javascript = {
-						__default = "// %s",
-						jsx_element = "{/* %s */}",
-						jsx_fragment = "{/* %s */}",
-						jsx_attribute = "// %s",
-						comment = "// %s",
-					},
-					typescript = { __default = "// %s", __multiline = "/* %s */" },
-				},
-			},
-		})
-	end,
-}
-
-local indent_blankline = {
-	"lukas-reineke/indent-blankline.nvim",
-	enabled = true,
-	event = { "BufReadPre", "BufNewFile" },
-	config = function()
-		vim.opt.list = true
-		-- vim.opt.listchars:append("space:•")
-		-- vim.opt.listchars:append("eol:↴")
-
-		require("indent_blankline").setup({
-			char = "▎",
-			char_blankline = "▎",
-			context_char = "▎",
-			-- space_char_blankline = " ",
-			use_treesitter_scope = false,
-			show_current_context = true,
-			show_current_context_start = true,
-		})
-	end,
+		-- Other default options you probably should not change:
+		debug = nil,
+		hl_grey_priority = "1000",
+	},
 }
 
 local rainbow = {
@@ -272,19 +234,15 @@ local neogen = {
 	"danymat/neogen",
 	dependencies = "nvim-treesitter/nvim-treesitter",
 	cmd = "Neogen",
-	config = function()
-		require("neogen").setup({
-			snippet_engine = "luasnip",
-		})
-	end,
+	opts = {
+		snippet_engine = "luasnip",
+	},
 }
 
 local femaco = {
 	"AckslD/nvim-FeMaco.lua",
 	cmd = "FeMaco",
-	config = function()
-		require("femaco").setup({})
-	end,
+	opts = {},
 }
 local node_marker = {
 	"atusy/tsnode-marker.nvim",
@@ -306,12 +264,10 @@ local local_highlight = {
 	"tzachar/local-highlight.nvim",
 	event = { "BufReadPost", "BufNewFile" },
 	enabled = false,
-	config = function()
-		require("local-highlight").setup({
-			hlgroup = "TSDefinitionUsage",
-			cw_hlgroup = "TSDefinitionUsage",
-		})
-	end,
+	opts = {
+		hlgroup = "TSDefinitionUsage",
+		cw_hlgroup = "TSDefinitionUsage",
+	},
 }
 
 local treesj = {
@@ -322,12 +278,10 @@ local treesj = {
 		{ "<leader>j", desc = "Join lines" },
 		{ "<leader>m", desc = "Toggle split/join" },
 	},
-	config = function()
-		require("treesj").setup({
-			use_default_keymaps = true,
-			max_join_length = 0xffffffff,
-		})
-	end,
+	opts = {
+		use_default_keymaps = true,
+		max_join_length = 0xffffffff,
+	},
 }
 
 local regexplainer = {
@@ -337,60 +291,57 @@ local regexplainer = {
 		"nvim-treesitter/nvim-treesitter",
 		"MunifTanjim/nui.nvim",
 	},
-	config = function()
-		require("regexplainer").setup({
-			-- 'narrative'
-			mode = "narrative", -- TODO: 'ascii', 'graphical'
+	opts = {
+		-- 'narrative'
+		mode = "narrative", -- TODO: 'ascii', 'graphical'
 
-			-- automatically show the explainer when the cursor enters a regexp
-			auto = false,
+		-- automatically show the explainer when the cursor enters a regexp
+		auto = false,
 
-			-- filetypes (i.e. extensions) in which to run the autocommand
-			filetypes = {
-				"html",
-				"js",
-				"cjs",
-				"mjs",
-				"ts",
-				"jsx",
-				"tsx",
-				"cjsx",
-				"mjsx",
-				"swift",
+		-- filetypes (i.e. extensions) in which to run the autocommand
+		filetypes = {
+			"html",
+			"js",
+			"cjs",
+			"mjs",
+			"ts",
+			"jsx",
+			"tsx",
+			"cjsx",
+			"mjsx",
+			"swift",
+		},
+
+		-- Whether to log debug messages
+		debug = false,
+
+		-- 'split', 'popup'
+		display = "popup",
+
+		mappings = {
+			toggle = "gR",
+			-- examples, not defaults:
+			-- show = 'gS',
+			-- hide = 'gH',
+			-- show_split = 'gP',
+			-- show_popup = 'gU',
+		},
+		popup = {
+			border = {
+				padding = { 0, 0 },
+				style = "rounded",
 			},
+		},
 
-			-- Whether to log debug messages
-			debug = false,
-
-			-- 'split', 'popup'
-			display = "popup",
-
-			mappings = {
-				toggle = "gR",
-				-- examples, not defaults:
-				-- show = 'gS',
-				-- hide = 'gH',
-				-- show_split = 'gP',
-				-- show_popup = 'gU',
-			},
-			popup = {
-				border = {
-					padding = { 0, 0 },
-					style = "rounded",
-				},
-			},
-
-			narrative = {
-				separator = "\n",
-			},
-		})
-	end,
+		narrative = {
+			separator = "\n",
+		},
+	},
 }
 
 return {
 	TS,
 	iswap,
-	commentstring,
 	rainbow,
 	femaco,
 	endwise,

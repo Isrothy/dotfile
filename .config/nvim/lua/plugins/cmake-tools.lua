@@ -1,11 +1,7 @@
-local M = {
+return {
 	"Civitasv/cmake-tools.nvim",
 	ft = { "cmake", "cpp", "c" },
-	enabled = true,
-}
-
-M.config = function()
-	require("cmake-tools").setup({
+	opts = {
 		cmake_command = "cmake",
 		cmake_build_directory = "",
 		cmake_build_directory_prefix = "cmake_build_", -- when cmake_build_directory is "", this option will be activated
@@ -19,6 +15,6 @@ M.config = function()
 			short = { show = true },
 			long = { show = true, max_length = 40 },
 		},
-	})
-end
-return M
+	},
+}
+

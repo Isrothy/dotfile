@@ -136,31 +136,29 @@ local substitute = {
 		map("x", "X", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
 		map("n", "sxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
 	end,
-	config = function()
-		require("substitute").setup({
-			on_substitute = function(event)
-				require("yanky").init_ring("p", event.register, event.count, event.vmode:match("[vV�]"))
-			end,
-			yank_substituted_text = false,
-			highlight_substituted_text = {
-				enabled = true,
-				timer = 500,
-			},
-			range = {
-				prefix = "s",
-				prompt_current_text = false,
-				confirm = false,
-				complete_word = false,
-				motion1 = false,
-				motion2 = false,
-				suffix = "",
-			},
-			exchange = {
-				motion = false,
-				use_esc_to_cancel = true,
-			},
-		})
-	end,
+	opts = {
+		on_substitute = function(event)
+			require("yanky").init_ring("p", event.register, event.count, event.vmode:match("[vV�]"))
+		end,
+		yank_substituted_text = false,
+		highlight_substituted_text = {
+			enabled = true,
+			timer = 500,
+		},
+		range = {
+			prefix = "s",
+			prompt_current_text = false,
+			confirm = false,
+			complete_word = false,
+			motion1 = false,
+			motion2 = false,
+			suffix = "",
+		},
+		exchange = {
+			motion = false,
+			use_esc_to_cancel = true,
+		},
+	},
 }
 
 local stay_in_place = {
@@ -173,25 +171,21 @@ local stay_in_place = {
 		{ "<<", mode = { "n" } },
 		{ "==", mode = { "n" } },
 	},
-	config = function()
-		require("stay-in-place").setup({
-			set_keymaps = true,
-			preserve_visual_selection = true,
-		})
-	end,
+	opts = {
+		set_keymaps = true,
+		preserve_visual_selection = true,
+	},
 }
 
 local cutlass = {
 	"gbprod/cutlass.nvim",
 	event = "VeryLazy",
 	enabled = false,
-	config = function()
-		require("cutlass").setup({
-			cut_key = nil,
-			override_del = true,
-			exclude = {},
-		})
-	end,
+	opts = {
+		cut_key = nil,
+		override_del = true,
+		exclude = {},
+	},
 }
 
 local dial = {
@@ -289,23 +283,21 @@ local mini_move = {
 		{ "<M-up>", mode = { "n", "x" }, desc = "Move up" },
 		{ "<M-down>", mode = { "n", "x" }, desc = "Move down" },
 	},
-	config = function()
-		require("mini.move").setup({
-			mappings = {
-				-- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
-				left = "<M-left>",
-				right = "<M-right>",
-				down = "<M-down>",
-				up = "<M-up>",
+	opts = {
+		mappings = {
+			-- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
+			left = "<M-left>",
+			right = "<M-right>",
+			down = "<M-down>",
+			up = "<M-up>",
 
-				-- Move current line in Normal mode
-				line_left = "<M-left>",
-				line_right = "<M-right>",
-				line_down = "<M-down>",
-				line_up = "<M-up>",
-			},
-		})
-	end,
+			-- Move current line in Normal mode
+			line_left = "<M-left>",
+			line_right = "<M-right>",
+			line_down = "<M-down>",
+			line_up = "<M-up>",
+		},
+	},
 }
 
 local surround = {
@@ -322,23 +314,21 @@ local surround = {
 		{ "<c-g>s", mode = "i" },
 		{ "<c-g>S", mode = "i" },
 	},
-	config = function()
-		require("nvim-surround").setup({
-			keymaps = {
-				insert = "<c-g>s",
-				insert_line = "<c-g>S",
-				normal = "gs",
-				normal_cur = "gss",
-				normal_line = "gS",
-				normal_cur_line = "gSS",
-				visual = "<c-s>",
-				visual_line = "g<c-s>",
-				delete = "ds",
-				change = "cs",
-			},
-			move_cursor = false,
-		})
-	end,
+	opts = {
+		keymaps = {
+			insert = "<c-g>s",
+			insert_line = "<c-g>S",
+			normal = "gs",
+			normal_cur = "gss",
+			normal_line = "gS",
+			normal_cur_line = "gSS",
+			visual = "<c-s>",
+			visual_line = "g<c-s>",
+			delete = "ds",
+			change = "cs",
+		},
+		move_cursor = false,
+	},
 }
 
 return {

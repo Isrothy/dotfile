@@ -243,21 +243,21 @@ M.config = function()
 			sources = { -- falls back to source_name if nil
 				{
 					source = "filesystem", -- string
-					display_name = "  Files ", -- string | nil
+					display_name = " 󰉓 Files ", -- string | nil
 				},
 				{
 					source = "buffers", -- string
-					display_name = "  Buffers ", -- string | nil
+					display_name = " 󰈙 Buffers ", -- string | nil
 				},
 				{
 					source = "git_status", -- string
-					display_name = "  Git ", -- string | nil
+					display_name = "  Git ", -- string | nil
 				},
 			},
 			content_layout = "center", -- only with `tabs_layout` = "equal", "focus"
-			--                start  : |/ 裡 bufname     \/...
-			--                end    : |/     裡 bufname \/...
-			--                center : |/   裡 bufname   \/...
+			--                start  : |/ 󰓩 bufname     \/...
+			--                end    : |/     󰓩 bufname \/...
+			--                center : |/   󰓩 bufname   \/...
 			tabs_layout = "equal", -- start, end, center, equal, focus
 			--             start  : |/  a  \/  b  \/  c  \            |
 			--             end    : |            /  a  \/  b  \/  c  \|
@@ -303,7 +303,8 @@ M.config = function()
 			icon = {
 				folder_closed = "",
 				folder_open = "",
-				folder_empty = "ﰊ",
+				folder_empty = "󰜌",
+				folder_empty_open = "󰜌",
 				default = "*",
 				highlight = "NeoTreeFileIcon",
 			},
@@ -322,11 +323,11 @@ M.config = function()
 					added = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
 					modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
 					deleted = "✖", -- this can only be used in the git_status source
-					renamed = "", -- this can only be used in the git_status source
+					renamed = "󰁕", -- this can only be used in the git_status source
 					-- Status type
 					untracked = "",
 					ignored = "",
-					unstaged = "",
+					unstaged = "󰄱",
 					staged = "",
 					conflict = "",
 				},

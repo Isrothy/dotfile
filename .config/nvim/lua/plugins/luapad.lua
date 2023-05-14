@@ -4,7 +4,7 @@ return {
 		"Luapad",
 		"LuaRun",
 	},
-	config = function()
-		require("luapad").setup()
-	end,
+	opts = {
+		wipe = false,
+	},
 }
