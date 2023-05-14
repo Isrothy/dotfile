@@ -28,6 +28,7 @@ plugins=(
   fast-syntax-highlighting
   fd
   fzf
+  fzf-tab
   git
   gitignore
   history-substring-search
@@ -64,6 +65,8 @@ alias lt='ls --tree'
 
 alias vim='nvim'
 alias vi='nvim'
+
+alias pipupall="pip3 list -o | cut -f1 -d' ' | tr ' ' '\n' | awk '{if(NR>=3)print}' | cut -d' ' -f1 | xargs -n1 pip3 install -U"
 
 alias icat="kitty +kitten icat"
 
