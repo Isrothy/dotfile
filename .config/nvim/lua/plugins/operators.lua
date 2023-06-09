@@ -131,10 +131,10 @@ local substitute = {
 		map("n", "S", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
 		map("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
 
-		map("n", "sx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
-		map("n", "sxx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
-		map("x", "X", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
-		map("n", "sxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
+		map("n", "gx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
+		map("n", "gxx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
+		map("x", "gx", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
+		map("n", "gxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
 	end,
 	opts = {
 		on_substitute = function(event)

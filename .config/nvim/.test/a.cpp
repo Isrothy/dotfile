@@ -24,7 +24,7 @@ struct A {
     double x;
 
   public:
-    double add(int z) const {
+    [[nodiscard]] double add(int z) const {
         return x + y + z;
     }
 };
@@ -72,7 +72,7 @@ int main() {
     scanf("%d %d", &a, &b);
     printf("%d\n", a + b);
     int n = 10;
-    int D = add(double(a), double(b));
+    auto D = add(double(a), double(b));
     switch (D) {
         case 0: {
         }

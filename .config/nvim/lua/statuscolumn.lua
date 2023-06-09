@@ -40,7 +40,8 @@ end
 _G.get_my_signcol = function(bufnum, lnum)
 	local cur_signs = get_signs_from_group(bufnum, lnum, "*")
 	if cur_signs == nil then
-		return "%2.2\\ "
+		return "%2.2\\  "
+		-- return "  "
 	end
 	local selected = nil
 	for _, sign in pairs(cur_signs) do
@@ -51,6 +52,7 @@ _G.get_my_signcol = function(bufnum, lnum)
 	end
 	if selected == nil then
 		return "%2.2\\  "
+		-- return "  "
 	end
 	return make_sign_col(selected.name)
 end
@@ -61,9 +63,10 @@ _G.get_statuscol = function()
 	local parts = {
 		["fold"] = [[%{% foldlevel(v:lnum) ? '%C' : '' %}]],
 		["gitsigns"] = "%{%v:virtnum == 0 ? (v:lua.get_statuscol_gitsign(bufnr(), v:lnum)) : ' '%}",
-		["num"] = "%{v:virtnum == 0 ? (v:relnum ? v:relnum : v:lnum) : ' '}",
+		-- ["num"] = "%{v:virtnum == 0 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . ' ' : v:lnum) : ''}",
+		["num"] = "%{v:virtnum == 0 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}",
 		["sep"] = "%=",
-		["signcol"] = "%{%v:virtnum == 0 ? (v:lua.get_my_signcol(bufnr(), v:lnum)) : ' '%}",
+		["signcol"] = "%{%v:virtnum == 0 ? (v:lua.get_my_signcol(bufnr(), v:lnum)) : '  '%}",
 		-- ["signcol"] = "%s",
 		["space"] = " ",
 	}
@@ -82,7 +85,7 @@ _G.get_statuscol = function()
 end
 
 -- vim.o.foldcolumn = "1"
--- vim.opt.signcolumn = "yes:1"
+vim.opt.signcolumn = "yes:1"
 -- vim.opt.number = true
 -- vim.opt.relativenumber = true
 -- vim.opt.numberwidth = 4

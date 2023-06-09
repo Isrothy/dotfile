@@ -7,6 +7,7 @@ local lightbulb = {
 		ignore = {},
 		sign = {
 			enabled = true,
+			text = "💡",
 			-- Priority of the gutter sign
 			priority = 10,
 		},
@@ -58,15 +59,6 @@ local lightbulb = {
 	},
 }
 
-local actionHint = {
-	"roobert/statusline-action-hints.nvim",
-	enabled = false,
-	opts = {
-		definition_identifier = "gd",
-		template = "%s ref:%s",
-	},
-}
-
 local inc_rename = {
 	"smjonas/inc-rename.nvim",
 	enabled = true,
@@ -97,7 +89,7 @@ local neo_dim = {
 
 local trouble = {
 	"folke/trouble.nvim",
-	enabled = false,
+	enabled = true,
 	cmd = {
 		"TroubleToggle",
 		"Trouble",
@@ -106,8 +98,8 @@ local trouble = {
 	},
 	dependencies = "nvim-tree/nvim-web-devicons",
 	keys = {
-		{ "<F5>", "<cmd>TroubleClose<cr>", noremap = true },
-		{ "<F6>", "<cmd>Trouble workspace_diagnostics<cr>", noremap = true },
+		-- { "<F5>", "<cmd>TroubleClose<cr>", noremap = true },
+		-- { "<F6>", "<cmd>Trouble workspace_diagnostics<cr>", noremap = true },
 		{ "<leader>xx", "<cmd>TroubleToggle<cr>", noremap = true },
 		{ "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", noremap = true },
 		{ "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", noremap = true },
@@ -180,6 +172,31 @@ local lsp_lens = {
 	},
 }
 
+local inlay_hint = {
+	"lvimuser/lsp-inlayhints.nvim",
+	event = { "LspAttach" },
+	branch = "anticonceal",
+	enabled = true,
+	opts = {
+		enabled_at_startup = true,
+		debug_mode = false,
+	},
+	init = function()
+		vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+		vim.api.nvim_create_autocmd("LspAttach", {
+			group = "LspAttach_inlayhints",
+			callback = function(args)
+				if not (args.data and args.data.client_id) then
+					return
+				end
+				local bufnr = args.buf
+				local client = vim.lsp.get_client_by_id(args.data.client_id)
+				require("lsp-inlayhints").on_attach(client, bufnr)
+			end,
+		})
+	end,
+}
+
 local pretty_hover = {
 	"Fildo7525/pretty_hover",
 	enabled = false,
@@ -210,5 +227,6 @@ return {
 	neo_dim,
 	trouble,
 	lsp_lens,
+	inlay_hint,
 	pretty_hover,
 }

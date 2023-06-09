@@ -200,7 +200,7 @@ CMP.config = function()
 				compare.score,
 				require("cmp-under-comparator").under,
 				compare.recently_used,
-				require("clangd_extensions.cmp_scores"),
+				-- require("clangd_extensions.cmp_scores"),
 				compare.kind,
 				compare.sort_text,
 				compare.length,

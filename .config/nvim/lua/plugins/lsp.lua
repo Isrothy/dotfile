@@ -106,8 +106,6 @@ end
 local Lspconfig = {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
-
-	enabled = true,
 	config = function()
 		vim.diagnostic.config({
 			virtual_text = false,
@@ -118,10 +116,10 @@ local Lspconfig = {
 			float = { border = "rounded" },
 		})
 		local signs = {
-			Error = " ",
-			Warn = " ",
-			Hint = " ",
-			Info = " ",
+			Error = "",
+			Warn = "",
+			Hint = "",
+			Info = "",
 		}
 		for type, icon in pairs(signs) do
 			local sign = "DiagnosticSign" .. type
@@ -147,6 +145,13 @@ local Lspconfig = {
 				hl_word(client, bufnr)
 			end,
 		})
+		-- require("lspconfig").clangd.setup({
+		-- 	capabilities = make_capabilities(),
+		-- 	on_attach = function(client, bufnr)
+		-- 		set_keymap(client, bufnr)
+		-- 		hl_word(client, bufnr)
+		-- 	end,
+		-- })
 
 		require("lspconfig").cssls.setup({
 			capabilities = make_capabilities(),
@@ -267,12 +272,19 @@ local Lspconfig = {
 				hl_word(client, bufnr)
 			end,
 		})
+		require("lspconfig").sqlls.setup({
+			capabilities = make_capabilities(),
+			on_attach = function(client, bufnr)
+				set_keymap(client, bufnr)
+				hl_word(client, bufnr)
+			end,
+		})
 		require("lspconfig").lua_ls.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
 				hl_word(client, bufnr)
-				client.server_capabilities.documentFormattingProvider = false
+				-- client.server_capabilities.documentFormattingProvider = false
 			end,
 			settings = {
 				Lua = {
@@ -283,6 +295,18 @@ local Lspconfig = {
 					diagnostics = {
 						-- Get the language server to recognize the `vim` global
 						globals = { "vim" },
+					},
+					format = {
+						enable = false,
+						defaultConfig = {
+							indent_style = "space",
+							indent_size = "2",
+							continuation_indent_size = "2",
+						},
+					},
+					hint = {
+						enable = true,
+						setType = true,
 					},
 				},
 			},
@@ -299,7 +323,11 @@ local Lspconfig = {
 
 local clangd = {
 	"p00f/clangd_extensions.nvim",
+	-- event = "LspAttach",
+	event = { "BufReadPre", "BufNewFile" },
 	ft = { "c", "cpp", "objc", "objcpp" },
+	enabled = true,
+	-- lazy = false,
 	config = function()
 		local clangd_capabilities = make_capabilities()
 		clangd_capabilities.offsetEncoding = "utf-16"
@@ -328,6 +356,9 @@ local clangd = {
 				hover_with_actions = true,
 				-- These apply to the ClangdSetInlayHints command
 				inlay_hints = {
+					inline = vim.fn.has("nvim-0.10") == 1,
+					-- Options other than `highlight' and `priority' only work
+					-- if `inline' is disabled
 					-- Only show inlay hints for the current line
 					only_current_line = false,
 					-- Event which triggers a refersh of the inlay hints.
@@ -337,7 +368,7 @@ local clangd = {
 					-- autoSetHints both are true.
 					only_current_line_autocmd = "CursorHold",
 					-- whether to show parameter hints with the inlay hints or not
-					show_parameter_hints = false,
+					show_parameter_hints = true,
 					-- prefix for parameter hints
 					parameter_hints_prefix = "<- ",
 					-- prefix for all the other hints (type, chaining)
@@ -399,7 +430,7 @@ local jdtls = {
 			pattern = "java",
 			callback = function()
 				local home = os.getenv("HOME")
-				local jdtls_install_location = "/opt/homebrew/Cellar/jdtls/1.23.0/"
+				local jdtls_install_location = "/opt/homebrew/Cellar/jdtls/1.24.0/"
 				local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h")
 				local workspace_dir = home .. "/.local/share/eclipse/" .. project_name
 				local javadebug_dir = home .. "/.local/share/javadebug/"
@@ -598,7 +629,6 @@ local jdtls = {
 local haskell_tools = {
 	"MrcJkb/haskell-tools.nvim",
 	ft = { "haskell" },
-	enabled = true,
 	branch = "1.x.x",
 	dependencies = {
 		"neovim/nvim-lspconfig",
@@ -655,7 +685,7 @@ local haskell_tools = {
 					map("n", "<leader>cl", vim.lsp.codelens.run, opts)
 					map("n", "<leader>s", ht.hoogle.hoogle_signature, opts)
 				end,
-				single_file_support = true,
+				single_file_support = false,
 				default_settings = {
 					haskell = { -- haskell-language-server options
 						formattingProvider = "ormolu",
@@ -670,7 +700,8 @@ local haskell_tools = {
 
 local rust_tools = {
 	"simrat39/rust-tools.nvim",
-	ft = { "rust" },
+	event = { "BufReadPre", "BufNewFile" },
+	-- ft = { "rust" },
 	enabled = true,
 	config = function()
 		local rt = require("rust-tools")
@@ -711,7 +742,7 @@ local rust_tools = {
 
 					-- whether to show parameter hints with the inlay hints or not
 					-- default: true
-					show_parameter_hints = false,
+					show_parameter_hints = true,
 
 					-- prefix for parameter hints
 					-- default: "<-"
@@ -748,30 +779,13 @@ local rust_tools = {
 				},
 			},
 		})
-		require("rust-tools").inlay_hints.disable()
-	end,
-}
-
-local sqls = {
-	"nanotee/sqls.nvim",
-	ft = { "sql", "mysql" },
-	enabled = true,
-	config = function()
-		require("lspconfig").sqls.setup({
-			capabilities = make_capabilities(),
-			on_attach = function(client, bufnr)
-				require("sqls").on_attach(client, bufnr)
-				hl_word(client, bufnr)
-				set_keymap(client, bufnr)
-				client.server_capabilities.documentFormattingProvider = false
-			end,
-		})
 	end,
 }
 
 local jsonls = {
 	"b0o/schemastore.nvim",
-	enabled = true,
+	-- enabled = true,
+	lazy = false,
 	ft = { "json", "jsonc" },
 	config = function()
 		require("lspconfig").jsonls.setup({
@@ -791,7 +805,8 @@ local jsonls = {
 
 local null_ls = {
 	"jose-elias-alvarez/null-ls.nvim",
-	event = { "BufReadPre", "BufNewFile" },
+	-- event = { "BufReadPre", "BufNewFile" },
+	lazy = false,
 	config = function()
 		local null_ls = require("null-ls")
 
@@ -999,6 +1014,12 @@ local codium = {
 	end,
 }
 
+-- local function sum(x, y)
+-- 	return x + y
+-- end
+--
+-- local x = sum(2, 3)
+
 return {
 	Lspconfig,
 	clangd,
@@ -1006,7 +1027,6 @@ return {
 	haskell_tools,
 	rust_tools,
 	null_ls,
-	sqls,
 	jsonls,
 	zk,
 	codium,

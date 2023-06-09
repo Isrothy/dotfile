@@ -1,7 +1,7 @@
 return {
 	{
 		"akinsho/nvim-toggleterm.lua",
-		keys = [[<c-\>]],
+		keys = [[<c-`>]],
 		cmd = {
 			"TermExec",
 			"TermSelect",
@@ -18,16 +18,16 @@ return {
 				if term.direction == "horizontal" then
 					return 16
 				elseif term.direction == "vertical" then
-					return vim.o.columns * 0.4
+					return vim.o.columns * 0.32
 				end
 			end,
-			open_mapping = [[<c-\>]],
+			open_mapping = [[<c-`>]],
 			hide_numbers = true, -- hide the number column in toggleterm buffers
 			shade_filetypes = {},
 			shade_terminals = false,
 			start_in_insert = false,
-			insert_mappings = false, -- whether or not the open mapping applies in insert mode
-			terminal_mappings = false, -- whether or not the open mapping applies in the opened terminals
+			insert_mappings = true, -- whether or not the open mapping applies in insert mode
+			terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
 			persist_size = true,
 			-- direction = "horizontal",
 			close_on_exit = true, -- close the terminal window when the process exits

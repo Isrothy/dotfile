@@ -93,6 +93,9 @@ M.config = function()
 
 			highlights["@error"] = {}
 
+			highlights.InlayHints = { fg = colors.polar_night.light }
+			highlights.LspInlayHint = { fg = colors.polar_night.light }
+
 			-- highlights.InclineNormal = { bg = colors.polar_night.brighter, bold = true }
 			-- highlights.InclineNormalNC = { bg = colors.polar_night.brighter }
 			-- highlights.Headline1 = { bg = utils.darken(colors.aurora.green, 0.2), bold = true }

@@ -10,8 +10,8 @@ return {
 			case_sensitive = true,
 			equivalence_classes = { " \t\r\n" },
 			substitute_chars = {},
-			safe_labels = { "s", "f", "n", "u", "t" },
-			labels = { "s", "f", "n", "j", "k" },
+			safe_labels = { "s", "d", "f", "g", "h", "l", "n", "u", "t" },
+			labels = { "s", "d", "f", "g", "h", "n", "j", "k" },
 			special_keys = {
 				repeat_search = "<enter>",
 				next_phase_one_target = "<enter>",
