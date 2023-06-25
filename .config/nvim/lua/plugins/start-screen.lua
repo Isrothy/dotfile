@@ -44,7 +44,7 @@ return {
 				dashboard.button("s", "⛶  Smart open", ":Telescope smart_open<CR>"),
 				dashboard.button("f", "󰈞  Find file", ":Telescope find_files<CR>"),
 				dashboard.button("l", "󰈬  Live grep", ":Telescope live_grep<CR>"),
-				dashboard.button("c", "  Load current dir session", ":SessionManage load_current_dir_session<CR>"),
+				dashboard.button("c", "  Load current dir session", ":lua require('persistence').load()<CR>"),
 				dashboard.button("q", "󰅚  Quit NVIM", ":qa<CR>"),
 			}
 			dashboard.config.opts.noautocmd = false

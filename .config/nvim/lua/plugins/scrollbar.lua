@@ -6,7 +6,20 @@ return {
 		opts = {
 			excluded_filetypes = {},
 			current_only = false,
+			column = 1,
 			winblend = 25,
+			signs_on_startup = {
+				"marks",
+				"diagnostics",
+				"folds",
+				"search",
+			},
+			signs_column = -1,
+			diagnostics_error_symbol = "-",
+			diagnostics_hint_symbol = "-",
+			diagnostics_info_symbol = "-",
+			diagnostics_warn_symbol = "-",
+			-- signs_max_per_row = 1,
 			-- base = "buffer",
 			-- column = 80,
 		},
@@ -14,7 +27,8 @@ return {
 	{
 		"lewis6991/satellite.nvim",
 		event = { "BufReadPost", "BufNewFile" },
-		otps = {
+		enabled = true,
+		opts = {
 			current_only = false,
 			winblend = 20,
 			zindex = 40,
@@ -23,6 +37,7 @@ return {
 				"prompt",
 				"TelescopePrompt",
 				"noice",
+				-- "neo-tree",
 			},
 			width = 2,
 			handlers = {
@@ -31,6 +46,7 @@ return {
 				},
 				diagnostic = {
 					enable = true,
+					signs = { "-", "=", "≡" },
 				},
 				gitsigns = {
 					enable = true,
@@ -41,7 +57,7 @@ return {
 					},
 				},
 				marks = {
-					enable = false,
+					enable = true,
 					show_builtins = false, -- shows the builtin marks like [ ] < >
 				},
 			},

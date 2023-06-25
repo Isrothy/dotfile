@@ -115,3 +115,5 @@ alias config='/usr/bin/git --git-dir=/Users/jiangjoshua/.cfg/ --work-tree=/Users
 
 [ -f "/Users/jiangjoshua/.ghcup/env" ] && source "/Users/jiangjoshua/.ghcup/env" # ghcup-env
 
+# opam configuration
+[[ ! -r /Users/jiangjoshua/.opam/opam-init/init.zsh ]] || source /Users/jiangjoshua/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null

@@ -23,7 +23,7 @@ return {
 					end,
 					pinned = true,
 					-- open = "Neotree buffers",
-					open = "Neotree position=top buffers",
+					open = "Neotree position=right buffers",
 				},
 				{
 					title = "Neo-Tree Git",
@@ -32,15 +32,23 @@ return {
 						return vim.b[buf].neo_tree_source == "git_status"
 					end,
 					pinned = true,
-					open = "Neotree position=right git_status",
+					open = "Neotree position=top git_status",
 					-- open = "Neotree git_status",
 				},
+				"neo-tree",
 			},
 			bottom = {
 				{
 					ft = "toggleterm",
 					size = { height = 0.32 },
 					-- exclude floating windows
+					filter = function(buf, win)
+						return vim.api.nvim_win_get_config(win).relative == ""
+					end,
+				},
+				{
+					ft = "noice",
+					size = { height = 0.32 },
 					filter = function(buf, win)
 						return vim.api.nvim_win_get_config(win).relative == ""
 					end,
@@ -53,6 +61,14 @@ return {
 					ft = "qf",
 					title = "QuickFix",
 					size = { height = 0.32 },
+				},
+				{
+					ft = "help",
+					size = { height = 20 },
+					-- don't open help files in edgy that we're editing
+					filter = function(buf)
+						return vim.bo[buf].buftype == "help"
+					end,
 				},
 			},
 			right = {
@@ -147,7 +163,7 @@ return {
 	},
 	{
 		"s1n7ax/nvim-window-picker",
-		version = "v1.*",
+		version = "2.*",
 		enabled = true,
 		keys = {
 			{
@@ -163,6 +179,7 @@ return {
 		opts = {
 			autoselect_one = true,
 			include_current = false,
+			-- hint = "floating-big-letter",
 			filter_rules = {
 				-- filter using buffer options
 				bo = {
@@ -173,6 +190,7 @@ return {
 						"notify",
 						"quickfix",
 						"aerial",
+						"edgy",
 					},
 
 					-- if the buffer type is one of following, the window will be ignored
@@ -183,6 +201,33 @@ return {
 				},
 			},
 			other_win_hl_color = c.frost.ice,
+
+			picker_config = {
+				statusline_winbar_picker = {
+					-- You can change the display string in status bar.
+					-- It supports '%' printf style. Such as `return char .. ': %f'` to display
+					-- buffer file path. See :h 'stl' for details.
+					selection_display = function(char, windowid)
+						return "%=" .. char .. "%="
+					end,
+
+					-- whether you want to use winbar instead of the statusline
+					-- "always" means to always use winbar,
+					-- "never" means to never use winbar
+					-- "smart" means to use winbar if cmdheight=0 and statusline if cmdheight > 0
+					use_winbar = "never", -- "always" | "never" | "smart"
+				},
+
+				floating_big_letter = {
+					-- window picker plugin provides bunch of big letter fonts
+					-- fonts will be lazy loaded as they are being requested
+					-- additionally, user can pass in a table of fonts in to font
+					-- property to use instead
+
+					font = "ansi-shadow", -- ansi-shadow |
+				},
+			},
+			show_prompt = false,
 		},
 	},
 	{
@@ -291,6 +336,18 @@ return {
 			-- this functionality is only supported on tmux and Wezterm due to kitty
 			-- not having a way to check if a pane is zoomed
 			disable_multiplexer_nav_when_zoomed = true,
+		},
+	},
+	{
+		"kwkarlwang/bufresize.nvim",
+		event = { "WinResized", "VimResized" },
+		lazy = true,
+		opts = {
+			resize = {
+				keys = {},
+				trigger_events = { "VimResized", "WinResized" },
+				increment = false,
+			},
 		},
 	},
 }

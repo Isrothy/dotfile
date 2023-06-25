@@ -86,10 +86,10 @@ M.config = function()
 			highlights.QuickFixLine = { bg = "NONE" }
 			-- highlights.QuickFixLine = { bg = colors.polar_night.brighter }
 
-			highlights.DiffAdd = { bg = utils.darken(colors.aurora.green, 0.15) }
-			highlights.DiffChange = { bg = utils.darken(colors.aurora.purple, 0.2) }
-			highlights.DiffDelete = { bg = utils.darken(colors.aurora.red, 0.3) }
-			highlights.DiffText = { fg = colors.frost.artic_water, bg = "NONE", reverse = true }
+			-- highlights.DiffAdd = { bg = utils.darken(colors.aurora.green, 0.15) }
+			-- highlights.DiffChange = { bg = utils.darken(colors.aurora.purple, 0.2) }
+			-- highlights.DiffDelete = { bg = utils.darken(colors.aurora.red, 0.3) }
+			-- highlights.DiffText = { fg = colors.frost.artic_water, bg = "NONE", reverse = true }
 
 			highlights["@error"] = {}
 
@@ -110,6 +110,8 @@ M.config = function()
 
 			highlights.DapStoppedLine = { bg = colors.polar_night.brightest }
 			highlights.DebugPC = { bg = colors.polar_night.brightest }
+
+			highlights.ScrollViewSearch = { fg = colors.frost.artic_water }
 		end,
 	})
 

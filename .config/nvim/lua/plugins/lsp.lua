@@ -203,6 +203,14 @@ local Lspconfig = {
 				hl_word(client, bufnr)
 			end,
 		})
+		require("lspconfig").ocamllsp.setup({
+			capabilities = make_capabilities(),
+			single_file_support = true,
+			on_attach = function(client, bufnr)
+				set_keymap(client, bufnr)
+				hl_word(client, bufnr)
+			end,
+		})
 		-- require("lspconfig").pylsp.setup({
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
@@ -785,7 +793,7 @@ local rust_tools = {
 local jsonls = {
 	"b0o/schemastore.nvim",
 	-- enabled = true,
-	lazy = false,
+	-- lazy = false,
 	ft = { "json", "jsonc" },
 	config = function()
 		require("lspconfig").jsonls.setup({

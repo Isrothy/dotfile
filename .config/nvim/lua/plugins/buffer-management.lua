@@ -17,12 +17,4 @@ return {
 			)
 		end,
 	},
-	{
-		"stevearc/stickybuf.nvim",
-		-- event = "BufWinEnter",
-		enabled = false,
-		config = function()
-			require("stickybuf").setup({})
-		end,
-	},
 }

@@ -50,7 +50,10 @@ M.config = function()
 			-- section_separators = { left = "", right = "" },
 			section_separators = "",
 			disabled_filetypes = {
-				statusline = {},
+				statusline = {
+					"dashboard",
+					"alpha",
+				},
 				winbar = {
 					"neo-tree",
 					"aerial",
@@ -224,7 +227,7 @@ M.config = function()
 			"aerial",
 			"toggleterm",
 			"lazy",
-			"neo-tree",
+			-- "neo-tree",
 			"trouble",
 			"quickfix",
 		},
