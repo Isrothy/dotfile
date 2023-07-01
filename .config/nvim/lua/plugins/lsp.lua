@@ -438,7 +438,7 @@ local jdtls = {
 			pattern = "java",
 			callback = function()
 				local home = os.getenv("HOME")
-				local jdtls_install_location = "/opt/homebrew/Cellar/jdtls/1.24.0/"
+				local jdtls_install_location = "/opt/homebrew/Cellar/jdtls/1.25.0/"
 				local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h")
 				local workspace_dir = home .. "/.local/share/eclipse/" .. project_name
 				local javadebug_dir = home .. "/.local/share/javadebug/"
@@ -636,7 +636,8 @@ local jdtls = {
 
 local haskell_tools = {
 	"MrcJkb/haskell-tools.nvim",
-	ft = { "haskell" },
+	event = { "BufReadPre", "BufNewFile" },
+	-- lazy = false,
 	branch = "1.x.x",
 	dependencies = {
 		"neovim/nvim-lspconfig",
@@ -693,7 +694,7 @@ local haskell_tools = {
 					map("n", "<leader>cl", vim.lsp.codelens.run, opts)
 					map("n", "<leader>s", ht.hoogle.hoogle_signature, opts)
 				end,
-				single_file_support = false,
+				single_file_support = true,
 				default_settings = {
 					haskell = { -- haskell-language-server options
 						formattingProvider = "ormolu",

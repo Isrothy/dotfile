@@ -227,7 +227,7 @@ M.config = function()
 			"aerial",
 			"toggleterm",
 			"lazy",
-			-- "neo-tree",
+			"neo-tree",
 			"trouble",
 			"quickfix",
 		},

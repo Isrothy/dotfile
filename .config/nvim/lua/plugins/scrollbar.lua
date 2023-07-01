@@ -41,6 +41,9 @@ return {
 			},
 			width = 2,
 			handlers = {
+				cursor = {
+					enable = false,
+				},
 				search = {
 					enable = true,
 				},

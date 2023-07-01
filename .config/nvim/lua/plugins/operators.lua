@@ -6,7 +6,7 @@ local yanky = {
 		"kkharji/sqlite.lua",
 	},
 	enabled = true,
-	event = "VeryLazy",
+	-- event = "VeryLazy",
 	keys = {
 		{ "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Yanky put after" },
 		{ "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Yanky put before" },

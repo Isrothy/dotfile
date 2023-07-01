@@ -28,13 +28,21 @@ return {
 				end,
 				desc = "Remote Flash",
 			},
+			{
+				"R",
+				mode = { "n", "o", "x" },
+				function()
+					-- show labeled treesitter nodes around the search matches
+					require("flash").treesitter_search()
+				end,
+				desc = "Treesitter Search",
+			},
 		},
 		opts = {
-			-- labels = "abcdefghijklmnopqrstuvwxyz",
 			labels = "asdfghjklqwertyuiopzxcvbnm",
 			search = {
 				-- search/jump in all windows
-				multi_window = false,
+				multi_window = true,
 				-- search direction
 				forward = true,
 				-- when `false`, find only matches in the given direction
@@ -49,7 +57,7 @@ return {
 				--   mode = function(str)
 				--     return "\\<" .. str
 				--   end,
-				mode = "exact",
+				mode = "search",
 				-- behave like `incsearch`
 				incremental = false,
 				-- Excluded filetypes and custom window filters
@@ -90,21 +98,21 @@ return {
 				-- set based on the mode.
 				inclusive = nil, ---@type boolean?
 			},
+			label = {
+				-- add a label for the first match in the current window.
+				-- you can always jump to the first match with `<CR>`
+				current = true,
+				-- show the label after the match
+				after = true, ---@type boolean|number[]
+				-- show the label before the match
+				before = false, ---@type boolean|number[]
+				-- position of the label extmark
+				style = "overlay", ---@type "eol" | "overlay" | "right_align" | "inline"
+				-- flash tries to re-use labels that were already assigned to a position,
+				-- when typing more characters. By default only lower-case labels are re-used.
+				reuse = "lowercase", ---@type "lowercase" | "all"
+			},
 			highlight = {
-				label = {
-					-- add a label for the first match in the current window.
-					-- you can always jump to the first match with `<CR>`
-					current = true,
-					-- show the label after the match
-					after = true, ---@type boolean|number[]
-					-- show the label before the match
-					before = false, ---@type boolean|number[]
-					-- position of the label extmark
-					style = "overlay", ---@type "eol" | "overlay" | "right_align" | "inline"
-					-- flash tries to re-use labels that were already assigned to a position,
-					-- when typing more characters. By default only lower-case labels are re-used.
-					reuse = "lowercase", ---@type "lowercase" | "all"
-				},
 				-- show a backdrop with hl FlashBackdrop
 				backdrop = true,
 				-- Highlight the search matches

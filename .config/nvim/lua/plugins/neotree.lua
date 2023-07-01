@@ -229,7 +229,7 @@ M.config = function()
 			"buffers",
 			"git_status",
 		},
-		close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+		close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
 		close_floats_on_escape_key = false,
 		popup_border_style = "rounded",
 		enable_git_status = true,
@@ -238,8 +238,8 @@ M.config = function()
 		open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy" },
 
 		source_selector = {
-			winbar = false, -- toggle to show selector on winbar
-			statusline = false, -- toggle to show selector on statusline
+			winbar = true, -- toggle to show selector on winbar
+			statusline = true, -- toggle to show selector on statusline
 			show_scrolled_off_parent_node = false, -- this will replace the tabs with the parent path
 			-- of the top visible node when scrolled down.
 			sources = { -- falls back to source_name if nil
@@ -337,7 +337,7 @@ M.config = function()
 		},
 		window = {
 			position = "left",
-			width = 40,
+			width = 36,
 			auto_expand_width = false,
 			mapping_options = {
 				noremap = true,

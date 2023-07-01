@@ -3,6 +3,7 @@ return {
 	{
 		"folke/edgy.nvim",
 		event = "VeryLazy",
+		enabled = false,
 		opts = {
 			left = {
 				{
@@ -151,6 +152,25 @@ return {
 				["[W"] = function(win)
 					win:prev({ pinned = false, focus = true })
 				end,
+				["<c-.>"] = function(win)
+					win:resize("width", 1)
+				end,
+				-- decrease width
+				["<c-,>"] = function(win)
+					win:resize("width", -1)
+				end,
+				-- increase height
+				["<c-="] = function(win)
+					win:resize("height", 1)
+				end,
+				-- decrease height
+				["<c->"] = function(win)
+					win:resize("height", -1)
+				end,
+				-- reset all custom sizing
+				["<c-w>="] = function(win)
+					win.view.edgebar:equalize()
+				end,
 			},
 			icons = {
 				closed = " ",
@@ -232,6 +252,7 @@ return {
 	},
 	{
 		"mrjones2014/smart-splits.nvim",
+		enabled = true,
 		keys = {
 			{
 				"<C-h>",
@@ -341,7 +362,7 @@ return {
 	{
 		"kwkarlwang/bufresize.nvim",
 		event = { "WinResized", "VimResized" },
-		lazy = true,
+		enabled = true,
 		opts = {
 			resize = {
 				keys = {},
