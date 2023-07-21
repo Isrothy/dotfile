@@ -40,11 +40,19 @@ return {
 			dashboard.section.header.val = neovim_delta_corps_preist1
 
 			dashboard.section.buttons.val = {
-				dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-				dashboard.button("s", "⛶  Smart open", ":Telescope smart_open<CR>"),
-				dashboard.button("f", "󰈞  Find file", ":Telescope find_files<CR>"),
-				dashboard.button("l", "󰈬  Live grep", ":Telescope live_grep<CR>"),
-				dashboard.button("q", "󰅚  Quit NVIM", ":qa<CR>"),
+				-- dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+				-- dashboard.button("s", "⛶  Smart open", ":Telescope smart_open<CR>"),
+				-- dashboard.button("f", "󰈞  Find file", ":Telescope find_files<CR>"),
+				-- dashboard.button("l", "󰈬  Live grep", ":Telescope live_grep<CR>"),
+				-- dashboard.button("q", "󰅚  Quit NVIM", ":qa<CR>"),
+				dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
+				dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
+				dashboard.button("r", " " .. " Recent files", ":Telescope frecency <CR>"),
+				dashboard.button("g", " " .. " Find text", ":Telescope live_grep <CR>"),
+				dashboard.button("c", " " .. " Config", ":e $MYVIMRC <CR>"),
+				dashboard.button("s", " " .. " Restore Session", [[:lua require("persistence").load() <cr>]]),
+				dashboard.button("l", "󰒲 " .. " Lazy", ":Lazy<CR>"),
+				dashboard.button("q", " " .. " Quit", ":qa<CR>"),
 			}
 			dashboard.config.opts.noautocmd = false
 			alpha.setup(dashboard.config)

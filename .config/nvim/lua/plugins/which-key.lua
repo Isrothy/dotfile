@@ -154,7 +154,7 @@ return {
 				cr = "Run code",
 				rn = "Lsp rename",
 				f = "Lsp format",
-				q = "Diagnostics to quickfix",
+				qd = "Diagnostics to quickfix",
 				d = "Float diagnostic window",
 				w = {
 					a = "Lsp add work space",

@@ -1,32 +1,37 @@
-vim.opt.termguicolors = true
-vim.opt.mouse = ""
-vim.opt.syntax = "on"
-vim.opt.cmdheight = 0
-vim.opt.showcmd = true
-vim.opt.cursorline = true
+local opt = vim.opt
+local o = vim.o
+local g = vim.g
 
-vim.o.pumheight = 10
+opt.termguicolors = true
+
+opt.mouse = ""
+opt.syntax = "on"
+opt.cmdheight = 0
+opt.showcmd = true
+opt.cursorline = true
+
+o.pumheight = 10
 
 --fold
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
--- vim.opt.foldmethod = "syntax"
--- vim.opt.foldmethod = "manual"
--- vim.opt.foldmethod = "indent"
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- vim.opt.foldtext = "v:folddashes.substitute(getline(v:foldstart),'/\\*\\|\\*/\\|{{{\\d\\=','','g')"
+o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+o.foldlevelstart = 99
+o.foldenable = true
+-- opt.foldmethod = "syntax"
+-- opt.foldmethod = "manual"
+-- opt.foldmethod = "indent"
+-- opt.foldmethod = "expr"
+-- opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- opt.foldtext = "v:folddashes.substitute(getline(v:foldstart),'/\\*\\|\\*/\\|{{{\\d\\=','','g')"
 
-vim.opt.undofile = true
+opt.undofile = true
 
-vim.opt.nrformats = { "alpha", "bin", "octal", "hex" }
+opt.nrformats = { "alpha", "bin", "octal", "hex" }
 
-vim.o.matchpairs = vim.o.matchpairs .. ",<:>"
-vim.o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
-vim.o.splitkeep = "screen"
+o.matchpairs = vim.o.matchpairs .. ",<:>"
+o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
+o.splitkeep = "screen"
 
-vim.opt.fillchars = {
+opt.fillchars = {
 	vert = "│",
 	eob = " ", -- suppress ~ at EndOfBuffer
 	diff = "╱", -- alternatives = ⣿ ░ ─ ╱
@@ -37,55 +42,57 @@ vim.opt.fillchars = {
 	foldclose = "▸",
 }
 
-vim.opt.virtualedit = { "block", "onemore" }
-vim.opt.wrap = true
-vim.opt.linebreak = true
--- vim.opt.textwidth = 0
--- vim.opt.wrapmargin =40
-vim.opt.scrolloff = 10
-vim.opt.sidescrolloff = 30
-vim.opt.history = 2000
-vim.opt.ttimeoutlen = 0
-vim.opt.belloff = "all"
-vim.opt.conceallevel = 0
-vim.opt.updatetime = 500
-vim.opt.wildmenu = true
+opt.virtualedit = { "block", "onemore" }
+opt.wrap = true
+opt.linebreak = true
+-- opt.textwidth = 0
+-- opt.wrapmargin =40
+opt.scrolloff = 10
+opt.sidescrolloff = 30
+opt.history = 2000
+opt.ttimeoutlen = 0
+opt.belloff = "all"
+opt.conceallevel = 0
+opt.updatetime = 500
+opt.wildmenu = true
 
--- vim.opt.spell = true
--- vim.opt.spelllang = { 'en_us' }
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
+-- opt.spell = true
+-- opt.spelllang = { 'en_us' }
+opt.completeopt = { "menu", "menuone", "noselect" }
 
 -- buffer settings
-vim.opt.autoread = true
-vim.opt.confirm = true
-vim.opt.hidden = true
+opt.autoread = true
+opt.confirm = true
+opt.hidden = true
 
 -- coding settings
-vim.opt.encoding = "utf-8"
-vim.opt.termencoding = "utf-8"
+opt.encoding = "utf-8"
+opt.termencoding = "utf-8"
 
 --session
-vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,localoptions"
+o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,localoptions"
 
 -- indentation & format settings
-vim.opt.autoindent = true
-vim.opt.smartindent = true
-vim.opt.expandtab = true
-vim.opt.smarttab = true
-vim.opt.tabstop = 4
-vim.opt.softtabstop = -1
-vim.opt.shiftwidth = 0
-vim.opt.cinoptions = "g0,(0,l1"
-vim.opt.backspace = { "indent", "eol", "start" }
+opt.autoindent = true
+opt.smartindent = true
+opt.cindent = true
+opt.expandtab = true
+opt.smarttab = true
+opt.tabstop = 4
+opt.softtabstop = -1
+opt.shiftwidth = 0
+opt.cinoptions = "g0,(0,l1,n-2"
+opt.backspace = { "indent", "eol", "start" }
 
-vim.opt.laststatus = 3
+opt.laststatus = 3
 
-vim.opt.gp = "rg"
+opt.gp = "rg"
 
 -- hearch settings
-vim.opt.hlsearch = true
-vim.opt.incsearch = true
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+opt.hlsearch = true
+opt.incsearch = true
+opt.ignorecase = true
+opt.smartcase = true
 
-vim.g.html_indent_autotags = "html,head,body"
+g.html_indent_autotags = "html,head,body"
+g.markdown_recommended_style = 0

@@ -18,12 +18,12 @@ telescope.keys = {
 	{ "<leader><leader>d", "<cmd>Telescope diagnostics<cr>" },
 
 	{ "<leader><leader>f", "<cmd>Telescope find_files<cr>" },
-	{ "<leader><leader>g", "<cmd>Telescope grep_string<cr>" },
+	{ "<leader><leader>g", "<cmd>Telescope live_grep<cr>" },
 	{ "<leader><leader>h", "<cmd>Telescope help_tags<cr>" },
 
 	{ "<leader><leader>j", "<cmd>Telescope jumplist<cr>" },
 	{ "<leader><leader>k", "<cmd>Telescope keymaps<cr>" },
-	{ "<leader><leader>l", "<cmd>Telescope live_grep<cr>" },
+	{ "<leader><leader>l", "<cmd>Telescope local_list<cr>" },
 	{ "<leader><leader>m", "<cmd>Telescope marks<cr>" },
 	{ "<leader><leader>n", "<cmd>Telescope noice<cr>" },
 	{ "<leader><leader>o", "<cmd>Telescope frecency<cr>" },

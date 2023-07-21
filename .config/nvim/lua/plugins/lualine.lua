@@ -138,10 +138,6 @@ M.config = function()
 			lualine_y = {
 				"fancy_filetype",
 				"fancy_lsp_servers",
-				function()
-					return "{…}"
-				end,
-				"%3{codeium#GetStatusString()}",
 			},
 			lualine_z = {
 				{
@@ -233,5 +229,6 @@ M.config = function()
 		},
 	})
 end
+
 
 return M

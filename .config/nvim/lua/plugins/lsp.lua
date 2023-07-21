@@ -18,34 +18,6 @@ local make_capabilities = function()
 	return capabilities
 end
 
-local hl_word = function(client, bufnr)
-	local c = require("nord.colors").palette
-	if client.server_capabilities.documentHighlightProvider then
-		vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = c.polar_night.brightest, fg = "NONE" })
-
-		vim.api.nvim_set_hl(0, "LspReferenceText", { bg = c.polar_night.brightest, fg = "NONE" })
-		vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = c.polar_night.brightest, fg = "NONE" })
-
-		vim.api.nvim_create_augroup("lsp_document_highlight", {
-			clear = false,
-		})
-		vim.api.nvim_clear_autocmds({
-			buffer = bufnr,
-			group = "lsp_document_highlight",
-		})
-		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-			group = "lsp_document_highlight",
-			buffer = bufnr,
-			callback = vim.lsp.buf.document_highlight,
-		})
-		vim.api.nvim_create_autocmd("CursorMoved", {
-			group = "lsp_document_highlight",
-			buffer = bufnr,
-			callback = vim.lsp.buf.clear_references,
-		})
-	end
-end
-
 local set_keymap = function(_, bufnr)
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	map("n", "g<c-d>", vim.lsp.buf.declaration, bufopts)
@@ -135,21 +107,18 @@ local Lspconfig = {
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").cmake.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 			end,
 		})
 		-- require("lspconfig").clangd.setup({
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
 		-- 		set_keymap(client, bufnr)
-		-- 		hl_word(client, bufnr)
 		-- 	end,
 		-- })
 
@@ -157,14 +126,12 @@ local Lspconfig = {
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").dockerls.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").emmet_ls.setup({
@@ -174,14 +141,12 @@ local Lspconfig = {
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").gradle_ls.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").html.setup({
@@ -192,7 +157,6 @@ local Lspconfig = {
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
 		-- 		set_key_map(client, bufnr)
-		-- 		hl_word(client, bufnr)
 		-- 	end,
 		-- })
 		require("lspconfig").kotlin_language_server.setup({
@@ -200,7 +164,6 @@ local Lspconfig = {
 			single_file_support = true,
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").ocamllsp.setup({
@@ -208,13 +171,11 @@ local Lspconfig = {
 			single_file_support = true,
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 			end,
 		})
 		-- require("lspconfig").pylsp.setup({
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
-		-- 		-- hl_word(client, bufnr)
 		-- 		set_key_map(client, bufnr)
 		-- 	end,
 		-- 	settings = {
@@ -237,7 +198,6 @@ local Lspconfig = {
 		-- 	-- capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
 		-- 		set_key_map(client, bufnr)
-		-- 		-- hl_word(client, bufnr)
 		-- 	end,
 		-- 	settings = {
 		-- 		python = {
@@ -260,7 +220,6 @@ local Lspconfig = {
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
 		-- 		set_key_map(client, bufnr)
-		-- 		hl_word(client, bufnr)
 		-- 	end,
 		-- 	settings = {
 		-- 		python = {
@@ -277,21 +236,18 @@ local Lspconfig = {
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").sqlls.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 			end,
 		})
 		require("lspconfig").lua_ls.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 				-- client.server_capabilities.documentFormattingProvider = false
 			end,
 			settings = {
@@ -323,7 +279,6 @@ local Lspconfig = {
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 			end,
 		})
 	end,
@@ -345,7 +300,6 @@ local clangd = {
 				-- offset_encoding = "utf-16",
 				on_attach = function(client, bufnr)
 					set_keymap(client, bufnr)
-					hl_word(client, bufnr)
 				end,
 				cmd = {
 					"clangd",
@@ -616,7 +570,6 @@ local jdtls = {
 					capabilities = make_capabilities(),
 					on_attach = function(client, bufnr)
 						set_jdtls_keymap(client, bufnr)
-						hl_word(client, bufnr)
 						require("jdtls").setup_dap({ hotcodereplace = "auto" })
 						vim.cmd([[
 							command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)
@@ -689,7 +642,6 @@ local haskell_tools = {
 				on_attach = function(client, bufnr)
 					local opts = { noremap = true, silent = true, buffer = bufnr }
 					set_keymap(client, bufnr)
-					hl_word(client, bufnr)
 					require("telescope").load_extension("ht")
 					map("n", "<leader>cl", vim.lsp.codelens.run, opts)
 					map("n", "<leader>s", ht.hoogle.hoogle_signature, opts)
@@ -719,7 +671,6 @@ local rust_tools = {
 				capabilities = make_capabilities(),
 				on_attach = function(client, bufnr)
 					set_keymap(client, bufnr)
-					hl_word(client, bufnr)
 					vim.keymap.set("n", "gh", rt.hover_actions.hover_actions, { buffer = bufnr })
 					vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
 					vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -805,7 +756,6 @@ local jsonls = {
 				},
 			},
 			on_attach = function(client, bufnr)
-				hl_word(client, bufnr)
 				set_keymap(client, bufnr)
 			end,
 		})
@@ -823,7 +773,6 @@ local null_ls = {
 			border = "rounded",
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
-				hl_word(client, bufnr)
 			end,
 			sources = {
 				null_ls.builtins.diagnostics.checkmake,
@@ -959,7 +908,6 @@ local zk = {
 					cmd = { "zk", "lsp" },
 					name = "zk",
 					on_attach = function(client, bufnr)
-						hl_word(client, bufnr)
 						set_keymap(client, bufnr)
 					end,
 				},
@@ -983,7 +931,7 @@ local zk = {
 -- 		vim.keymap.set("i", "<M-;>", [[copilot#Accept("\<CR>")]], { expr = true, script = true })
 -- 	end,
 -- }
---
+
 -- local codium = {
 -- 	"jcdickinson/codeium.nvim",
 -- 	event = "VeryLazy",
@@ -1000,34 +948,28 @@ local zk = {
 --
 -- }
 
-local codium = {
-	"Exafunction/codeium.vim",
-	init = function()
-		vim.g.codeium_disable_bindings = 1
-	end,
-	event = "VeryLazy",
-	config = function()
-		-- Change '<C-g>' here to any keycode you like.
-		vim.keymap.set("i", "<M-;>", function()
-			return vim.fn["codeium#Accept"]()
-		end, { expr = true, silent = true })
-		vim.keymap.set("i", "<M-]>", function()
-			return vim.fn["codeium#CycleCompletions"](1)
-		end, { expr = true, silent = true })
-		vim.keymap.set("i", "<M-[>", function()
-			return vim.fn["codeium#CycleCompletions"](-1)
-		end, { expr = true, silent = true })
-		vim.keymap.set("i", "<M-'>", function()
-			return vim.fn["codeium#Clear"]()
-		end, { expr = true, silent = true })
-	end,
-}
-
--- local function sum(x, y)
--- 	return x + y
--- end
---
--- local x = sum(2, 3)
+-- local codium = {
+-- 	"Exafunction/codeium.vim",
+-- 	init = function()
+-- 		vim.g.codeium_disable_bindings = 1
+-- 	end,
+-- 	event = "VeryLazy",
+-- 	config = function()
+-- 		-- Change '<C-g>' here to any keycode you like.
+-- 		vim.keymap.set("i", "<M-;>", function()
+-- 			return vim.fn["codeium#Accept"]()
+-- 		end, { expr = true, silent = true })
+-- 		vim.keymap.set("i", "<M-]>", function()
+-- 			return vim.fn["codeium#CycleCompletions"](1)
+-- 		end, { expr = true, silent = true })
+-- 		vim.keymap.set("i", "<M-[>", function()
+-- 			return vim.fn["codeium#CycleCompletions"](-1)
+-- 		end, { expr = true, silent = true })
+-- 		vim.keymap.set("i", "<M-'>", function()
+-- 			return vim.fn["codeium#Clear"]()
+-- 		end, { expr = true, silent = true })
+-- 	end,
+-- }
 
 return {
 	Lspconfig,
@@ -1038,5 +980,6 @@ return {
 	null_ls,
 	jsonls,
 	zk,
-	codium,
+	copilot,
+	-- codium,
 }

@@ -48,6 +48,15 @@ return {
 			["<LEFT>"] = { "", "i" },
 			["<RIGHT>"] = { "", "i" },
 		},
-		disabled_filetypes = { "qf", "netrw", "NvimTree", "neo-tree", "lazy", "mason" },
+		disabled_filetypes = {
+			"qf",
+			"netrw",
+			"NvimTree",
+			"neo-tree",
+			"lazy",
+			"mason",
+			"terminal",
+			"toggleterm",
+		},
 	},
 }

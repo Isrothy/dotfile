@@ -16,8 +16,8 @@ return {
 			-- size can be a number or function which is passed the current terminal
 			size = function(term)
 				if term.direction == "horizontal" then
-					return vim.api.nvim_win_get_height(0) * 0.4 * 2
-					-- return 15
+					-- return vim.api.nvim_win_get_height(0) * 0.4 * 2
+					return 15
 				elseif term.direction == "vertical" then
 					return vim.o.columns * 0.32
 				end

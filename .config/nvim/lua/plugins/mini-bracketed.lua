@@ -1,7 +1,6 @@
 return {
 	"echasnovski/mini.bracketed",
 	event = { "BufReadPre", "BufNewFile" },
-	-- event = "VeryLazy",
 	opts = {
 		buffer = { suffix = "", options = {} },
 		comment = { suffix = "k", options = {} },

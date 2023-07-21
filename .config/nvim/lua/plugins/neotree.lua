@@ -1,6 +1,5 @@
 local M = {
 	"nvim-neo-tree/neo-tree.nvim",
-	branch = "v2.x",
 	cmd = { "Neotree" },
 	dependencies = {
 		"nvim-lua/plenary.nvim",
@@ -9,9 +8,9 @@ local M = {
 		"s1n7ax/nvim-window-picker",
 	},
 	keys = {
-		{ "<F2>", "<cmd>Neotree filesystem toggle<cr>" },
-		{ "<F3>", "<cmd>Neotree buffers toggle <cr>" },
-		{ "<F4>", "<cmd>Neotree git_status toggle <cr>" },
+		{ "<F2>", "<cmd>Neotree filesystem toggle left<cr>" },
+		{ "<F3>", "<cmd>Neotree buffers toggle left<cr>" },
+		{ "<F4>", "<cmd>Neotree git_status toggle left<cr>" },
 	},
 }
 
@@ -230,7 +229,6 @@ M.config = function()
 			"git_status",
 		},
 		close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
-		close_floats_on_escape_key = false,
 		popup_border_style = "rounded",
 		enable_git_status = true,
 		enable_diagnostics = true,
@@ -413,10 +411,14 @@ M.config = function()
 				},
 				never_show = { -- remains hidden even if visible is toggled to true
 					".DS_Store",
-					--"thumbs.db"
+					"thumbs.db",
 				},
 			},
-			follow_current_file = false, -- This will find and focus the file in the active buffer every
+			follow_current_file = {
+				enabled = false, -- This will find and focus the file in the active buffer every time
+				--               -- the current file is changed while the tree is open.
+				leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+			},
 			-- time the current file is changed while the tree is open.
 			group_empty_dirs = false, -- when true, empty folders will be grouped together
 			hijack_netrw_behavior = "disabled", -- netrw disabled, opening a directory opens neo-tree
@@ -447,7 +449,11 @@ M.config = function()
 			},
 		},
 		buffers = {
-			follow_current_file = false, -- This will find and focus the file in the active buffer every
+			follow_current_file = {
+				enabled = false, -- This will find and focus the file in the active buffer every time
+				--               -- the current file is changed while the tree is open.
+				leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+			},
 			-- time the current file is changed while the tree is open.
 			group_empty_dirs = true, -- when true, empty folders will be grouped together
 			show_unloaded = true,

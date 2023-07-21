@@ -2,125 +2,54 @@ local map = vim.keymap.set
 
 local yanky = {
 	"gbprod/yanky.nvim",
+	event = "VeryLazy",
 	dependencies = {
-		"kkharji/sqlite.lua",
-	},
-	enabled = true,
-	-- event = "VeryLazy",
-	keys = {
-		{ "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Yanky put after" },
-		{ "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Yanky put before" },
-		{ "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "Yanky gput after" },
-		{ "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "Yanky gput before" },
 		{
-			"]p",
-			"<Plug>(YankyPutIndentAfterLinewise)",
-			mode = "n",
-			desc = "Yanky put indent after linewise",
-		},
-		{
-			"[p",
-			"<Plug>(YankyPutIndentBeforeLinewise)",
-			mode = "n",
-			desc = "Yanky put indent before linewise",
-		},
-		{ "]P", "<Plug>(YankyPutIndentAfterLinewise)", mode = { "n", "x" }, desc = "Yanky put indent after linewise" },
-		{
-			"[P",
-			"<Plug>(YankyPutIndentBeforeLinewise)",
-			mode = "n",
-			desc = "Yanky put indent before linewise",
-		},
-		{
-			">p",
-			"<Plug>(YankyPutIndentAfterShiftRight)",
-			mode = "n",
-			desc = "Yanky put indent after shift right",
-		},
-		{
-			"<p",
-			"<Plug>(YankyPutIndentAfterShiftLeft)",
-			mode = "n",
-			desc = "Yanky put indent after shift left",
-		},
-		{
-			">P",
-			"<Plug>(YankyPutIndentBeforeShiftRight)",
-			mode = "n",
-			desc = "Yanky put indent before shift right",
-		},
-		{
-			"<P",
-			"<Plug>(YankyPutIndentBeforeShiftLeft)",
-			mode = "n",
-			desc = "Yanky put indent before shift left",
-		},
-		{
-			"=p",
-			"<Plug>(YankyPutAfterFilter)",
-			mode = "n",
-			desc = "Yanky put after filter",
-		},
-		{
-			"=P",
-			"<Plug>(YankyPutBeforeFilter)",
-			mode = "n",
-			desc = "Yanky put before filter",
-		},
-		{
-			"y",
-			"<Plug>(YankyYank)",
-			mode = { "n", "x" },
-			desc = "Yanky yank",
+			"kkharji/sqlite.lua",
+			enabled = not jit.os:find("Windows"),
 		},
 	},
-	config = function()
-		local utils = require("yanky.utils")
+	opts = function()
 		local mapping = require("yanky.telescope.mapping")
-		require("yanky").setup({
-			ring = {
-				history_length = 128,
-				storage = "sqlite",
-				sync_with_numbered_registers = true,
-				cancel_event = "update",
-			},
+		local mappings = mapping.get_defaults()
+		mappings.i["<c-p>"] = nil
+		return {
+			highlight = { timer = 200 },
+			ring = { storage = jit.os:find("Windows") and "shada" or "sqlite" },
 			picker = {
-				select = {
-					action = require("yanky.picker").actions.set_register("+"), -- nil to use default put action
-				},
 				telescope = {
-					mappings = {
-						default = mapping.put("p"),
-						i = {
-							-- ["<c-p>"] = mapping.put("p"),
-							-- ["<c-k>"] = mapping.put("P"),
-							["<c-x>"] = mapping.delete(),
-							["<c-r>"] = mapping.set_register(utils.get_default_register()),
-						},
-						n = {
-							p = mapping.put("p"),
-							P = mapping.put("P"),
-							d = mapping.delete(),
-							r = mapping.set_register(utils.get_default_register()),
-						},
-					}, -- nil to use default mappings
+					use_default_mappings = false,
+					mappings = mappings,
 				},
 			},
-			system_clipboard = {
-				sync_with_ring = false,
-			},
-			highlight = {
-				on_put = true,
-				on_yank = true,
-				timer = 250,
-			},
-			preserve_cursor_position = {
-				enabled = true,
-			},
-		})
-		-- vim.keymap.set({ "n", "x" }, "y", "<Plug>(YankyYank)")
-		require("telescope").load_extension("yank_history")
+		}
 	end,
+	keys = {
+		{
+			"<leader>p",
+			function()
+				require("telescope").extensions.yank_history.yank_history({})
+			end,
+			desc = "Open Yank History",
+		},
+		{ "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
+		{ "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after cursor" },
+		{ "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before cursor" },
+		{ "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after selection" },
+		{ "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before selection" },
+		{ "[y", "<Plug>(YankyCycleForward)", desc = "Cycle forward through yank history" },
+		{ "]y", "<Plug>(YankyCycleBackward)", desc = "Cycle backward through yank history" },
+		{ "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
+		{ "[p", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
+		{ "]P", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
+		{ "[P", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
+		{ ">p", "<Plug>(YankyPutIndentAfterShiftRight)", desc = "Put and indent right" },
+		{ "<p", "<Plug>(YankyPutIndentAfterShiftLeft)", desc = "Put and indent left" },
+		{ ">P", "<Plug>(YankyPutIndentBeforeShiftRight)", desc = "Put before and indent right" },
+		{ "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)", desc = "Put before and indent left" },
+		{ "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put after applying a filter" },
+		{ "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put before applying a filter" },
+	},
 }
 
 local substitute = {
