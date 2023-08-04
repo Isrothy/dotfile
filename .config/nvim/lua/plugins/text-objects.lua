@@ -76,115 +76,185 @@ return {
 		event = { "BufRead", "BufNewFile" },
 		enabled = true,
 		init = function()
-			local keymap = vim.keymap.set
-			local innerOuterMaps = {
-				value = "v",
-				key = "k",
-				subword = "S", -- lowercase taken for sentence textobj
-			}
-			local oneMaps = {
-				lineCharacterwise = "_",
-				toNextClosingBracket = "%", -- since this is basically a more intuitive version of the standard "%" motion-as-textobj
-				restOfParagraph = "r",
-				restOfIndentation = "R",
-				diagnostic = "!",
-				column = "|",
-				entireBuffer = "gG", -- G + gg
-				url = "L", -- gu, gU, and U would conflict with gugu, gUgU, and gUU. u would conflict with gcu (undo comment)
-			}
-			local ftMaps = {
-				{
-					map = { mdlink = "l" },
-					fts = { "markdown", "toml" },
-				},
-				{
-					map = { mdFencedCodeBlock = "C" },
-					fts = { "markdown" },
-				},
-				{
-					map = { doubleSquareBrackets = "D" },
-					fts = { "lua", "norg", "sh", "fish", "zsh", "bash", "markdown" },
-				},
-				{
-					map = { cssSelector = "c" },
-					fts = { "css", "scss" },
-				},
-				{
-					map = { shellPipe = "P" },
-					fts = { "sh", "bash", "zsh", "fish" },
-				},
-				{
-					map = { htmlAttribute = "x" },
-					fts = { "html", "css", "scss", "xml" },
-				},
-			}
-			-- keymap(
-			-- 	{ "o", "x" },
-			-- 	"ii",
-			-- 	"<cmd>lua require('various-textobjs').indentation(true, true)<CR>",
-			-- 	{ noremap = true, desc = "inner-inner indentation textobj" }
-			-- )
-			-- keymap(
-			-- 	{ "o", "x" },
-			-- 	"ai",
-			-- 	"<cmd>lua require('various-textobjs').indentation(false, true)<CR>",
-			-- 	{ noremap = true, desc = "outer-inner indentation textobj" }
-			-- )
-			-- keymap(
-			-- 	{ "o", "x" },
-			-- 	"iI",
-			-- 	"<cmd>lua require('various-textobjs').indentation(true, true)<CR>",
-			-- 	{ noremap = true, desc = "inner-inner indentation textobj" }
-			-- )
-			-- keymap(
-			-- 	{ "o", "x" },
-			-- 	"aI",
-			-- 	"<cmd>lua require('various-textobjs').indentation(false, false)<CR>",
-			-- 	{ noremap = true, desc = "outer-outer indentation textobj" }
-			-- )
+			local map = vim.keymap.set
 
-			for objName, map in pairs(innerOuterMaps) do
-				local name = " " .. objName .. " textobj"
-				keymap(
-					{ "o", "x" },
-					"a" .. map,
-					"<cmd>lua require('various-textobjs')." .. objName .. "(true)<CR>",
-					{ noremap = true, desc = "outer" .. name }
-				)
-				keymap(
-					{ "o", "x" },
-					"i" .. map,
-					"<cmd>lua require('various-textobjs')." .. objName .. "(false)<CR>",
-					{ noremap = true, desc = "inner" .. name }
-				)
-			end
-			for objName, map in pairs(oneMaps) do
-				keymap(
-					{ "o", "x" },
-					map,
-					"<cmd>lua require('various-textobjs')." .. objName .. "()<CR>",
-					{ noremap = true, desc = objName .. " textobj" }
-				)
-			end
+			map({ "o", "x" }, "ii", "<cmd>lua require('various-textobjs').indentation(true, true)<CR>")
+			map({ "o", "x" }, "ai", "<cmd>lua require('various-textobjs').indentation(false, true)<CR>")
+			map({ "o", "x" }, "iI", "<cmd>lua require('various-textobjs').indentation(true, true)<CR>")
+			map({ "o", "x" }, "aI", "<cmd>lua require('various-textobjs').indentation(false, false)<CR>")
 
-			vim.api.nvim_create_augroup("VariousTextobjs", {})
-			for _, textobj in pairs(ftMaps) do
-				vim.api.nvim_create_autocmd("FileType", {
-					group = "VariousTextobjs",
-					pattern = textobj.fts,
-					callback = function()
-						for objName, map in pairs(textobj.map) do
-							local name = " " .. objName .. " textobj"
-							keymap({ "o", "x" }, "a" .. map, function()
-								require("various-textobjs")[objName](false)
-							end, { noremap = true, desc = "outer" .. name, buffer = true })
-							keymap({ "o", "x" }, "i" .. map, function()
-								require("various-textobjs")[objName](true)
-							end, { noremap = true, desc = "inner" .. name, buffer = true })
-						end
-					end,
-				})
+			map({ "o", "x" }, "R", "<cmd>lua require('various-textobjs').restOfIdentation()<CR>")
+
+			map({ "o", "x" }, "iS", "<cmd>lua require('various-textobjs').subword(true)<CR>")
+			map({ "o", "x" }, "aS", "<cmd>lua require('various-textobjs').subword(false)<CR>")
+
+			map({ "o", "x" }, "%", "<cmd>lua require('various-textobjs').toNextClosingBracket()<CR>")
+			map({ "o", "x" }, "Q", "<cmd>lua require('various-textobjs').toNextQuotationMark()<CR>")
+
+			map({ "o", "x" }, "r", "<cmd>lua require('various-textobjs').restOfParagraph()<CR>")
+
+			map({ "o", "x" }, "gG", "<cmd>lua require('various-textobjs').entireBuffer()<CR>")
+
+			map({ "o", "x" }, "\\", "<cmd>lua require('various-textobjs').nearEoL()<CR>")
+
+			map({ "o", "x" }, "i_", "<cmd>lua require('various-textobjs').lineCharacterwise(true)<CR>")
+			map({ "o", "x" }, "a_", "<cmd>lua require('various-textobjs').lineCharacterwise(false)<CR>")
+
+			map({ "o", "x" }, "|", "<cmd>lua require('various-textobjs').column()<CR>")
+
+			map({ "o", "x" }, "iv", "<cmd>lua require('various-textobjs').value(true)<CR>")
+			map({ "o", "x" }, "av", "<cmd>lua require('various-textobjs').value(false)<CR>")
+
+			map({ "o", "x" }, "ik", "<cmd>lua require('various-textobjs').key(true)<CR>")
+			map({ "o", "x" }, "ak", "<cmd>lua require('various-textobjs').key(false)<CR>")
+
+			map({ "o", "x" }, "L", "<cmd>lua require('various-textobjs').url()<CR>")
+
+			map({ "o", "x" }, "i.", "<cmd>lua require('various-textobjs').number(true)<CR>")
+			map({ "o", "x" }, "a.", "<cmd>lua require('various-textobjs').number(false)<CR>")
+
+			map({ "o", "x" }, "!", "<cmd>lua require('various-textobjs').diagnostic()<CR>")
+
+			map({ "o", "x" }, "iz", "<cmd>lua require('various-textobjs').closedFold(true)<CR>")
+			map({ "o", "x" }, "az", "<cmd>lua require('various-textobjs').closedFold(false)<CR>")
+
+			map({ "o", "x" }, "im", "<cmd>lua require('various-textobjs').chainMember(true)<CR>")
+			map({ "o", "x" }, "am", "<cmd>lua require('various-textobjs').chainMember(false)<CR>")
+
+			map({ "o", "x" }, "gw", "<cmd>lua require('various-textobjs').visibleInWindow()<CR>")
+			map({ "o", "x" }, "gW", "<cmd>lua require('various-textobjs').restOfWindow()<CR>")
+
+			--------------------------------------------------------------------------------------
+			-- put these into the ftplugins or autocms for the filetypes you want to use them with
+			--use an autocmd set to keymap for markdown file type
+			--use lua api
+
+			local function augroup(name)
+				return vim.api.nvim_create_augroup(name, { clear = true })
 			end
+			vim.api.nvim_create_autocmd("FileType", {
+				group = augroup("various_textobjs_mklink"),
+				pattern = { "markdown", "toml" },
+				callback = function()
+					map({ "o", "x" }, "il", "<cmd>lua require('various-textobjs').mdlink(true)<CR>", { buffer = true })
+					map({ "o", "x" }, "al", "<cmd>lua require('various-textobjs').mdlink(false)<CR>", { buffer = true })
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("FileType", {
+				group = augroup("various_textobjs_mk_fenced_code_block"),
+				pattern = { "markdown" },
+				callback = function()
+					map(
+						{ "o", "x" },
+						"iC",
+						"<cmd>lua require('various-textobjs').mdFencedCodeBlock(true)<CR>",
+						{ buffer = true }
+					)
+					map(
+						{ "o", "x" },
+						"aC",
+						"<cmd>lua require('various-textobjs').mdFencedCodeBlock(false)<CR>",
+						{ buffer = true }
+					)
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("FileType", {
+				group = augroup("various_textobjs_css_selector"),
+				pattern = {
+					"css",
+					"scss",
+				},
+				callback = function()
+					map(
+						{ "o", "x" },
+						"ic",
+						"<cmd>lua require('various-textobjs').cssSelector(true)<CR>",
+						{ buffer = true }
+					)
+					map(
+						{ "o", "x" },
+						"ac",
+						"<cmd>lua require('various-textobjs').cssSelector(false)<CR>",
+						{ buffer = true }
+					)
+				end,
+			})
+			vim.api.nvim_create_autocmd("FileType", {
+				group = augroup("various_textobjs_html_attribute"),
+				pattern = {
+					"html",
+					"xml",
+					"css",
+					"scss",
+					"vue",
+				},
+				callback = function()
+					map(
+						{ "o", "x" },
+						"ix",
+						"<cmd>lua require('various-textobjs').htmlAttribute(true)<CR>",
+						{ buffer = true }
+					)
+					map(
+						{ "o", "x" },
+						"ax",
+						"<cmd>lua require('various-textobjs').htmlAttribute(false)<CR>",
+						{ buffer = true }
+					)
+				end,
+			})
+			vim.api.nvim_create_autocmd("FileType", {
+				group = augroup("various_textobjs_double_square_brackets"),
+				pattern = {
+					"markdown",
+					"lua",
+					"sh",
+					"zsh",
+					"bash",
+					"fish",
+					"neorg",
+				},
+				callback = function()
+					map(
+						{ "o", "x" },
+						"iD",
+						"<cmd>lua require('various-textobjs').doubleSquareBrackets(true)<CR>",
+						{ buffer = true }
+					)
+					map(
+						{ "o", "x" },
+						"aD",
+						"<cmd>lua require('various-textobjs').doubleSquareBrackets(false)<CR>",
+						{ buffer = true }
+					)
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("FileType", {
+				group = augroup("various_textobjs_shell_pipe"),
+				pattern = {
+					"sh",
+					"zsh",
+					"bash",
+					"fish",
+				},
+				callback = function()
+					map(
+						{ "o", "x" },
+						"iP",
+						"<cmd>lua require('various-textobjs').shellPipe(true)<CR>",
+						{ buffer = true }
+					)
+					map(
+						{ "o", "x" },
+						"aP",
+						"<cmd>lua require('various-textobjs').shellPipe(false)<CR>",
+						{ buffer = true }
+					)
+				end,
+			})
 		end,
 		opts = {
 			useDefaultKeymaps = false,

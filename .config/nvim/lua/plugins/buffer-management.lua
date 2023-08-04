@@ -1,6 +1,7 @@
 return {
 	{
 		"famiu/bufdelete.nvim",
+		enabled = true,
 		cmd = { "Bdelete", "Bwipeout" },
 		init = function()
 			vim.keymap.set(

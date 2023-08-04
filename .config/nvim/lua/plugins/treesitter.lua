@@ -24,11 +24,24 @@ local TS = {
 			rainbow = {
 				enable = true,
 				-- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-				extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-				max_file_lines = nil, -- Do not enable for files with more than n lines, int
 
-				-- query = "rainbow-parens",
-				-- strategy = require("ts-rainbow").strategy.global,
+				query = {
+					"rainbow-parens",
+					html = "rainbow-tags",
+					latex = "rainbow-blocks",
+					javascript = "rainbow-tags-react",
+					tsx = "rainbow-tags",
+				},
+				strategy = require("ts-rainbow").strategy.global,
+				hlgroups = {
+					"TSRainbowRed",
+					"TSRainbowYellow",
+					"TSRainbowBlue",
+					"TSRainbowOrange",
+					"TSRainbowGreen",
+					"TSRainbowViolet",
+					"TSRainbowCyan",
+				},
 			},
 			incremental_selection = {
 				enable = true,
@@ -204,14 +217,9 @@ local iswap = {
 }
 
 local rainbow = {
-	"mrjones2014/nvim-ts-rainbow",
-	enabled = true,
+	"HiPhish/nvim-ts-rainbow2",
 	event = { "BufReadPost", "BufNewFile" },
 }
--- local rainbow = {
--- 	"HiPhish/nvim-ts-rainbow2",
--- 	event = { "BufReadPost", "BufNewFile" },
--- }
 local endwise = {
 	"RRethy/nvim-treesitter-endwise",
 	event = { "InsertEnter" },

@@ -1,6 +1,7 @@
 return {
 	"m4xshen/hardtime.nvim",
 	event = "VeryLazy",
+	enabled = false,
 	opts = {
 		max_time = 1000,
 		max_count = 2,

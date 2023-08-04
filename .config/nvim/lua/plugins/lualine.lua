@@ -96,7 +96,7 @@ M.config = function()
 				},
 			},
 			lualine_c = {
-				{ require("NeoComposer.ui").status_recording },
+				-- { require("NeoComposer.ui").status_recording },
 				{
 					"filename",
 					file_status = true,

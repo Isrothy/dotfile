@@ -153,7 +153,7 @@ telescope.config = function()
 	})
 
 	require("telescope").load_extension("notify")
-	require("telescope").load_extension("ui-select")
+	-- require("telescope").load_extension("ui-select")
 	require("telescope").load_extension("fzf")
 	require("telescope").load_extension("zoxide")
 	require("telescope").load_extension("frecency")
@@ -179,6 +179,7 @@ return {
 	{
 		"nvim-telescope/telescope-ui-select.nvim",
 		event = "VeryLazy",
+		enabled = false,
 		dependencies = {
 			"nvim-telescope/telescope.nvim",
 		},

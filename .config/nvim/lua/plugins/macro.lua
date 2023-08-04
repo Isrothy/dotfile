@@ -2,6 +2,7 @@ return {
 	{
 		"ecthelionvi/NeoComposer.nvim",
 		event = "VeryLazy",
+		enabled = false,
 		dependencies = { "kkharji/sqlite.lua" },
 		config = function()
 			local c = require("nord.colors").palette

@@ -764,8 +764,8 @@ local jsonls = {
 
 local null_ls = {
 	"jose-elias-alvarez/null-ls.nvim",
-	-- event = { "BufReadPre", "BufNewFile" },
-	lazy = false,
+	event = { "BufReadPre", "BufNewFile" },
+	-- lazy = false,
 	config = function()
 		local null_ls = require("null-ls")
 

@@ -61,7 +61,7 @@ return {
 			augroup Alpha
 				autocmd!
 				autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
-				autocmd User AlphaReady set statuscolumn= | autocmd BufUnload <buffer> set statuscolumn=%!v:lua.get_statuscol()
+				" autocmd User AlphaReady set statuscolumn= | autocmd BufUnload <buffer> set statuscolumn=%!v:lua.get_statuscol()
 			augroup END
 			]])
 		end,

@@ -9,6 +9,8 @@ opt.syntax = "on"
 opt.cmdheight = 0
 opt.showcmd = true
 opt.cursorline = true
+opt.number = true
+opt.relativenumber = true
 
 o.pumheight = 10
 
@@ -16,6 +18,7 @@ o.pumheight = 10
 o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 o.foldlevelstart = 99
 o.foldenable = true
+opt.foldcolumn = "1"
 -- opt.foldmethod = "syntax"
 -- opt.foldmethod = "manual"
 -- opt.foldmethod = "indent"
@@ -37,9 +40,10 @@ opt.fillchars = {
 	diff = "╱", -- alternatives = ⣿ ░ ─ ╱
 	msgsep = "‾",
 	fold = "⠀",
-	foldopen = "▾",
-	foldsep = "│",
-	foldclose = "▸",
+	foldopen = "▼",
+	-- foldsep = "│",
+	foldsep = " ",
+	foldclose = "▶",
 }
 
 opt.virtualedit = { "block", "onemore" }
@@ -47,7 +51,7 @@ opt.wrap = true
 opt.linebreak = true
 -- opt.textwidth = 0
 -- opt.wrapmargin =40
-opt.scrolloff = 10
+opt.scrolloff = 5
 opt.sidescrolloff = 30
 opt.history = 2000
 opt.ttimeoutlen = 0
@@ -67,7 +71,6 @@ opt.hidden = true
 
 -- coding settings
 opt.encoding = "utf-8"
-opt.termencoding = "utf-8"
 
 --session
 o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,localoptions"
@@ -87,6 +90,8 @@ opt.backspace = { "indent", "eol", "start" }
 opt.laststatus = 3
 
 opt.gp = "rg"
+
+opt.swapfile = false
 
 -- hearch settings
 opt.hlsearch = true

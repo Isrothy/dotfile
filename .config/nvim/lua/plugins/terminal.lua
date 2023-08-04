@@ -17,7 +17,7 @@ return {
 			size = function(term)
 				if term.direction == "horizontal" then
 					-- return vim.api.nvim_win_get_height(0) * 0.4 * 2
-					return 15
+					return 16
 				elseif term.direction == "vertical" then
 					return vim.o.columns * 0.32
 				end
@@ -113,7 +113,7 @@ return {
 	{
 		"chomosuke/term-edit.nvim",
 		ft = { "toggleterm", "BufTerm" },
-		version = "1.*",
+		-- version = "1.*",
 		otps = {
 			prompt_end = "❯ ",
 		},

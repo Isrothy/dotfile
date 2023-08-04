@@ -20,7 +20,6 @@ local M = {
 -- 	end, { ["repeat"] = -1 })
 -- end
 
-
 M.opts = {
 	provider_selector = function(bufnr, filetype, buftype)
 		return { "treesitter", "indent" }
