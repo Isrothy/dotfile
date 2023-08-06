@@ -46,10 +46,10 @@ local TS = {
 			incremental_selection = {
 				enable = true,
 				keymaps = {
-					init_selection = "gnn",
-					node_incremental = "gni",
-					scope_incremental = "gsi",
-					node_decremental = "gnd",
+					init_selection = "<enter>",
+					node_incremental = "<enter>",
+					node_decremental = "<BS>",
+					scope_incremental = "<c-s>",
 				},
 			},
 			indent = {
@@ -134,24 +134,6 @@ local TS = {
 			},
 		})
 	end,
-}
-
-local node_action = {
-	"ckolkey/ts-node-action",
-	-- keys = {
-	-- 	{ "<leader>n", "<Cmd>lua require('ts-node-action').node_action() <cr>", mode = "n", desc = "Trigger node action" },
-	-- },
-	init = function()
-		vim.keymap.set(
-			{ "n" },
-			"<leader>n",
-			[[<cmd>lua require'ts-node-action'.node_action() <cr>]],
-			{ desc = "Trigger Node Action" }
-		)
-	end,
-
-	dependencies = { "nvim-treesitter" },
-	opts = {},
 }
 
 local iswap = {
@@ -280,7 +262,6 @@ local local_highlight = {
 
 local treesj = {
 	"Wansmer/treesj",
-	enabled = true,
 	keys = {
 		{ "<leader>s", desc = "Split lines" },
 		{ "<leader>j", desc = "Join lines" },
@@ -294,7 +275,7 @@ local treesj = {
 
 local regexplainer = {
 	"bennypowers/nvim-regexplainer",
-	keys = "gR",
+	keys = { "gR", desc = "Explain regex" },
 	requires = {
 		"nvim-treesitter/nvim-treesitter",
 		"MunifTanjim/nui.nvim",

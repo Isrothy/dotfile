@@ -75,6 +75,13 @@ local set_keymap = function(_, bufnr)
 	end, bufopts)
 end
 
+local set_inlay_hint = function(client, bufnr)
+	local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
+	if inlay_hint and client.supports_method("textDocument/inlayHint") then
+		inlay_hint(bufnr, true)
+	end
+end
+
 local Lspconfig = {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
@@ -107,31 +114,28 @@ local Lspconfig = {
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 		})
 		require("lspconfig").cmake.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 		})
-		-- require("lspconfig").clangd.setup({
-		-- 	capabilities = make_capabilities(),
-		-- 	on_attach = function(client, bufnr)
-		-- 		set_keymap(client, bufnr)
-		-- 	end,
-		-- })
-
 		require("lspconfig").cssls.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 		})
 		require("lspconfig").dockerls.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 		})
 		require("lspconfig").emmet_ls.setup({
@@ -141,12 +145,21 @@ local Lspconfig = {
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
+			end,
+		})
+		require("lspconfig").fennel_language_server.setup({
+			capabilities = make_capabilities(),
+			on_attach = function(client, bufnr)
+				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 		})
 		require("lspconfig").gradle_ls.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 		})
 		require("lspconfig").html.setup({
@@ -164,13 +177,47 @@ local Lspconfig = {
 			single_file_support = true,
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
+		})
+		require("lspconfig").lua_ls.setup({
+			capabilities = make_capabilities(),
+			on_attach = function(client, bufnr)
+				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
+				-- client.server_capabilities.documentFormattingProvider = false
+			end,
+			settings = {
+				Lua = {
+					runtime = {
+						-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+						version = "LuaJIT",
+					},
+					diagnostics = {
+						-- Get the language server to recognize the `vim` global
+						globals = { "vim" },
+					},
+					format = {
+						enable = false,
+						defaultConfig = {
+							indent_style = "space",
+							indent_size = "2",
+							continuation_indent_size = "2",
+						},
+					},
+					hint = {
+						enable = true,
+						setType = true,
+					},
+				},
+			},
 		})
 		require("lspconfig").ocamllsp.setup({
 			capabilities = make_capabilities(),
 			single_file_support = true,
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 		})
 		-- require("lspconfig").pylsp.setup({
@@ -213,6 +260,7 @@ local Lspconfig = {
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 		})
 		-- require("lspconfig").pylyzer.setup({
@@ -236,49 +284,21 @@ local Lspconfig = {
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 		})
 		require("lspconfig").sqlls.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
-		})
-		require("lspconfig").lua_ls.setup({
-			capabilities = make_capabilities(),
-			on_attach = function(client, bufnr)
-				set_keymap(client, bufnr)
-				-- client.server_capabilities.documentFormattingProvider = false
-			end,
-			settings = {
-				Lua = {
-					runtime = {
-						-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-						version = "LuaJIT",
-					},
-					diagnostics = {
-						-- Get the language server to recognize the `vim` global
-						globals = { "vim" },
-					},
-					format = {
-						enable = false,
-						defaultConfig = {
-							indent_style = "space",
-							indent_size = "2",
-							continuation_indent_size = "2",
-						},
-					},
-					hint = {
-						enable = true,
-						setType = true,
-					},
-				},
-			},
 		})
 		require("lspconfig").vimls.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 		})
 	end,
@@ -300,6 +320,7 @@ local clangd = {
 				-- offset_encoding = "utf-16",
 				on_attach = function(client, bufnr)
 					set_keymap(client, bufnr)
+					set_inlay_hint(client, bufnr)
 				end,
 				cmd = {
 					"clangd",
@@ -570,6 +591,7 @@ local jdtls = {
 					capabilities = make_capabilities(),
 					on_attach = function(client, bufnr)
 						set_jdtls_keymap(client, bufnr)
+						set_inlay_hint(client, bufnr)
 						require("jdtls").setup_dap({ hotcodereplace = "auto" })
 						vim.cmd([[
 							command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)
@@ -593,77 +615,79 @@ local haskell_tools = {
 	-- lazy = false,
 	branch = "1.x.x",
 	dependencies = {
-		"neovim/nvim-lspconfig",
 		"nvim-lua/plenary.nvim",
 	},
-	config = function()
-		local ht = require("haskell-tools")
-		ht.setup({
-			tools = { -- haskell-tools options
-				codeLens = {
-					-- Whether to automatically display/refresh codeLenses
-					autoRefresh = true,
-				},
-				hoogle = {
-					-- 'auto': Choose a mode automatically, based on what is available.
-					-- 'telescope-local': Force use of a local installation.
-					-- 'telescope-web': The online version (depends on curl).
-					-- 'browser': Open hoogle search in the default browser.
-					mode = "auto",
-				},
-				repl = {
-					-- 'builtin': Use the simple builtin repl
-					-- 'toggleterm': Use akinsho/toggleterm.nvim
-					handler = nil,
-					builtin = {
-						create_repl_window = function(view)
-							-- create_repl_split | create_repl_vsplit | create_repl_tabnew | create_repl_cur_win
-							return view.create_repl_split({ size = vim.o.lines / 3 })
+	init = function()
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "haskell",
+			callback = function()
+				local ht = require("haskell-tools")
+				require("telescope").load_extension("ht")
+				ht.start_or_attach({
+					tools = { -- haskell-tools options
+						codeLens = {
+							-- Whether to automatically display/refresh codeLenses
+							autoRefresh = true,
+						},
+						hoogle = {
+							-- 'auto': Choose a mode automatically, based on what is available.
+							-- 'telescope-local': Force use of a local installation.
+							-- 'telescope-web': The online version (depends on curl).
+							-- 'browser': Open hoogle search in the default browser.
+							mode = "auto",
+						},
+						repl = {
+							-- 'builtin': Use the simple builtin repl
+							-- 'toggleterm': Use akinsho/toggleterm.nvim
+							handler = nil,
+							builtin = {
+								create_repl_window = function(view)
+									-- create_repl_split | create_repl_vsplit | create_repl_tabnew | create_repl_cur_win
+									return view.create_repl_split({ size = vim.o.lines / 3 })
+								end,
+							},
+						},
+						hover = {
+							-- Whether to disable haskell-tools hover and use the builtin lsp's default handler
+							disable = false,
+							-- border = ,
+							stylize_markdown = true,
+							-- Whether to automatically switch to the hover window
+							auto_focus = false,
+						},
+						tags = {
+							-- enable = vim.fn.executable("fast-tags") == 1,
+							enable = false,
+							-- Events to trigger package tag generation
+							package_events = { "BufWritePost" },
+						},
+					},
+					hls = {
+						capabilities = make_capabilities(),
+						on_attach = function(client, bufnr)
+							local opts = { noremap = true, silent = true, buffer = bufnr }
+							set_keymap(client, bufnr)
+							set_inlay_hint(client, bufnr)
+							map("n", "<leader>cl", vim.lsp.codelens.run, opts)
+							map("n", "<leader>s", ht.hoogle.hoogle_signature, opts)
 						end,
+						single_file_support = true,
+						default_settings = {
+							haskell = { -- haskell-language-server options
+								formattingProvider = "ormolu",
+								checkProject = true, -- Setting this to true could have a performance impact on large mono repos.
+							},
+						},
 					},
-				},
-				hover = {
-					-- Whether to disable haskell-tools hover and use the builtin lsp's default handler
-					disable = false,
-					-- border = ,
-					stylize_markdown = true,
-					-- Whether to automatically switch to the hover window
-					auto_focus = false,
-				},
-				tags = {
-					-- enable = vim.fn.executable("fast-tags") == 1,
-					enable = false,
-					-- Events to trigger package tag generation
-					package_events = { "BufWritePost" },
-				},
-			},
-			hls = {
-				capabilities = make_capabilities(),
-				on_attach = function(client, bufnr)
-					local opts = { noremap = true, silent = true, buffer = bufnr }
-					set_keymap(client, bufnr)
-					require("telescope").load_extension("ht")
-					map("n", "<leader>cl", vim.lsp.codelens.run, opts)
-					map("n", "<leader>s", ht.hoogle.hoogle_signature, opts)
-				end,
-				single_file_support = true,
-				default_settings = {
-					haskell = { -- haskell-language-server options
-						formattingProvider = "ormolu",
-						checkProject = true, -- Setting this to true could have a performance impact on large mono repos.
-					},
-				},
-			},
+				})
+			end,
 		})
-		require("telescope").load_extension("ht")
 	end,
 }
 
 local rust_tools = {
 	"simrat39/rust-tools.nvim",
 	event = { "BufReadPre", "BufNewFile" },
-	-- ft = { "rust" },
-	enabled = true,
 	config = function()
 		local rt = require("rust-tools")
 		rt.setup({
@@ -671,6 +695,7 @@ local rust_tools = {
 				capabilities = make_capabilities(),
 				on_attach = function(client, bufnr)
 					set_keymap(client, bufnr)
+					set_inlay_hint(client, bufnr)
 					vim.keymap.set("n", "gh", rt.hover_actions.hover_actions, { buffer = bufnr })
 					vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
 					vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -679,7 +704,6 @@ local rust_tools = {
 				standalone = true,
 			},
 			tools = { -- rust-tools options
-
 				-- how to execute terminal commands
 				-- options right now: termopen / quickfix
 				executor = require("rust-tools/executors").termopen,
@@ -693,48 +717,10 @@ local rust_tools = {
 
 				-- These apply to the default RustSetInlayHints command
 				inlay_hints = {
-					-- automatically set inlay hints (type hints)
-					-- default: true
 					auto = false,
-
-					-- Only show inlay hints for the current line
-					only_current_line = false,
-
-					-- whether to show parameter hints with the inlay hints or not
-					-- default: true
-					show_parameter_hints = true,
-
-					-- prefix for parameter hints
-					-- default: "<-"
-					parameter_hints_prefix = "<- ",
-
-					-- prefix for all the other hints (type, chaining)
-					-- default: "=>"
-					other_hints_prefix = "=> ",
-
-					-- whether to align to the lenght of the longest line in the file
-					max_len_align = false,
-
-					-- padding from the left if max_len_align is true
-					max_len_align_padding = 1,
-
-					-- whether to align to the extreme right or not
-					right_align = false,
-
-					-- padding from the right if pight_align is true
-					right_align_padding = 7,
-
-					-- The color of the hints
-					highlight = "Comment",
 				},
 				hover_actions = {
-
-					-- the border that is used for the hover window
-					-- see vim.api.nvim_open_win()
 					border = border,
-
-					-- whether the hover action window gets automatically focused
-					-- default: false
 					auto_focus = false,
 				},
 			},
@@ -744,8 +730,6 @@ local rust_tools = {
 
 local jsonls = {
 	"b0o/schemastore.nvim",
-	-- enabled = true,
-	-- lazy = false,
 	ft = { "json", "jsonc" },
 	config = function()
 		require("lspconfig").jsonls.setup({
@@ -757,6 +741,7 @@ local jsonls = {
 			},
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 		})
 	end,
@@ -773,6 +758,7 @@ local null_ls = {
 			border = "rounded",
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 			sources = {
 				null_ls.builtins.diagnostics.checkmake,
@@ -880,49 +866,6 @@ local copilot = {
 	end,
 }
 
-local zk = {
-	"mickael-menu/zk-nvim",
-	enabled = false,
-	cmd = {
-		"ZkIndex",
-		"ZkNotes",
-		"ZkNew",
-		"ZkNewFromTitleSelection",
-		"ZkNewFromContentSelection",
-		"ZkCd",
-		"ZkBacklinks",
-		"ZkLinks",
-		"ZkInsertLink",
-		"ZkMatch",
-		"ZkTags",
-	},
-	config = function()
-		require("zk").setup({
-			-- can be "telescope", "fzf" or "select" (`vim.ui.select`)
-			-- it's recommended to use "telescope" or "fzf"
-			picker = "telescope",
-
-			lsp = {
-				-- `config` is passed to `vim.lsp.start_client(config)`
-				config = {
-					cmd = { "zk", "lsp" },
-					name = "zk",
-					on_attach = function(client, bufnr)
-						set_keymap(client, bufnr)
-					end,
-				},
-
-				-- automatically attach buffers in a zk notebook that match the given filetypes
-				auto_attach = {
-					enabled = false,
-					filetypes = { "markdown" },
-				},
-			},
-		})
-		require("telescope").load_extension("zk")
-	end,
-}
-
 -- local copilot = {
 -- 	"github/copilot.vim",
 -- 	event = "VeryLazy",
@@ -979,7 +922,6 @@ return {
 	rust_tools,
 	null_ls,
 	jsonls,
-	zk,
 	copilot,
 	-- codium,
 }

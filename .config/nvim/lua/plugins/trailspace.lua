@@ -1,7 +1,6 @@
 return {
 	{
 		"echasnovski/mini.trailspace",
-		enabled = true,
 		event = { "BufReadPost", "BufNewFile" },
 		init = function()
 			vim.api.nvim_create_user_command("MiniTrailspace", "lua MiniTrailspace.trim()", {})

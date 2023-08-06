@@ -10,7 +10,7 @@ return {
 		return {
 			setopt = true,
 			relculright = true,
-			thousands = "'",
+			-- thousands = "'",
 			ft_ignore = {
 				"aerial",
 				"neo-tree",

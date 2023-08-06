@@ -153,7 +153,6 @@ telescope.config = function()
 	})
 
 	require("telescope").load_extension("notify")
-	-- require("telescope").load_extension("ui-select")
 	require("telescope").load_extension("fzf")
 	require("telescope").load_extension("zoxide")
 	require("telescope").load_extension("frecency")
@@ -168,21 +167,12 @@ return {
 	{
 		"luc-tielen/telescope_hoogle",
 		ft = "haskell",
-		cmd = { "Telescope" },
 		dependencies = {
 			"nvim-telescope/telescope.nvim",
 		},
 		config = function()
 			require("telescope").load_extension("hoogle")
 		end,
-	},
-	{
-		"nvim-telescope/telescope-ui-select.nvim",
-		event = "VeryLazy",
-		enabled = false,
-		dependencies = {
-			"nvim-telescope/telescope.nvim",
-		},
 	},
 	{
 		"danielfalk/smart-open.nvim",

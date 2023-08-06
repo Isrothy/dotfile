@@ -72,7 +72,7 @@ int main() {
     scanf("%d %d", &a, &b);
     printf("%d\n", a + b);
     int n = 10;
-    auto D = add(double(a), double(b));
+    auto D = static_cast<int>(add(double(a), double(b)));
     switch (D) {
         case 0: {
         }

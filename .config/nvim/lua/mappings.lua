@@ -27,7 +27,6 @@ map("n", "<C-o>", "<C-w>o", default_options)
 -- map("n", "<C-->", "<C-w>-", default_options)
 
 map("n", "<esc>", ":nohlsearch<cr>", default_options)
-
 map("t", "<esc>", [[<C-\><C-n>]], default_options)
 
 -- map("i", "<M-h>", "<Left>", { noremap = false, desc = "Left" })

@@ -4,10 +4,6 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"echasnovski/mini.ai",
-			-- "numToStr/Comment.nvim",
-			-- "kylechui/nvim-surround",
-			-- "gbprod/yanky.nvim",
-			-- "gbprod/substitute.nvim",
 		},
 		event = "VeryLazy",
 		enabled = true,
@@ -22,7 +18,7 @@ return {
 				-- the presets plugin, adds help for a bunch of default keybindings in Neovim
 				-- No actual key bindings are created
 				presets = {
-					operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+					operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
 					motions = true, -- adds help for motions
 					text_objects = true, -- help for text objects triggered after entering an operator
 					windows = true, -- default bindings on <c-w>
@@ -34,9 +30,10 @@ return {
 			-- add operators that will trigger motion and text object completion
 			-- to enable all native operators, set the preset / operators plugin above
 			operators = {
-				gc = "Comments",
-				gb = "Comments blockwise",
-				s = "Substitute",
+				-- gc = "Comments",
+				-- gb = "Comments blockwise",
+				-- gx = "Exchange",
+				-- s = "Substitute",
 			},
 			key_labels = {
 				-- override the label used to display some keys. It doesn't effect WK in any other way.
@@ -220,6 +217,10 @@ return {
 				["[h"] = "Previous hunk",
 				["]c"] = "Next diff",
 				["[c"] = "Previous diff",
+			})
+			wk.register({
+				["dm"] = "Delete mark",
+				["ds"] = "Delete surrounding",
 			})
 		end,
 	},

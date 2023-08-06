@@ -40,11 +40,6 @@ return {
 			dashboard.section.header.val = neovim_delta_corps_preist1
 
 			dashboard.section.buttons.val = {
-				-- dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-				-- dashboard.button("s", "⛶  Smart open", ":Telescope smart_open<CR>"),
-				-- dashboard.button("f", "󰈞  Find file", ":Telescope find_files<CR>"),
-				-- dashboard.button("l", "󰈬  Live grep", ":Telescope live_grep<CR>"),
-				-- dashboard.button("q", "󰅚  Quit NVIM", ":qa<CR>"),
 				dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
 				dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
 				dashboard.button("r", " " .. " Recent files", ":Telescope frecency <CR>"),
@@ -61,7 +56,6 @@ return {
 			augroup Alpha
 				autocmd!
 				autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
-				" autocmd User AlphaReady set statuscolumn= | autocmd BufUnload <buffer> set statuscolumn=%!v:lua.get_statuscol()
 			augroup END
 			]])
 		end,

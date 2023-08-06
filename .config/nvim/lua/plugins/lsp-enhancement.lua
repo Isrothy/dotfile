@@ -271,7 +271,7 @@ local trouble = {
 local lsp_lens = {
 	"VidocqH/lsp-lens.nvim",
 	event = { "LspAttach" },
-	enabled = false,
+	enabled = true,
 	opts = {
 		enable = true,
 		include_declaration = false, -- Reference include declaration
@@ -284,55 +284,6 @@ local lsp_lens = {
 	},
 }
 
-local inlay_hint = {
-	"lvimuser/lsp-inlayhints.nvim",
-	event = { "LspAttach" },
-	branch = "anticonceal",
-	enabled = true,
-	opts = {
-		enabled_at_startup = true,
-		debug_mode = false,
-	},
-	init = function()
-		vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-		vim.api.nvim_create_autocmd("LspAttach", {
-			group = "LspAttach_inlayhints",
-			callback = function(args)
-				if not (args.data and args.data.client_id) then
-					return
-				end
-				local bufnr = args.buf
-				local client = vim.lsp.get_client_by_id(args.data.client_id)
-				require("lsp-inlayhints").on_attach(client, bufnr)
-			end,
-		})
-	end,
-}
-
-local pretty_hover = {
-	"Fildo7525/pretty_hover",
-	enabled = false,
-	otps = {
-		line = {
-			"@brief",
-		},
-		word = {
-			"@param",
-			"@tparam",
-			"@see",
-		},
-		header = {
-			"@class",
-		},
-		stylers = {
-			line = "**",
-			word = "`",
-			header = "###",
-		},
-		border = "rounded",
-	},
-}
-
 return {
 	lightbulb,
 	inc_rename,
@@ -340,6 +291,4 @@ return {
 	illuminate,
 	trouble,
 	lsp_lens,
-	inlay_hint,
-	pretty_hover,
 }

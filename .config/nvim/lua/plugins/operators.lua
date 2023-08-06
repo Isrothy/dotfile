@@ -2,7 +2,7 @@ local map = vim.keymap.set
 
 local yanky = {
 	"gbprod/yanky.nvim",
-	event = "VeryLazy",
+	-- event = "VeryLazy",
 	dependencies = {
 		{
 			"kkharji/sqlite.lua",
@@ -25,13 +25,6 @@ local yanky = {
 		}
 	end,
 	keys = {
-		{
-			"<leader>p",
-			function()
-				require("telescope").extensions.yank_history.yank_history({})
-			end,
-			desc = "Open Yank History",
-		},
 		{ "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
 		{ "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after cursor" },
 		{ "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before cursor" },
@@ -55,15 +48,55 @@ local yanky = {
 local substitute = {
 	"gbprod/substitute.nvim",
 	init = function()
-		map("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
-		map("n", "ss", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
-		map("n", "S", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
-		map("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
+		map(
+			"n",
+			"s",
+			"<cmd>lua require('substitute').operator()<cr>",
+			{ noremap = true, silent = true, desc = "substitute" }
+		)
+		map(
+			"n",
+			"ss",
+			"<cmd>lua require('substitute').line()<cr>",
+			{ noremap = true, silent = true, desc = "substitute line" }
+		)
+		map(
+			"n",
+			"S",
+			"<cmd>lua require('substitute').eol()<cr>",
+			{ noremap = true, silent = true, desc = "substitute eol" }
+		)
+		map(
+			"x",
+			"s",
+			"<cmd>lua require('substitute').visual()<cr>",
+			{ noremap = true, silent = true, desc = "substitute visual" }
+		)
 
-		map("n", "gx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
-		map("n", "gxx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
-		map("x", "gx", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
-		map("n", "gxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
+		map(
+			"n",
+			"gx",
+			"<cmd>lua require('substitute.exchange').operator()<cr>",
+			{ noremap = true, silent = true, desc = "exchange" }
+		)
+		map(
+			"n",
+			"gxx",
+			"<cmd>lua require('substitute.exchange').line()<cr>",
+			{ noremap = true, silent = true, desc = "exchange line" }
+		)
+		map(
+			"x",
+			"gx",
+			"<cmd>lua require('substitute.exchange').visual()<cr>",
+			{ noremap = true, silent = true, desc = "exchange visual" }
+		)
+		map(
+			"n",
+			"gxc",
+			"<cmd>lua require('substitute.exchange').cancel()<cr>",
+			{ noremap = true, silent = true, desc = "cancel exchange" }
+		)
 	end,
 	opts = {
 		on_substitute = function(event)
@@ -103,17 +136,6 @@ local stay_in_place = {
 	opts = {
 		set_keymaps = true,
 		preserve_visual_selection = true,
-	},
-}
-
-local cutlass = {
-	"gbprod/cutlass.nvim",
-	event = "VeryLazy",
-	enabled = false,
-	opts = {
-		cut_key = nil,
-		override_del = true,
-		exclude = {},
 	},
 }
 
@@ -264,7 +286,6 @@ return {
 	yanky,
 	substitute,
 	stay_in_place,
-	cutlass,
 	dial,
 	mini_move,
 	surround,
