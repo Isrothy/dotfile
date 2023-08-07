@@ -1,14 +1,29 @@
 return {
 	{
 		"windwp/nvim-autopairs",
-		event = { "InsertEnter", "CmdlineEnter" },
-		enabled = true,
+		event = { "InsertEnter" },
 		opts = {
 			map_bs = true,
 			map_c_h = true,
 			check_ts = true,
 			map_c_w = true,
-			disable_filetype = { "TelescopePrompt" },
+			enable_check_bracket_line = false,
+			ignored_next_char = "[%w%.]",
+			disable_filetype = {
+				"TelescopePrompt",
+				"spectre_panel",
+			},
+			fast_wrap = {
+				map = "<M-e>",
+				chars = { "{", "[", "(", '"', "'" },
+				pattern = [=[[%'%"%>%]%)%}%,]]=],
+				end_key = "$",
+				keys = "qwertyuiopzxcvbnmasdfghjkl",
+				check_comma = true,
+				manual_position = true,
+				highlight = "Search",
+				highlight_grey = "Comment",
+			},
 		},
 		config = function(_, opts)
 			require("nvim-autopairs").setup(opts)
@@ -19,7 +34,7 @@ return {
 	},
 	{
 		"altermo/ultimate-autopair.nvim",
-		event = { "InsertEnter", "CmdlineEnter" },
+		event = { "InsertEnter" },
 		enabled = false,
 		config = function()
 			require("ultimate-autopair").setup({

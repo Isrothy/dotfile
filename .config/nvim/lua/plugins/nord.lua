@@ -66,14 +66,14 @@ M.config = function()
 
 			highlights.Folded = { fg = colors.frost.artic_water, bg = colors.polar_night.brighter }
 
-			highlights.TSRainbowRed = { fg = colors.aurora.red }
-			highlights.TSRainbowYellow = { fg = colors.aurora.yellow }
-			highlights.TSRainbowBlue = { fg = colors.frost.artic_ocean }
-			highlights.TSRainbowGreen = { fg = colors.aurora.green }
-			highlights.TSRainbowOrange = { fg = colors.aurora.orange }
-			highlights.TSRainbowCyan = { fg = colors.frost.ice }
-			highlights.TSRainbowViolet = { fg = colors.aurora.purple }
-			highlights.TSRainbowWhite = { fg = colors.snow_storm.origin }
+			highlights.RainbowDelimiterRed = { fg = colors.aurora.red }
+			highlights.RainbowDelimiterYellow = { fg = colors.aurora.yellow }
+			highlights.RainbowDelimiterBlue = { fg = colors.frost.artic_ocean }
+			highlights.RainbowDelimiterOrange = { fg = colors.aurora.green }
+			highlights.RainbowDelimiterGreen = { fg = colors.aurora.orange }
+			highlights.RainbowDelimiterCyan = { fg = colors.frost.ice }
+			highlights.RainbowDelimiterViolet = { fg = colors.aurora.purple }
+			highlights.RainbowDelimiterWhite = { fg = colors.snow_storm.origin }
 
 			highlights.TSDefinitionUsage = { bg = colors.polar_night.brightest }
 

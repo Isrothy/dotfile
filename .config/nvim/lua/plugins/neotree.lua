@@ -8,9 +8,9 @@ local M = {
 		"s1n7ax/nvim-window-picker",
 	},
 	keys = {
-		{ "<F2>", "<cmd>Neotree filesystem toggle left<cr>" },
-		{ "<F3>", "<cmd>Neotree buffers toggle left<cr>" },
-		{ "<F4>", "<cmd>Neotree git_status toggle left<cr>" },
+		{ "<F2>", "<cmd>Neotree filesystem toggle left<cr>", desc = "Neotree toggle filesystem" },
+		{ "<F3>", "<cmd>Neotree buffers toggle left<cr>", desc = "Neotree toggle buffers" },
+		{ "<F4>", "<cmd>Neotree git_status toggle left<cr>", desc = "Neotree toggle git status" },
 	},
 }
 

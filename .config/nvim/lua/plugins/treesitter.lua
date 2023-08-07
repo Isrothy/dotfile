@@ -21,28 +21,6 @@ local TS = {
 				-- Instead of true it can also be a list of languages
 				additional_vim_regex_highlighting = true,
 			},
-			rainbow = {
-				enable = true,
-				-- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-
-				query = {
-					"rainbow-parens",
-					html = "rainbow-tags",
-					latex = "rainbow-blocks",
-					javascript = "rainbow-tags-react",
-					tsx = "rainbow-tags",
-				},
-				strategy = require("ts-rainbow").strategy.global,
-				hlgroups = {
-					"TSRainbowRed",
-					"TSRainbowYellow",
-					"TSRainbowBlue",
-					"TSRainbowOrange",
-					"TSRainbowGreen",
-					"TSRainbowViolet",
-					"TSRainbowCyan",
-				},
-			},
 			incremental_selection = {
 				enable = true,
 				keymaps = {
@@ -199,8 +177,39 @@ local iswap = {
 }
 
 local rainbow = {
-	"HiPhish/nvim-ts-rainbow2",
+	"HiPhish/rainbow-delimiters.nvim",
 	event = { "BufReadPost", "BufNewFile" },
+	config = function()
+		local rainbow_delimiters = require("rainbow-delimiters")
+
+		vim.g.rainbow_delimiters = {
+			strategy = {
+				[""] = rainbow_delimiters.strategy["global"],
+				vim = rainbow_delimiters.strategy["local"],
+				html = rainbow_delimiters.strategy["local"],
+				commonlisp = rainbow_delimiters.strategy["local"],
+				fennel = rainbow_delimiters.strategy["local"],
+			},
+			query = {
+				[""] = "rainbow-delimiters",
+				lua = "rainbow-blocks",
+				javascript = "rainbow-parens",
+				jsx = "rainbow-parens",
+				tsx = "rainbow-parens",
+				verilog = "rainbow-blocks",
+			},
+			highlight = {
+				"RainbowDelimiterRed",
+				"RainbowDelimiterYellow",
+				"RainbowDelimiterBlue",
+				"RainbowDelimiterOrange",
+				"RainbowDelimiterGreen",
+				"RainbowDelimiterViolet",
+				"RainbowDelimiterCyan",
+				"RainbowDelimiterWhite",
+			},
+		}
+	end,
 }
 local endwise = {
 	"RRethy/nvim-treesitter-endwise",
@@ -249,15 +258,6 @@ local node_marker = {
 			end,
 		})
 	end,
-}
-local local_highlight = {
-	"tzachar/local-highlight.nvim",
-	event = { "BufReadPost", "BufNewFile" },
-	enabled = false,
-	opts = {
-		hlgroup = "TSDefinitionUsage",
-		cw_hlgroup = "TSDefinitionUsage",
-	},
 }
 
 local treesj = {
@@ -334,7 +334,6 @@ return {
 	rainbow,
 	femaco,
 	endwise,
-	local_highlight,
 	autotag,
 	neogen,
 	node_marker,
