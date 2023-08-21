@@ -1,4 +1,4 @@
-require("lazy").setup("plugins", {
+require("lazy").setup("isrothy.plugins", {
 	defaults = {
 		lazy = true,
 	},

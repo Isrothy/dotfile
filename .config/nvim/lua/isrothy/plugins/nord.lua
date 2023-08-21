@@ -1,7 +1,6 @@
 local M = {
 	"gbprod/nord.nvim",
 	priority = 100,
-	enabled = true,
 	lazy = false,
 }
 M.config = function()

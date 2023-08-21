@@ -1,15 +1,6 @@
 local CMP = {
 	"hrsh7th/nvim-cmp",
 	event = { "InsertEnter", "CmdlineEnter" },
-	enabled = true,
-	-- init = function()
-	-- vim.api.nvim_create_autocmd({ "InsertEnter", "CursorHoldI" }, {
-	-- 	callback = function(_)
-	-- 		local cmp = require("cmp")
-	-- 		cmp.complete()
-	-- 	end,
-	-- })
-	-- end,
 }
 
 CMP.dependencies = {
@@ -332,5 +323,4 @@ local LuaSnip = {
 return {
 	CMP,
 	LuaSnip,
-	-- copilot,
 }

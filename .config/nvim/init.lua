@@ -13,7 +13,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require("options")
-require("mappings")
-require("autocmd")
-require("lazy_plugin")
+require("isrothy.options")
+require("isrothy.mappings")
+require("isrothy.autocmd")
+require("isrothy.lazy_plugin")

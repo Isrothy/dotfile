@@ -1,13 +1,7 @@
 local M = {
 	"stevearc/aerial.nvim",
-	enabled = true,
+	cmd = { "AerialToggle" },
 }
-
--- M.init = function()
--- 	vim.keymap.set("n", "<F9>", "<cmd>AerialToggle<CR>", { noremap = true, silent = true })
--- end
-
-M.cmd = { "AerialToggle" }
 
 M.opts = {
 	backends = { "markdown", "lsp", "treesitter", "man" },

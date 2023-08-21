@@ -132,9 +132,10 @@ local lightbulb = {
 
 local inc_rename = {
 	"smjonas/inc-rename.nvim",
-	enabled = true,
 	event = { "LspAttach" },
-	opts = {},
+	opts = {
+		cmd_name = "IncRename", -- the name of the command
+	},
 }
 
 local neo_dim = {
@@ -201,7 +202,6 @@ local illuminate = {
 
 local trouble = {
 	"folke/trouble.nvim",
-	enabled = true,
 	cmd = {
 		"TroubleToggle",
 		"Trouble",
@@ -212,12 +212,22 @@ local trouble = {
 	keys = {
 		-- { "<F5>", "<cmd>TroubleClose<cr>", noremap = true },
 		-- { "<F6>", "<cmd>Trouble workspace_diagnostics<cr>", noremap = true },
-		{ "<leader>xx", "<cmd>TroubleToggle<cr>", noremap = true },
-		{ "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", noremap = true },
-		{ "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", noremap = true },
-		{ "<leader>xl", "<cmd>TroubleToggle loclist<cr>", noremap = true },
-		{ "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", noremap = true },
-		{ "<leader>xr", "<cmd>TroubleToggle lsp_references<cr>", noremap = true },
+		{ "<leader>xx", "<cmd>TroubleToggle<cr>", noremap = true, desc = "Trouble toggle" },
+		{
+			"<leader>xw",
+			"<cmd>TroubleToggle workspace_diagnostics<cr>",
+			noremap = true,
+			desc = "Trouble workspace diagnostics",
+		},
+		{
+			"<leader>xd",
+			"<cmd>TroubleToggle document_diagnostics<cr>",
+			noremap = true,
+			desc = "Trouble document diagnostics",
+		},
+		{ "<leader>xl", "<cmd>TroubleToggle loclist<cr>", noremap = true, desc = "Trouble loclist" },
+		{ "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", noremap = true, desc = "Trouble quickfix" },
+		{ "<leader>xr", "<cmd>TroubleToggle lsp_references<cr>", noremap = true, desc = "Trouble lsp references" },
 	},
 	opts = {
 		position = "bottom", -- position of the list can be: bottom, top, left, right
@@ -271,7 +281,7 @@ local trouble = {
 local lsp_lens = {
 	"VidocqH/lsp-lens.nvim",
 	event = { "LspAttach" },
-	enabled = true,
+	enabled = false,
 	opts = {
 		enable = true,
 		include_declaration = false, -- Reference include declaration

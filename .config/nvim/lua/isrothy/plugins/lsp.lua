@@ -15,25 +15,26 @@ local make_capabilities = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 	capabilities.textDocument.completion.completionItem.snippetSupport = true
+	capabilities.offsetEncoding = "utf-16"
 	return capabilities
 end
 
 local set_keymap = function(_, bufnr)
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	map("n", "g<c-d>", vim.lsp.buf.declaration, bufopts)
-	map("n", "gD", function()
+	map("n", "<leader>gD", vim.lsp.buf.declaration, bufopts)
+	map("n", "<leader>gt", function()
 		require("telescope.builtin").lsp_type_definitions({ jump_type = "never" })
 	end, bufopts)
 
-	map("n", "gd", function()
+	map("n", "<leader>gd", function()
 		require("telescope.builtin").lsp_definitions({ jump_type = "never" })
 	end, bufopts)
 
-	map("n", "gi", function()
+	map("n", "<leader>gi", function()
 		require("telescope.builtin").lsp_implementations({ jump_type = "never" })
 	end, bufopts)
 
-	map("n", "gr", function()
+	map("n", "<leader>gr", function()
 		require("telescope.builtin").lsp_references({
 			include_declaration = false,
 			include_current_line = false,
@@ -116,6 +117,20 @@ local Lspconfig = {
 				set_keymap(client, bufnr)
 				set_inlay_hint(client, bufnr)
 			end,
+		})
+		require("lspconfig").clangd.setup({
+			capabilities = make_capabilities(),
+			on_attach = function(client, bufnr)
+				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
+			end,
+			cmd = {
+				"clangd",
+				"--background-index",
+				"--clang-tidy",
+				"--completion-style=bundled",
+				"--header-insertion=iwyu",
+			},
 		})
 		require("lspconfig").cmake.setup({
 			capabilities = make_capabilities(),
@@ -307,98 +322,74 @@ local Lspconfig = {
 local clangd = {
 	"p00f/clangd_extensions.nvim",
 	-- event = "LspAttach",
-	event = { "BufReadPre", "BufNewFile" },
+	-- event = { "BufReadPre", "BufNewFile" },
 	ft = { "c", "cpp", "objc", "objcpp" },
-	enabled = true,
 	-- lazy = false,
 	config = function()
 		local clangd_capabilities = make_capabilities()
 		clangd_capabilities.offsetEncoding = "utf-16"
 		require("clangd_extensions").setup({
-			server = {
-				capabilities = clangd_capabilities,
-				-- offset_encoding = "utf-16",
-				on_attach = function(client, bufnr)
-					set_keymap(client, bufnr)
-					set_inlay_hint(client, bufnr)
-				end,
-				cmd = {
-					"clangd",
-					"--background-index",
-					"--clang-tidy",
-					"--completion-style=bundled",
-					"--cross-file-rename",
-					"--header-insertion=iwyu",
+			inlay_hints = {
+				inline = vim.fn.has("nvim-0.10") == 1,
+				-- inline = false,
+				-- Options other than `highlight' and `priority' only work
+				-- if `inline' is disabled
+				-- Only show inlay hints for the current line
+				only_current_line = false,
+				-- Event which triggers a refersh of the inlay hints.
+				-- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
+				-- not that this may cause  higher CPU usage.
+				-- This option is only respected when only_current_line and
+				-- autoSetHints both are true.
+				only_current_line_autocmd = "CursorHold",
+				-- whether to show parameter hints with the inlay hints or not
+				show_parameter_hints = true,
+				-- prefix for parameter hints
+				parameter_hints_prefix = "<- ",
+				-- prefix for all the other hints (type, chaining)
+				other_hints_prefix = "=> ",
+				-- whether to align to the length of the longest line in the file
+				max_len_align = false,
+				-- padding from the left if max_len_align is true
+				max_len_align_padding = 1,
+				-- whether to align to the extreme right or not
+				right_align = false,
+				-- padding from the right if right_align is true
+				right_align_padding = 7,
+				-- The color of the hints
+				highlight = "Comment",
+				-- The highlight group priority for extmark
+				priority = 100,
+			},
+			ast = {
+				role_icons = {
+					type = "󰉺",
+					declaration = "󰙞",
+					expression = "󰜌",
+					specifier = "󰓼",
+					statement = "󰜋",
+					["template argument"] = "",
+				},
+
+				kind_icons = {
+					Compound = "󰛸",
+					Recovery = "",
+					TranslationUnit = "",
+					PackExpansion = "",
+					TemplateTypeParm = "󰆦",
+					TemplateTemplateParm = "󰆩",
+					TemplateParamObject = "󰆧",
+				},
+
+				highlights = {
+					detail = "Comment",
 				},
 			},
-			extensions = {
-				-- :
-				-- Automatically set inlay hints (type hints)
-				autoSetHints = false,
-				-- Whether to show hover actions inside the hover window
-				hover_with_actions = true,
-				-- These apply to the ClangdSetInlayHints command
-				inlay_hints = {
-					inline = vim.fn.has("nvim-0.10") == 1,
-					-- Options other than `highlight' and `priority' only work
-					-- if `inline' is disabled
-					-- Only show inlay hints for the current line
-					only_current_line = false,
-					-- Event which triggers a refersh of the inlay hints.
-					-- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
-					-- not that this may cause  higher CPU usage.
-					-- This option is only respected when only_current_line and
-					-- autoSetHints both are true.
-					only_current_line_autocmd = "CursorHold",
-					-- whether to show parameter hints with the inlay hints or not
-					show_parameter_hints = true,
-					-- prefix for parameter hints
-					parameter_hints_prefix = "<- ",
-					-- prefix for all the other hints (type, chaining)
-					other_hints_prefix = "=> ",
-					-- whether to align to the length of the longest line in the file
-					max_len_align = false,
-					-- padding from the left if max_len_align is true
-					max_len_align_padding = 1,
-					-- whether to align to the extreme right or not
-					right_align = false,
-					-- padding from the right if right_align is true
-					right_align_padding = 7,
-					-- The color of the hints
-					highlight = "Comment",
-					-- The highlight group priority for extmark
-					priority = 100,
-				},
-				ast = {
-					role_icons = {
-						type = "󰉺",
-						declaration = "󰙞",
-						expression = "󰜌",
-						specifier = "󰓼",
-						statement = "󰜋",
-						["template argument"] = "",
-					},
-
-					kind_icons = {
-						Compound = "󰛸",
-						Recovery = "",
-						TranslationUnit = "",
-						PackExpansion = "",
-						TemplateTypeParm = "󰆦",
-						TemplateTemplateParm = "󰆩",
-						TemplateParamObject = "󰆧",
-					},
-
-					highlights = {
-						detail = "Comment",
-					},
-				},
-				memory_usage = {
-					border = border,
-				},
-				symbol_info = {
-					border = border,
-				},
+			memory_usage = {
+				border = border,
+			},
+			symbol_info = {
+				border = border,
 			},
 		})
 	end,
@@ -420,20 +411,20 @@ local jdtls = {
 
 				local set_jdtls_keymap = function(_, bufnr)
 					local bufopts = { noremap = true, silent = true, buffer = bufnr }
-					map("n", "g<c-d>", vim.lsp.buf.declaration, bufopts)
-					map("n", "gD", function()
+					map("n", "<leader>gD", vim.lsp.buf.declaration, bufopts)
+					map("n", "<leader>gt", function()
 						require("telescope.builtin").lsp_type_definitions({ jump_type = "never" })
 					end, bufopts)
 
-					map("n", "gd", function()
+					map("n", "<leader>gd", function()
 						require("telescope.builtin").lsp_definitions({ jump_type = "never" })
 					end, bufopts)
 
-					map("n", "gi", function()
+					map("n", "<leader>gi", function()
 						require("telescope.builtin").lsp_implementations({ jump_type = "never" })
 					end, bufopts)
 
-					map("n", "gr", function()
+					map("n", "<leader>gr", function()
 						require("telescope.builtin").lsp_references({
 							include_declaration = false,
 							include_current_line = false,
@@ -611,75 +602,74 @@ local jdtls = {
 
 local haskell_tools = {
 	"MrcJkb/haskell-tools.nvim",
-	event = { "BufReadPre", "BufNewFile" },
-	-- lazy = false,
-	branch = "1.x.x",
+	-- event = { "BufReadPre", "BufNewFile" },
+	branch = "2.x.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 	},
 	init = function()
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "haskell",
-			callback = function()
-				local ht = require("haskell-tools")
-				require("telescope").load_extension("ht")
-				ht.start_or_attach({
-					tools = { -- haskell-tools options
-						codeLens = {
-							-- Whether to automatically display/refresh codeLenses
-							autoRefresh = true,
-						},
-						hoogle = {
-							-- 'auto': Choose a mode automatically, based on what is available.
-							-- 'telescope-local': Force use of a local installation.
-							-- 'telescope-web': The online version (depends on curl).
-							-- 'browser': Open hoogle search in the default browser.
-							mode = "auto",
-						},
-						repl = {
-							-- 'builtin': Use the simple builtin repl
-							-- 'toggleterm': Use akinsho/toggleterm.nvim
-							handler = nil,
-							builtin = {
-								create_repl_window = function(view)
-									-- create_repl_split | create_repl_vsplit | create_repl_tabnew | create_repl_cur_win
-									return view.create_repl_split({ size = vim.o.lines / 3 })
-								end,
-							},
-						},
-						hover = {
-							-- Whether to disable haskell-tools hover and use the builtin lsp's default handler
-							disable = false,
-							-- border = ,
-							stylize_markdown = true,
-							-- Whether to automatically switch to the hover window
-							auto_focus = false,
-						},
-						tags = {
-							-- enable = vim.fn.executable("fast-tags") == 1,
-							enable = false,
-							-- Events to trigger package tag generation
-							package_events = { "BufWritePost" },
-						},
-					},
-					hls = {
-						capabilities = make_capabilities(),
-						on_attach = function(client, bufnr)
-							local opts = { noremap = true, silent = true, buffer = bufnr }
-							set_keymap(client, bufnr)
-							set_inlay_hint(client, bufnr)
-							map("n", "<leader>cl", vim.lsp.codelens.run, opts)
-							map("n", "<leader>s", ht.hoogle.hoogle_signature, opts)
+		vim.g.haskell_tools = {
+			tools = { -- haskell-tools options
+				codeLens = {
+					-- Whether to automatically display/refresh codeLenses
+					autoRefresh = true,
+				},
+				hoogle = {
+					-- 'auto': Choose a mode automatically, based on what is available.
+					-- 'telescope-local': Force use of a local installation.
+					-- 'telescope-web': The online version (depends on curl).
+					-- 'browser': Open hoogle search in the default browser.
+					mode = "auto",
+				},
+				repl = {
+					-- 'builtin': Use the simple builtin repl
+					-- 'toggleterm': Use akinsho/toggleterm.nvim
+					handler = nil,
+					builtin = {
+						create_repl_window = function(view)
+							-- create_repl_split | create_repl_vsplit | create_repl_tabnew | create_repl_cur_win
+							return view.create_repl_split({ size = vim.o.lines / 3 })
 						end,
-						single_file_support = true,
-						default_settings = {
-							haskell = { -- haskell-language-server options
-								formattingProvider = "ormolu",
-								checkProject = true, -- Setting this to true could have a performance impact on large mono repos.
-							},
-						},
 					},
-				})
+				},
+				hover = {
+					-- Whether to disable haskell-tools hover and use the builtin lsp's default handler
+					disable = false,
+					-- border = ,
+					stylize_markdown = true,
+					-- Whether to automatically switch to the hover window
+					auto_focus = false,
+				},
+				tags = {
+					-- enable = vim.fn.executable("fast-tags") == 1,
+					enable = false,
+					-- Events to trigger package tag generation
+					package_events = { "BufWritePost" },
+				},
+			},
+			hls = {
+				capabilities = make_capabilities(),
+				on_attach = function(client, bufnr)
+					local opts = { noremap = true, silent = true, buffer = bufnr }
+					set_keymap(client, bufnr)
+					set_inlay_hint(client, bufnr)
+					map("n", "<leader>cl", vim.lsp.codelens.run, opts)
+				end,
+				single_file_support = true,
+				default_settings = {
+					haskell = { -- haskell-language-server options
+						formattingProvider = "ormolu",
+						checkProject = true, -- Setting this to true could have a performance impact on large mono repos.
+					},
+				},
+			},
+		}
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "haskell", "cabal" },
+			callback = function()
+				require("telescope").load_extension("ht")
+				local ht = require("haskell-tools")
+				ht.lsp.start()
 			end,
 		})
 	end,
@@ -875,45 +865,6 @@ local copilot = {
 -- 	end,
 -- }
 
--- local codium = {
--- 	"jcdickinson/codeium.nvim",
--- 	event = "VeryLazy",
--- 	dependencies = {
--- 		"nvim-lua/plenary.nvim",
--- 		{
--- 			"jcdickinson/http.nvim",
--- 			build = "cargo build --workspace --release",
--- 		},
--- 	},
--- 	config = function()
--- 		require("codeium").setup({})
--- 	end,
---
--- }
-
--- local codium = {
--- 	"Exafunction/codeium.vim",
--- 	init = function()
--- 		vim.g.codeium_disable_bindings = 1
--- 	end,
--- 	event = "VeryLazy",
--- 	config = function()
--- 		-- Change '<C-g>' here to any keycode you like.
--- 		vim.keymap.set("i", "<M-;>", function()
--- 			return vim.fn["codeium#Accept"]()
--- 		end, { expr = true, silent = true })
--- 		vim.keymap.set("i", "<M-]>", function()
--- 			return vim.fn["codeium#CycleCompletions"](1)
--- 		end, { expr = true, silent = true })
--- 		vim.keymap.set("i", "<M-[>", function()
--- 			return vim.fn["codeium#CycleCompletions"](-1)
--- 		end, { expr = true, silent = true })
--- 		vim.keymap.set("i", "<M-'>", function()
--- 			return vim.fn["codeium#Clear"]()
--- 		end, { expr = true, silent = true })
--- 	end,
--- }
-
 return {
 	Lspconfig,
 	clangd,
@@ -923,5 +874,4 @@ return {
 	null_ls,
 	jsonls,
 	copilot,
-	-- codium,
 }

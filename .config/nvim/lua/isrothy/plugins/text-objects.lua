@@ -82,12 +82,12 @@ return {
 			-- map({ "o", "x" }, "iI", "<cmd>lua require('various-textobjs').indentation(true, true)<CR>")
 			-- map({ "o", "x" }, "aI", "<cmd>lua require('various-textobjs').indentation(false, false)<CR>")
 
-			map(
-				{ "o", "x" },
-				"R",
-				"<cmd>lua require('various-textobjs').restOfIdentation()<CR>",
-				{ noremap = true, silent = true, desc = "rest of identation" }
-			)
+			-- map(
+			-- 	{ "o", "x" },
+			-- 	"R",
+			-- 	"<cmd>lua require('various-textobjs').restOfIdentation()<CR>",
+			-- 	{ noremap = true, silent = true, desc = "rest of identation" }
+			-- )
 
 			map(
 				{ "o", "x" },
@@ -104,7 +104,7 @@ return {
 
 			map(
 				{ "o", "x" },
-				"%",
+				"C",
 				"<cmd>lua require('various-textobjs').toNextClosingBracket()<CR>",
 				{ noremap = true, silent = true, desc = "to next closing bracket" }
 			)

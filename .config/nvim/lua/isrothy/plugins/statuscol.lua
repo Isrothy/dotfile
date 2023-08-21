@@ -1,6 +1,6 @@
 return {
 	"luukvbaal/statuscol.nvim",
-	event = {"BufReadPre", "BufNewFile"},
+	event = { "BufReadPre", "BufNewFile" },
 	init = function()
 		vim.opt.number = true
 		vim.opt.relativenumber = true

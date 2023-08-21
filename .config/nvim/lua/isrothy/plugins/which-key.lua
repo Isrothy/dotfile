@@ -96,7 +96,7 @@ return {
 			},
 		},
 		config = function(_, opts)
-			local custom_textobjects = require("plugins.text-objects").custom_textobjects
+			local custom_textobjects = require("isrothy.plugins.text-objects").custom_textobjects
 			local objects = require("which-key.plugins.presets").objects
 			local motions = require("which-key.plugins.presets").motions
 			objects["an"] = { name = "around next" }
@@ -127,22 +127,25 @@ return {
 			require("which-key").setup(opts)
 
 			local wk = require("which-key")
-			wk.register({
-				["<c-d>"] = "Lsp goto declaration",
-				D = "Lsp goto type defination",
-				d = "Lsp foto defination",
-				i = "Lsp goto implentation",
-				r = "Lsp goto reference",
-				f = "Folder preview",
-				l = "Leap forward",
-				L = "Leap backward",
-			}, {
-				prefix = "g",
-			})
 
 			wk.register({
 				["<leader><leader>"] = {
 					name = "Telescope",
+				},
+			})
+			wk.register({
+				["<leader>d"] = {
+					name = "Dap",
+				},
+			})
+			wk.register({
+				["<leader>x"] = {
+					name = "Trouble",
+				},
+			})
+			wk.register({
+				["<leader>p"] = {
+					name = "Presistence",
 				},
 			})
 
@@ -152,15 +155,20 @@ return {
 				rn = "Lsp rename",
 				f = "Lsp format",
 				qd = "Diagnostics to quickfix",
-				d = "Float diagnostic window",
+				cd = "Float diagnostic window",
 				w = {
 					a = "Lsp add work space",
 					r = "Lsp remove work space",
 					l = "Lsp watch work space",
-					p = "Pick a windpw",
+					p = "Pick a window",
 				},
-				a = "Swap next parameter",
-				A = "Swap previous parameter",
+				g = {
+					D = "Lsp buf declaration",
+					d = "Lsp definition",
+					i = "Lsp implementation",
+					r = "Lsp references",
+					t = "Lsp type definition",
+				},
 			}, {
 				prefix = "<leader>",
 			})

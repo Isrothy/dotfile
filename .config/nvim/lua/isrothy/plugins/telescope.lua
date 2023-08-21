@@ -1,7 +1,6 @@
 local telescope = {
 	"nvim-telescope/telescope.nvim",
 	cmd = { "Telescope" },
-	enabled = true,
 	dependencies = {
 		{ "nvim-lua/plenary.nvim" },
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -26,7 +25,7 @@ telescope.keys = {
 	{ "<leader><leader>l", "<cmd>Telescope local_list<cr>", desc = "Local list" },
 	{ "<leader><leader>m", "<cmd>Telescope marks<cr>", desc = "Marks" },
 	{ "<leader><leader>n", "<cmd>Telescope noice<cr>", desc = "Noice" },
-	{ "<leader><leader>o", "<cmd>Telescope frecency<cr>", desc = "Frecency" },
+	{ "<leader><leader>o", "<cmd>Telescope frecency<cr>", desc = "Oldfiles" },
 	{ "<leader><leader>p", "<cmd>Telescope projects<cr>", desc = "Projects" },
 	{ "<leader><leader>q", "<cmd>Telescope quickfix<cr>", desc = "Quickfix" },
 	{ "<leader><leader>r", "<cmd>Telescope registers<cr>", desc = "Registers" },

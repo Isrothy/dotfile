@@ -29,17 +29,18 @@ map("n", "<C-o>", "<C-w>o", default_options)
 map("n", "<esc>", ":nohlsearch<cr>", default_options)
 map("t", "<esc>", [[<C-\><C-n>]], default_options)
 
--- map("i", "<M-h>", "<Left>", { noremap = false, desc = "Left" })
--- map("i", "<M-j>", "<Down>", { noremap = false, desc = "Down" })
--- map("i", "<M-k>", "<Up>", { noremap = false, desc = "Up" })
--- map("i", "<M-l>", "<Right>", { noremap = false, desc = "Right" })
---
+map("i", "<M-h>", "<Left>", { noremap = false, desc = "Left" })
+map("i", "<M-j>", "<Down>", { noremap = false, desc = "Down" })
+map("i", "<M-k>", "<Up>", { noremap = false, desc = "Up" })
+map("i", "<M-l>", "<Right>", { noremap = false, desc = "Right" })
+
 -- map("t", "<M-h>", "<Left>", { desc = "Left" })
 -- map("t", "<M-j>", "<Down>", { desc = "Down" })
 -- map("t", "<M-k>", "<Up>", { desc = "Up" })
 -- map("t", "<M-l>", "<Right>", { desc = "Right" })
 
-map("n", "<leader>qd", vim.diagnostic.setloclist, { noremap = true, silent = true, desc = "Quickfix diagnostics" })
+map("n", "<leader>qd", vim.diagnostic.setqflist, { noremap = true, silent = true, desc = "Quickfix diagnostics" })
+map("n", "<leader>ld", vim.diagnostic.setloclist, { noremap = true, silent = true, desc = "Local diagnostics" })
 map("n", "<leader>cd", vim.diagnostic.open_float, { noremap = true, silent = true, desc = "Current line diagnostics" })
 
 -- map("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", { noremap = true, silent = true })

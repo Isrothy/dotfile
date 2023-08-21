@@ -50,25 +50,25 @@ local substitute = {
 	init = function()
 		map(
 			"n",
-			"s",
+			"gr",
 			"<cmd>lua require('substitute').operator()<cr>",
 			{ noremap = true, silent = true, desc = "substitute" }
 		)
 		map(
 			"n",
-			"ss",
+			"grr",
 			"<cmd>lua require('substitute').line()<cr>",
 			{ noremap = true, silent = true, desc = "substitute line" }
 		)
 		map(
 			"n",
-			"S",
+			"gR",
 			"<cmd>lua require('substitute').eol()<cr>",
 			{ noremap = true, silent = true, desc = "substitute eol" }
 		)
 		map(
 			"x",
-			"s",
+			"gr",
 			"<cmd>lua require('substitute').visual()<cr>",
 			{ noremap = true, silent = true, desc = "substitute visual" }
 		)
@@ -108,7 +108,7 @@ local substitute = {
 			timer = 500,
 		},
 		range = {
-			prefix = "s",
+			prefix = "gr",
 			prompt_current_text = false,
 			confirm = false,
 			complete_word = false,

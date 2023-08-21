@@ -1,7 +1,6 @@
 return {
 	"chentoast/marks.nvim",
 	event = { "BufReadPost", "BufNewFile" },
-	enabled = true,
 	opts = {
 		-- whether to map keybinds or not. default true
 		default_mappings = true,
