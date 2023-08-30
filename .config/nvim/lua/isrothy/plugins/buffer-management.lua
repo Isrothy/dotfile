@@ -19,7 +19,8 @@ return {
 	},
 	{
 		"chrisgrieser/nvim-early-retirement",
-		config = true,
+		enabled = false,
+		config = false,
 		event = "VeryLazy",
 		-- default values
 		opts = {

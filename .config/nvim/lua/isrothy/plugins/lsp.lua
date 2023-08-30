@@ -58,7 +58,8 @@ local set_keymap = function(_, bufnr)
 		buffer = bufnr,
 		expr = true,
 	})
-	map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, bufopts)
+	map({ "n", "x" }, "<leader>ca", require("actions-preview").code_actions)
+	-- map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, bufopts)
 	map("n", "<leader>f", function()
 		vim.lsp.buf.format({ async = true })
 	end, bufopts)
@@ -447,7 +448,8 @@ local jdtls = {
 						buffer = bufnr,
 						expr = true,
 					})
-					map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, bufopts)
+					map({ "n", "x" }, "<leader>ca", require("actions-preview").code_actions)
+					--map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, bufopts)
 					map("n", "<leader>f", function()
 						vim.lsp.buf.format({ async = true })
 						require("jdtls").organize_imports()
@@ -607,6 +609,7 @@ local haskell_tools = {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 	},
+	ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
 	init = function()
 		vim.g.haskell_tools = {
 			tools = { -- haskell-tools options
@@ -664,14 +667,6 @@ local haskell_tools = {
 				},
 			},
 		}
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = { "haskell", "cabal" },
-			callback = function()
-				require("telescope").load_extension("ht")
-				local ht = require("haskell-tools")
-				ht.lsp.start()
-			end,
-		})
 	end,
 }
 

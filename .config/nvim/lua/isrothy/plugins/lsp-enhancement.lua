@@ -130,6 +130,31 @@ local lightbulb = {
 	},
 }
 
+local actions_preview = {
+	"aznhe21/actions-preview.nvim",
+	opts = {
+		-- options for vim.diff(): https://neovim.io/doc/user/lua.html#vim.diff()
+		diff = {
+			ctxlen = 3,
+		},
+		backend = { "telescope", "nui" },
+		telescope = {
+			sorting_strategy = "ascending",
+			layout_strategy = "vertical",
+			layout_config = {
+				width = 0.8,
+				height = 0.9,
+				prompt_position = "top",
+				preview_cutoff = 20,
+				preview_height = function(_, _, max_lines)
+					return max_lines - 15
+				end,
+			},
+		},
+		-- telescope = require("telescope.themes").get_dropdown({ winblend = 10 }),
+	},
+}
+
 local inc_rename = {
 	"smjonas/inc-rename.nvim",
 	event = { "LspAttach" },
@@ -178,7 +203,7 @@ local illuminate = {
 
 		local function map(key, dir, buffer)
 			vim.keymap.set("n", key, function()
-				require("illuminate")["goto_" .. dir .. "_reference"](false)
+				require("illuminate")["goto_" .. dir .. "_reference"](true)
 			end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
 		end
 
@@ -296,6 +321,7 @@ local lsp_lens = {
 
 return {
 	lightbulb,
+	actions_preview,
 	inc_rename,
 	neo_dim,
 	illuminate,

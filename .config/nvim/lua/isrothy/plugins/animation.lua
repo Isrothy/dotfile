@@ -2,7 +2,6 @@ return {
 	{
 		"echasnovski/mini.animate",
 		event = "VeryLazy",
-		version = false,
 		enabled = false,
 		config = function()
 			local mouse_scrolled = false

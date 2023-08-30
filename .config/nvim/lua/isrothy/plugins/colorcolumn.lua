@@ -1,6 +1,6 @@
 return {
 	"fmbarina/multicolumn.nvim",
-	enabled = false,
+	enabled = true,
 	event = { "BufReadPre", "BufNewFile" },
 	opts = {
 		start = "enabled",
@@ -8,7 +8,7 @@ return {
 			scope = "window",
 			rulers = {},
 			to_line_end = false,
-			full_column = false,
+			full_column = true,
 			always_on = true,
 		},
 		sets = {
@@ -20,22 +20,19 @@ return {
 			python = {
 				scope = "window",
 				rulers = { 80 },
-				to_line_end = true,
 			},
 			c = {
 				scope = "window",
 				rulers = { 101 },
-				to_line_end = true,
 				always_on = true,
 			},
 			cpp = {
 				scope = "window",
 				rulers = { 101 },
-				to_line_end = true,
 				always_on = true,
 			},
 		},
-		line_limit = 6000,
+		line_limit = 0,
 		exclude_floating = true,
 		exclude_ft = { "markdown", "help", "netrw" },
 	},

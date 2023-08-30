@@ -13,7 +13,7 @@ return {
 		oldfile = { suffix = "o", options = {} },
 		quickfix = { suffix = "q", options = {} },
 		treesitter = { suffix = "t", options = {} },
-		undo = { suffix = "u", options = {} },
+		undo = { suffix = "" },
 		window = { suffix = "w", options = {} },
 		yank = { suffix = "y", options = {} },
 	},

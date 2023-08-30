@@ -31,7 +31,6 @@ return {
 	{
 		"goolord/alpha-nvim",
 		event = "VimEnter",
-		enabled = true,
 
 		config = function()
 			local alpha = require("alpha")
@@ -50,6 +49,7 @@ return {
 				dashboard.button("q", " " .. " Quit", ":qa<CR>"),
 			}
 			dashboard.config.opts.noautocmd = false
+			-- dashboard.section.footer.val = "hello"
 			alpha.setup(dashboard.config)
 
 			vim.cmd([[

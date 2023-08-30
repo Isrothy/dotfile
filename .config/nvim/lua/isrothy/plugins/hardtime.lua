@@ -2,7 +2,7 @@ return {
 	"m4xshen/hardtime.nvim",
 	dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
 	event = "VeryLazy",
-	enabled = true,
+	enabled = false,
 	opts = {
 		max_time = 1000,
 		max_count = 2,

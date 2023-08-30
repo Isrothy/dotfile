@@ -13,13 +13,13 @@ local TS = {
 
 			highlight = {
 				-- `false` will disable the whole extension
-				enable = true,
+				enable = false,
 
 				-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
 				-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
 				-- Using this option may slow down your editor, and you may see some duplicate highlights.
 				-- Instead of true it can also be a list of languages
-				additional_vim_regex_highlighting = true,
+				additional_vim_regex_highlighting = false,
 			},
 			incremental_selection = {
 				enable = true,
@@ -52,9 +52,6 @@ local TS = {
 				enable = true,
 			},
 			endwise = {
-				enable = true,
-			},
-			matchup = {
 				enable = true,
 			},
 			textobjects = {
@@ -175,10 +172,10 @@ local iswap = {
 		hl_grey_priority = "1000",
 	},
 }
-
 local rainbow = {
 	"HiPhish/rainbow-delimiters.nvim",
 	event = { "BufReadPost", "BufNewFile" },
+	enabled = true,
 	config = function()
 		local rainbow_delimiters = require("rainbow-delimiters")
 
@@ -201,10 +198,10 @@ local rainbow = {
 			highlight = {
 				"RainbowDelimiterRed",
 				"RainbowDelimiterYellow",
-				"RainbowDelimiterBlue",
-				"RainbowDelimiterOrange",
-				"RainbowDelimiterGreen",
 				"RainbowDelimiterViolet",
+				"RainbowDelimiterOrange",
+				"RainbowDelimiterBlue",
+				"RainbowDelimiterGreen",
 				"RainbowDelimiterCyan",
 				"RainbowDelimiterWhite",
 			},

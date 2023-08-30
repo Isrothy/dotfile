@@ -1,13 +1,11 @@
 return {
 	{
-		"andymass/vim-matchup",
-		event = { "BufReadPost", "BufNewFile" },
-		lazy = true,
-		config = function()
-			vim.g.matchup_matchparen_offscreen = {
-				method = "status_manual",
-			}
-			vim.g.matchup_motion_override_Npercent = 0
+		"utilyre/sentiment.nvim",
+		version = "*",
+		event = "VeryLazy", -- keep for lazy loading
+		init = function()
+			-- `matchparen.vim` needs to be disabled manually in case of lazy loading
+			vim.g.loaded_matchparen = 1
 		end,
 	},
 }

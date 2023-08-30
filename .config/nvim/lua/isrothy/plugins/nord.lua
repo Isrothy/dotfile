@@ -109,6 +109,8 @@ M.config = function()
 			highlights.DapStoppedLine = { bg = colors.polar_night.brightest }
 			highlights.DebugPC = { bg = colors.polar_night.brightest }
 
+			highlights.HighlightUndo = { bg = colors.polar_night.brightest }
+
 			highlights.ScrollViewSearch = { fg = colors.frost.artic_water }
 		end,
 	})

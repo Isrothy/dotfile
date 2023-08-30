@@ -15,7 +15,7 @@ M.keys = {
 	{ "<leader>bp", "<cmd>BufferLinePick<cr>", noremap = true, silent = true, desc = "Pick buffer" },
 	{ "<leader>bl", "<cmd>BufferLineCloseLeft<cr>", noremap = true, silent = true, desc = "Close left buffer" },
 	{ "<leader>br", "<cmd>BufferLineCloseRight<cr>", noremap = true, silent = true, desc = "Close right buffer" },
-	{"<leader>bo", "<cmd>BufferLineCloseOthers<cr>", noremap = true, silent = true, desc = "Close other buffer"},
+	{ "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", noremap = true, silent = true, desc = "Close other buffer" },
 	{ "]b", "<cmd>BufferLineCycleNext<cr>", noremap = true, silent = true, desc = "Buffer forward" },
 	{ "[b", "<cmd>BufferLineCyclePrev<cr>", noremap = true, silent = true, desc = "Buffer backward" },
 	{
