@@ -28,7 +28,7 @@ M.config = function()
 			},
 		},
 		colorblind = {
-			enable = true,
+			enable = false,
 			preserve_background = false,
 			severity = {
 				protan = 0.7,
@@ -64,15 +64,6 @@ M.config = function()
 			highlights.FloatBorder = { fg = colors.snow_storm.origin }
 
 			highlights.Folded = { fg = colors.frost.artic_water, bg = colors.polar_night.brighter }
-
-			highlights.RainbowDelimiterRed = { fg = colors.aurora.red }
-			highlights.RainbowDelimiterYellow = { fg = colors.aurora.yellow }
-			highlights.RainbowDelimiterBlue = { fg = colors.frost.artic_ocean }
-			highlights.RainbowDelimiterOrange = { fg = colors.aurora.green }
-			highlights.RainbowDelimiterGreen = { fg = colors.aurora.orange }
-			highlights.RainbowDelimiterCyan = { fg = colors.frost.ice }
-			highlights.RainbowDelimiterViolet = { fg = colors.aurora.purple }
-			highlights.RainbowDelimiterWhite = { fg = colors.snow_storm.origin }
 
 			highlights.TSDefinitionUsage = { bg = colors.polar_night.brightest }
 

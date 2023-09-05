@@ -48,7 +48,7 @@ return {
 	{
 		"gaoDean/autolist.nvim",
 		ft = { "markdown" },
-		enabled = true,
+		enabled = false,
 		opts = {
 			enabled = true,
 			list_cap = 50,

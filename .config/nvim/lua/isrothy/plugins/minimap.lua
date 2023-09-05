@@ -1,6 +1,6 @@
 return {
 	"gorbit99/codewindow.nvim",
-	enabled = false,
+	enabled = true,
 	event = { "BufRead", "BufNewFile" },
 	config = function()
 		local codewindow = require("codewindow")
@@ -8,6 +8,7 @@ return {
 			active_in_terminals = false, -- Should the minimap activate for terminal buffers
 			auto_enable = true, -- Automatically open the minimap when entering a (non-excluded) buffer (accepts a table of filetypes)
 			exclude_filetypes = {
+				"help",
 				"alpha",
 				"aerial",
 				"neo-tree",
@@ -21,28 +22,9 @@ return {
 			width_multiplier = 4, -- How many characters one dot represents
 			z_index = 1, -- The z-index the floating window will be on
 			show_cursor = true, -- Show the cursor position in the minimap
+			screen_bounds = "background",
 			window_border = "none", -- The border style of the floating window (accepts all usual options)
 		}
 		codewindow.setup(config)
-		-- config = require("codewindow.config").setup(config)
-		-- vim.api.nvim_create_autocmd({ "BufLeave", "BufWinLeave", "BufWipeout", "WinClosed", "WinLeave", "BufWinEnter" }, {
-		-- 	callback = function()
-		-- 		local filetype = vim.bo.filetype
-		-- 		local should_open = true
-		-- 		if type(config.auto_enable) == "boolean" then
-		-- 			should_open = config.auto_enable
-		-- 		else
-		-- 			for _, v in ipairs(config.auto_enable) do
-		-- 				if v == filetype then
-		-- 					should_open = true
-		-- 				end
-		-- 			end
-		-- 		end
-		--
-		-- 		if should_open then
-		-- 			vim.defer_fn(require("codewindow").open_minimap, 0)
-		-- 		end
-		-- 	end,
-		-- })
 	end,
 }

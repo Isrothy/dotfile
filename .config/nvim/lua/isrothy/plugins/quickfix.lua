@@ -2,7 +2,6 @@ return {
 	{
 		"kevinhwang91/nvim-bqf",
 		ft = "qf",
-		enabled = true,
 		init = function()
 			local fn = vim.fn
 
@@ -93,7 +92,6 @@ return {
 		"ashfinal/qfview.nvim",
 		event = "UIEnter",
 		-- ft = "qf",
-		enabled = true,
 		config = true,
 	},
 }

@@ -2,7 +2,6 @@ local map = vim.keymap.set
 
 local yanky = {
 	"gbprod/yanky.nvim",
-	-- event = "VeryLazy",
 	dependencies = {
 		{
 			"kkharji/sqlite.lua",

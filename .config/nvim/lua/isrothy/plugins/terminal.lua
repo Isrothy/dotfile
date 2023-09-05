@@ -67,6 +67,7 @@ return {
 	},
 	{
 		"willothy/flatten.nvim",
+		enabled = false,
 		lazy = false,
 		priority = 1001,
 		opts = {

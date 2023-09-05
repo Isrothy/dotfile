@@ -90,6 +90,7 @@ int main() {
     }
     do {
 
-    } while (false);
+
+    } while (true);
     return 0;
 }

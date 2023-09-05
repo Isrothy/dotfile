@@ -4,7 +4,12 @@ return {
 		event = { "BufReadPost", "BufNewFile" },
 		enabled = false,
 		opts = {
-			excluded_filetypes = {},
+			excluded_filetypes = {
+				"",
+				"prompt",
+				"TelescopePrompt",
+				"noice",
+			},
 			current_only = false,
 			column = 1,
 			winblend = 25,

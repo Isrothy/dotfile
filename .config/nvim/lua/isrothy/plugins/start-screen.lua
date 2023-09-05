@@ -30,6 +30,7 @@ local neovim_delta_corps_preist1 = {
 return {
 	{
 		"goolord/alpha-nvim",
+		enabled = true,
 		event = "VimEnter",
 
 		config = function()

@@ -20,7 +20,7 @@ o.foldlevelstart = 99
 o.foldenable = true
 opt.foldcolumn = "1"
 -- opt.foldmethod = "syntax"
-opt.foldmethod = "manual"
+-- opt.foldmethod = "manual"
 -- opt.foldmethod = "indent"
 -- opt.foldmethod = "expr"
 -- opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
@@ -47,12 +47,12 @@ opt.fillchars = {
 }
 
 opt.virtualedit = { "block", "onemore" }
-opt.wrap = true
+opt.wrap = false
 opt.linebreak = true
 -- opt.textwidth = 0
 -- opt.wrapmargin =40
 opt.scrolloff = 5
-opt.sidescrolloff = 30
+opt.sidescrolloff = 40
 opt.history = 2000
 opt.ttimeoutlen = 0
 opt.belloff = "all"
