@@ -2,19 +2,24 @@ return {
 	{
 		"andymass/vim-matchup",
 		event = { "BufReadPost", "BufNewFile" },
-		enabled = false,
-		config = function()
+		enabled = true,
+		init = function()
+			vim.g.loaded_matchparen = 1
+			vim.g.matchup_motion_override_Npercent = 0
+			vim.g.matchup_matchparen_fallback = 0
+			vim.g.matchup_matchparen_deferred = 1
 			vim.g.matchup_matchparen_offscreen = {
 				method = "status_manual",
 			}
-			vim.g.matchup_motion_override_Npercent = 0
+			vim.g.matchup_matchparen_deferred = 1
+			vim.g.matchup_matchparen_hi_surround_always = 1
+			vim.g.matchup_motion_override_Npercent = 1
 		end,
 	},
 	{
 		"utilyre/sentiment.nvim",
-		enabled = true,
+		enabled = false,
 		version = "*",
-		-- event = "VeryLazy", -- keep for lazy loading
 		event = { "BufReadPost", "BufNewFile" },
 		opts = {
 			-- config

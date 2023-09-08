@@ -2,6 +2,8 @@ local opt = vim.opt
 local o = vim.o
 local g = vim.g
 
+g.compatible = 0
+
 opt.termguicolors = true
 
 opt.mouse = ""
@@ -20,7 +22,7 @@ o.foldlevelstart = 99
 o.foldenable = true
 opt.foldcolumn = "1"
 -- opt.foldmethod = "syntax"
--- opt.foldmethod = "manual"
+opt.foldmethod = "manual"
 -- opt.foldmethod = "indent"
 -- opt.foldmethod = "expr"
 -- opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"

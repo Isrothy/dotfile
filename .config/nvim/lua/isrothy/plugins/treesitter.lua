@@ -11,6 +11,10 @@ local TS = {
 			-- Install languages synchronously (only applied to `ensure_installed`)
 			sync_install = false,
 
+			matchup = {
+				enable = false, -- mandatory, false will disable the whole extension
+				disable_virtual_text = true,
+			},
 			highlight = {
 				-- `false` will disable the whole extension
 				enable = true,

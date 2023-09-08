@@ -4,8 +4,6 @@ local M = {
 	lazy = false,
 }
 M.config = function()
-	local utils = require("nord.utils")
-
 	require("nord").setup({
 		-- your configuration comes here
 		-- or leave it empty to use the default settings
@@ -37,8 +35,6 @@ M.config = function()
 			},
 		},
 		on_highlights = function(highlights, colors)
-			highlights.CursorLineNr = { fg = colors.frost.artic_water, bold = true }
-
 			highlights.CmpDocumentation = { bg = colors.polar_night.brighter }
 
 			highlights.MarkSignHL = { fg = colors.aurora.green }
@@ -59,16 +55,13 @@ M.config = function()
 			highlights.ErrorMsg = { link = "Normal" }
 			highlights.WarningMsg = { link = "Normal" }
 
-			highlights.ColorColumn = { bg = colors.polar_night.brighter }
+			-- highlights.ColorColumn = { bg = colors.polar_night.brighter }
 
 			highlights.FloatBorder = { fg = colors.snow_storm.origin }
 
 			highlights.Folded = { fg = colors.frost.artic_water, bg = colors.polar_night.brighter }
 
 			highlights.TSDefinitionUsage = { bg = colors.polar_night.brightest }
-
-			highlights.EyelinerPrimary = { fg = colors.aurora.orange, bold = true }
-			highlights.EyelinerSecondary = { fg = colors.frost.ice, bold = true }
 
 			highlights.DiagnosticLineNrError = { fg = colors.aurora.red, bold = true }
 			highlights.DiagnosticLineNrWarn = { fg = colors.aurora.yellow, bold = true }
@@ -95,14 +88,14 @@ M.config = function()
 			-- highlights.Headline6 = { bg = utils.darken(colors.aurora.purple, 0.2), bold = true }
 			-- highlights.Dash = { fg = colors.polar_night.brightest }
 
-			highlights.rainbowcol7 = { fg = colors.aurora.orange }
-
 			highlights.DapStoppedLine = { bg = colors.polar_night.brightest }
 			highlights.DebugPC = { bg = colors.polar_night.brightest }
 
 			highlights.HighlightUndo = { bg = colors.polar_night.brightest }
 
 			highlights.ScrollViewSearch = { fg = colors.frost.artic_water }
+
+			-- highlights.FlashLabel = { fg = colors.aurora.orange, bg = colors.polar_night.brightest, bold = true }
 		end,
 	})
 

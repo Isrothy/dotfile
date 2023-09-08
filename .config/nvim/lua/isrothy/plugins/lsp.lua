@@ -129,8 +129,13 @@ local Lspconfig = {
 				"clangd",
 				"--background-index",
 				"--clang-tidy",
+				"--clang-tidy-checks=performance-*,bugprone-*",
+				"--all-scopes-completion",
 				"--completion-style=bundled",
 				"--header-insertion=iwyu",
+				"-j=8",
+				"--background-index",
+				"--pch-storage=memory",
 			},
 		})
 		require("lspconfig").cmake.setup({
@@ -322,6 +327,7 @@ local Lspconfig = {
 
 local clangd = {
 	"p00f/clangd_extensions.nvim",
+	enabled = true,
 	-- event = "LspAttach",
 	-- event = { "BufReadPre", "BufNewFile" },
 	ft = { "c", "cpp", "objc", "objcpp" },

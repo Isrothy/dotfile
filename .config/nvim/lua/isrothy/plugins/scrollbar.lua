@@ -35,7 +35,7 @@ return {
 		enabled = true,
 		opts = {
 			current_only = false,
-			winblend = 20,
+			winblend = 0,
 			zindex = 40,
 			excluded_filetypes = {
 				"",

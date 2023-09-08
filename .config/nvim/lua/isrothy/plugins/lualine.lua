@@ -173,7 +173,9 @@ M.config = function()
 				{
 					"aerial",
 					-- The separator to be used to separate symbols in status line.
-					sep = " ❯ ",
+					sep = " ⟩ ",
+					sep_prefix = true,
+					sep_highlight = "@text",
 					-- The number of symbols to render top-down. In order to render only 'N' last
 					-- symbols, negative numbers may be supplied. For instance, 'depth = -1' can
 					-- be used in order to render only current symbol.
@@ -229,6 +231,5 @@ M.config = function()
 		},
 	})
 end
-
 
 return M

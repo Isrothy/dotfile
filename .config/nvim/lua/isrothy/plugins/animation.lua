@@ -12,7 +12,6 @@ return {
 					return key
 				end, { expr = true })
 			end
-
 			local animate = require("mini.animate")
 			require("mini.animate").setup({
 				resize = {

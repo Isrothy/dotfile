@@ -153,8 +153,6 @@ CMP.config = function()
 		},
 
 		sources = cmp.config.sources({
-			-- { name = "copilot" },
-			-- { name = "codeium" },
 			{ name = "nvim_lsp" },
 			{ name = "nvim_lsp_signature_help" },
 			{ name = "nvim_lsp_document_symbol" },
@@ -167,16 +165,6 @@ CMP.config = function()
 			{ name = "fuzzy_buffer" },
 			{ name = "path" },
 			{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
-			-- {
-			-- 	name = "spell",
-			-- 	option = {
-			-- 		keep_all_entries = false,
-			-- 		enable_in_context = function()
-			-- 			return require("cmp.config.context").in_treesitter_capture("spell")
-			-- 		end,
-			-- 	},
-			-- },
-			-- { name = "look" },
 		}),
 
 		sorting = {
