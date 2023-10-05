@@ -35,7 +35,7 @@ enum class B {
     C,
 };
 
-long long ex_gcd(long long a, long long b, long long &x, long long &y) {
+int64_t ex_gcd(int64_t a, int64_t b, int64_t &x, int64_t &y) {
     if (b == 0) {
         x = 1;
         y = 0;
@@ -56,8 +56,8 @@ long long ex_gcd(long long a, long long b, long long &x, long long &y) {
  * @description
  * @version 1.0
  */
-long long inv(long long a, long long p) {
-    long long x, y;
+int64_t inv(int64_t a, int64_t p) {
+    int64_t x, y;
     ex_gcd(a, p, x, y);
     x %= p;
     if (x < 0) {
@@ -74,10 +74,10 @@ int main() {
     int n = 10;
     auto D = static_cast<int>(add(double(a), double(b)));
     switch (D) {
-        case 0: {
-        }
+        case 0:
         case 1: {
             printf("%d\n", a + b);
+            break;
         }
         default: {
             printf("%d\n", a + b);

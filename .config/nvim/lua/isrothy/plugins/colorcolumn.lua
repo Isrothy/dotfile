@@ -26,6 +26,6 @@ return {
 		},
 		line_limit = 0,
 		exclude_floating = true,
-		exclude_ft = { "markdown", "help", "netrw" },
+		exclude_ft = { "markdown", "help", "netrw", "text" },
 	},
 }

@@ -41,12 +41,10 @@ M.opts = {
 		-- view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
 		view_search = false, -- view for search count messages. Set to `false` to disable
 	},
-
 	redirect = {
 		view = "popup",
 		filter = { event = "msg_show" },
 	},
-
 	-- You can add any custom commands below that will be available with `:Noice command`
 	commands = {
 		history = {
@@ -87,7 +85,6 @@ M.opts = {
 			filter_opts = { reverse = true },
 		},
 	},
-
 	notify = {
 		-- Noice can be used as `vim.notify` so you can route any notification like other messages
 		-- Notification messages have their level and other properties set.

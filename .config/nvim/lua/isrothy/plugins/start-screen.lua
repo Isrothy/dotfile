@@ -30,7 +30,6 @@ local neovim_delta_corps_preist1 = {
 return {
 	{
 		"goolord/alpha-nvim",
-		enabled = true,
 		event = "VimEnter",
 
 		config = function()
@@ -59,57 +58,6 @@ return {
 				autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
 			augroup END
 			]])
-		end,
-	},
-	{
-		"willothy/veil.nvim",
-		-- event = "VimEnter",
-		lazy = false,
-		enabled = false,
-		dependencies = {
-			"nvim-telescope/telescope.nvim",
-			"nvim-lua/plenary.nvim",
-		},
-		config = function()
-			local builtin = require("veil.builtin")
-
-			require("veil").setup({
-				sections = {
-					builtin.sections.animated(builtin.headers.frames_nvim, {
-						hl = { fg = "#5de4c7" },
-					}),
-					builtin.sections.buttons({
-						{
-							icon = "",
-							text = "Find Files",
-							shortcut = "f",
-							callback = function()
-								require("telescope.builtin").find_files()
-							end,
-						},
-						{
-							icon = "",
-							text = "Find Word",
-							shortcut = "w",
-							callback = function()
-								require("telescope.builtin").live_grep()
-							end,
-						},
-						{
-							icon = "",
-							text = "Buffers",
-							shortcut = "b",
-							callback = function()
-								require("telescope.builtin").buffers()
-							end,
-						},
-					}),
-				},
-				builtin.sections.oldfiles(),
-				mappings = {},
-				startup = true,
-				listed = false,
-			})
 		end,
 	},
 }

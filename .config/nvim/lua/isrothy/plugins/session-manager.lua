@@ -29,7 +29,18 @@ return {
 
 		"folke/persistence.nvim",
 		event = { "BufReadPre", "BufNewFile" },
-		opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp" } },
+		opts = {
+			dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"),
+			options = {
+				"buffers",
+				"curdir",
+				"tabpages",
+				"winsize",
+				"help",
+				"globals",
+				"skiprtp",
+			},
+		},
 		keys = {
 			{
 				"<leader>ps",

@@ -77,11 +77,6 @@ return {
 		event = { "BufRead", "BufNewFile" },
 		enabled = true,
 		init = function()
-			-- map({ "o", "x" }, "ii", "<cmd>lua require('various-textobjs').indentation(true, true)<CR>")
-			-- map({ "o", "x" }, "ai", "<cmd>lua require('various-textobjs').indentation(false, true)<CR>")
-			-- map({ "o", "x" }, "iI", "<cmd>lua require('various-textobjs').indentation(true, true)<CR>")
-			-- map({ "o", "x" }, "aI", "<cmd>lua require('various-textobjs').indentation(false, false)<CR>")
-
 			-- map(
 			-- 	{ "o", "x" },
 			-- 	"R",
@@ -101,7 +96,6 @@ return {
 				"<cmd>lua require('various-textobjs').subword(false)<CR>",
 				{ noremap = true, silent = true, desc = "around subword" }
 			)
-
 			map(
 				{ "o", "x" },
 				"C",

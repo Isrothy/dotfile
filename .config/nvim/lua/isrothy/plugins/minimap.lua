@@ -1,6 +1,7 @@
 return {
 	"gorbit99/codewindow.nvim",
 	event = { "BufRead", "BufNewFile" },
+	enabled = false,
 	config = function()
 		local codewindow = require("codewindow")
 		local config = {

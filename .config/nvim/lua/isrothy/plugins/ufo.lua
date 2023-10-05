@@ -5,6 +5,7 @@ local M = {
 	},
 	event = { "BufReadPost", "BufNewFile" },
 	lazy = false,
+	enabled = false,
 	-- event = "User isfolded",
 }
 
@@ -52,7 +53,6 @@ M.opts = {
 	end,
 	enable_get_fold_end_virt_text = true,
 	preview = {
-
 		win_config = {
 			border = "none",
 			winhighlight = "Normal:Folded",

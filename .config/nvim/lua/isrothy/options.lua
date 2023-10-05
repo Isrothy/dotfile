@@ -3,38 +3,23 @@ local o = vim.o
 local g = vim.g
 
 g.compatible = 0
-
 opt.termguicolors = true
 
 opt.mouse = ""
 opt.syntax = "on"
 opt.cmdheight = 0
+opt.laststatus = 3
 opt.showcmd = true
 opt.cursorline = true
 opt.number = true
 opt.relativenumber = true
-
 o.pumheight = 10
-
---fold
-o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-o.foldlevelstart = 99
-o.foldenable = true
-opt.foldcolumn = "1"
--- opt.foldmethod = "syntax"
-opt.foldmethod = "manual"
--- opt.foldmethod = "indent"
--- opt.foldmethod = "expr"
--- opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- opt.foldtext = "v:folddashes.substitute(getline(v:foldstart),'/\\*\\|\\*/\\|{{{\\d\\=','','g')"
-
+opt.swapfile = false
 opt.undofile = true
 
 opt.nrformats = { "alpha", "bin", "octal", "hex" }
 
 o.matchpairs = vim.o.matchpairs .. ",<:>"
-o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
-o.splitkeep = "screen"
 
 opt.fillchars = {
 	vert = "│",
@@ -61,6 +46,9 @@ opt.belloff = "all"
 opt.conceallevel = 0
 opt.updatetime = 500
 opt.wildmenu = true
+
+o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
+o.splitkeep = "screen"
 
 -- opt.spell = true
 -- opt.spelllang = { 'en_us' }
@@ -89,17 +77,58 @@ opt.shiftwidth = 0
 opt.cinoptions = "g0,(0,l1,n-2"
 opt.backspace = { "indent", "eol", "start" }
 
-opt.laststatus = 3
-
-opt.gp = "rg"
-
-opt.swapfile = false
-
 -- hearch settings
 opt.hlsearch = true
 opt.incsearch = true
 opt.ignorecase = true
 opt.smartcase = true
 
+opt.gp = "rg"
+
 g.html_indent_autotags = "html,head,body"
 g.markdown_recommended_style = 0
+
+--------- fold -----------
+local function get_custom_foldtxt_suffix(foldstart)
+	local fold_suffix_str = string.format("  %s [%s lines]", "┉", vim.v.foldend - foldstart + 1)
+
+	return { fold_suffix_str, "Folded" }
+end
+
+local function get_custom_foldtext(foldtxt_suffix, foldstart)
+	local line = vim.api.nvim_buf_get_lines(0, foldstart - 1, foldstart, false)[1]
+
+	return {
+		{ line, "Normal" },
+		foldtxt_suffix,
+	}
+end
+
+_G.get_foldtext = function()
+	local foldstart = vim.v.foldstart
+	local ts_foldtxt = vim.treesitter.foldtext()
+	local foldtxt_suffix = get_custom_foldtxt_suffix(foldstart)
+
+	if type(ts_foldtxt) == "string" then
+		return get_custom_foldtext(foldtxt_suffix, foldstart)
+	else
+		table.insert(ts_foldtxt, foldtxt_suffix)
+		return ts_foldtxt
+	end
+end
+
+-- o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+o.foldlevelstart = 99
+o.foldenable = true
+opt.foldcolumn = "1"
+-- opt.foldmethod = "syntax"
+-- opt.foldmethod = "manual"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+vim.opt.foldtext = "v:lua.get_foldtext()"
+-- opt.foldmethod = "indent"
+opt.foldmethod = "expr"
+-- opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- opt.foldtext = "v:folddashes.substitute(getline(v:foldstart),'/\\*\\|\\*/\\|{{{\\d\\=','','g')"
+--
+--------- end fold ----------

@@ -3,7 +3,6 @@ return {
 	{
 		"s1n7ax/nvim-window-picker",
 		version = "2.*",
-		enabled = true,
 		keys = {
 			{
 				"<leader>wp",
@@ -71,7 +70,6 @@ return {
 	},
 	{
 		"mrjones2014/smart-splits.nvim",
-		enabled = true,
 		keys = {
 			{
 				"<C-h>",
@@ -177,32 +175,6 @@ return {
 			-- this functionality is only supported on tmux and Wezterm due to kitty
 			-- not having a way to check if a pane is zoomed
 			disable_multiplexer_nav_when_zoomed = true,
-		},
-	},
-	{
-		"kwkarlwang/bufresize.nvim",
-		event = { "WinResized", "VimResized" },
-		enabled = false,
-		opts = {
-			register = {
-				-- keys = {
-				-- 	{ "n", "<C-w><", "<C-w><", { noremap = true, silent = true } },
-				-- 	{ "n", "<C-w>>", "<C-w>>", { noremap = true, silent = true } },
-				-- 	{ "n", "<C-w>+", "<C-w>+", { noremap = true, silent = true } },
-				-- 	{ "n", "<C-w>-", "<C-w>-", { noremap = true, silent = true } },
-				-- 	{ "n", "<C-w>_", "<C-w>_", { noremap = true, silent = true } },
-				-- 	{ "n", "<C-w>=", "<C-w>=", { noremap = true, silent = true } },
-				-- 	{ "n", "<C-w>|", "<C-w>|", { noremap = true, silent = true } },
-				-- 	{ "", "<LeftRelease>", "<LeftRelease>", { noremap = true, silent = true } },
-				-- 	{ "i", "<LeftRelease>", "<LeftRelease><C-o>", { noremap = true, silent = true } },
-				-- },
-				-- trigger_events = { "BufWinEnter", "WinEnter" },
-			},
-			resize = {
-				keys = {},
-				trigger_events = { "VimResized", "WinResized" },
-				increment = false,
-			},
 		},
 	},
 }

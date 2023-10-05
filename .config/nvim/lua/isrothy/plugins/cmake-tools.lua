@@ -1,7 +1,6 @@
 return {
 	"Civitasv/cmake-tools.nvim",
 	ft = { "cmake", "cpp", "c" },
-	enabled = false,
 	opts = {
 		cmake_command = "cmake",
 		cmake_build_directory = "",
@@ -18,4 +17,3 @@ return {
 		},
 	},
 }
-

@@ -51,7 +51,7 @@ return {
 	{
 		"kevinhwang91/nvim-hlslens",
 		event = { "BufReadPre", "BufNewFile" },
-		enabled = true,
+		enabled = false,
 		keys = {
 			{ "*", [[*<cmd>lua require('hlslens').start()<cr>]], noremap = true, silent = true },
 			{ "#", [[#<cmd>lua require('hlslens').start()<cr>]], noremap = true, silent = true },

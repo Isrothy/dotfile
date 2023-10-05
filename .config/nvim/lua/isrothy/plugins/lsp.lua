@@ -126,7 +126,7 @@ local Lspconfig = {
 				set_inlay_hint(client, bufnr)
 			end,
 			cmd = {
-				"clangd",
+				"/usr/bin/clangd",
 				"--background-index",
 				"--clang-tidy",
 				"--clang-tidy-checks=performance-*,bugprone-*",
@@ -404,14 +404,14 @@ local clangd = {
 
 local jdtls = {
 	"mfussenegger/nvim-jdtls",
-	ft = { "java" },
+	-- ft = { "java" },
 	init = function()
 		-- create autocmd on filetypes java
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "java",
 			callback = function()
 				local home = os.getenv("HOME")
-				local jdtls_install_location = "/opt/homebrew/Cellar/jdtls/1.25.0/"
+				local jdtls_install_location = "/opt/homebrew/Cellar/jdtls/1.26.0/"
 				local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h")
 				local workspace_dir = home .. "/.local/share/eclipse/" .. project_name
 				local javadebug_dir = home .. "/.local/share/javadebug/"
@@ -739,7 +739,7 @@ local jsonls = {
 }
 
 local null_ls = {
-	"jose-elias-alvarez/null-ls.nvim",
+	"nvimtools/none-ls.nvim",
 	event = { "BufReadPre", "BufNewFile" },
 	-- lazy = false,
 	config = function()
