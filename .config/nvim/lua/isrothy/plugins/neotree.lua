@@ -1,5 +1,6 @@
 local M = {
 	"nvim-neo-tree/neo-tree.nvim",
+	branch = "v3.x",
 	cmd = { "Neotree" },
 	dependencies = {
 		"nvim-lua/plenary.nvim",
@@ -230,93 +231,16 @@ M.config = function()
 		},
 		close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
 		popup_border_style = "rounded",
-		enable_git_status = true,
-		enable_diagnostics = true,
-		use_popups_for_input = true,
+		enable_normal_mode_for_inputs = true, -- Enable normal mode for input dialogs.
 		open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy" },
 
 		source_selector = {
 			winbar = true, -- toggle to show selector on winbar
 			statusline = true, -- toggle to show selector on statusline
-			show_scrolled_off_parent_node = false, -- this will replace the tabs with the parent path
-			-- of the top visible node when scrolled down.
-			sources = { -- falls back to source_name if nil
-				{
-					source = "filesystem", -- string
-					display_name = " 󰉓 Files ", -- string | nil
-				},
-				{
-					source = "buffers", -- string
-					display_name = " 󰈙 Buffers ", -- string | nil
-				},
-				{
-					source = "git_status", -- string
-					display_name = "  Git ", -- string | nil
-				},
-			},
 			content_layout = "center", -- only with `tabs_layout` = "equal", "focus"
-			--                start  : |/ 󰓩 bufname     \/...
-			--                end    : |/     󰓩 bufname \/...
-			--                center : |/   󰓩 bufname   \/...
-			tabs_layout = "equal", -- start, end, center, equal, focus
-			--             start  : |/  a  \/  b  \/  c  \            |
-			--             end    : |            /  a  \/  b  \/  c  \|
-			--             center : |      /  a  \/  b  \/  c  \      |
-			--             equal  : |/    a    \/    b    \/    c    \|
-			--             active : |/  focused tab    \/  b  \/  c  \|
-			truncation_character = "…", -- character to use when truncating the tab label
-			tabs_min_width = nil, -- nil | int: if int padding is added based on `content_layout`
-			tabs_max_width = nil, -- this will truncate text even if `text_trunc_to_fit = false`
-			padding = 0, -- can be int or table
-			-- padding = { left = 2, right = 0 },
-			-- separator = { left = "", right = "" },
 			separator = "", -- can be string or table, see below
-			-- separator = { left = "▏", right = "▕" },
-			-- separator = { left = "/", right = "\\", override = nil }, -- |/  a  \/  b  \/  c  \...
-			-- separator = { left = "/", right = "\\", override = "right" }, -- |/  a  \  b  \  c  \...
-			-- separator = { left = "/", right = "\\", override = "left" },  -- |/  a  /  b  /  c  /...
-			-- separator = { left = "/", right = "\\", override = "active" },-- |/  a  / b:active \  c  \...
-			-- separator = "|",                                              -- ||  a  |  b  |  c  |...
-			separator_active = nil, -- set separators around the active tab. nil falls back to `source_selector.separator`
-			show_separator_on_edge = false,
-			--                       true  : |/    a    \/    b    \/    c    \|
-			--                       false : |     a    \/    b    \/    c     |
 		},
 		default_component_configs = {
-			container = {
-				enable_character_fade = true,
-			},
-			indent = {
-				indent_size = 2,
-				padding = 1, -- extra padding on left hand side
-				-- indent guides
-				with_markers = true,
-				indent_marker = "│",
-				last_indent_marker = "└",
-				highlight = "NeoTreeIndentMarker",
-				-- expander config, needed for nesting files
-				with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-				expander_collapsed = "",
-				expander_expanded = "",
-				expander_highlight = "NeoTreeExpander",
-			},
-			icon = {
-				folder_closed = "",
-				folder_open = "",
-				folder_empty = "󰜌",
-				folder_empty_open = "󰜌",
-				default = "*",
-				highlight = "NeoTreeFileIcon",
-			},
-			modified = {
-				symbol = "[+]",
-				highlight = "NeoTreeModified",
-			},
-			name = {
-				trailing_slash = false,
-				use_git_status_colors = true,
-				highlight = "NeoTreeFileName",
-			},
 			git_status = {
 				symbols = {
 					-- Change type
@@ -332,15 +256,13 @@ M.config = function()
 					conflict = "",
 				},
 			},
+			symlink_target = {
+				enabled = true,
+			},
 		},
 		window = {
-			position = "left",
 			width = 36,
 			auto_expand_width = false,
-			mapping_options = {
-				noremap = true,
-				nowait = true,
-			},
 			mappings = {
 				["<space>"] = "none",
 				["<tab>"] = function(state)
@@ -364,17 +286,6 @@ M.config = function()
 						show_path = "relative", -- "none", "relative", "absolute"
 					},
 				},
-				["A"] = "add_directory",
-				["d"] = "delete",
-				["r"] = "rename",
-				["y"] = "copy_to_clipboard",
-				["x"] = "cut_to_clipboard",
-				["p"] = "paste_from_clipboard",
-				["c"] = "copy", -- takes text input for destination
-				["m"] = "move", -- takes text input for destination
-				["q"] = "close_window",
-				["R"] = "refresh",
-				["?"] = "show_help",
 				["h"] = "",
 				["l"] = "",
 
@@ -398,44 +309,23 @@ M.config = function()
 				["<m-l>"] = "none",
 			},
 		},
-		nesting_rules = {},
 		filesystem = {
 			filtered_items = {
 				visible = true, -- when true, they will just be displayed differently than normal items
-				hide_dotfiles = false,
+				hide_dotfiles = true,
 				hide_gitignored = false,
 				hide_hidden = true, -- only works on Windows for hidden files/directories
-				hide_by_name = {},
-				hide_by_pattern = { -- uses glob style patterns
-					--"*.meta"
-				},
 				never_show = { -- remains hidden even if visible is toggled to true
 					".DS_Store",
 					"thumbs.db",
 				},
 			},
-			follow_current_file = {
-				enabled = false, -- This will find and focus the file in the active buffer every time
-				--               -- the current file is changed while the tree is open.
-				leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
-			},
-			-- time the current file is changed while the tree is open.
-			group_empty_dirs = false, -- when true, empty folders will be grouped together
 			hijack_netrw_behavior = "disabled", -- netrw disabled, opening a directory opens neo-tree
-			-- in whatever position is specified in window.position
-			-- "open_current",  -- netrw disabled, opening a directory opens within the
-			-- window like netrw would, regardless of window.position
-			-- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
 			use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
 			-- instead of relying on nvim autocmd events.
 			window = {
 				mappings = {
-					["<bs>"] = "navigate_up",
-					["."] = "set_root",
-					["H"] = "toggle_hidden",
-					["/"] = "fuzzy_finder",
-					["f"] = "filter_on_submit",
-					["<c-x>"] = "clear_filter",
+					["i"] = "run_command",
 					["[c"] = "prev_git_modified",
 					["]c"] = "next_git_modified",
 					["gA"] = "git_add_all",
@@ -447,6 +337,13 @@ M.config = function()
 					["gg"] = "git_commit_and_push",
 				},
 			},
+			commands = {
+				run_command = function(state)
+					local node = state.tree:get_node()
+					local path = node:get_id()
+					vim.api.nvim_input(": " .. path .. "<Home>")
+				end,
+			},
 		},
 		buffers = {
 			follow_current_file = {
@@ -455,13 +352,10 @@ M.config = function()
 				leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
 			},
 			-- time the current file is changed while the tree is open.
-			group_empty_dirs = true, -- when true, empty folders will be grouped together
+			group_empty_dirs = false, -- when true, empty folders will be grouped together
 			show_unloaded = true,
 			window = {
 				mappings = {
-					["bd"] = "buffer_delete",
-					["<bs>"] = "navigate_up",
-					["."] = "set_root",
 					["gA"] = "git_add_all",
 					["gu"] = "git_unstage_file",
 					["ga"] = "git_add_file",
@@ -475,33 +369,8 @@ M.config = function()
 		git_status = {
 			window = {
 				mappings = {
+					["A"] = "none",
 					["gA"] = "git_add_all",
-					["gu"] = "git_unstage_file",
-					["ga"] = "git_add_file",
-					["gr"] = "git_revert_file",
-					["gc"] = "git_commit",
-					["gp"] = "git_push",
-					["gg"] = "git_commit_and_push",
-				},
-			},
-		},
-		diagnostics = {
-			bind_to_cwd = true,
-			diag_sort_function = "severity", -- "severity" means diagnostic items are sorted by severity in addition to their positions.
-			-- "position" means diagnostic items are sorted strictly by their positions.
-			-- May also be a function.
-			follow_behavior = { -- Behavior when `follow_current_file` is true
-				always_focus_file = false, -- Focus the followed file, even when focus is currently on a diagnostic item belonging to that file.
-				expand_followed = true, -- Ensure the node of the followed file is expanded
-				collapse_others = true, -- Ensure other nodes are collapsed
-			},
-			follow_current_file = true,
-			group_dirs_and_files = true, -- when true, empty folders and files will be grouped together
-			group_empty_dirs = true, -- when true, empty directories will be grouped together
-			show_unloaded = true, -- show diagnostics from unloaded buffers
-			window = {
-				mappings = {
-					["w"] = "",
 				},
 			},
 		},

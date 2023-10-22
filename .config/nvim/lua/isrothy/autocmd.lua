@@ -71,30 +71,30 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	end,
 })
 
--- local cc_filetypes = {
--- 	c = "101",
--- 	cpp = "101",
--- 	java = "101",
--- 	javascript = "101",
--- 	javascriptreact = "101",
--- 	kotlin = "101",
--- 	lua = "121",
--- 	typescript = "101",
--- 	typescriptreact = "101",
--- 	rust = "101",
--- 	swift = "101",
--- }
--- vim.api.nvim_create_autocmd({ "FileType" }, {
--- 	group = vim.api.nvim_create_augroup("colorcolumn", { clear = true }),
--- 	callback = function(event)
--- 		local filetype = event.match
--- 		if cc_filetypes[filetype] then
--- 			vim.wo.colorcolumn = cc_filetypes[filetype]
--- 		else
--- 			vim.wo.colorcolumn = ""
--- 		end
--- 	end,
--- })
+local cc_filetypes = {
+	c = "101",
+	cpp = "101",
+	java = "101",
+	javascript = "101",
+	javascriptreact = "101",
+	kotlin = "101",
+	lua = "121",
+	typescript = "101",
+	typescriptreact = "101",
+	rust = "101",
+	swift = "101",
+}
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	group = vim.api.nvim_create_augroup("colorcolumn", { clear = true }),
+	callback = function(event)
+		local filetype = event.match
+		if cc_filetypes[filetype] then
+			vim.wo.colorcolumn = cc_filetypes[filetype]
+		else
+			vim.wo.colorcolumn = ""
+		end
+	end,
+})
 
 local wrap_filetypes = {
 	"markdown",

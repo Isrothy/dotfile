@@ -49,32 +49,6 @@ return {
 		},
 	},
 	{
-		"kevinhwang91/nvim-hlslens",
-		event = { "BufReadPre", "BufNewFile" },
-		enabled = false,
-		keys = {
-			{ "*", [[*<cmd>lua require('hlslens').start()<cr>]], noremap = true, silent = true },
-			{ "#", [[#<cmd>lua require('hlslens').start()<cr>]], noremap = true, silent = true },
-			{ "g*", [[g*<cmd>lua require('hlslens').start()<cr>]], noremap = true, silent = true },
-			{ "g#", [[g#<cmd>lua require('hlslens').start()<cr>]], noremap = true, silent = true },
-			{
-				"n",
-				[[<cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<cr>]],
-				noremap = true,
-				silent = true,
-			},
-			{
-				"N",
-				[[<cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<cr>]],
-				noremap = true,
-				silent = true,
-			},
-		},
-		opts = {
-			virt_priority = 1,
-		},
-	},
-	{
 		"chrisgrieser/nvim-alt-substitute",
 		opts = true,
 		-- lazy-loading with `cmd =` does not work well with incremental preview

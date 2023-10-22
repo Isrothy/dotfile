@@ -129,6 +129,5 @@ vim.opt.foldtext = "v:lua.get_foldtext()"
 -- opt.foldmethod = "indent"
 opt.foldmethod = "expr"
 -- opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- opt.foldtext = "v:folddashes.substitute(getline(v:foldstart),'/\\*\\|\\*/\\|{{{\\d\\=','','g')"
 --
 --------- end fold ----------

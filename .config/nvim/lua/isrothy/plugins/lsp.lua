@@ -610,8 +610,7 @@ local jdtls = {
 
 local haskell_tools = {
 	"MrcJkb/haskell-tools.nvim",
-	-- event = { "BufReadPre", "BufNewFile" },
-	branch = "2.x.x",
+	version = "^2", -- Recommended
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 	},
@@ -619,21 +618,10 @@ local haskell_tools = {
 	init = function()
 		vim.g.haskell_tools = {
 			tools = { -- haskell-tools options
-				codeLens = {
-					-- Whether to automatically display/refresh codeLenses
-					autoRefresh = true,
-				},
-				hoogle = {
-					-- 'auto': Choose a mode automatically, based on what is available.
-					-- 'telescope-local': Force use of a local installation.
-					-- 'telescope-web': The online version (depends on curl).
-					-- 'browser': Open hoogle search in the default browser.
-					mode = "auto",
-				},
 				repl = {
 					-- 'builtin': Use the simple builtin repl
 					-- 'toggleterm': Use akinsho/toggleterm.nvim
-					handler = nil,
+					handler = "toggleterm",
 					builtin = {
 						create_repl_window = function(view)
 							-- create_repl_split | create_repl_vsplit | create_repl_tabnew | create_repl_cur_win
@@ -643,7 +631,7 @@ local haskell_tools = {
 				},
 				hover = {
 					-- Whether to disable haskell-tools hover and use the builtin lsp's default handler
-					disable = false,
+					disable = true,
 					-- border = ,
 					stylize_markdown = true,
 					-- Whether to automatically switch to the hover window

@@ -1,4 +1,3 @@
-local c = require("nord.colors").palette
 return {
 	{
 		"s1n7ax/nvim-window-picker",
@@ -38,7 +37,6 @@ return {
 					},
 				},
 			},
-			other_win_hl_color = c.frost.ice,
 
 			picker_config = {
 				statusline_winbar_picker = {
