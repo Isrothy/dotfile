@@ -199,6 +199,14 @@ local illuminate = {
 				-- "regex",
 			},
 		},
+		filetypes_denylist = {
+			"dirbuf",
+			"dirvish",
+			"fugitive",
+			"toggleterm",
+			"neo-tree",
+			"aerial",
+		},
 	},
 	config = function(_, opts)
 		require("illuminate").configure(opts)

@@ -274,7 +274,7 @@ M.config = function()
 						vim.cmd("Neotree reveal")
 					end
 				end,
-				["o"] = "open_with_window_picker",
+				-- ["o"] = "open_with_window_picker",
 				["t"] = "open_tabnew",
 				["s"] = "split_with_window_picker",
 				["v"] = "vsplit_with_window_picker",

@@ -299,6 +299,13 @@ local Lspconfig = {
 		-- 		},
 		-- 	},
 		-- })
+		require("lspconfig").r_language_server.setup({
+			capabilities = make_capabilities(),
+			on_attach = function(client, bufnr)
+				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
+			end,
+		})
 		require("lspconfig").sourcekit.setup({
 			filetypes = { "swift", "objective-c" },
 			single_file_support = true,
