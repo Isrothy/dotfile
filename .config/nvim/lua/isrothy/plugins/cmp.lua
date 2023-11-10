@@ -25,12 +25,8 @@ CMP.dependencies = {
 		"tzachar/cmp-fuzzy-path",
 		dependencies = { "hrsh7th/nvim-cmp", "tzachar/fuzzy.nvim" },
 	},
-	{
-		"lukas-reineke/cmp-under-comparator",
-	},
-	{
-		"onsails/lspkind-nvim",
-	},
+	{ "lukas-reineke/cmp-under-comparator" },
+	{ "onsails/lspkind-nvim" },
 }
 
 CMP.config = function()
@@ -170,8 +166,6 @@ CMP.config = function()
 		sorting = {
 			priority_weight = 2,
 			comparators = {
-				-- require("copilot_cmp.comparators").prioritize,
-				-- require("copilot_cmp.comparators").score,
 				require("cmp_fuzzy_path.compare"),
 				require("cmp_fuzzy_buffer.compare"),
 				compare.offset,
@@ -240,23 +234,6 @@ CMP.config = function()
 			end,
 		},
 	})
-	-- vim.cmd([[
-	-- autocmd InsertEnter * call s:on_insert_enter()
-	-- function! s:on_insert_enter()
-	-- lua <<EOF
-	--   vim.schedule(function()
-	--     local cmp = require('cmp')
-	--     cmp.complete({
-	--       config = {
-	--         sources = {
-	--           { name = 'copilot' }
-	--         }
-	--       }
-	--     })
-	--   end)
-	-- EOF
-	-- endfunction
-	-- ]])
 end
 local LuaSnip = {
 	"L3MON4D3/LuaSnip",
@@ -276,6 +253,7 @@ local LuaSnip = {
 				"javascript",
 				"javascriptreact",
 				"json",
+				"haskell",
 				"kotlin",
 				"lua",
 				"objective-c",
@@ -289,26 +267,18 @@ local LuaSnip = {
 	end,
 }
 
--- local copilot = {
--- 	"zbirenbaum/copilot-cmp",
--- 	enabled = false,
--- 	dependencies = {
--- 		"zbirenbaum/copilot.lua",
--- 	},
--- 	event = "InsertEnter",
--- 	config = function()
--- 		require("copilot_cmp").setup({
--- 			method = "getCompletionsCycling",
--- 			formatters = {
--- 				label = require("copilot_cmp.format").format_label_text,
--- 				insert_text = require("copilot_cmp.format").format_insert_text,
--- 				preview = require("copilot_cmp.format").deindent,
--- 			},
--- 		})
--- 	end,
--- }
+local haskell_snippets = {
+	"mrcjkb/haskell-snippets.nvim",
+	ft = "haskell",
+	config = function()
+		local ls = require("luasnip")
+		local haskell_snippets = require("haskell-snippets").all
+		ls.add_snippets("haskell", haskell_snippets, { key = "haskell" })
+	end,
+}
 
 return {
 	CMP,
 	LuaSnip,
+	haskell_snippets,
 }

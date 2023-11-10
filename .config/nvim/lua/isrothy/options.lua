@@ -46,6 +46,7 @@ opt.belloff = "all"
 opt.conceallevel = 0
 opt.updatetime = 500
 opt.wildmenu = true
+opt.scrollback = 2000
 
 o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 o.splitkeep = "screen"

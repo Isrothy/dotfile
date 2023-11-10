@@ -1,6 +1,5 @@
 local TS = {
 	"nvim-treesitter/nvim-treesitter",
-	enabled = true,
 	event = { "BufReadPost", "BufNewFile" },
 	build = ":TSUpdate",
 	config = function()
@@ -11,9 +10,12 @@ local TS = {
 			-- Install languages synchronously (only applied to `ensure_installed`)
 			sync_install = false,
 
+			ignore_install = { "comment" },
+
 			matchup = {
 				enable = false, -- mandatory, false will disable the whole extension
 				disable_virtual_text = true,
+				include_match_words = false,
 			},
 			highlight = {
 				-- `false` will disable the whole extension

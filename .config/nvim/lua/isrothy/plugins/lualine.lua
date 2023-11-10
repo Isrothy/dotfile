@@ -78,6 +78,13 @@ M.config = function()
 					require("noice").api.statusline.command.get,
 					cond = require("noice").api.statusline.command.has,
 				},
+				{
+					"fancy_macro",
+					icon = {
+						"⏺",
+						color = { fg = c.polar_night.origin },
+					},
+				},
 			},
 			lualine_b = {
 				{
@@ -96,7 +103,7 @@ M.config = function()
 				},
 			},
 			lualine_c = {
-				{ require("NeoComposer.ui").status_recording },
+				-- { require("NeoComposer.ui").status_recording },
 				{
 					"filename",
 					file_status = true,
@@ -172,21 +179,12 @@ M.config = function()
 			lualine_c = {
 				{
 					"aerial",
-					-- The separator to be used to separate symbols in status line.
 					sep = " ⟩ ",
 					sep_prefix = true,
 					sep_highlight = "@text",
-					-- The number of symbols to render top-down. In order to render only 'N' last
-					-- symbols, negative numbers may be supplied. For instance, 'depth = -1' can
-					-- be used in order to render only current symbol.
 					depth = nil,
-					-- When 'dense' mode is on, icons are not rendered near their symbols. Only
-					-- a single icon that represents the kind of current symbol is rendered at
-					-- the beginning of status line.
 					dense = false,
-					-- The separator to be used to separate symbols in dense mode.
 					dense_sep = ".",
-
 					colored = true,
 				},
 			},

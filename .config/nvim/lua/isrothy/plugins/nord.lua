@@ -44,10 +44,6 @@ M.config = function()
 
 			highlights.MatchParen = { bg = colors.polar_night.origin, standout = true }
 
-			highlights.IlluminatedWordText = { bg = colors.polar_night.brightest }
-			highlights.IlluminatedWordRead = { bg = colors.polar_night.brightest }
-			highlights.IlluminatedWordWrite = { bg = colors.polar_night.brightest }
-
 			highlights.NoiceLspProgressClient = { fg = colors.frost.ice, italic = true }
 			highlights.NoiceLspProgressTitle = { fg = colors.snow_storm.origin }
 			highlights.NoiceMini = { bg = colors.polar_night.bright }
