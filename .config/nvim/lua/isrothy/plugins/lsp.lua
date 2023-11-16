@@ -736,7 +736,6 @@ local jsonls = {
 local null_ls = {
 	"nvimtools/none-ls.nvim",
 	event = { "BufReadPre", "BufNewFile" },
-	-- lazy = false,
 	config = function()
 		local null_ls = require("null-ls")
 
@@ -747,9 +746,14 @@ local null_ls = {
 				set_inlay_hint(client, bufnr)
 			end,
 			sources = {
+				null_ls.builtins.completion.spell,
+
 				null_ls.builtins.diagnostics.checkmake,
 				null_ls.builtins.diagnostics.hadolint,
+				null_ls.builtins.diagnostics.markdownlint,
 				null_ls.builtins.diagnostics.gitlint,
+				-- null_ls.builtins.diagnostics.textidote,
+				-- null_ls.builtins.diagnostics.typos,
 				null_ls.builtins.diagnostics.pylint.with({
 					args = {
 						"--from-stdin",
@@ -766,7 +770,6 @@ local null_ls = {
 				-- null_ls.builtins.code_actions.shellcheck,
 
 				null_ls.builtins.formatting.autopep8,
-				-- null_ls.builtins.formatting.clang_format,
 				null_ls.builtins.formatting.cmake_format,
 				null_ls.builtins.formatting.markdownlint,
 				null_ls.builtins.formatting.prettierd.with({
@@ -792,6 +795,8 @@ local null_ls = {
 
 				-- null_ls.builtins.formatting.yamlfmt,
 				null_ls.builtins.formatting.xmllint,
+
+				null_ls.builtins.hover.dictionary,
 			},
 		})
 	end,
