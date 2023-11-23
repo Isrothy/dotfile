@@ -1,6 +1,7 @@
 return {
 	"luukvbaal/statuscol.nvim",
 	event = { "BufReadPre", "BufNewFile" },
+	branch = "0.10",
 	init = function()
 		vim.opt.number = true
 		vim.opt.relativenumber = true
@@ -10,7 +11,6 @@ return {
 		return {
 			setopt = true,
 			relculright = true,
-			-- thousands = "'",
 			ft_ignore = {
 				"aerial",
 				"neo-tree",

@@ -61,17 +61,16 @@ source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/opt/homebrew/opt/zip/bin:$PATH"
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+# export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/Users/jiangjoshua/.rustup/toolchains/stable-aarch64-apple-darwin/bin:$PATH"
 export PATH="/opt/homebrew/opt/node@16/bin:$PATH"
 export PATH=$PATH:$HOME/.local/bin
 
 
-
 export JAVA_HOME=/opt/homebrew/Cellar/openjdk@17/17.0.7/libexec/openjdk.jdk/Contents/Home
 export JAVA_HOME=$(/usr/libexec/java_home)
-export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+# export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+# export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export MYVIMRC="/Users/jiangjoshua/.config/nvim/init.lua"
 
@@ -94,7 +93,7 @@ export FZF_DEFAULT_OPTS="--ansi"
 alias config='/usr/bin/git --git-dir=/Users/jiangjoshua/.cfg/ --work-tree=/Users/jiangjoshua'
 
 
-[ -f "/Users/jiangjoshua/.ghcup/env" ] && source "/Users/jiangjoshua/.ghcup/env" # ghcup-env
+#[ -f "/Users/jiangjoshua/.ghcup/env" ] && source "/Users/jiangjoshua/.ghcup/env" # ghcup-env
 
 # opam configuration
 [[ ! -r /Users/jiangjoshua/.opam/opam-init/init.zsh ]] || source /Users/jiangjoshua/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
@@ -119,3 +118,5 @@ alias pipupall="pip3 list -o | cut -f1 -d' ' | tr ' ' '\n' | awk '{if(NR>=3)prin
 alias icat="kitty +kitten icat"
 
 alias preview="open -a preview"
+
+[ -f "/Users/jiangjoshua/.ghcup/env" ] && source "/Users/jiangjoshua/.ghcup/env" # ghcup-env

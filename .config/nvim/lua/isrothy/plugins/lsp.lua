@@ -80,7 +80,7 @@ end
 local set_inlay_hint = function(client, bufnr)
 	local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
 	if inlay_hint and client.supports_method("textDocument/inlayHint") then
-		inlay_hint(bufnr, true)
+		inlay_hint.enable(bufnr, true)
 	end
 end
 
