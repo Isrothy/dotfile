@@ -4,27 +4,15 @@ local TS = {
 	build = ":TSUpdate",
 	config = function()
 		require("nvim-treesitter.configs").setup({
-			-- One of "all", "maintained" (parsers with maintainers), or a list of languages
-			-- ensure_installed = { "c", "cpp", "java" },
-
-			-- Install languages synchronously (only applied to `ensure_installed`)
 			sync_install = false,
-
 			ignore_install = { "comment" },
-
 			matchup = {
-				enable = false, -- mandatory, false will disable the whole extension
+				enable = true, -- mandatory, false will disable the whole extension
 				disable_virtual_text = true,
 				include_match_words = false,
 			},
 			highlight = {
-				-- `false` will disable the whole extension
 				enable = true,
-
-				-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-				-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-				-- Using this option may slow down your editor, and you may see some duplicate highlights.
-				-- Instead of true it can also be a list of languages
 				additional_vim_regex_highlighting = false,
 			},
 			incremental_selection = {
@@ -63,12 +51,8 @@ local TS = {
 			textobjects = {
 				select = {
 					enable = false,
-
-					-- Automatically jump forward to textobj, similar to targets.vim
 					lookahead = true,
-
 					keymaps = {
-						-- You can use the capture groups defined in textobjects.scm
 						["af"] = "@function.outer",
 						["if"] = "@function.inner",
 						["ac"] = "@class.outer",
@@ -127,53 +111,28 @@ local iswap = {
 		"ISwapNodeWithLeft",
 		"ISwapNodeWithRight",
 	},
-	init = function()
-		vim.keymap.set({ "n" }, "<leader>is", [[<cmd>ISwap<cr>]], { desc = "ISwap" })
-		vim.keymap.set({ "n" }, "<leader>iw", [[<cmd>ISwapWith<cr>]], { desc = "ISwap with" })
-		vim.keymap.set({ "n" }, "<leader>in", [[<cmd>ISwapNode<cr>]], { desc = "ISwap node" })
-		vim.keymap.set({ "n" }, "<leader>im", [[<cmd>ISwapNodeWith<cr>]], { desc = "ISwap node with" })
-		vim.keymap.set({ "n" }, "<m-i>", [[<cmd>ISwapNodeWithLeft<cr>]], { desc = "ISwap node with left" })
-		vim.keymap.set({ "n" }, "<m-o>", [[<cmd>ISwapNodeWithRight<cr>]], { desc = "ISwap node with right" })
-	end,
+	keys = {
+		{ "<leader>is", [[<cmd>ISwap<cr>]], desc = "ISwap" },
+		{ "<leader>iw", [[<cmd>ISwapWith<cr>]], desc = "ISwap with" },
+		{ "<leader>in", [[<cmd>ISwapNode<cr>]], desc = "ISwap node" },
+		{ "<leader>im", [[<cmd>ISwapNodeWith<cr>]], desc = "ISwap node with" },
+		{
+			"<m-i>",
+			[[<cmd>ISwapNodeWithLeft<cr>]],
+			desc = "ISwap node with left",
+			mode = { "n", "v" },
+		},
+		{
+			"<m-o>",
+			[[<cmd>ISwapNodeWithRight]],
+			desc = "ISwap node with right",
+			mode = { "n", "v" },
+		},
+	},
 	opts = {
-		-- The keys that will be used as a selection, in order
-		-- ('asdfghjklqwertyuiopzxcvbnm' by default)
-		keys = "qwertyuiop",
-
-		-- Grey out the rest of the text when making a selection
-		-- (enabled by default)
-		grey = "disable",
-
-		-- Highlight group for the sniping value (asdf etc.)
-		-- default 'Search'
-		hl_snipe = "Search",
-
-		-- Highlight group for the visual selection of terms
-		-- default 'Visual'
-		hl_selection = "Visual",
-
-		-- Highlight group for the greyed background
-		-- default 'Comment'
-		hl_grey = "Comment",
-
-		-- Post-operation flashing highlight style,
-		-- either 'simultaneous' or 'sequential', or false to disable
-		-- default 'sequential'
 		flash_style = "simultaneous",
-
-		-- Highlight group for flashing highlight afterward
-		-- default 'IncSearch'
-		hl_flash = "IncSearch",
-
-		-- Move cursor to the other element in ISwap*With commands
-		-- default false
 		move_cursor = true,
-
-		-- Automatically swap with only two arguments
-		-- default nil
-		autoswap = true,
-
-		-- Other default options you probably should not change:
+		autoswap = nil,
 		debug = nil,
 		hl_grey_priority = "1000",
 	},
@@ -207,14 +166,6 @@ local rainbow = {
 local endwise = {
 	"RRethy/nvim-treesitter-endwise",
 	event = { "InsertEnter" },
-	-- ft = {
-	-- 	"lua",
-	-- 	"vim",
-	-- 	"ruby",
-	-- 	"bash",
-	-- 	"zsh",
-	-- 	"sh",
-	-- },
 }
 
 local autotag = {
@@ -273,13 +224,7 @@ local regexplainer = {
 		"MunifTanjim/nui.nvim",
 	},
 	opts = {
-		-- 'narrative'
-		mode = "narrative", -- TODO: 'ascii', 'graphical'
-
-		-- automatically show the explainer when the cursor enters a regexp
 		auto = false,
-
-		-- filetypes (i.e. extensions) in which to run the autocommand
 		filetypes = {
 			"html",
 			"js",
@@ -292,13 +237,8 @@ local regexplainer = {
 			"mjsx",
 			"swift",
 		},
-
-		-- Whether to log debug messages
 		debug = false,
-
-		-- 'split', 'popup'
 		display = "popup",
-
 		mappings = {
 			toggle = "gR",
 			-- examples, not defaults:
@@ -313,7 +253,6 @@ local regexplainer = {
 				style = "rounded",
 			},
 		},
-
 		narrative = {
 			separator = "\n",
 		},
