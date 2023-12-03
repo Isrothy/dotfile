@@ -2,7 +2,6 @@ local function augroup(name)
 	return vim.api.nvim_create_augroup(name, { clear = true })
 end
 
--- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 	group = augroup("checktime"),
 	command = "checktime",
@@ -96,24 +95,24 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 	end,
 })
 
-local wrap_filetypes = {
-	"markdown",
-	"latex",
-	"text",
-}
-vim.api.nvim_create_autocmd({ "FileType" }, {
-	group = vim.api.nvim_create_augroup("wrap", { clear = true }),
-	callback = function(event)
-		local filetype = event.match
-		if vim.tbl_contains(wrap_filetypes, filetype) then
-			vim.wo.wrap = true
-			vim.wo.linebreak = true
-		else
-			vim.wo.wrap = false
-			vim.wo.linebreak = false
-		end
-	end,
-})
+-- local wrap_filetypes = {
+-- 	"markdown",
+-- 	"latex",
+-- 	"text",
+-- }
+-- vim.api.nvim_create_autocmd({ "FileType" }, {
+-- 	group = vim.api.nvim_create_augroup("wrap", { clear = true }),
+-- 	callback = function(event)
+-- 		local filetype = event.match
+-- 		if vim.tbl_contains(wrap_filetypes, filetype) then
+-- 			vim.wo.wrap = true
+-- 			vim.wo.linebreak = true
+-- 		else
+-- 			vim.wo.wrap = false
+-- 			vim.wo.linebreak = false
+-- 		end
+-- 	end,
+-- })
 
 -- vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 -- 	group = vim.api.nvim_create_augroup("ScrollEOF", { clear = true }),

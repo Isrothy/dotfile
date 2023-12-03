@@ -118,17 +118,10 @@ _G.get_foldtext = function()
 	end
 end
 
--- o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 o.foldlevelstart = 99
 o.foldenable = true
 opt.foldcolumn = "1"
--- opt.foldmethod = "syntax"
--- opt.foldmethod = "manual"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
 vim.opt.foldtext = "v:lua.get_foldtext()"
--- opt.foldmethod = "indent"
 opt.foldmethod = "expr"
--- opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
---
 --------- end fold ----------
