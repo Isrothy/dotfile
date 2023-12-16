@@ -1,3 +1,4 @@
+
 public class A implements Inter {
     private static final String FOO = "foo";
 

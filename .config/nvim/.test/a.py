@@ -10,6 +10,7 @@ for i in range(0, 10):
     x += i
     # print(x)
 
+
 a, b = map(int, input().split())
 
 print(a + b)

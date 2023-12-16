@@ -237,7 +237,8 @@ CMP.config = function()
 end
 local LuaSnip = {
 	"L3MON4D3/LuaSnip",
-	version = "v1.1.x",
+	version = "v2.*",
+	build = "make install_jsregexp",
 	dependencies = {
 		"rafamadriz/friendly-snippets",
 	},

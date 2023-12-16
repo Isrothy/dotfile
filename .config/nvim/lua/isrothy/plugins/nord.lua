@@ -3,19 +3,15 @@ local M = {
 	priority = 100,
 	lazy = false,
 }
+
 M.config = function()
 	require("nord").setup({
-		-- your configuration comes here
-		-- or leave it empty to use the default settings
-		transparent = false, -- Enable this to disable setting the background color
-		terminal_colors = true, -- Configure the colors used khen opening a `:terminal` in Neovim
-		diff = { mode = "bg" }, -- enables/disables colorful backgrounds khen used in diff mode. values : [bg|fg]
-		borders = true, -- Enable the border between verticaly split windows visible
-		errors = { mode = "none" }, -- Display mode for errors and diagnostics
-		-- values : [bg|fg|none]
+		transparent = false,
+		terminal_colors = true,
+		diff = { mode = "bg" },
+		borders = true,
+		errors = { mode = "none" },
 		styles = {
-			-- Style to be applied to different syntax groups
-			-- Value is any valid attr-list value for `:help nvim_set_hl`
 			comments = { italic = true },
 			keywords = { bold = true },
 			functions = { italic = true },
@@ -27,7 +23,7 @@ M.config = function()
 		},
 		colorblind = {
 			enable = false,
-			preserve_background = false,
+			preserve_background = true,
 			severity = {
 				protan = 0.7,
 				deutan = 1.0,
@@ -63,6 +59,12 @@ M.config = function()
 			highlights.DiagnosticLineNrWarn = { fg = colors.aurora.yellow, bold = true }
 			highlights.DiagnosticLineNrInfo = { fg = colors.frost.ice, bold = true }
 			highlights.DiagnosticLineNrHint = { fg = colors.frost.artic_water, bold = true }
+
+			highlights.DiagnosticFloatingOk = { link = "DiagnostcOk" }
+			highlights.DiagnosticFloatingWarn = { link = "DiagnosticWarn" }
+			highlights.DiagnosticFloatingError = { link = "DiagnosticError" }
+			highlights.DiagnosticFloatingHint = { link = "DiagnosticHint" }
+			highlights.DiagnosticFloatingInfo = { link = "DiagnosticInfo" }
 
 			highlights.LspLens = { fg = colors.polar_night.light }
 
