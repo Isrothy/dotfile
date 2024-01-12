@@ -11,6 +11,7 @@ double add(double x, double y) {
     printf("%lf\n", x + y);
     return x + y;
 }
+
 struct A {
     A(const A &) = delete;
     A(A &&) = default;
@@ -81,6 +82,7 @@ int main() {
         }
         default: {
             printf("%d\n", a + b);
+            break;
         }
     }
     for (int i = 0; i <= n; ++i) {
@@ -92,5 +94,6 @@ int main() {
 
 
     } while (true);
+
     return 0;
 }

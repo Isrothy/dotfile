@@ -253,32 +253,90 @@ local mini_move = {
 local surround = {
 	"kylechui/nvim-surround",
 	keys = {
-		{ "ds", mode = "n" },
-		{ "cs", mode = "n" },
-		{ "gs", mode = "n" },
-		{ "gss", mode = "n" },
-		{ "gS", mode = "n" },
-		{ "gSS", mode = "n" },
-		{ "<c-s>", mode = "v" },
-		{ "g<c-s>", mode = "v" },
-		{ "<c-g>s", mode = "i" },
-		{ "<c-g>S", mode = "i" },
+		{
+			"ds",
+			"<cmd><Plug>(nvim-surround-delete)<cr>",
+			mode = "n",
+			desc = "Delete a surrounding pair",
+		},
+		{
+			"cs",
+			"<cmd><Plug>(nvim-surround-change)<cr>",
+			mode = "n",
+			desc = "Change a surrounding pair",
+		},
+		{
+			"cS",
+			"<cmd><Plug>(nvim-surround-change-line)<cr>",
+			mode = "n",
+			desc = "Change a surrounding pair, putting replacements on new lines",
+		},
+		{
+			"gs",
+			"<cmd><Plug>(nvim-surround-normal)<cr>",
+			mode = "n",
+			desc = "Add a surrounding pair around a motion (normal mode)",
+		},
+		{
+			"gss",
+			"<cmd><Plug>(nvim-surround-normal-cur)<cr>",
+			mode = "n",
+			desc = "Add a surrounding pair around the current line (normal mode)",
+		},
+		{
+			"gS",
+			"<cmd><Plug>(nvim-surround-normal-line)<cr>",
+			mode = "n",
+			desc = "Add a surrounding pair around a motion, on new lines (normal mode)",
+		},
+		{
+			"gSS",
+			"<cmd><Plug>(nvim-surround-normal-cur-line)<cr>",
+			mode = "n",
+			desc = "Add a surrounding pair around the current line, on new lines (normal mode)",
+		},
+		{
+			"<m-g>s",
+			"<cmd><Plug>(nvim-surround-visual)<cr>",
+			mode = "v",
+			desc = "Add a surrounding pair around a visual selection",
+		},
+		{
+			"<m-g>S",
+			"<cmd><Plug>(nvim-surround-visual-line)<cr>",
+			mode = "v",
+			desc = "Add a surrounding pair around a visual selection, on new lines",
+		},
+		{
+			"<m-g>s",
+			"<cmd><Plug>(nvim-surround-insert)<cr>",
+			mode = "i",
+			desc = "Add a surrounding pair around the cursor (insert mode)",
+		},
+		{
+			"<m-g>S",
+			"<cmd><Plug>(nvim-surround-insert-line)<cr>",
+			mode = "i",
+			desc = "Add a surrounding pair around the cursor, on new lines (insert mode)",
+		},
 	},
 	opts = {
-		keymaps = {
-			insert = "<c-g>s",
-			insert_line = "<c-g>S",
-			normal = "gs",
-			normal_cur = "gss",
-			normal_line = "gS",
-			normal_cur_line = "gSS",
-			visual = "<c-s>",
-			visual_line = "g<c-s>",
-			delete = "ds",
-			change = "cs",
-		},
+		keymaps = {},
 		move_cursor = false,
 	},
+}
+
+local textcase = {
+	"johmsalas/text-case.nvim",
+	dependencies = { "nvim-telescope/telescope.nvim" },
+	-- lazy = false,
+	config = function()
+		require("textcase").setup({
+			default_keymappings_enabled = false,
+			prefix = "ga",
+		})
+		require("telescope").load_extension("textcase")
+	end,
 }
 
 return {
@@ -288,4 +346,5 @@ return {
 	dial,
 	mini_move,
 	surround,
+	textcase,
 }

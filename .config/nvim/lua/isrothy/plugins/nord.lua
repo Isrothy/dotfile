@@ -68,7 +68,6 @@ M.config = function()
 
 			highlights.LspLens = { fg = colors.polar_night.light }
 
-			highlights.InlayHints = { fg = colors.polar_night.light }
 			highlights.LspInlayHint = { fg = colors.polar_night.light }
 
 			highlights.QuickFixLine = { bg = "NONE" }
@@ -96,8 +95,7 @@ M.config = function()
 			-- highlights.FlashLabel = { fg = colors.aurora.orange, bg = colors.polar_night.brightest, bold = true }
 		end,
 	})
-
-	vim.cmd([[colorscheme nord]])
+	vim.cmd.colorscheme("nord")
 end
 
 return M

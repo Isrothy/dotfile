@@ -64,7 +64,7 @@ local inc_rename = {
 local neo_dim = {
 	"zbirenbaum/neodim",
 	branch = "v2",
-	enabled = true,
+	enabled = false,
 	event = { "LspAttach" },
 	config = function()
 		local c = require("nord.colors").palette

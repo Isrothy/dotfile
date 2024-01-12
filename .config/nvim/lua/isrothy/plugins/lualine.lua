@@ -13,6 +13,14 @@ local function tab_size()
 	return (vim.bo.expandtab and "␠" or "␉") .. vim.bo.tabstop
 end
 
+local function codeium()
+	local str = vim.fn["codeium#GetStatusString"]()
+	if type(str) ~= "string" then
+		return ""
+	end
+	return "{…}" .. vim.fn["codeium#GetStatusString"]()
+end
+
 ---- Truncating components in smaller window
 local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
 	return function(str)
@@ -145,6 +153,7 @@ M.config = function()
 			lualine_y = {
 				"fancy_filetype",
 				"fancy_lsp_servers",
+				codeium,
 			},
 			lualine_z = {
 				{

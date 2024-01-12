@@ -7,7 +7,7 @@ local TS = {
 			sync_install = false,
 			ignore_install = { "comment" },
 			matchup = {
-				enable = true, -- mandatory, false will disable the whole extension
+				enable = true,
 				disable_virtual_text = true,
 				include_match_words = false,
 			},
@@ -21,28 +21,10 @@ local TS = {
 					init_selection = "<enter>",
 					node_incremental = "<enter>",
 					node_decremental = "<BS>",
-					scope_incremental = "<c-s>",
+					-- scope_incremental = "<c-s>",
 				},
 			},
 			indent = {
-				enable = false,
-			},
-			context_commentstring = {
-				enable = true,
-				enable_autocmd = false,
-				config = {
-					css = "/* %s */",
-					javascript = {
-						__default = "// %s",
-						jsx_element = "{/* %s */}",
-						jsx_fragment = "{/* %s */}",
-						jsx_attribute = "// %s",
-						comment = "// %s",
-					},
-					typescript = { __default = "// %s", __multiline = "/* %s */" },
-				},
-			},
-			autotag = {
 				enable = true,
 			},
 			endwise = {
@@ -140,7 +122,6 @@ local iswap = {
 local rainbow = {
 	"HiPhish/rainbow-delimiters.nvim",
 	event = { "BufReadPost", "BufNewFile" },
-	enabled = true,
 	config = function()
 		local rainbow_delimiters = require("rainbow-delimiters")
 
@@ -170,7 +151,14 @@ local endwise = {
 
 local autotag = {
 	"windwp/nvim-ts-autotag",
-	event = "InsertEnter",
+	-- event = { "InsertEnter" },
+	event = { "BufReadPost", "BufNewFile" },
+	opts = {
+		enable = true,
+		enable_rename = true,
+		enable_close = true,
+		enable_close_on_slash = true,
+	},
 }
 
 local neogen = {

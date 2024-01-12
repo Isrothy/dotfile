@@ -21,10 +21,10 @@ CMP.dependencies = {
 		"tzachar/cmp-fuzzy-buffer",
 		dependencies = { "hrsh7th/nvim-cmp", "tzachar/fuzzy.nvim" },
 	},
-	{
-		"tzachar/cmp-fuzzy-path",
-		dependencies = { "hrsh7th/nvim-cmp", "tzachar/fuzzy.nvim" },
-	},
+	-- {
+		-- "tzachar/cmp-fuzzy-path",
+		-- dependencies = { "hrsh7th/nvim-cmp", "tzachar/fuzzy.nvim" },
+	-- },
 	{ "lukas-reineke/cmp-under-comparator" },
 	{ "onsails/lspkind-nvim" },
 }
@@ -160,13 +160,13 @@ CMP.config = function()
 			{ name = "buffer" },
 			{ name = "fuzzy_buffer" },
 			{ name = "path" },
-			{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
+			-- { name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
 		}),
 
 		sorting = {
 			priority_weight = 2,
 			comparators = {
-				require("cmp_fuzzy_path.compare"),
+				-- require("cmp_fuzzy_path.compare"),
 				require("cmp_fuzzy_buffer.compare"),
 				compare.offset,
 				compare.exact,
@@ -207,7 +207,7 @@ CMP.config = function()
 		}, {
 			{ name = "cmdline_history" },
 			{ name = "path" },
-			{ name = "fuzzy_path" },
+			-- { name = "fuzzy_path" },
 		}),
 		formatting = {
 			format = function(entry, vim_item)
@@ -220,7 +220,7 @@ CMP.config = function()
 					latex_symbols = "[LaTeX]",
 					treesitter = "[TS]",
 					fuzzy_buffer = "[FZ]",
-					fuzzy_path = "[FZ]",
+					-- fuzzy_path = "[FZ]",
 					path = "[Path]",
 					calc = "[Calc]",
 				})[entry.source.name]

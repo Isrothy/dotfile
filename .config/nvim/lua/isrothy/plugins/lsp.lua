@@ -353,6 +353,18 @@ local Lspconfig = {
 				set_inlay_hint(client, bufnr)
 			end,
 		})
+		require("lspconfig").typst_lsp.setup({
+			capabilities = make_capabilities(),
+			on_attach = function(client, bufnr)
+				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
+			end,
+			single_file_support = true,
+			settings = {
+				exportPdf = "onType", -- Choose onType, onSave or never.
+				-- serverPath = "" -- Normally, there is no need to uncomment it.
+			},
+		})
 		require("lspconfig").vimls.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
@@ -528,46 +540,27 @@ local haskell_tools = {
 	end,
 }
 
-local rust_tools = {
-	"simrat39/rust-tools.nvim",
-	event = { "BufReadPre", "BufNewFile" },
-	config = function()
-		local rt = require("rust-tools")
-		rt.setup({
+local rustaceanvim = {
+	"mrcjkb/rustaceanvim",
+	version = "^3", -- Recommended
+	ft = { "rust" },
+	init = function()
+		vim.g.rustaceanvim = {
+			-- Plugin configuration
+			tools = {},
+			-- LSP configuration
 			server = {
-				capabilities = make_capabilities(),
 				on_attach = function(client, bufnr)
 					set_keymap(client, bufnr)
 					set_inlay_hint(client, bufnr)
-					vim.keymap.set("n", "gh", rt.hover_actions.hover_actions, { buffer = bufnr })
-					vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
-					vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-					vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
 				end,
-				standalone = true,
-			},
-			tools = { -- rust-tools options
-				-- how to execute terminal commands
-				-- options right now: termopen / quickfix
-				executor = require("rust-tools/executors").termopen,
-
-				-- callback to execute once rust-analyzer is done initializing the workspace
-				-- The callback receives one parameter indicating the `health` of the server: "ok" | "warning" | "error"
-				on_initialized = nil,
-
-				-- automatically call RustReloadWorkspace when writing to a Cargo.toml file.
-				reload_workspace_from_cargo_toml = true,
-
-				-- These apply to the default RustSetInlayHints command
-				inlay_hints = {
-					auto = false,
-				},
-				hover_actions = {
-					border = border,
-					auto_focus = false,
+				settings = {
+					["rust-analyzer"] = {},
 				},
 			},
-		})
+			-- DAP configuration
+			dap = {},
+		}
 	end,
 }
 
@@ -620,6 +613,7 @@ local null_ls = {
 						"--errors-only",
 					},
 				}),
+				null_ls.builtins.diagnostics.shellcheck,
 				-- null_ls.builtins.diagnostics.swiftlint,
 				-- null_ls.builtins.diagnostics.yamllint,
 				null_ls.builtins.diagnostics.zsh,
@@ -629,24 +623,31 @@ local null_ls = {
 				null_ls.builtins.formatting.autopep8,
 				null_ls.builtins.formatting.cmake_format,
 				null_ls.builtins.formatting.markdownlint,
-				null_ls.builtins.formatting.prettierd.with({
+				null_ls.builtins.formatting.shellharden.with({
 					filetypes = {
-						"css",
-						"scss",
-						"less",
-						"html",
-						"json",
-						"jsonc",
-						"yaml",
-						"graphql",
-						"handlebars",
-						"javascript",
-						"javascriptreact",
-						"typescript",
-						"typescriptreact",
-						"vue",
+						"sh",
+						"bash",
+						"zsh",
 					},
 				}),
+				-- null_ls.builtins.formatting.prettierd.with({
+				-- 	filetypes = {
+				-- 		"css",
+				-- 		"scss",
+				-- 		"less",
+				-- 		"html",
+				-- 		"json",
+				-- 		"jsonc",
+				-- 		"yaml",
+				-- 		"graphql",
+				-- 		"handlebars",
+				-- 		"javascript",
+				-- 		"javascriptreact",
+				-- 		"typescript",
+				-- 		"typescriptreact",
+				-- 		"vue",
+				-- 	},
+				-- }),
 				null_ls.builtins.formatting.stylua,
 				null_ls.builtins.formatting.swiftformat,
 
@@ -659,60 +660,59 @@ local null_ls = {
 	end,
 }
 
-local copilot = {
-	"zbirenbaum/copilot.lua",
-	event = "VeryLazy",
-	enabled = true,
-	config = function()
-		vim.defer_fn(function()
-			require("copilot").setup({
-				panel = {
-					enabled = false,
-					auto_refresh = true,
-					keymap = {
-						jump_prev = "[[",
-						jump_next = "]]",
-						accept = "<CR>",
-						refresh = "gr",
-						open = "<M-CR>",
-					},
-				},
-				suggestion = {
-					enabled = true,
-					auto_trigger = true,
-					debounce = 75,
-					keymap = {
-						accept = "<M-;>",
-						next = "<M-]>",
-						prev = "<M-[>",
-						dismiss = "<M-'>",
-					},
-				},
-				filetypes = {
-					yaml = false,
-					markdown = false,
-					help = false,
-					gitcommit = false,
-					gitrebase = false,
-					hgcommit = false,
-					svn = false,
-					cvs = false,
-					["."] = false,
-				},
-				copilot_node_command = "node", -- Node version must be < 18
-				server_opts_overrides = {
-					trace = "verbose",
-					settings = {
-						advanced = {
-							listCount = 10, -- #completions for panel
-							inlineSuggestCount = 3, -- #completions for getCompletions
-						},
-					},
-				},
-			})
-		end, 100)
-	end,
-}
+-- local copilot = {
+-- 	"zbirenbaum/copilot.lua",
+-- 	event = "VeryLazy",
+-- 	enabled = true,
+-- 	config = function()
+-- 		vim.defer_fn(function()
+-- 			require("copilot").setup({
+-- 				panel = {
+-- 					enabled = false,
+-- 					auto_refresh = true,
+-- 					keymap = {
+-- 						jump_prev = "[[",
+-- 						jump_next = "]]",
+-- 						accept = "<CR>",
+-- 						refresh = "gr",
+-- 						open = "<c-CR>",
+-- 					},
+-- 				},
+-- 				suggestion = {
+-- 					enabled = true,
+-- 					auto_trigger = true,
+-- 					debounce = 75,
+-- 					keymap = {
+-- 						accept = "<c-;>",
+-- 						next = "<c-,>",
+-- 						prev = "<c-.>",
+-- 						dismiss = "<c-'>",
+-- 					},
+-- 				},
+-- 				filetypes = {
+-- 					yaml = false,
+-- 					help = false,
+-- 					gitcommit = false,
+-- 					gitrebase = false,
+-- 					hgcommit = false,
+-- 					svn = false,
+-- 					cvs = false,
+-- 					["."] = false,
+-- 				},
+-- 				copilot_node_command = "node", -- Node version must be < 18
+-- 				server_opts_overrides = {
+-- 					trace = "verbose",
+-- 					settings = {
+-- 						advanced = {
+-- 							listCount = 10, -- #completions for panel
+-- 							inlineSuggestCount = 3, -- #completions for getCompletions
+-- 						},
+-- 					},
+-- 				},
+-- 			})
+-- 		end, 100)
+-- 	end,
+-- }
 
 -- local copilot = {
 -- 	"github/copilot.vim",
@@ -723,14 +723,37 @@ local copilot = {
 -- 	end,
 -- }
 
+local codeium = {
+	{
+		"Exafunction/codeium.vim",
+		event = "VeryLazy",
+		config = function()
+			-- Change '<C-g>' here to any keycode you like.
+			vim.keymap.set("i", "<C-;>", function()
+				return vim.fn["codeium#Accept"]()
+			end, { expr = true, silent = true, noremap = true })
+			vim.keymap.set("i", "<c-,>", function()
+				return vim.fn["codeium#CycleCompletions"](1)
+			end, { expr = true, silent = true, noremap = true })
+			vim.keymap.set("i", "<c-.>", function()
+				return vim.fn["codeium#CycleCompletions"](-1)
+			end, { expr = true, silent = true, noremap = true })
+			vim.keymap.set("i", "<c-'>", function()
+				return vim.fn["codeium#Clear"]()
+			end, { expr = true, silent = true, noremap = true })
+		end,
+	},
+}
+
 return {
 	mason,
 	Lspconfig,
 	clangd,
 	java,
 	haskell_tools,
-	rust_tools,
+	rustaceanvim,
 	null_ls,
 	jsonls,
-	copilot,
+	codeium,
+	-- copilot,
 }

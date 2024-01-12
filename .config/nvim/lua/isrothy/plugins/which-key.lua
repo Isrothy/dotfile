@@ -6,17 +6,8 @@ return {
 			"echasnovski/mini.ai",
 		},
 		event = "VeryLazy",
-		enabled = true,
 		opts = {
 			plugins = {
-				marks = true, -- shows a list of your marks on ' and `
-				registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
-				spelling = {
-					enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
-					suggestions = 20, -- how many suggestions should be shown in the list?
-				},
-				-- the presets plugin, adds help for a bunch of default keybindings in Neovim
-				-- No actual key bindings are created
 				presets = {
 					operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
 					motions = true, -- adds help for motions
@@ -27,30 +18,7 @@ return {
 					g = true, -- bindings for prefixed with g
 				},
 			},
-			-- add operators that will trigger motion and text object completion
-			-- to enable all native operators, set the preset / operators plugin above
-			operators = {
-				-- gc = "Comments",
-				-- gb = "Comments blockwise",
-				-- gx = "Exchange",
-				-- s = "Substitute",
-			},
-			key_labels = {
-				-- override the label used to display some keys. It doesn't effect WK in any other way.
-				-- For example:
-				["<space>"] = "SPC",
-				["<cr>"] = "CR",
-				["<tab>"] = "TAB",
-			},
-			icons = {
-				breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-				separator = "➜", -- symbol used between a key and it's label
-				group = "+", -- symbol prepended to a group
-			},
-			popup_mappings = {
-				scroll_down = "<c-d>", -- binding to scroll down inside the popup
-				scroll_up = "<c-u>", -- binding to scroll up inside the popup
-			},
+			-- operators = { gc = "Comments" },
 			window = {
 				border = "rounded", -- none, single, double, shadow
 				position = "bottom", -- bottom, top
@@ -58,38 +26,9 @@ return {
 				padding = { 1, 0, 1, 0 }, -- extra window padding [top, right, bottom, left]
 				winblend = 20,
 			},
-			layout = {
-				height = { min = 4, max = 25 }, -- min and max height of the columns
-				width = { min = 20, max = 50 }, -- min and max width of the columns
-				spacing = 3, -- spacing between columns
-				align = "left", -- align columns left, center or right
-			},
 			ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
-			-- hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
 			hidden = {},
-			show_help = true, -- show help message on the command line when the popup is visible
-			show_keys = true, -- show the currently pressed key and its label as a message in the command line
-			triggers = "auto", -- automatically setup triggers
-			-- triggers = {"<leader>"} -- or specify a list manually
-			triggers_nowait = {
-				-- marks
-				"`",
-				"'",
-				"g`",
-				"g'",
-				-- registers
-				'"',
-				"<c-r>",
-				-- spelling
-				"z=",
-			},
-			triggers_blacklist = {
-				-- list of mode / prefixes that should never be hooked by WhichKey
-				-- this is mostly relevant for key maps that start with a native binding
-				-- most people should not need to change this
-				-- i = { "j", "k" },
-				-- v = { "j", "k" },
-			},
+			triggers_blacklist = {},
 			disable = {
 				buftypes = {},
 				filetypes = { "TelescopePrompt" },
@@ -230,75 +169,36 @@ return {
 				["dm"] = "Delete mark",
 				["ds"] = "Delete surrounding",
 			})
-		end,
-	},
-	{
-		"Cassin01/wf.nvim",
-		event = "VeryLazy",
-		-- lazy = false,
-		enabled = false,
-		config = function()
-			require("wf").setup({
-				theme = "space",
+			wk.register({
+				["ga"] = {
+					name = "text-case",
+					c = { "<cmd>lua require('textcase').current_word('to_camel_case')<CR>", "Convert toCamelCase" },
+					d = { "<cmd>lua require('textcase').current_word('to_dashed_case')<CR>", "Convert to-dashed-case" },
+					l = { "<cmd>lua require('textcase').current_word('to_lower_case')<CR>", "Convert to lower case" },
+					p = { "<cmd>lua require('textcase').current_word('to_pascal_case')<CR>", "Convert ToPascalCase" },
+					s = { "<cmd>lua require('textcase').current_word('to_snake_case')<CR>", "Convert to_snake_case" },
+					u = { "<cmd>lua require('textcase').current_word('to_upper_case')<CR>", "Convert To UPPER CASE" },
+					C = { "<cmd>lua require('textcase').lsp_rename('to_camel_case')<CR>", "LSP rename toCamelCase" },
+					D = { "<cmd>lua require('textcase').lsp_rename('to_dashed_case')<CR>", "LSP rename to-dashed-case" },
+					L = { "<cmd>lua require('textcase').lsp_rename('to_lower_case')<CR>", "LSP rename to lower case" },
+					P = { "<cmd>lua require('textcase').lsp_rename('to_pascal_case')<CR>", "LSP rename ToPascalCase" },
+					S = { "<cmd>lua require('textcase').lsp_rename('to_snake_case')<CR>", "LSP rename to_snake_case" },
+					U = { "<cmd>lua require('textcase').lsp_rename('to_upper_case')<CR>", "LSP rename To UPPER CASE" },
+				},
 			})
-			local which_key = require("wf.builtin.which_key")
-			local register = require("wf.builtin.register")
-			-- local bookmark = require("wf.builtin.bookmark")
-			local buffer = require("wf.builtin.buffer")
-			local mark = require("wf.builtin.mark")
-
-			-- Register
-			vim.keymap.set(
-				"n",
-				"<leader>wr",
-				-- register(opts?: table) -> function
-				-- opts?: option
-				register(),
-				{ noremap = true, silent = true, desc = "[wf.nvim] register" }
-			)
-
-			-- Bookmark
-			-- vim.keymap.set(
-			-- 	"n",
-			-- 	"<Space>wbo",
-			-- 	-- bookmark(bookmark_dirs: table, opts?: table) -> function
-			-- 	-- bookmark_dirs: directory or file paths
-			-- 	-- opts?: option
-			-- 	bookmark({
-			-- 		nvim = "~/.config/nvim",
-			-- 		zsh = "~/.zshrc",
-			-- 	})({ noremap = true, silent = true, desc = "[wf.nvim] bookmark" })
-			-- )
-
-			-- Buffer
-			vim.keymap.set(
-				"n",
-				"<leader>wbu",
-				-- buffer(opts?: table) -> function
-				-- opts?: option
-				buffer(),
-				{ noremap = true, silent = true, desc = "[wf.nvim] buffer" }
-			)
-
-			-- Mark
-			vim.keymap.set(
-				"n",
-				"'",
-				-- mark(opts?: table) -> function
-				-- opts?: option
-				mark(),
-				{ nowait = true, noremap = true, silent = true, desc = "[wf.nvim] mark" }
-			)
-
-			-- Which Key
-			vim.keymap.set(
-				"n",
-				"<leader>",
-				-- mark(opts?: table) -> function
-				-- opts?: option
-				which_key({ text_insert_in_advance = "<Leader>" }),
-				{ noremap = true, silent = true, desc = "[wf.nvim] which-key /" }
-			)
+			wk.register({
+				["gao"] = {
+					name = "Pending mode operator",
+					c = { "<cmd>lua require('textcase').operator('to_camel_case')<CR>", "toCamelCase" },
+					d = { "<cmd>lua require('textcase').operator('to_dashed_case')<CR>", "to-dashed-case" },
+					l = { "<cmd>lua require('textcase').operator('to_lower_case')<CR>", "to lower case" },
+					p = { "<cmd>lua require('textcase').operator('to_pascal_case')<CR>", "ToPascalCase" },
+					s = { "<cmd>lua require('textcase').operator('to_snake_case')<CR>", "to_snake_case" },
+					u = { "<cmd>lua require('textcase').operator('to_upper_case')<CR>", "To UPPER CASE" },
+				},
+			}, {
+				mode = { "n", "v" },
+			})
 		end,
 	},
 }
