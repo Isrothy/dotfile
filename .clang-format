@@ -1,7 +1,7 @@
 # Generated from CLion C/C++ Code Style settings
 ---
 BasedOnStyle: LLVM
-# AccessModifierOffset: 2
+AccessModifierOffset: -4
 AlignAfterOpenBracket: BlockIndent
 AlignConsecutiveAssignments: None
 AlignOperands: Align
@@ -72,6 +72,6 @@ SpacesInLineCommentPrefix:
   Maximum: 1
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
-Standard: c++17
+Standard: c++20
 TabWidth: 4
 UseTab: Never

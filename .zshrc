@@ -51,7 +51,7 @@ chmod -R go-w "$(brew --prefix)/share"
 ZSH_COLORIZE_TOOL=chroma
 ENABLE_CORRECTION=true
 
-source $ZSH/oh-my-zsh.sh
+source "$ZSH"/oh-my-zsh.sh
 source /opt/homebrew/share/zsh-autopair/autopair.zsh
 source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -95,14 +95,11 @@ alias config='/usr/bin/git --git-dir=/Users/jiangjoshua/.cfg/ --work-tree=/Users
 
 #[ -f "/Users/jiangjoshua/.ghcup/env" ] && source "/Users/jiangjoshua/.ghcup/env" # ghcup-env
 
-# opam configuration
-[[ ! -r /Users/jiangjoshua/.opam/opam-init/init.zsh ]] || source /Users/jiangjoshua/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
-
-alias python="/opt/homebrew/bin/python3.11"
-alias python3="/opt/homebrew/bin/python3.11"
-alias pip="/opt/homebrew/bin/pip3.11"
-alias pip3="/opt/homebrew/bin/pip3.11"
+alias python="/opt/homebrew/bin/python3.12"
+alias python3="/opt/homebrew/bin/python3.12"
+alias pip="/opt/homebrew/bin/pip3.12"
+alias pip3="/opt/homebrew/bin/pip3.12"
 
 alias ls='lsd'
 alias l='ls -l'
@@ -110,13 +107,12 @@ alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
 
-alias vim='nvim'
-alias vi='nvim'
-
 alias pipupall="pip3 list -o | cut -f1 -d' ' | tr ' ' '\n' | awk '{if(NR>=3)print}' | cut -d' ' -f1 | xargs -n1 pip3 install -U"
 
 alias icat="kitty +kitten icat"
 
 alias preview="open -a preview"
-
+alias nano=micro
 [ -f "/Users/jiangjoshua/.ghcup/env" ] && source "/Users/jiangjoshua/.ghcup/env" # ghcup-env
+
+source /Users/jiangjoshua/.config/broot/launcher/bash/br
