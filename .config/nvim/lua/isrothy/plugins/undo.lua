@@ -10,8 +10,6 @@ return {
 	},
 	{
 		"tzachar/highlight-undo.nvim",
-		-- event = { "BufReadPre", "BufNewFile" },
-		-- lazy = false,
 		keys = { { "u" }, { "<C-r>" } },
 		opts = {
 			duration = 300,
@@ -35,7 +33,6 @@ return {
 	{
 		"kevinhwang91/nvim-fundo",
 		dependencies = "kevinhwang91/promise-async",
-		enabled = true,
 		build = function()
 			require("fundo").install()
 		end,

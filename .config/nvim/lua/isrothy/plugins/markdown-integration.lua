@@ -4,19 +4,20 @@ return {
 		build = "cd app && npm install",
 		cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
 		ft = { "markdown" },
-		enabled = false,
+		enabled = true,
 		config = function()
 			local home = os.getenv("HOME")
 			vim.g.mkdp_markdown_css = home .. "/.config/nvim/style/markdown.css"
 			vim.g.mkdp_highlight_css = home .. "/.config/nvim/style/highlight.css"
 			vim.g.mkdp_theme = "dark"
-			vim.g.mkdp_auto_close = 0
+			vim.g.mkdp_auto_close = 1
 		end,
 	},
 	{
 		"toppair/peek.nvim",
 		build = "deno task --quiet build:fast",
 		ft = { "markdown" },
+		enabled = false,
 		opts = {
 			auto_load = false, -- whether to automatically load preview when
 			-- entering another markdown buffer

@@ -214,12 +214,12 @@ local trouble = {
 local lsp_lens = {
 	"VidocqH/lsp-lens.nvim",
 	event = { "LspAttach" },
-	enabled = false,
+	enabled = true,
 	opts = {
 		enable = true,
 		include_declaration = false, -- Reference include declaration
 		sections = { -- Enable / Disable specific request
-			definition = false,
+			definition = true,
 			references = true,
 			implementation = true,
 		},

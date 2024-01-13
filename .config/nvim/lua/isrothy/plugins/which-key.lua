@@ -18,7 +18,7 @@ return {
 					g = true, -- bindings for prefixed with g
 				},
 			},
-			-- operators = { gc = "Comments" },
+			operators = {},
 			window = {
 				border = "rounded", -- none, single, double, shadow
 				position = "bottom", -- bottom, top

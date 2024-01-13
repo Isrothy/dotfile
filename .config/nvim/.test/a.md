@@ -1,6 +1,8 @@
 # leval 1
 
-A very long line A very long line A very long line A very long line A very long line A very long line A very long line A very long line A very long line A very long line
+A very long line A very long line A very long line A very long line A very long
+line A very long line A very long line A very long line A very long line A very
+long line
 
 ## level2
 
@@ -11,6 +13,10 @@ A very long line A very long line A very long line A very long line A very long 
 ##### level5
 
 ###### level6
+
+---
+
+$a + b$ and $a - b$
 
 > This is a
 > quote block
@@ -75,7 +81,7 @@ fn main() {
 
 c#
 
-```csharp
+```c_sharp
 namespace ConsoleApplication1
 {
     class Program
@@ -123,10 +129,6 @@ func main() {
     print("hello world")
 }
 ```
-
------------------------
-
---------------------------------------------
 
 $$
 \sum_{i=0}^n i^2 = \frac{n(n+1)(2 n+1)}{6}

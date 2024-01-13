@@ -6,7 +6,7 @@ return {
 		map_c_h = true,
 		check_ts = true,
 		map_c_w = true,
-		enable_check_bracket_line = false,
+		enable_check_bracket_line = true,
 		ignored_next_char = "[%w%.]",
 		disable_filetype = {
 			"TelescopePrompt",

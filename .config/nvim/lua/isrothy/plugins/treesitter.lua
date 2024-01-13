@@ -5,7 +5,7 @@ local TS = {
 	config = function()
 		require("nvim-treesitter.configs").setup({
 			sync_install = false,
-			ignore_install = { "comment" },
+			-- ignore_install = { "comment" },
 			matchup = {
 				enable = true,
 				disable_virtual_text = true,

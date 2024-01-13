@@ -14,20 +14,22 @@ root {
   --color-markdown-table-tr-border: #d8dee9;
   --color-markdown-code-bg: #3b4252;
 }
+
+
 [data-theme="dark"] {
   --color-text-primary: #eceff4;
-  --color-text-tertiary: #4c566a;
+  --color-text-tertiary: #59657d;
   --color-text-link: #81a1c1;
   --color-bg-primary: #2e3440;
   --color-bg-secondary: #2e3440;
   --color-bg-tertiary: #3b4252;
-  --color-border-primary: #2e3440;
-  --color-border-secondary: #2e3440;
-  --color-border-tertiary: #3b4252;
+  --color-border-primary: #ECEFF4;
+  --color-border-secondary: #E5E9F0;
+  --color-border-tertiary: #D8DEE9;
   --color-kbd-foreground: #e5e9f0;
-  --color-markdown-blockquote-border: #3b4252;
-  --color-markdown-table-border: #3b4252;
-  --color-markdown-table-tr-border: #2e3440;
+  --color-markdown-blockquote-border: #D8DEE9;
+  --color-markdown-table-border: #e5e9f0;
+  --color-markdown-table-tr-border: #eceff4;
   --color-markdown-code-bg: #4c566a;
 }
 
@@ -57,11 +59,11 @@ root {
   border-radius: 0 0 3px 3px;
 }
 
-.markdown-body > *:first-child {
+.markdown-body>*:first-child {
   margin-top: 0 !important;
 }
 
-.markdown-body > *:last-child {
+.markdown-body>*:last-child {
   margin-bottom: 0 !important;
 }
 
@@ -69,7 +71,7 @@ root {
   list-style: none;
 }
 
-.markdown-body .table-of-contents > ol {
+.markdown-body .table-of-contents>ol {
   padding-left: 0;
 }
 
@@ -98,7 +100,7 @@ root {
 .markdown-body h5 .anchor,
 .markdown-body h6 .anchor {
   margin-left: -24px;
-  visibility: hidden;
+  visibility: visible;
 }
 
 .markdown-body h1:hover .anchor,
@@ -151,7 +153,7 @@ root {
 
 .markdown-body h6 {
   font-size: 1em;
-  color: var(--color-text-tertiary);
+  /* color: var(--color-text-tertiary); */
 }
 
 .markdown-body hr {
@@ -243,7 +245,7 @@ root {
 .markdown-body kbd {
   display: inline-block;
   padding: 5px 6px;
-  font: 14px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font: 14px Jetbrain Mono, SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
   line-height: 10px;
   color: var(--color-kbd-foreground);
   vertical-align: middle;
@@ -286,7 +288,7 @@ root {
 }
 
 .markdown-body code {
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-family: "JetBrains Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
   padding: 0;
   padding-top: 0.2em;
   padding-bottom: 0.2em;

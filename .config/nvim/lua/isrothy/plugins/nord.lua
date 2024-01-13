@@ -60,12 +60,6 @@ M.config = function()
 			highlights.DiagnosticLineNrInfo = { fg = colors.frost.ice, bold = true }
 			highlights.DiagnosticLineNrHint = { fg = colors.frost.artic_water, bold = true }
 
-			highlights.DiagnosticFloatingOk = { link = "DiagnostcOk" }
-			highlights.DiagnosticFloatingWarn = { link = "DiagnosticWarn" }
-			highlights.DiagnosticFloatingError = { link = "DiagnosticError" }
-			highlights.DiagnosticFloatingHint = { link = "DiagnosticHint" }
-			highlights.DiagnosticFloatingInfo = { link = "DiagnosticInfo" }
-
 			highlights.LspLens = { fg = colors.polar_night.light }
 
 			highlights.LspInlayHint = { fg = colors.polar_night.light }
@@ -90,7 +84,7 @@ M.config = function()
 
 			highlights.HighlightUndo = { bg = colors.polar_night.brightest }
 
-			highlights.ScrollViewSearch = { fg = colors.frost.artic_water }
+			-- highlights.ScrollViewSearch = { fg = colors.frost.artic_water }
 
 			-- highlights.FlashLabel = { fg = colors.aurora.orange, bg = colors.polar_night.brightest, bold = true }
 		end,
