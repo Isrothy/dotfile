@@ -163,48 +163,48 @@ return {
 			desc = "Widgets",
 		},
 
-		{
-			"<F5>",
-			function()
-				require("dap").continue()
-			end,
-			desc = "Continue",
-		},
-		{
-			"<F29>", -- <s-F5>
-			function()
-				require("dap").pause()
-			end,
-			desc = "Pause",
-		},
-		{
-			"<F6>",
-			function()
-				require("dap").terminate()
-			end,
-			desc = "Terminate",
-		},
-		{
-			"<F7>",
-			function()
-				require("dap").step_into()
-			end,
-			desc = "Step Into",
-		},
-		{
-			"<F8>",
-			function()
-				require("dap").step_over()
-			end,
-			desc = "Step Over",
-		},
-		{
-			"<F31>", -- <s-F7>
-			function()
-				require("dap").step_out()
-			end,
-			desc = "Step Out",
-		},
+		-- {
+		-- 	"<F5>",
+		-- 	function()
+		-- 		require("dap").continue()
+		-- 	end,
+		-- 	desc = "Continue",
+		-- },
+		-- {
+		-- 	"<F29>", -- <s-F5>
+		-- 	function()
+		-- 		require("dap").pause()
+		-- 	end,
+		-- 	desc = "Pause",
+		-- },
+		-- {
+		-- 	"<F6>",
+		-- 	function()
+		-- 		require("dap").terminate()
+		-- 	end,
+		-- 	desc = "Terminate",
+		-- },
+		-- {
+		-- 	"<F7>",
+		-- 	function()
+		-- 		require("dap").step_into()
+		-- 	end,
+		-- 	desc = "Step Into",
+		-- },
+		-- {
+		-- 	"<F8>",
+		-- 	function()
+		-- 		require("dap").step_over()
+		-- 	end,
+		-- 	desc = "Step Over",
+		-- },
+		-- {
+		-- 	"<F31>", -- <s-F7>
+		-- 	function()
+		-- 		require("dap").step_out()
+		-- 	end,
+		-- 	desc = "Step Out",
+		-- },
 	},
 
 	config = function()

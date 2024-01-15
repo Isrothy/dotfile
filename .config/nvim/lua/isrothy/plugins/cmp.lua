@@ -21,10 +21,10 @@ CMP.dependencies = {
 		"tzachar/cmp-fuzzy-buffer",
 		dependencies = { "hrsh7th/nvim-cmp", "tzachar/fuzzy.nvim" },
 	},
-	-- {
-		-- "tzachar/cmp-fuzzy-path",
-		-- dependencies = { "hrsh7th/nvim-cmp", "tzachar/fuzzy.nvim" },
-	-- },
+	{
+		"tzachar/cmp-fuzzy-path",
+		dependencies = { "hrsh7th/nvim-cmp", "tzachar/fuzzy.nvim" },
+	},
 	{ "lukas-reineke/cmp-under-comparator" },
 	{ "onsails/lspkind-nvim" },
 }
@@ -91,7 +91,7 @@ CMP.config = function()
 			["<c-b>"] = cmp.mapping.scroll_docs(-4),
 			["<c-f>"] = cmp.mapping.scroll_docs(4),
 			["<c-Space>"] = cmp.mapping.complete(),
-			["<c-e>"] = cmp.mapping.abort(),
+			["<c-q>"] = cmp.mapping.abort(),
 			["<cr>"] = cmp.mapping.confirm({
 				behavior = cmp.ConfirmBehavior.Replace,
 				select = false,
@@ -160,7 +160,7 @@ CMP.config = function()
 			{ name = "buffer" },
 			{ name = "fuzzy_buffer" },
 			{ name = "path" },
-			-- { name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
+			{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
 		}),
 
 		sorting = {
@@ -188,6 +188,30 @@ CMP.config = function()
 		}, {
 			{ name = "buffer" },
 		}),
+		formatting = {
+			format = function(entry, vim_item)
+				vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+				vim_item.menu = ({
+					buffer = "[Buf]",
+					nvim_lsp = "[LSP]",
+					luasnip = "[LuaSnip]",
+					nvim_lua = "[Lua]",
+					latex_symbols = "[LaTeX]",
+					treesitter = "[TS]",
+					fuzzy_buffer = "[FZ]",
+					fuzzy_path = "[FZ]",
+					path = "[Path]",
+					calc = "[Calc]",
+				})[entry.source.name]
+
+				local kind = require("lspkind").cmp_format({
+					with_text = false,
+					mode = "symbol_text",
+					ellipsis_char = "...",
+				})(entry, vim_item)
+				return kind
+			end,
+		},
 	})
 
 	cmp.setup.cmdline({ "/", "?" }, {
@@ -198,6 +222,30 @@ CMP.config = function()
 			{ name = "buffer" },
 			{ name = "fuzzy_buffer" },
 		},
+		formatting = {
+			format = function(entry, vim_item)
+				vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+				vim_item.menu = ({
+					buffer = "[Buf]",
+					nvim_lsp = "[LSP]",
+					luasnip = "[LuaSnip]",
+					nvim_lua = "[Lua]",
+					latex_symbols = "[LaTeX]",
+					treesitter = "[TS]",
+					fuzzy_buffer = "[FZ]",
+					fuzzy_path = "[FZ]",
+					path = "[Path]",
+					calc = "[Calc]",
+				})[entry.source.name]
+
+				local kind = require("lspkind").cmp_format({
+					with_text = false,
+					mode = "symbol_text",
+					ellipsis_char = "...",
+				})(entry, vim_item)
+				return kind
+			end,
+		},
 	})
 
 	cmp.setup.cmdline(":", {
@@ -207,7 +255,7 @@ CMP.config = function()
 		}, {
 			{ name = "cmdline_history" },
 			{ name = "path" },
-			-- { name = "fuzzy_path" },
+			{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
 		}),
 		formatting = {
 			format = function(entry, vim_item)
@@ -220,7 +268,7 @@ CMP.config = function()
 					latex_symbols = "[LaTeX]",
 					treesitter = "[TS]",
 					fuzzy_buffer = "[FZ]",
-					-- fuzzy_path = "[FZ]",
+					fuzzy_path = "[FZ]",
 					path = "[Path]",
 					calc = "[Calc]",
 				})[entry.source.name]

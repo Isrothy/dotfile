@@ -8,6 +8,7 @@
 -- 	{ "", "FloatBorder" },
 -- 	{ " ", "FloatBorder" },
 -- }
+
 local map = vim.keymap.set
 
 local border = "rounded"
@@ -728,7 +729,6 @@ local codeium = {
 		"Exafunction/codeium.vim",
 		event = "VeryLazy",
 		config = function()
-			-- Change '<C-g>' here to any keycode you like.
 			vim.keymap.set("i", "<C-;>", function()
 				return vim.fn["codeium#Accept"]()
 			end, { expr = true, silent = true, noremap = true })

@@ -14,13 +14,9 @@ return {
 			},
 		},
 		opts = {
-			autoselect_one = true,
-			include_current = false,
-			-- hint = "floating-big-letter",
+			hint = "statusline-winbar",
 			filter_rules = {
-				-- filter using buffer options
 				bo = {
-					-- if the file type is one of following, the window will be ignored
 					filetype = {
 						"neo-tree",
 						"neo-tree-popup",
@@ -29,38 +25,18 @@ return {
 						"aerial",
 						"edgy",
 					},
-
-					-- if the buffer type is one of following, the window will be ignored
 					buftype = {
 						"terminal",
 						"aerial",
 					},
 				},
 			},
-
 			picker_config = {
 				statusline_winbar_picker = {
-					-- You can change the display string in status bar.
-					-- It supports '%' printf style. Such as `return char .. ': %f'` to display
-					-- buffer file path. See :h 'stl' for details.
 					selection_display = function(char, windowid)
 						return "%=" .. char .. "%="
 					end,
-
-					-- whether you want to use winbar instead of the statusline
-					-- "always" means to always use winbar,
-					-- "never" means to never use winbar
-					-- "smart" means to use winbar if cmdheight=0 and statusline if cmdheight > 0
 					use_winbar = "never", -- "always" | "never" | "smart"
-				},
-
-				floating_big_letter = {
-					-- window picker plugin provides bunch of big letter fonts
-					-- fonts will be lazy loaded as they are being requested
-					-- additionally, user can pass in a table of fonts in to font
-					-- property to use instead
-
-					font = "ansi-shadow", -- ansi-shadow |
 				},
 			},
 			show_prompt = false,
@@ -94,10 +70,10 @@ return {
 				desc = "Move cursor right",
 			},
 
-			{ "<leader>bh", "<cmd> lua require('smart-splits').swap_buf_left() <cr>", desc = "Swap buffers left" },
-			{ "<leader>bj", "<cmd> lua require('smart-splits').swap_buf_down() <cr>", desc = "Swap buffers down" },
-			{ "<leader>bk", "<cmd> lua require('smart-splits').swap_buf_up() <cr>", desc = "Swap buffers up" },
-			{ "<leader>bl", "<cmd> lua require('smart-splits').swap_buf_right() <cr>", desc = "Swap buffers right" },
+			{ "<leader>bh", "<cmd>lua require('smart-splits').swap_buf_left()<cr>", desc = "Swap buffers left" },
+			{ "<leader>bj", "<cmd>lua require('smart-splits').swap_buf_down()<cr>", desc = "Swap buffers down" },
+			{ "<leader>bk", "<cmd>lua require('smart-splits').swap_buf_up()<cr>", desc = "Swap buffers up" },
+			{ "<leader>bl", "<cmd>lua require('smart-splits').swap_buf_right()<cr>", desc = "Swap buffers right" },
 
 			{ "<M-h>", "<cmd>lua require('smart-splits').resize_left()<cr>", desc = "Resize left" },
 			{ "<M-j>", "<cmd>lua require('smart-splits').resize_down()<cr>", desc = "Resize down" },

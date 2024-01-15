@@ -2,6 +2,7 @@ return {
 	{
 		"akinsho/nvim-toggleterm.lua",
 		keys = [[<c-`>]],
+		enabled = false,
 		cmd = {
 			"TermExec",
 			"TermSelect",
@@ -94,8 +95,8 @@ return {
 	},
 	{
 		"chomosuke/term-edit.nvim",
-		ft = { "toggleterm", "BufTerm" },
-		-- version = "1.*",
+		enabled = false,
+		event = "TermOpen",
 		otps = {
 			prompt_end = "❯ ",
 		},

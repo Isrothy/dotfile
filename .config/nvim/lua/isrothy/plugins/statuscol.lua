@@ -16,6 +16,9 @@ return {
 				"neo-tree",
 				"undotree",
 			},
+			bt_ignore = {
+				"terminal",
+			},
 			segments = {
 				{
 					text = {

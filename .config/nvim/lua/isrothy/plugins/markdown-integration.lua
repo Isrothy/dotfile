@@ -1,10 +1,13 @@
 return {
 	{
 		"iamcco/markdown-preview.nvim",
-		build = "cd app && npm install",
+		-- build = "cd app && npm install",
 		cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
+		build = function() vim.fn["mkdp#util#install"]() end,
 		ft = { "markdown" },
-		enabled = true,
+		init = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
 		config = function()
 			local home = os.getenv("HOME")
 			vim.g.mkdp_markdown_css = home .. "/.config/nvim/style/markdown.css"

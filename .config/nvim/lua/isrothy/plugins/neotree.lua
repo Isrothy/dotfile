@@ -270,7 +270,10 @@ M.config = function()
 			width = 36,
 			auto_expand_width = false,
 			mappings = {
-				["<space>"] = "none",
+				["<esc>"] = function()
+					vim.cmd("nohl")
+				end,
+				["<space>"] = "noop",
 				["<tab>"] = function(state)
 					local node = state.tree:get_node()
 					if require("neo-tree.utils").is_expandable(node) then
@@ -341,6 +344,7 @@ M.config = function()
 					["gc"] = "git_commit",
 					["gp"] = "git_push",
 					["gg"] = "git_commit_and_push",
+					["/"] = "none",
 				},
 			},
 			commands = {
