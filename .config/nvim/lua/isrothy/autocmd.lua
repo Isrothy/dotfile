@@ -14,6 +14,8 @@ vim.api.nvim_create_autocmd({ "TermOpen" }, {
 		vim.wo.colorcolumn = ""
 		vim.wo.sidescrolloff = 0
 		vim.wo.scrolloff = 0
+		vim.wo.number = false
+		vim.wo.relativenumber = false
 	end,
 })
 

@@ -160,7 +160,7 @@ CMP.config = function()
 			{ name = "buffer" },
 			{ name = "fuzzy_buffer" },
 			{ name = "path" },
-			{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
+			-- { name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
 		}),
 
 		sorting = {
@@ -233,7 +233,7 @@ CMP.config = function()
 					latex_symbols = "[LaTeX]",
 					treesitter = "[TS]",
 					fuzzy_buffer = "[FZ]",
-					fuzzy_path = "[FZ]",
+					-- fuzzy_path = "[FZ]",
 					path = "[Path]",
 					calc = "[Calc]",
 				})[entry.source.name]
@@ -255,7 +255,7 @@ CMP.config = function()
 		}, {
 			{ name = "cmdline_history" },
 			{ name = "path" },
-			{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
+			-- { name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
 		}),
 		formatting = {
 			format = function(entry, vim_item)

@@ -90,7 +90,7 @@ return {
 
 			wk.register({
 				ca = "Lsp code action",
-				cr = "Run code",
+				-- cr = "Run code",
 				rn = "Lsp rename",
 				f = "Lsp format",
 				qd = "Diagnostics to quickfix",

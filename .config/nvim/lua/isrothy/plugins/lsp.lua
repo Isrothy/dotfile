@@ -273,31 +273,33 @@ local Lspconfig = {
 				set_inlay_hint(client, bufnr)
 			end,
 		})
-		-- require("lspconfig").pylsp.setup({
+		require("lspconfig").pylsp.setup({
+			capabilities = make_capabilities(),
+			on_attach = function(client, bufnr)
+				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
+			end,
+			settings = {
+				pylsp = {
+					plugins = {
+						flake8 = {
+							enabled = false,
+						},
+						pyflakes = {
+							enabled = false,
+						},
+						pylint = {
+							enabled = false,
+						},
+					},
+				},
+			},
+		})
+		-- require("lspconfig").pyright.setup({
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
-		-- 		set_key_map(client, bufnr)
-		-- 	end,
-		-- 	settings = {
-		-- 		pylsp = {
-		-- 			plugins = {
-		-- 				flake8 = {
-		-- 					enabled = false,
-		-- 				},
-		-- 				pyflakes = {
-		-- 					enabled = false,
-		-- 				},
-		-- 				pylint = {
-		-- 					enabled = false,
-		-- 				},
-		-- 			},
-		-- 		},
-		-- 	},
-		-- })
-		-- require("lspconfig").pyright.setup({
-		-- 	-- capabilities = make_capabilities(),
-		-- 	on_attach = function(client, bufnr)
-		-- 		set_key_map(client, bufnr)
+		-- 		set_keymap(client, bufnr)
+		-- 		set_inlay_hint(client, bufnr)
 		-- 	end,
 		-- 	settings = {
 		-- 		python = {
@@ -309,13 +311,13 @@ local Lspconfig = {
 		-- 		},
 		-- 	},
 		-- })
-		require("lspconfig").jedi_language_server.setup({
-			capabilities = make_capabilities(),
-			on_attach = function(client, bufnr)
-				set_keymap(client, bufnr)
-				set_inlay_hint(client, bufnr)
-			end,
-		})
+		-- require("lspconfig").jedi_language_server.setup({
+		-- 	capabilities = make_capabilities(),
+		-- 	on_attach = function(client, bufnr)
+		-- 		set_keymap(client, bufnr)
+		-- 		set_inlay_hint(client, bufnr)
+		-- 	end,
+		-- })
 		-- require("lspconfig").pylyzer.setup({
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
@@ -605,15 +607,15 @@ local null_ls = {
 				null_ls.builtins.diagnostics.gitlint,
 				-- null_ls.builtins.diagnostics.textidote,
 				-- null_ls.builtins.diagnostics.typos,
-				null_ls.builtins.diagnostics.pylint.with({
-					args = {
-						"--from-stdin",
-						"$FILENAME",
-						"-f",
-						"json",
-						"--errors-only",
-					},
-				}),
+				-- null_ls.builtins.diagnostics.pylint.with({
+				-- 	args = {
+				-- 		"--from-stdin",
+				-- 		"$FILENAME",
+				-- 		"-f",
+				-- 		"json",
+				-- 		"--errors-only",
+				-- 	},
+				-- }),
 				null_ls.builtins.diagnostics.shellcheck,
 				-- null_ls.builtins.diagnostics.swiftlint,
 				-- null_ls.builtins.diagnostics.yamllint,
@@ -621,7 +623,7 @@ local null_ls = {
 
 				-- null_ls.builtins.code_actions.shellcheck,
 
-				null_ls.builtins.formatting.autopep8,
+				-- null_ls.builtins.formatting.autopep8,
 				null_ls.builtins.formatting.cmake_format,
 				null_ls.builtins.formatting.markdownlint,
 				null_ls.builtins.formatting.shellharden.with({
