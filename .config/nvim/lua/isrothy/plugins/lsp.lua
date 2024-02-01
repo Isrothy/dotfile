@@ -104,6 +104,9 @@ local mason = {
 				"shfmt",
 				-- "flake8",
 			},
+			ui = {
+				border = "rounded",
+			},
 		},
 		config = function(_, opts)
 			require("mason").setup(opts)
