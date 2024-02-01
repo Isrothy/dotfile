@@ -6,6 +6,9 @@ local neotest = {
 		"nvim-treesitter/nvim-treesitter",
 		"mrcjkb/neotest-haskell",
 		"rcasia/neotest-java",
+		"alfaix/neotest-gtest",
+		"rouge8/neotest-rust",
+		"nvim-neotest/neotest-python",
 	},
 	keys = {
 		{
@@ -79,11 +82,12 @@ local neotest = {
 				open = true,
 			},
 			adapters = {
-				adapters = {
-					require("neotest-java")({
-						ignore_wrapper = false, -- whether to ignore maven/gradle wrapper
-					}),
-				},
+				require("neotest-rust"),
+				require("neotest-python"),
+				require("neotest-gtest").setup({}),
+				require("neotest-java")({
+					ignore_wrapper = false, -- whether to ignore maven/gradle wrapper
+				}),
 				require("neotest-haskell")({
 					build_tools = { "stack", "cabal" },
 					frameworks = { "hspec" },

@@ -162,6 +162,13 @@ return {
 			end,
 			desc = "Widgets",
 		},
+		{
+			"<leader>td",
+			function()
+				require("neotest").run.run({ strategy = "dap" })
+			end,
+			desc = "Debug Nearest",
+		},
 
 		-- {
 		-- 	"<F5>",

@@ -113,17 +113,8 @@ return {
 			})
 
 			wk.register({
-				["<leader>h"] = {
+				["<leader>gh"] = {
 					name = "hunk",
-					s = "Stage hunk",
-					r = "Reset hunk",
-					S = "Stage buffer",
-					u = "Undo stage buffer",
-					R = "Reset buffer",
-					p = "Preview Hunk",
-					b = "Toggle current blame line",
-					d = "Diff",
-					D = "Toggle delete",
 				},
 			})
 			wk.register({
@@ -162,7 +153,7 @@ return {
 			wk.register({
 				["<leader>t"] = {
 					name = "Neotest",
-				}
+				},
 			})
 			wk.register({
 				["]h"] = "Next hunk",
