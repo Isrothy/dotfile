@@ -21,11 +21,6 @@ return {
 			},
 			segments = {
 				{
-					text = {
-						builtin.foldfunc,
-					},
-				},
-				{
 					sign = {
 						namespace = { ".*" },
 						name = { ".*" },
@@ -37,8 +32,14 @@ return {
 					text = { builtin.lnumfunc, " " },
 				},
 				{
+					text = {
+						builtin.foldfunc,
+					},
+				},
+				{
 					sign = {
-						name = { "GitSign*" },
+						-- name = { "GitSign*" },
+						namespace = { "gitsigns_extmark_signs_" },
 						maxwidth = 1,
 						colwidth = 1,
 					},

@@ -87,6 +87,13 @@ telescope.config = function()
 				require("telescope.themes").get_dropdown({}),
 				-- require("telescope.themes").get_cursor({}),
 			},
+			frecency = {
+				show_scores = false,
+				show_unindexed = true,
+				db_safe_mode = false,
+				ignore_patterns = { "*.git/*", "*/tmp/*" },
+				disable_devicons = false,
+			},
 			fzf = {
 				fuzzy = true, -- false will only do exact matching
 				override_generic_sorter = true, -- override the generic sorter

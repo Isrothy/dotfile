@@ -9,7 +9,4 @@ vim.filetype.add({
 			end
 		end,
 	},
-	extension = {
-		["typst"] = "typst",
-	}
 })

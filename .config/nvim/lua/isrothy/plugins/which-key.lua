@@ -160,6 +160,11 @@ return {
 				},
 			})
 			wk.register({
+				["<leader>t"] = {
+					name = "Neotest",
+				}
+			})
+			wk.register({
 				["]h"] = "Next hunk",
 				["[h"] = "Previous hunk",
 				["]c"] = "Next diff",

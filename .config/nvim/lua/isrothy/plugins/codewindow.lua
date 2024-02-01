@@ -1,7 +1,7 @@
 return {
 	"gorbit99/codewindow.nvim",
 	event = { "BufReadPost", "BufNewFile" },
-	enabled = true,
+	enabled = false,
 	config = function()
 		local codewindow = require("codewindow")
 		codewindow.setup({
@@ -19,7 +19,7 @@ return {
 			z_index = 1,
 			show_cursor = true,
 			screen_bounds = "background",
-			window_border = "none",
+			window_border = "rounded",
 			events = {
 				"LspAttach",
 				"BufEnter",

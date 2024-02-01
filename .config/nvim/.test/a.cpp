@@ -21,10 +21,10 @@ struct A {
 
     static const int y;
 
-  private:
+private:
     double x;
 
-  public:
+public:
     [[nodiscard]] double add(int z) const {
         return x + y + z;
     }

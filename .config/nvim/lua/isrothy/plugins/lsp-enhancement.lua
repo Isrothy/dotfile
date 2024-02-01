@@ -63,7 +63,7 @@ local inc_rename = {
 
 local neo_dim = {
 	"zbirenbaum/neodim",
-	enabled = true,
+	enabled = false,
 	event = { "LspAttach" },
 	config = function()
 		local c = require("nord.colors").palette
@@ -177,7 +177,7 @@ local trouble = {
 local lsp_lens = {
 	"VidocqH/lsp-lens.nvim",
 	event = { "LspAttach" },
-	enabled = true,
+	enabled = false,
 	opts = {
 		enable = true,
 		include_declaration = false, -- Reference include declaration
