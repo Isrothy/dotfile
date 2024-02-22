@@ -1,6 +1,7 @@
 return {
 	"chentoast/marks.nvim",
 	event = { "BufReadPost", "BufNewFile" },
+	enabled = true,
 	opts = {
 		excluded_filetypes = {
 			"",

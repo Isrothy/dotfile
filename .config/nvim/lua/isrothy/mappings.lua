@@ -3,7 +3,8 @@ local map = vim.keymap.set
 local default_options = { noremap = true, silent = true }
 local expr_options = { expr = true, silent = true }
 
-map({ "n", "v" }, "<Space>", "<Nop>", default_options)
+map({ "n", "x" }, "<Space>", "<Nop>", default_options)
+map({ "n", "x", "i", "c", "t" }, "<F1>", "<Nop>", default_options)
 vim.g.mapleader = " "
 
 map(
@@ -39,6 +40,9 @@ map("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"', {
 	desc = "Visually select changed text",
 })
 
+map("n", "<leader>o", "<C-o>", default_options)
+map("n", "<leader>i", "<C-i>", default_options)
+
 map("n", "<C-v>", "<C-w>v", default_options)
 map("n", "<C-s>", "<C-w>s", default_options)
 map("n", "<C-c>", "<C-w>c", default_options)
@@ -60,10 +64,40 @@ map("n", "<leader>qd", vim.diagnostic.setqflist, { noremap = true, silent = true
 map("n", "<leader>ld", vim.diagnostic.setloclist, { noremap = true, silent = true, desc = "Local diagnostics" })
 map("n", "<leader>cd", vim.diagnostic.open_float, { noremap = true, silent = true, desc = "Current line diagnostics" })
 
--- map("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", { noremap = true, silent = true })
--- map("n", "<F10>", "<cmd>lua require'dap'.step_over()<cr>", { noremap = true, silent = true })
--- map("n", "<F11>", "<cmd>lua require'dap'.step_into()<cr>", { noremap = true, silent = true })
--- map("n", "<F12>", "<cmd>lua require'dap'.step_out()<cr>", { noremap = true, silent = true })
--- map("n", "<Leader>b", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { noremap = true, silent = true })
--- map("n", "<Leader>B", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: ')))<cr>",
--- 	{ noremap = true, silent = true })
+map("x", ".", ":norm .<CR>", default_options)
+map("x", "@", ":norm @q<CR>", default_options)
+
+map(
+	"n",
+	"<leader>yr",
+	":call setreg('+', getreg('@'))<CR>",
+	{ noremap = true, silent = true, desc = "Paste register to system clipboard" }
+)
+map("n", "<leader>yp", ":call setreg('+', expand('%:.') .. ':' .. line('.'))<CR>", {
+	noremap = true,
+	silent = true,
+	desc = "Paste filename and line number to system clipboard",
+})
+
+vim.cmd([[
+cnoreabbrev W! w!
+cnoreabbrev W1 w!
+cnoreabbrev w1 w!
+cnoreabbrev Q! q!
+cnoreabbrev Q1 q!
+cnoreabbrev q1 q!
+cnoreabbrev Qa! qa!
+cnoreabbrev Qall! qall!
+cnoreabbrev Wa wa
+cnoreabbrev Wq wq
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev wq1 wq!
+cnoreabbrev Wq1 wq!
+cnoreabbrev wQ1 wq!
+cnoreabbrev WQ1 wq!
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qa qa
+cnoreabbrev Qall qall
+]])

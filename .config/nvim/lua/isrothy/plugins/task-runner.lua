@@ -8,24 +8,15 @@ return {
 		},
 	},
 	{
-		"skywind3000/asyncrun.vim",
-		enabled = false,
-		cmd = {
-			"AsyncRun",
-			"AsyncReset",
-			"AsyncStop",
-		},
-	},
-	{
 		"CRAG666/code_runner.nvim",
 		cmd = "RunCode",
-		enabled = false,
+		enabled = true,
 		keys = {
 			{ "<leader>cr", ":RunCode<cr>" },
 		},
 		dependencies = "nvim-lua/plenary.nvim",
 		opts = {
-			mode = "toggleterm",
+			mode = "float",
 			startinsert = true,
 			filetype = {
 				c = "cd $dir && clang $fileName -o $fileNameWithoutExt && $dir/$fileNameWithoutExt",

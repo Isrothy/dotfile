@@ -1,6 +1,7 @@
 local vvar = vim.api.nvim_get_vvar
 return {
 	"numToStr/Comment.nvim",
+	enabled = true,
 	dependencies = {
 		{
 			"JoosepAlviste/nvim-ts-context-commentstring",

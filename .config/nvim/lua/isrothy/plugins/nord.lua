@@ -34,7 +34,7 @@ M.config = function()
 			highlights.CmpDocumentation = { bg = colors.polar_night.brighter }
 
 			highlights.MarkSignHL = { fg = colors.aurora.green }
-			highlights.MarkSignNumHL = { fg = colors.aurora.green, bold = true }
+			-- highlights.MarkSignNumHL = { fg = colors.aurora.green, bold = true }
 
 			highlights.WhichKeyFloat = { bg = colors.polar_night.origin }
 
@@ -83,6 +83,8 @@ M.config = function()
 			highlights.DebugPC = { bg = colors.polar_night.brightest }
 
 			highlights.HighlightUndo = { bg = colors.polar_night.brightest }
+
+			highlights.VirtColumn = { fg = colors.polar_night.brightest }
 
 			-- highlights.ScrollViewSearch = { fg = colors.frost.artic_water }
 

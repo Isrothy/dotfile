@@ -7,7 +7,6 @@ local neotest = {
 		"mrcjkb/neotest-haskell",
 		"rcasia/neotest-java",
 		"alfaix/neotest-gtest",
-		"rouge8/neotest-rust",
 		"nvim-neotest/neotest-python",
 	},
 	keys = {
@@ -82,7 +81,7 @@ local neotest = {
 				open = true,
 			},
 			adapters = {
-				require("neotest-rust"),
+				require("rustaceanvim.neotest"),
 				require("neotest-python"),
 				require("neotest-gtest").setup({}),
 				require("neotest-java")({

@@ -1,5 +1,6 @@
 local CMP = {
 	"hrsh7th/nvim-cmp",
+	enabled = true,
 	event = { "InsertEnter", "CmdlineEnter" },
 }
 
@@ -27,7 +28,34 @@ CMP.dependencies = {
 	},
 	{ "lukas-reineke/cmp-under-comparator" },
 	{ "onsails/lspkind-nvim" },
+	{ "rcarriga/cmp-dap" },
+	{ "chrisgrieser/cmp_yanky" },
+	{
+		"tamago324/cmp-zsh",
+		opts = {
+			zshrc = true,
+			filetypes = { "zsh" },
+		},
+	},
 }
+
+local function get_default_cmp_source()
+	local cmp = require("cmp")
+	return cmp.config.sources({
+		{ name = "nvim_lsp" },
+		-- { name = "nvim_lsp_signature_help" },
+		{ name = "nvim_lsp_document_symbol" },
+		{ name = "luasnip" },
+	}, {
+		{ name = "calc" },
+		{ name = "buffer" },
+		{ name = "fuzzy_buffer" },
+		{ name = "path" },
+		{ name = "treesitter" },
+		{ name = "cmp_yanky" },
+		{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
+	})
+end
 
 CMP.config = function()
 	local has_words_before = function()
@@ -70,9 +98,6 @@ CMP.config = function()
 	local luasnip = require("luasnip")
 
 	cmp.setup({
-		-- experimental = {
-		-- 	ghost_text = { hlgroup = "Comment" },
-		-- },
 		snippet = {
 			expand = function(args)
 				require("luasnip").lsp_expand(args.body)
@@ -120,7 +145,8 @@ CMP.config = function()
 		}),
 		formatting = {
 			format = function(entry, vim_item)
-				vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+				-- This concatonates the icons with the name of the item kind
+				vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
 				vim_item.menu = ({
 					buffer = "[Buf]",
 					nvim_lsp = "[LSP]",
@@ -133,6 +159,9 @@ CMP.config = function()
 					path = "[Path]",
 					calc = "[Calc]",
 					codeium = "[CDM]",
+					yanky = "[YANK]",
+					dap = "[DAP]",
+					zsh = "[ZSH]",
 				})[entry.source.name]
 
 				local kind = require("lspkind").cmp_format({
@@ -141,27 +170,11 @@ CMP.config = function()
 					mode = "symbol_text",
 					ellipsis_char = "...",
 				})(entry, vim_item)
-				-- local strings = vim.split(kind.kind, "%s", { trimempty = true })
-				-- kind.kind = " " .. (strings[1] or "") .. " "
-				-- kind.menu = "    (" .. (strings[2] or "") .. ")"
 				return kind
 			end,
 		},
 
-		sources = cmp.config.sources({
-			{ name = "nvim_lsp" },
-			{ name = "nvim_lsp_signature_help" },
-			{ name = "nvim_lsp_document_symbol" },
-			{ name = "luasnip" },
-			{ name = "nvim_lua" },
-		}, {
-			{ name = "calc" },
-			{ name = "treesitter" },
-			{ name = "buffer" },
-			{ name = "fuzzy_buffer" },
-			{ name = "path" },
-			{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
-		}),
+		sources = get_default_cmp_source(),
 
 		sorting = {
 			priority_weight = 2,
@@ -173,13 +186,31 @@ CMP.config = function()
 				compare.score,
 				require("cmp-under-comparator").under,
 				compare.recently_used,
-				-- require("clangd_extensions.cmp_scores"),
 				compare.kind,
 				compare.sort_text,
 				compare.length,
 				compare.order,
 			},
 		},
+		enabled = function()
+			return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
+		end,
+	})
+
+	cmp.setup.filetype("lua", {
+		sources = cmp.config.sources((function()
+			local sources = get_default_cmp_source()
+			sources[#sources + 1] = { name = "nvim_lua", group_index = 1 }
+			return sources
+		end)()),
+	})
+
+	cmp.setup.filetype("zsh", {
+		sources = cmp.config.sources((function()
+			local sources = get_default_cmp_source()
+			sources[#sources + 1] = { name = "zsh", group_index = 1 }
+			return sources
+		end)()),
 	})
 
 	cmp.setup.filetype("gitcommit", {
@@ -188,29 +219,11 @@ CMP.config = function()
 		}, {
 			{ name = "buffer" },
 		}),
-		formatting = {
-			format = function(entry, vim_item)
-				vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-				vim_item.menu = ({
-					buffer = "[Buf]",
-					nvim_lsp = "[LSP]",
-					luasnip = "[LuaSnip]",
-					nvim_lua = "[Lua]",
-					latex_symbols = "[LaTeX]",
-					treesitter = "[TS]",
-					fuzzy_buffer = "[FZ]",
-					fuzzy_path = "[FZ]",
-					path = "[Path]",
-					calc = "[Calc]",
-				})[entry.source.name]
+	})
 
-				local kind = require("lspkind").cmp_format({
-					with_text = false,
-					mode = "symbol_text",
-					ellipsis_char = "...",
-				})(entry, vim_item)
-				return kind
-			end,
+	cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+		sources = {
+			{ name = "dap" },
 		},
 	})
 
@@ -221,30 +234,6 @@ CMP.config = function()
 			{ name = "cmdline_history" },
 			{ name = "buffer" },
 			{ name = "fuzzy_buffer" },
-		},
-		formatting = {
-			format = function(entry, vim_item)
-				vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-				vim_item.menu = ({
-					buffer = "[Buf]",
-					nvim_lsp = "[LSP]",
-					luasnip = "[LuaSnip]",
-					nvim_lua = "[Lua]",
-					latex_symbols = "[LaTeX]",
-					treesitter = "[TS]",
-					fuzzy_buffer = "[FZ]",
-					fuzzy_path = "[FZ]",
-					path = "[Path]",
-					calc = "[Calc]",
-				})[entry.source.name]
-
-				local kind = require("lspkind").cmp_format({
-					with_text = false,
-					mode = "symbol_text",
-					ellipsis_char = "...",
-				})(entry, vim_item)
-				return kind
-			end,
 		},
 	})
 
@@ -257,32 +246,26 @@ CMP.config = function()
 			{ name = "path" },
 			{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
 		}),
-		formatting = {
-			format = function(entry, vim_item)
-				vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-				vim_item.menu = ({
-					buffer = "[Buf]",
-					nvim_lsp = "[LSP]",
-					luasnip = "[LuaSnip]",
-					nvim_lua = "[Lua]",
-					latex_symbols = "[LaTeX]",
-					treesitter = "[TS]",
-					fuzzy_buffer = "[FZ]",
-					fuzzy_path = "[FZ]",
-					path = "[Path]",
-					calc = "[Calc]",
-				})[entry.source.name]
-
-				local kind = require("lspkind").cmp_format({
-					with_text = false,
-					mode = "symbol_text",
-					ellipsis_char = "...",
-				})(entry, vim_item)
-				return kind
-			end,
-		},
 	})
 end
+
+CMP.init = function()
+	vim.api.nvim_create_autocmd("User", {
+		pattern = "LargeBuf",
+		group = vim.api.nvim_create_augroup("cmp_large_file", { clear = true }),
+		callback = function()
+			local cmp = require("cmp")
+			cmp.setup.buffer({
+				sources = {
+					{ name = "calc" },
+					{ name = "buffer" },
+					{ name = "fuzzy_buffer" },
+				},
+			})
+		end,
+	})
+end
+
 local LuaSnip = {
 	"L3MON4D3/LuaSnip",
 	version = "v2.*",
@@ -331,3 +314,4 @@ return {
 	LuaSnip,
 	haskell_snippets,
 }
+

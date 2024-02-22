@@ -2,7 +2,7 @@ return {
 	{
 		"andymass/vim-matchup",
 		event = { "BufReadPost", "BufNewFile" },
-		enabled = true,
+		enabled = false,
 		init = function()
 			vim.g.matchup_motion_override_Npercent = 0
 			vim.g.matchup_matchparen_fallback = 0
@@ -16,7 +16,7 @@ return {
 	},
 	{
 		"utilyre/sentiment.nvim",
-		enabled = false,
+		enabled = true,
 		version = "*",
 		event = { "BufReadPost", "BufNewFile" },
 		opts = {

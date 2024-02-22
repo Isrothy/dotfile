@@ -16,6 +16,8 @@ vim.api.nvim_create_autocmd({ "TermOpen" }, {
 		vim.wo.scrolloff = 0
 		vim.wo.number = false
 		vim.wo.relativenumber = false
+		vim.wo.foldcolumn = "0"
+		vim.wo.foldmethod = "manual"
 	end,
 })
 
@@ -72,30 +74,32 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	end,
 })
 
-local cc_filetypes = {
-	c = "101",
-	cpp = "101",
-	java = "101",
-	javascript = "101",
-	javascriptreact = "101",
-	kotlin = "101",
-	lua = "121",
-	typescript = "101",
-	typescriptreact = "101",
-	rust = "101",
-	swift = "101",
-}
-vim.api.nvim_create_autocmd({ "FileType" }, {
-	group = vim.api.nvim_create_augroup("colorcolumn", { clear = true }),
-	callback = function(event)
-		local filetype = event.match
-		if cc_filetypes[filetype] then
-			vim.wo.colorcolumn = cc_filetypes[filetype]
-		else
-			vim.wo.colorcolumn = ""
-		end
-	end,
-})
+-- -- create cc according to filetype
+-- local cc_filetypes = {
+-- 	c = "101",
+-- 	cpp = "101",
+-- 	java = "101",
+-- 	javascript = "101",
+-- 	javascriptreact = "101",
+-- 	kotlin = "101",
+-- 	lua = "121",
+-- 	typescript = "101",
+-- 	typescriptreact = "101",
+-- 	rust = "101",
+-- 	swift = "101",
+-- 	markdown = "81",
+-- }
+-- vim.api.nvim_create_autocmd({ "FileType" }, {
+-- 	group = vim.api.nvim_create_augroup("colorcolumn", { clear = true }),
+-- 	callback = function(event)
+-- 		local filetype = event.match
+-- 		if cc_filetypes[filetype] then
+-- 			vim.wo.colorcolumn = cc_filetypes[filetype]
+-- 		else
+-- 			vim.wo.colorcolumn = ""
+-- 		end
+-- 	end,
+-- })
 
 -- local wrap_filetypes = {
 -- 	"markdown",
@@ -116,31 +120,23 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 -- 	end,
 -- })
 
--- vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
--- 	group = vim.api.nvim_create_augroup("ScrollEOF", { clear = true }),
--- 	pattern = "*",
---- 	callback = function()
--- 		local filetype = vim.bo.filetype
--- 		local ignore_filetype = {
--- 			"quickfix",
--- 			"nofile",
--- 			"help",
--- 			"terminal",
--- 			"toggleterm",
--- 			"",
--- 		}
--- 		if vim.tbl_contains(ignore_filetype, filetype) then
--- 			return
--- 		end
--- 		local win_height = vim.api.nvim_win_get_height(0)
--- 		local win_view = vim.fn.winsaveview()
--- 		local scrolloff = math.min(vim.o.scrolloff, math.floor(win_height / 2))
--- 		local scrolloff_line_count = win_height - (vim.fn.line("w$") - win_view.topline + 1)
--- 		local distance_to_last_line = vim.fn.line("$") - win_view.lnum
---
--- 		if distance_to_last_line < scrolloff and scrolloff_line_count + distance_to_last_line < scrolloff then
--- 			win_view.topline = win_view.topline + scrolloff - (scrolloff_line_count + distance_to_last_line)
--- 			vim.fn.winrestview(win_view)
--- 		end
--- 	end,
--- })
+-- large file
+vim.api.nvim_create_autocmd({ "BufReadPre" }, {
+	callback = function()
+		local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf()))
+		if ok and stats and (stats.size > 1024 * 1024) then
+			vim.b.large_buf = true
+			vim.cmd("syntax off")
+			vim.opt_local.foldmethod = "manual"
+			vim.opt_local.spell = false
+			vim.notify("Large buffer detected", "warn")
+			vim.api.nvim_exec_autocmds("User", {
+				pattern = "LargeBuf",
+			})
+		else
+			vim.b.large_buf = false
+		end
+	end,
+	group = vim.api.nvim_create_augroup("large_buf", { clear = true }),
+	pattern = "*",
+})

@@ -500,7 +500,6 @@ local haskell_tools = {
 					},
 				},
 				hover = {
-					-- disable = true,
 					stylize_markdown = true,
 					auto_focus = false,
 				},
@@ -531,7 +530,7 @@ local haskell_tools = {
 
 local rustaceanvim = {
 	"mrcjkb/rustaceanvim",
-	version = "^3",
+	version = "^4",
 	ft = { "rust" },
 	init = function()
 		vim.g.rustaceanvim = {
@@ -605,7 +604,8 @@ local null_ls = {
 
 				-- null_ls.builtins.code_actions.shellcheck,
 
-				null_ls.builtins.formatting.autopep8,
+				-- null_ls.builtins.formatting.autopep8,
+				null_ls.builtins.formatting.black,
 				null_ls.builtins.formatting.cmake_format,
 				null_ls.builtins.formatting.markdownlint,
 				null_ls.builtins.formatting.shellharden.with({
@@ -634,7 +634,7 @@ local null_ls = {
 				-- 	},
 				-- }),
 				null_ls.builtins.formatting.stylua,
-				null_ls.builtins.formatting.swiftformat,
+				-- null_ls.builtins.formatting.swiftformat,
 
 				-- null_ls.builtins.formatting.yamlfmt,
 				null_ls.builtins.formatting.xmllint,
@@ -698,15 +698,6 @@ local copilot = {
 		end, 100)
 	end,
 }
-
--- local copilot = {
--- 	"github/copilot.vim",
--- 	event = "VeryLazy",
--- 	init = function()
--- 		vim.g.copilot_no_tab_map = true
--- 		vim.keymap.set("i", "<M-;>", [[copilot#Accept("\<CR>")]], { expr = true, script = true })
--- 	end,
--- }
 
 local codeium = {
 	"Exafunction/codeium.vim",

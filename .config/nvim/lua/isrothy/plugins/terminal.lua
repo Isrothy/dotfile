@@ -1,105 +1,72 @@
 return {
 	{
-		"akinsho/nvim-toggleterm.lua",
-		keys = [[<c-`>]],
-		enabled = false,
-		cmd = {
-			"TermExec",
-			"TermSelect",
-			"ToggleTerm",
-			"ToggleTermSendCurrentLine",
-			"ToggleTermSendVisualLines",
-			"ToggleTermSendVisualSelection",
-			"ToggleTermSetName",
-			"ToggleTermToggleAll",
-		},
+		"akinsho/toggleterm.nvim",
+		version = "*",
+		keys = { "<c-`>" },
 		opts = {
-			-- size can be a number or function which is passed the current terminal
-			size = function(term)
-				if term.direction == "horizontal" then
-					-- return vim.api.nvim_win_get_height(0) * 0.4 * 2
-					return 16
-				elseif term.direction == "vertical" then
-					return vim.o.columns * 0.32
-				end
-			end,
 			open_mapping = [[<c-`>]],
-			hide_numbers = true, -- hide the number column in toggleterm buffers
-			shade_filetypes = {},
+			hide_numbers = true,
+			autochdir = true,
+			insert_mappings = true,
 			shade_terminals = false,
-			start_in_insert = false,
-			insert_mappings = true, -- whether or not the open mapping applies in insert mode
-			terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
-			persist_size = true,
-			-- direction = "horizontal",
-			close_on_exit = true, -- close the terminal window when the process exits
-			shell = vim.o.shell, -- change the default shell
-			-- This field is only relevant if direction is set to 'float'
-			float_opts = {
-				-- The border key is *almost* the same as 'nvim_open_win'
-				-- see :h nvim_open_win for details on borders however
-				-- the 'curved' border is a custom border type
-				-- not natively supported but implemented in this plugin.
-				border = "single",
-				-- width = <value>,
-				height = 20,
-				winblend = 3,
+			winbar = {
+				enabled = true,
 			},
 		},
 	},
 	{
 		"willothy/flatten.nvim",
-		enabled = false,
+		enabled = true,
 		lazy = false,
 		priority = 1001,
-		opts = {
-			window = {
-				open = "tab",
-			},
-			callbacks = {
-				pre_open = function()
-					-- Close toggleterm when an external open request is received
-					require("toggleterm").toggle(0)
-				end,
-				post_open = function(bufnr, winnr, ft, is_blocking)
-					if is_blocking then
-						-- Hide the terminal while it's blocking
-						require("toggleterm").toggle(0)
-					else
-						-- If it's a normal file, just switch to its window
-						vim.api.nvim_set_current_win(winnr)
-					end
+		opts = function()
+			local saved_terminal
 
-					-- If the file is a git commit, create one-shot autocmd to delete its buffer on write
-					-- If you just want the toggleable terminal integration, ignore this bit
-					if ft == "gitcommit" then
-						vim.api.nvim_create_autocmd("BufWritePost", {
-							buffer = bufnr,
-							once = true,
-							callback = function()
-								-- This is a bit of a hack, but if you run bufdelete immediately
-								-- the shell can occasionally freeze
-								vim.defer_fn(function()
+			return {
+				window = {
+					open = "alternate",
+				},
+				one_per = {
+					kitty = true, -- Flatten all instance in the current Kitty session
+					wezterm = false, -- Flatten all instance in the current Wezterm session
+				},
+				callbacks = {
+					should_block = function(argv)
+						return vim.tbl_contains(argv, "-b")
+					end,
+					pre_open = function()
+						local term = require("toggleterm.terminal")
+						local termid = term.get_focused_id()
+						saved_terminal = term.get(termid)
+					end,
+					post_open = function(bufnr, winnr, ft, is_blocking)
+						if is_blocking and saved_terminal then
+							saved_terminal:close()
+						else
+							vim.api.nvim_set_current_win(winnr)
+						end
+
+						if ft == "gitcommit" or ft == "gitrebase" then
+							vim.api.nvim_create_autocmd("BufWritePost", {
+								buffer = bufnr,
+								once = true,
+								callback = vim.schedule_wrap(function()
 									vim.api.nvim_buf_delete(bufnr, {})
-								end, 50)
-							end,
-						})
-					end
-				end,
-				block_end = function()
-					-- After blocking ends (for a git commit, etc), reopen the terminal
-					require("toggleterm").toggle(0)
-				end,
-			},
-		},
-	},
-	{
-		"chomosuke/term-edit.nvim",
-		enabled = false,
-		event = "TermOpen",
-		otps = {
-			prompt_end = "❯ ",
-		},
+								end),
+							})
+						end
+					end,
+					block_end = function()
+						vim.schedule(function()
+							if saved_terminal then
+								saved_terminal:open()
+								saved_terminal = nil
+							end
+						end)
+					end,
+				},
+			}
+		end,
 	},
 	{
 		"mikesmithgh/kitty-scrollback.nvim",

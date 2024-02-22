@@ -1,5 +1,6 @@
 local lightbulb = {
 	"kosayoda/nvim-lightbulb",
+	enabled = true,
 	event = { "LspAttach" },
 	opts = {
 		priority = 10,
@@ -34,6 +35,7 @@ local lightbulb = {
 
 local actions_preview = {
 	"aznhe21/actions-preview.nvim",
+	enabled = true,
 	opts = {
 		diff = {
 			ctxlen = 3,
@@ -57,34 +59,14 @@ local actions_preview = {
 
 local inc_rename = {
 	"smjonas/inc-rename.nvim",
+	enabled = true,
 	event = { "LspAttach" },
 	opts = { cmd_name = "IncRename" },
 }
 
-local neo_dim = {
-	"zbirenbaum/neodim",
-	enabled = false,
-	event = { "LspAttach" },
-	config = function()
-		local c = require("nord.colors").palette
-		require("neodim").setup({
-			alpha = 0.5,
-			blend_color = c.polar_night.origin,
-			update_in_insert = {
-				enable = true,
-				delay = 100,
-			},
-			hide = {
-				virtual_text = false,
-				signs = false,
-				underline = false,
-			},
-		})
-	end,
-}
-
 local illuminate = {
 	"RRethy/vim-illuminate",
+	enabled = true,
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		delay = 200,
@@ -97,13 +79,14 @@ local illuminate = {
 			},
 		},
 		filetypes_denylist = {
-			"text",
+			"TelescopePrompt",
+			"aerial",
 			"dirbuf",
 			"dirvish",
 			"fugitive",
-			"toggleterm",
 			"neo-tree",
-			"aerial",
+			"text",
+			"toggleterm",
 		},
 	},
 	config = function(_, opts)
@@ -193,9 +176,8 @@ local lsp_lens = {
 return {
 	lightbulb,
 	actions_preview,
-	inc_rename,
-	neo_dim,
 	illuminate,
+	inc_rename,
 	trouble,
 	lsp_lens,
 }

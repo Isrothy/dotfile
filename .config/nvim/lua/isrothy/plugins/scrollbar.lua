@@ -30,7 +30,7 @@ return {
 		},
 	},
 	{
-		"lewis6991/satellite.nvim",
+		"Isrothy/satellite.nvim",
 		event = { "BufReadPost", "BufNewFile" },
 		enabled = true,
 		opts = {

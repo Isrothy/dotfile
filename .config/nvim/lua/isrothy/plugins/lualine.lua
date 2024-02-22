@@ -49,10 +49,15 @@ end
 M.config = function()
 	local c = require("nord.colors").palette
 
+	local theme = require("lualine.themes.nord")
+	theme.terminal = {
+		a = { fg = c.polar_night.bright, bg = c.aurora.green },
+	}
+
 	require("lualine").setup({
 		options = {
 			icons_enabled = true,
-			theme = "nord",
+			theme = theme,
 			-- component_separators = { left = '╲', right = '╱' },
 			component_separators = "",
 			-- section_separators = { left = "", right = "" },
@@ -230,11 +235,15 @@ M.config = function()
 		tabline = {},
 		extensions = {
 			"aerial",
-			"toggleterm",
 			"lazy",
+			"mason",
 			"neo-tree",
-			"trouble",
+			"nvim-dap-ui",
+			"oil",
+			"overseer",
 			"quickfix",
+			"toggleterm",
+			"trouble",
 		},
 	})
 end

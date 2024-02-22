@@ -11,7 +11,7 @@ return {
 		},
 		keys = {
 			{ "<F2>", "<cmd>Neotree filesystem toggle left<cr>", desc = "Neotree toggle filesystem" },
-			{ "<F3>", "<cmd>Neotree buffers toggle left<cr>",    desc = "Neotree toggle buffers" },
+			{ "<F3>", "<cmd>Neotree buffers toggle left<cr>", desc = "Neotree toggle buffers" },
 			{ "<F4>", "<cmd>Neotree git_status toggle left<cr>", desc = "Neotree toggle git status" },
 		},
 		config = function()
@@ -386,6 +386,6 @@ return {
 			})
 
 			vim.g.neo_tree_remove_legacy_commands = 1
-		end
+		end,
 	},
 }

@@ -91,7 +91,6 @@ return {
 	{
 		"ashfinal/qfview.nvim",
 		event = "UIEnter",
-		-- ft = "qf",
 		config = true,
 	},
 }

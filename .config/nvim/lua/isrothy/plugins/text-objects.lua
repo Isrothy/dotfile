@@ -437,6 +437,7 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		event = { "BufReadPost", "BufNewFile" },
+	    enabled = true,
 	},
 	custom_textobjects = custom_textobjects,
 }

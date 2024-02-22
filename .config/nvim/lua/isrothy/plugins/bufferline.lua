@@ -1,5 +1,6 @@
 local M = {
 	"akinsho/bufferline.nvim",
+	enabled = true,
 	version = "v4.*",
 	event = { "BufReadPost", "BufNewFile" },
 	dependencies = "nvim-tree/nvim-web-devicons",
@@ -55,11 +56,14 @@ M.config = function()
 			tab_size = 18,
 
 			custom_filter = function(buf_number, buf_numbers)
-				-- filter out filetypes you don't want to see
-				if vim.bo[buf_number].filetype == "qf" then
+				local ft = vim.bo[buf_number].filetype
+				local bt = vim.bo[buf_number].buftype
+				if ft == "qf" then
 					return false
 				end
-				-- filter out by buffer name
+				if bt == "terminal" then
+					return false
+				end
 				if vim.fn.bufname(buf_number) == "quickfix" then
 					return false
 				end

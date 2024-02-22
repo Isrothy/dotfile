@@ -56,6 +56,7 @@ return {
 		config = true,
 	},
 	{
+
 		"sindrets/diffview.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
 		cmd = {
