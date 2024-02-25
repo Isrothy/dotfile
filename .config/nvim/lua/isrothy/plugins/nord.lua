@@ -47,6 +47,8 @@ M.config = function()
 			highlights.ErrorMsg = { link = "Normal" }
 			highlights.WarningMsg = { link = "Normal" }
 
+			highlights.TermCursor = { fg = colors.aurora.green, bg = colors.none, reverse = true }
+
 			-- highlights.ColorColumn = { bg = colors.polar_night.brighter }
 
 			highlights.FloatBorder = { fg = colors.snow_storm.origin }

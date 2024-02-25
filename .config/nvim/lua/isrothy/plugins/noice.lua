@@ -25,6 +25,7 @@ M.opts = {
 			lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" },
 			help = { pattern = "^:%s*he?l?p?%s+", icon = "󰋖" },
 			calculator = { pattern = "^=", icon = "", lang = "vimnormal" },
+			term_run = { pattern = "^:%s*TermRun", icon = "", lang = "bash" },
 			input = {}, -- Used by input()
 			-- lua = false, -- to disable a format, set to `false`
 		},

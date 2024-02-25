@@ -8,5 +8,11 @@ vim.filetype.add({
 				return "markdown"
 			end
 		end,
+		["*_log"] = "log",
+		["*_LOG"] = "log",
 	},
+	extension = {
+		["log"] = "log",
+		["LOG"] = "log",
+	}
 })

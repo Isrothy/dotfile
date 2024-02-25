@@ -588,21 +588,16 @@ local null_ls = {
 				-- null_ls.builtins.diagnostics.markdownlint,
 				null_ls.builtins.diagnostics.gitlint,
 				-- null_ls.builtins.diagnostics.textidote,
-				-- null_ls.builtins.diagnostics.pylint.with({
-				-- 	args = {
-				-- 		"--from-stdin",
-				-- 		"$FILENAME",
-				-- 		"-f",
-				-- 		"json",
-				-- 		"--errors-only",
-				-- 	},
-				-- }),
-				null_ls.builtins.diagnostics.shellcheck,
-				-- null_ls.builtins.diagnostics.swiftlint,
-				-- null_ls.builtins.diagnostics.yamllint,
+				null_ls.builtins.diagnostics.pylint.with({
+					args = {
+						"--from-stdin",
+						"$FILENAME",
+						"-f",
+						"json",
+						"--errors-only",
+					},
+				}),
 				null_ls.builtins.diagnostics.zsh,
-
-				-- null_ls.builtins.code_actions.shellcheck,
 
 				-- null_ls.builtins.formatting.autopep8,
 				null_ls.builtins.formatting.black,
@@ -634,10 +629,6 @@ local null_ls = {
 				-- 	},
 				-- }),
 				null_ls.builtins.formatting.stylua,
-				-- null_ls.builtins.formatting.swiftformat,
-
-				-- null_ls.builtins.formatting.yamlfmt,
-				null_ls.builtins.formatting.xmllint,
 
 				null_ls.builtins.hover.dictionary,
 			},

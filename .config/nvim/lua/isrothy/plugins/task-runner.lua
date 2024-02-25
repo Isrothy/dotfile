@@ -1,10 +1,13 @@
 return {
 	{
-		"pianocomposer321/officer.nvim",
-		dependencies = "stevearc/overseer.nvim",
-		cmd = { "Make", "Run" },
+		"stevearc/overseer.nvim",
 		opts = {
-			create_commands = true,
+			-- strategy = {
+			-- 	"toggleterm",
+			-- 	direction = "vertical",
+			-- 	close_on_exit = false,
+			-- 	quit_on_exit = false,
+			-- }
 		},
 	},
 	{
@@ -16,7 +19,7 @@ return {
 		},
 		dependencies = "nvim-lua/plenary.nvim",
 		opts = {
-			mode = "float",
+			mode = "toggleterm",
 			startinsert = true,
 			filetype = {
 				c = "cd $dir && clang $fileName -o $fileNameWithoutExt && $dir/$fileNameWithoutExt",

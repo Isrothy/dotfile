@@ -157,27 +157,10 @@ local trouble = {
 	},
 }
 
-local lsp_lens = {
-	"VidocqH/lsp-lens.nvim",
-	event = { "LspAttach" },
-	enabled = false,
-	opts = {
-		enable = true,
-		include_declaration = false, -- Reference include declaration
-		sections = { -- Enable / Disable specific request
-			definition = true,
-			references = true,
-			implementation = true,
-		},
-		ignore_filetype = {},
-	},
-}
-
 return {
 	lightbulb,
 	actions_preview,
 	illuminate,
 	inc_rename,
 	trouble,
-	lsp_lens,
 }

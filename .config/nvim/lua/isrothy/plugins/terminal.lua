@@ -3,12 +3,29 @@ return {
 		"akinsho/toggleterm.nvim",
 		version = "*",
 		keys = { "<c-`>" },
+		cmd = {
+			"TermExec",
+			"ToggleTerm",
+			"ToggleTermToggleAll",
+			"ToggleTermSendCurrentLine",
+			"ToggleTermSendVisualLines",
+			"ToggleTermSendVisualSelection",
+			"ToggleTermSetName",
+		},
+		init = function()
+			vim.api.nvim_create_user_command("TermRun", function(opts)
+				local cmd = table.concat(opts.fargs, " ")
+				cmd = cmd:gsub([["]], [[\"]])
+				require("toggleterm").exec(cmd)
+			end, { nargs = "*", desc = "Alias for TermExec with dynamic command execution" })
+		end,
 		opts = {
 			open_mapping = [[<c-`>]],
 			hide_numbers = true,
 			autochdir = true,
 			insert_mappings = true,
 			shade_terminals = false,
+			close_on_exit = false,
 			winbar = {
 				enabled = true,
 			},
