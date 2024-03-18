@@ -1,16 +1,5 @@
 return {
 	{
-		"stevearc/overseer.nvim",
-		opts = {
-			-- strategy = {
-			-- 	"toggleterm",
-			-- 	direction = "vertical",
-			-- 	close_on_exit = false,
-			-- 	quit_on_exit = false,
-			-- }
-		},
-	},
-	{
 		"CRAG666/code_runner.nvim",
 		cmd = "RunCode",
 		enabled = true,

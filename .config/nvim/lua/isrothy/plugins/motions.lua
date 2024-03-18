@@ -28,15 +28,6 @@ return {
 				end,
 				desc = "Remote Flash",
 			},
-			{
-				"R",
-				mode = { "n", "o", "x" },
-				function()
-					-- show labeled treesitter nodes around the search matches
-					require("flash").treesitter_search()
-				end,
-				desc = "Treesitter Search",
-			},
 		},
 		opts = {
 			modes = {
@@ -108,7 +99,7 @@ return {
 	{
 		"echasnovski/mini.animate",
 		event = "VeryLazy",
-		enabled = true,
+		enabled = false,
 		opts = function()
 			local animate = require("mini.animate")
 			return {

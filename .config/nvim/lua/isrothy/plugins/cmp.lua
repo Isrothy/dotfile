@@ -43,7 +43,7 @@ local function get_default_cmp_source()
 	local cmp = require("cmp")
 	return cmp.config.sources({
 		{ name = "nvim_lsp" },
-		-- { name = "nvim_lsp_signature_help" },
+		{ name = "nvim_lsp_signature_help" },
 		{ name = "nvim_lsp_document_symbol" },
 		{ name = "luasnip" },
 	}, {
@@ -95,12 +95,12 @@ CMP.config = function()
 	-- nvim-cmp setup
 	local cmp = require("cmp")
 	local compare = require("cmp.config.compare")
-	local luasnip = require("luasnip")
 
 	cmp.setup({
 		snippet = {
 			expand = function(args)
-				require("luasnip").lsp_expand(args.body)
+				vim.snippet.expand(args.body)
+				-- require("luasnip").lsp_expand(args.body)
 			end,
 		},
 
@@ -124,8 +124,10 @@ CMP.config = function()
 			["<Tab>"] = cmp.mapping(function(fallback)
 				if cmp.visible() then
 					cmp.select_next_item()
-				elseif luasnip.expand_or_jumpable() then
-					luasnip.expand_or_jump()
+				elseif vim.snippet.jumpable(1) then
+					vim.schedule(function()
+						vim.snippet.jump(1)
+					end)
 				elseif has_words_before() then
 					cmp.complete()
 				else
@@ -136,8 +138,10 @@ CMP.config = function()
 			["<S-Tab>"] = cmp.mapping(function(fallback)
 				if cmp.visible() then
 					cmp.select_prev_item()
-				elseif luasnip.jumpable(-1) then
-					luasnip.jump(-1)
+				elseif vim.snippet.jumpable(-1) then
+					vim.schedule(function()
+						vim.snippet.jump(-1)
+					end)
 				else
 					fallback()
 				end
@@ -314,4 +318,3 @@ return {
 	LuaSnip,
 	haskell_snippets,
 }
-

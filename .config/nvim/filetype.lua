@@ -14,5 +14,5 @@ vim.filetype.add({
 	extension = {
 		["log"] = "log",
 		["LOG"] = "log",
-	}
+	},
 })

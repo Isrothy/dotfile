@@ -15,7 +15,48 @@ local opts = {
 	yank = { suffix = "y", options = {} },
 }
 
-local keys = {}
+local keys = {
+	{
+		"]e",
+		"<cmd>lua MiniBracketed.diagnostic('forward',{ severity = vim.diagnostic.severity.ERROR })<cr>",
+		desc = "error forward",
+	},
+	{
+		"[e",
+		"<cmd>lua MiniBracketed.diagnostic('backward',{ severity = vim.diagnostic.severity.ERROR })<cr>",
+		desc = "error backword",
+	},
+	{
+		"]E",
+		"<cmd>lua MiniBracketed.diagnostic('last',{ severity = vim.diagnostic.severity.ERROR })<cr>",
+		desc = "error last",
+	},
+	{
+		"[E",
+		"<cmd>lua MiniBracketed.diagnostic('first',{ severity = vim.diagnostic.severity.ERROR })<cr>",
+		desc = "error first",
+	},
+	{
+		"]w",
+		"<cmd>lua MiniBracketed.diagnostic('forward',{ severity = vim.diagnostic.severity.WARN })<cr>",
+		desc = "warn forward",
+	},
+	{
+		"[w",
+		"<cmd>lua MiniBracketed.diagnostic('backward',{ severity = vim.diagnostic.severity.WARN })<cr>",
+		desc = "warn backword",
+	},
+	{
+		"]W",
+		"<cmd>lua MiniBracketed.diagnostic('last',{ severity = vim.diagnostic.severity.WARN })<cr>",
+		desc = "warn last",
+	},
+	{
+		"[W",
+		"<cmd>lua MiniBracketed.diagnostic('first',{ severity = vim.diagnostic.severity.WARN })<cr>",
+		desc = "warn first",
+	},
+}
 
 for k, v in pairs(opts) do
 	local m = string.upper(k:sub(1, 1)) .. k:sub(2)

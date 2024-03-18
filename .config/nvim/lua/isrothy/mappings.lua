@@ -20,11 +20,6 @@ map(
 	{ desc = "append line after", noremap = true }
 )
 
--- map("v", "<", "<gv", default_options)
--- map("v", ">", ">gv", default_options)
--- map("x", "K", ":move '<-2<CR>gv-gv", default_options)
--- map("x", "J", ":move '>+1<CR>gv-gv", default_options)
-
 map({ "n", "v" }, "k", "v:count == 0 ? 'gk' : 'k'", expr_options)
 map({ "n", "v" }, "j", "v:count == 0 ? 'gj' : 'j'", expr_options)
 
@@ -43,16 +38,16 @@ map("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"', {
 map("n", "<leader>o", "<C-o>", default_options)
 map("n", "<leader>i", "<C-i>", default_options)
 
-map("n", "<C-v>", "<C-w>v", default_options)
-map("n", "<C-s>", "<C-w>s", default_options)
-map("n", "<C-c>", "<C-w>c", default_options)
+map("n", "<leader>wv", "<C-w>v", default_options)
+map("n", "<leader>ws", "<C-w>s", default_options)
+map("n", "<leader>wc", "<C-w>c", default_options)
+map("n", "<leader>wo", "<C-w>o", default_options)
 map("t", "<esc>", [[<C-\><C-n>]], default_options)
 -- map("n", "<C-,>", "<C-w><", default_options)
 -- map("n", "<C-.>", "<C-w>>", default_options)
 -- map("n", "<C-=>", "<C-w>+", default_options)
 -- map("n", "<C-->", "<C-w>-", default_options)
 
-map("n", "<C-o>", "<C-w>o", default_options)
 map("n", "<esc>", ":nohlsearch<cr>", default_options)
 
 map({ "i", "c", "t" }, "<M-h>", "<Left>", { noremap = false, desc = "Left" })

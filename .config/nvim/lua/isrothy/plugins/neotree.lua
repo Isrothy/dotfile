@@ -229,14 +229,8 @@ return {
 			vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
 
 			require("neo-tree").setup({
-				sources = {
-					"filesystem",
-					"buffers",
-					"git_status",
-				},
 				close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
 				popup_border_style = "rounded",
-				enable_normal_mode_for_inputs = true, -- Enable normal mode for input dialogs.
 				open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy" },
 
 				source_selector = {
@@ -375,12 +369,28 @@ return {
 						},
 					},
 				},
+
 				git_status = {
 					window = {
 						mappings = {
 							["A"] = "none",
 							["gA"] = "git_add_all",
 						},
+					},
+				},
+				event_handlers = {
+					{
+						event = "neo_tree_popup_input_ready",
+						handler = function()
+							vim.cmd("stopinsert")
+						end,
+					},
+					{
+						event = "neo_tree_popup_input_ready",
+						---@param args { bufnr: integer, winid: integer }
+						handler = function(args)
+							vim.keymap.set("i", "<esc>", vim.cmd.stopinsert, { noremap = true, buffer = args.bufnr })
+						end,
 					},
 				},
 			})

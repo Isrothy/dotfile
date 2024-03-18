@@ -156,6 +156,17 @@ return {
 				},
 			})
 			wk.register({
+				["<leader>h"] = {
+					name = "Harpoon",
+				},
+			})
+
+			wk.register({
+				["<leader>k"] = {
+					name = "Git conflict",
+				},
+			})
+			wk.register({
 				["]h"] = "Next hunk",
 				["[h"] = "Previous hunk",
 				["]c"] = "Next diff",

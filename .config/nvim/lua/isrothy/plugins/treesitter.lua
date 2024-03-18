@@ -25,6 +25,7 @@ local TS = {
 					init_selection = "<enter>",
 					node_incremental = "<enter>",
 					node_decremental = "<BS>",
+					scope_incremental = false,
 					-- scope_incremental = "<c-s>",
 				},
 			},

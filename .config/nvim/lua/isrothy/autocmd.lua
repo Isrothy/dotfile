@@ -86,6 +86,7 @@ local cc_filetypes = {
 	typescript = "101",
 	typescriptreact = "101",
 	rust = "101",
+	haskell = "101",
 	swift = "101",
 	markdown = "81",
 }

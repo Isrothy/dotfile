@@ -21,13 +21,11 @@ struct A {
 
     static const int y;
 
-private:
+  private:
     double x;
 
-public:
-    [[nodiscard]] double add(int z) const {
-        return x + y + z;
-    }
+  public:
+    [[nodiscard]] double add(int z) const { return x + y + z; }
 };
 
 enum class B {
@@ -67,7 +65,6 @@ int64_t inv(int64_t a, int64_t p) {
     return x;
 }
 
-
 int main() {
     int a, b;
     scanf("%d %d", &a, &b);
@@ -75,15 +72,15 @@ int main() {
     int n = 10;
     auto D = static_cast<int>(add(double(a), double(b)));
     switch (D) {
-        case 0:
-        case 1: {
-            printf("%d\n", a + b);
-            break;
-        }
-        default: {
-            printf("%d\n", a + b);
-            break;
-        }
+    case 0:
+    case 1: {
+        printf("%d\n", a + b);
+        break;
+    }
+    default: {
+        printf("%d\n", a + b);
+        break;
+    }
     }
     for (int i = 0; i <= n; ++i) {
         if (i % 2 == 0) {

@@ -25,7 +25,7 @@ M.opts = {
 			lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" },
 			help = { pattern = "^:%s*he?l?p?%s+", icon = "󰋖" },
 			calculator = { pattern = "^=", icon = "", lang = "vimnormal" },
-			term_run = { pattern = "^:%s*TermRun", icon = "", lang = "bash" },
+			term_run = { pattern = "^:%s*TermRun%s+", icon = "", lang = "bash" },
 			input = {}, -- Used by input()
 			-- lua = false, -- to disable a format, set to `false`
 		},
@@ -118,7 +118,7 @@ M.opts = {
 			opts = {}, -- merged with defaults from documentation
 		},
 		signature = {
-			enabled = true,
+			enabled = false,
 			auto_open = {
 				enabled = true,
 				trigger = true, -- Automatically show signature help when typing a trigger character from the LSP

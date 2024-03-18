@@ -306,7 +306,7 @@ local Lspconfig = {
 		-- 				},
 		-- 				mccabe = {
 		-- 					enabled = false,
-		-- 				}
+		-- 				},
 		-- 			},
 		-- 		},
 		-- 	},
@@ -317,15 +317,6 @@ local Lspconfig = {
 		-- 		set_keymap(client, bufnr)
 		-- 		set_inlay_hint(client, bufnr)
 		-- 	end,
-		-- 	settings = {
-		-- 		python = {
-		-- 			analysis = {
-		-- 				autoSearchPaths = true,
-		-- 				diagnosticMode = "workspace",
-		-- 				useLibraryCodeForTypes = true,
-		-- 			},
-		-- 		},
-		-- 	},
 		-- })
 		require("lspconfig").jedi_language_server.setup({
 			capabilities = make_capabilities(),
@@ -333,8 +324,9 @@ local Lspconfig = {
 				set_keymap(client, bufnr)
 				set_inlay_hint(client, bufnr)
 			end,
+			init_options = {},
 		})
-		-- require("lspconfig").pylyzer.setup({
+		--  require("lspconfig").pylyzer.setup({
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
 		-- 		set_keymap(client, bufnr)
@@ -342,10 +334,28 @@ local Lspconfig = {
 		-- 	end,
 		-- 	settings = {
 		-- 		python = {
-		-- 			checkOnType = true,
-		-- 			diagnostics = true,
-		-- 			inlayHints = true,
+		-- 			checkOnType = false,
+		-- 			diagnostics = false,
+		-- 			inlayHints = false,
 		-- 			smartCompletion = true,
+		-- 		},
+		-- 	},
+		-- })
+		-- require("lspconfig").anakin_language_server.setup({
+		-- 	capabilities = make_capabilities(),
+		-- 	on_attach = function(client, bufnr)
+		-- 		set_keymap(client, bufnr)
+		-- 		set_inlay_hint(client, bufnr)
+		-- 	end,
+		-- 	settings = {
+		-- 		diagnostic_on_save = false,
+		-- 		anakinls = {
+		-- 			pycodestyle_config = {
+		-- 				ignore = {
+		-- 					"E501",
+		-- 					"W505",
+		-- 				},
+		-- 			},
 		-- 		},
 		-- 	},
 		-- })
@@ -516,7 +526,6 @@ local haskell_tools = {
 					set_inlay_hint(client, bufnr)
 					map("n", "<leader>cl", vim.lsp.codelens.run, opts)
 				end,
-				-- single_file_support = true,
 				default_settings = {
 					haskell = {
 						formattingProvider = "ormolu",
@@ -588,19 +597,19 @@ local null_ls = {
 				-- null_ls.builtins.diagnostics.markdownlint,
 				null_ls.builtins.diagnostics.gitlint,
 				-- null_ls.builtins.diagnostics.textidote,
-				null_ls.builtins.diagnostics.pylint.with({
-					args = {
-						"--from-stdin",
-						"$FILENAME",
-						"-f",
-						"json",
-						"--errors-only",
-					},
-				}),
+				-- null_ls.builtins.diagnostics.pylint.with({
+				-- 	args = {
+				-- 		"--from-stdin",
+				-- 		"$FILENAME",
+				-- 		"-f",
+				-- 		"json",
+				-- 		"--errors-only",
+				-- 	},
+				-- }),
 				null_ls.builtins.diagnostics.zsh,
 
 				-- null_ls.builtins.formatting.autopep8,
-				null_ls.builtins.formatting.black,
+				-- null_ls.builtins.formatting.black,
 				null_ls.builtins.formatting.cmake_format,
 				null_ls.builtins.formatting.markdownlint,
 				null_ls.builtins.formatting.shellharden.with({
@@ -706,6 +715,9 @@ local codeium = {
 		vim.keymap.set("i", "<c-'>", function()
 			return vim.fn["codeium#Clear"]()
 		end, { expr = true, silent = true, noremap = true })
+		vim.api.nvim_create_user_command("CodeiumChat", function(opts)
+			vim.fn["codeium#Chat"]()
+		end, { nargs = "*", desc = "Codeium Chat" })
 	end,
 }
 
