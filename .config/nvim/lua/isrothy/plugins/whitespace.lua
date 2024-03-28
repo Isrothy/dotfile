@@ -43,4 +43,17 @@ return {
 			only_in_normal_buffers = true,
 		},
 	},
+	{
+		"mcauley-penney/visual-whitespace.nvim",
+		event = { "BufReadPost", "BufNewFile" },
+		opts = function()
+			local c = require("nord.colors").palette
+			return {
+				highlight = { fg = c.polar_night.light, bg = c.polar_night.brighter },
+				space_char = "·",
+				tab_char = "→",
+				nl_char = "↲",
+			}
+		end,
+	},
 }

@@ -283,6 +283,13 @@ local Lspconfig = {
 				set_inlay_hint(client, bufnr)
 			end,
 		})
+		-- require("lspconfig").basedpyright.setup({
+		-- 	capabilities = make_capabilities(),
+		-- 	on_attach = function(client, bufnr)
+		-- 		set_keymap(client, bufnr)
+		-- 		set_inlay_hint(client, bufnr)
+		-- 	end,
+		-- })
 		-- require("lspconfig").pylsp.setup({
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
@@ -318,14 +325,14 @@ local Lspconfig = {
 		-- 		set_inlay_hint(client, bufnr)
 		-- 	end,
 		-- })
-		require("lspconfig").jedi_language_server.setup({
-			capabilities = make_capabilities(),
-			on_attach = function(client, bufnr)
-				set_keymap(client, bufnr)
-				set_inlay_hint(client, bufnr)
-			end,
-			init_options = {},
-		})
+		-- require("lspconfig").jedi_language_server.setup({
+		-- 	capabilities = make_capabilities(),
+		-- 	on_attach = function(client, bufnr)
+		-- 		set_keymap(client, bufnr)
+		-- 		set_inlay_hint(client, bufnr)
+		-- 	end,
+		-- 	init_options = {},
+		-- })
 		--  require("lspconfig").pylyzer.setup({
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
@@ -619,24 +626,6 @@ local null_ls = {
 						"zsh",
 					},
 				}),
-				-- null_ls.builtins.formatting.prettierd.with({
-				-- 	filetypes = {
-				-- 		"css",
-				-- 		"scss",
-				-- 		"less",
-				-- 		"html",
-				-- 		"json",
-				-- 		"jsonc",
-				-- 		"yaml",
-				-- 		"graphql",
-				-- 		"handlebars",
-				-- 		"javascript",
-				-- 		"javascriptreact",
-				-- 		"typescript",
-				-- 		"typescriptreact",
-				-- 		"vue",
-				-- 	},
-				-- }),
 				null_ls.builtins.formatting.stylua,
 
 				null_ls.builtins.hover.dictionary,

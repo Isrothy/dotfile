@@ -2,10 +2,11 @@ return {
 	"mfussenegger/nvim-dap",
 	enabled = true,
 	dependencies = {
-
-		-- fancy UI for the debugger
 		{
 			"rcarriga/nvim-dap-ui",
+			dependencies = {
+				{ "nvim-neotest/nvim-nio" },
+			},
 			keys = {
 				{
 					"<leader>du",

@@ -166,6 +166,7 @@ telescope.config = function()
 	require("telescope").load_extension("noice")
 	require("telescope").load_extension("undo")
 	require("telescope").load_extension("smart_open")
+	require("telescope").load_extension("projects")
 end
 
 return {
@@ -191,5 +192,15 @@ return {
 		dependencies = {
 			"nvim-telescope/telescope.nvim",
 		},
+	},
+	{
+		"ahmedkhalf/project.nvim",
+		event = "VeryLazy",
+		opts = {
+			manual_mode = true,
+		},
+		config = function(_, opts)
+			require("project_nvim").setup(opts)
+		end,
 	},
 }
