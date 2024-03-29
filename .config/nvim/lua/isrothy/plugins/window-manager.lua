@@ -15,7 +15,10 @@ return {
 		},
 		opts = {
 			hint = "statusline-winbar",
+			-- hint = "floating-big-letter",
 			filter_rules = {
+				autoselect_one = false,
+				include_current_win = false,
 				bo = {
 					filetype = {
 						"neo-tree",
@@ -28,6 +31,7 @@ return {
 					buftype = {
 						"terminal",
 						"aerial",
+						"nofile",
 					},
 				},
 			},
