@@ -87,7 +87,7 @@ end
 local set_inlay_hint = function(client, bufnr)
 	local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
 	if inlay_hint and client.supports_method("textDocument/inlayHint") then
-		inlay_hint.enable(bufnr, true)
+		inlay_hint.enable(true)
 	end
 end
 
@@ -283,13 +283,13 @@ local Lspconfig = {
 				set_inlay_hint(client, bufnr)
 			end,
 		})
-		-- require("lspconfig").basedpyright.setup({
-		-- 	capabilities = make_capabilities(),
-		-- 	on_attach = function(client, bufnr)
-		-- 		set_keymap(client, bufnr)
-		-- 		set_inlay_hint(client, bufnr)
-		-- 	end,
-		-- })
+		require("lspconfig").basedpyright.setup({
+			capabilities = make_capabilities(),
+			on_attach = function(client, bufnr)
+				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
+			end,
+		})
 		-- require("lspconfig").pylsp.setup({
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
@@ -333,18 +333,22 @@ local Lspconfig = {
 		-- 	end,
 		-- 	init_options = {},
 		-- })
-		--  require("lspconfig").pylyzer.setup({
-		-- 	capabilities = make_capabilities(),
+		-- require("lspconfig").pylyzer.setup({
+		-- 	capabilities = (function()
+		-- 		local cap = make_capabilities()
+		-- 		cap.offsetEncoding = { "utf-16" }
+		-- 		return cap
+		-- 	end)(),
 		-- 	on_attach = function(client, bufnr)
 		-- 		set_keymap(client, bufnr)
-		-- 		set_inlay_hint(client, bufnr)
+		-- 		-- set_inlay_hint(client, bufnr)
 		-- 	end,
 		-- 	settings = {
 		-- 		python = {
 		-- 			checkOnType = false,
 		-- 			diagnostics = false,
 		-- 			inlayHints = false,
-		-- 			smartCompletion = true,
+		-- 			smartCompletion = false,
 		-- 		},
 		-- 	},
 		-- })
@@ -366,6 +370,19 @@ local Lspconfig = {
 		-- 		},
 		-- 	},
 		-- })
+		require("lspconfig").ruff_lsp.setup({
+			capabilities = make_capabilities(),
+			on_attach = function(client, bufnr)
+				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
+			end,
+			init_options = {
+				settings = {
+					-- Any extra CLI arguments for `ruff` go here.
+					args = {},
+				},
+			},
+		})
 		require("lspconfig").r_language_server.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
@@ -597,7 +614,7 @@ local null_ls = {
 				set_inlay_hint(client, bufnr)
 			end,
 			sources = {
-				null_ls.builtins.completion.spell,
+				-- null_ls.builtins.completion.spell,
 
 				null_ls.builtins.diagnostics.checkmake,
 				null_ls.builtins.diagnostics.hadolint,
@@ -628,87 +645,38 @@ local null_ls = {
 				}),
 				null_ls.builtins.formatting.stylua,
 
-				null_ls.builtins.hover.dictionary,
+				-- null_ls.builtins.hover.dictionary,
 			},
 		})
 	end,
 }
 
-local copilot = {
-	"zbirenbaum/copilot.lua",
-	event = "VeryLazy",
-	enabled = false,
-	config = function()
-		vim.defer_fn(function()
-			require("copilot").setup({
-				panel = {
-					enabled = false,
-					auto_refresh = true,
-					keymap = {
-						jump_prev = "[[",
-						jump_next = "]]",
-						accept = "<CR>",
-						refresh = "gr",
-						open = "<c-CR>",
-					},
-				},
-				suggestion = {
-					enabled = true,
-					auto_trigger = true,
-					debounce = 75,
-					keymap = {
-						accept = "<c-;>",
-						next = "<c-,>",
-						prev = "<c-.>",
-						dismiss = "<c-'>",
-					},
-				},
-				filetypes = {
-					yaml = false,
-					help = false,
-					gitcommit = false,
-					gitrebase = false,
-					hgcommit = false,
-					svn = false,
-					cvs = false,
-					["."] = false,
-				},
-				copilot_node_command = "node", -- Node version must be < 18
-				server_opts_overrides = {
-					trace = "verbose",
-					settings = {
-						advanced = {
-							listCount = 10, -- #completions for panel
-							inlineSuggestCount = 3, -- #completions for getCompletions
-						},
-					},
-				},
-			})
-		end, 100)
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	callback = function()
+		local root_dir = vim.fs.dirname(vim.fs.find({ ".ants" }, { upward = true })[1])
+		local client = vim.lsp.start({
+			name = "ants-ls",
+			cmd = { "ants-ls" },
+			root_dir = root_dir,
+			on_attach = function(client, bufnr)
+				set_keymap(client, bufnr)
+			end,
+			capabilities = make_capabilities(),
+		})
+		vim.lsp.buf_attach_client(0, client)
 	end,
-}
+})
 
-local codeium = {
-	"Exafunction/codeium.vim",
-	event = "VeryLazy",
-	config = function()
-		vim.keymap.set("i", "<C-;>", function()
-			return vim.fn["codeium#Accept"]()
-		end, { expr = true, silent = true, noremap = true })
-		vim.keymap.set("i", "<c-,>", function()
-			return vim.fn["codeium#CycleCompletions"](1)
-		end, { expr = true, silent = true, noremap = true })
-		vim.keymap.set("i", "<c-.>", function()
-			return vim.fn["codeium#CycleCompletions"](-1)
-		end, { expr = true, silent = true, noremap = true })
-		vim.keymap.set("i", "<c-'>", function()
-			return vim.fn["codeium#Clear"]()
-		end, { expr = true, silent = true, noremap = true })
-		vim.api.nvim_create_user_command("CodeiumChat", function(opts)
-			vim.fn["codeium#Chat"]()
-		end, { nargs = "*", desc = "Codeium Chat" })
-	end,
-}
+-- vim.lsp.start({
+-- 	name = "ants-ls",
+-- 	cmd = { "ants-ls" },
+-- 	root_dir = vim.fs.dirname(vim.fs.find({ ".ants" }, { upward = true })[1]),
+-- 	capabilities = make_capabilities(),
+-- 	on_attach = function(client, bufnr)
+-- 		set_keymap(client, bufnr)
+-- 	end,
+-- }, {})
 
 return {
 	mason,
@@ -719,6 +687,4 @@ return {
 	rustaceanvim,
 	null_ls,
 	jsonls,
-	codeium,
-	copilot,
 }

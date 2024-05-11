@@ -73,11 +73,11 @@ opt.expandtab = true
 opt.smarttab = true
 opt.tabstop = 4
 opt.softtabstop = -1
-opt.shiftwidth = 0
+opt.shiftwidth = 4
 opt.cinoptions = "g0,(0,l1,n-2"
 opt.backspace = { "indent", "eol", "start" }
 
--- hearch settings
+-- -- hearch settings
 opt.hlsearch = true
 opt.incsearch = true
 opt.ignorecase = true

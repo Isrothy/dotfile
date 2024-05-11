@@ -54,6 +54,15 @@ M.config = function()
 		a = { fg = c.polar_night.bright, bg = c.aurora.green },
 	}
 
+	local trouble = require("trouble")
+	local symbols = trouble.statusline({
+		mode = "lsp_document_symbols",
+		groups = {},
+		title = false,
+		filter = { range = true },
+		format = "{kind_icon}{symbol.name:Normal}",
+	})
+
 	require("lualine").setup({
 		options = {
 			icons_enabled = true,
@@ -158,7 +167,7 @@ M.config = function()
 			lualine_y = {
 				"fancy_filetype",
 				"fancy_lsp_servers",
-				codeium,
+				-- codeium,
 			},
 			lualine_z = {
 				{
@@ -189,7 +198,12 @@ M.config = function()
 		},
 		winbar = {
 			lualine_a = {},
-			lualine_b = {},
+			lualine_b = {
+				-- {
+				-- 	symbols.get,
+				-- 	cond = symbols.has,
+				-- },
+			},
 			lualine_c = {
 				{
 					"aerial",

@@ -130,6 +130,24 @@ vim.api.nvim_create_autocmd({ "BufReadPre" }, {
 			vim.cmd("syntax off")
 			vim.opt_local.foldmethod = "manual"
 			vim.opt_local.spell = false
+			vim.opt_local.list = false
+			local status_ok, ts_config = pcall(require, "nvim-treesitter.configs")
+			if not status_ok then
+				return
+			end
+			local disable_cb = function(_, buf)
+				local success, detected = pcall(vim.api.nvim_buf_get_var, buf, "bigfile_disable_treesitter")
+				return success and detected
+			end
+			for _, mod_name in ipairs(ts_config.available_modules()) do
+				local module_config = ts_config.get_module(mod_name) or {}
+				local old_disabled = module_config.disable
+				module_config.disable = function(lang, buf)
+					return disable_cb(lang, buf)
+						or (type(old_disabled) == "table" and vim.tbl_contains(old_disabled, lang))
+						or (type(old_disabled) == "function" and old_disabled(lang, buf))
+				end
+			end
 			vim.notify("Large buffer detected", "warn")
 			vim.api.nvim_exec_autocmds("User", {
 				pattern = "LargeBuf",

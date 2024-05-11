@@ -91,6 +91,7 @@ M.config = function()
 			-- highlights.ScrollViewSearch = { fg = colors.frost.artic_water }
 
 			-- highlights.FlashLabel = { fg = colors.aurora.orange, bg = colors.polar_night.brightest, bold = true }
+			--
 		end,
 	})
 	vim.cmd.colorscheme("nord")

@@ -16,9 +16,7 @@ return {
 	keys = {
 		{
 			"<leader>ps",
-			function()
-				require("persistence").load()
-			end,
+			function() require("persistence").load() end,
 			desc = "Restore Session",
 		},
 		{

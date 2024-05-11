@@ -1,7 +1,6 @@
 return {
 	{
 		"iamcco/markdown-preview.nvim",
-		enabled = false,
 		cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
 		build = function()
 			vim.fn["mkdp#util#install"]()
@@ -16,6 +15,15 @@ return {
 			vim.g.mkdp_highlight_css = home .. "/.config/nvim/style/highlight.css"
 			vim.g.mkdp_theme = "dark"
 			vim.g.mkdp_auto_close = 1
+		end,
+	},
+	{
+		"zk-org/zk-nvim",
+		ft = "markdown",
+		config = function()
+			require("zk").setup({
+				-- See Setup section below
+			})
 		end,
 	},
 }

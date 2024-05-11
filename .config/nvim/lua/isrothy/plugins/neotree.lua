@@ -338,6 +338,7 @@ return {
 							["gp"] = "git_push",
 							["gg"] = "git_commit_and_push",
 							["/"] = "none",
+							["<leader>ip"] = "image_preview",
 						},
 					},
 					commands = {
@@ -345,6 +346,12 @@ return {
 							local node = state.tree:get_node()
 							local path = node:get_id()
 							vim.api.nvim_input(": " .. path .. "<Home>")
+						end,
+						image_preview = function(state)
+							local node = state.tree:get_node()
+							if node.type == "file" then
+								require("image_preview").PreviewImage(node.path)
+							end
 						end,
 					},
 				},

@@ -71,12 +71,13 @@ local illuminate = {
 	opts = {
 		delay = 200,
 		large_file_cutoff = 2000,
+		providers = {
+			"lsp",
+			-- "treesitter",
+			-- "regex",
+		},
 		large_file_overrides = {
-			providers = {
-				"lsp",
-				-- "treesitter",
-				-- "regex",
-			},
+			providers = {},
 		},
 		filetypes_denylist = {
 			"TelescopePrompt",
@@ -118,42 +119,87 @@ local illuminate = {
 
 local trouble = {
 	"folke/trouble.nvim",
+	branch = "dev",
 	cmd = {
-		"TroubleToggle",
 		"Trouble",
-		"TroubleRefresh",
-		"TroubleClose",
 	},
 	dependencies = "nvim-tree/nvim-web-devicons",
 	keys = {
-		-- { "<F5>", "<cmd>TroubleClose<cr>", noremap = true },
-		-- { "<F6>", "<cmd>Trouble workspace_diagnostics<cr>", noremap = true },
-		{ "<leader>xx", "<cmd>TroubleToggle<cr>", noremap = true, desc = "Trouble toggle" },
 		{
-			"<leader>xw",
-			"<cmd>TroubleToggle workspace_diagnostics<cr>",
-			noremap = true,
-			desc = "Trouble workspace diagnostics",
+			"<leader>xx",
+			"<cmd>Trouble diagnostics toggle<cr>",
+			desc = "Diagnostics (Trouble)",
 		},
 		{
-			"<leader>xd",
-			"<cmd>TroubleToggle document_diagnostics<cr>",
-			noremap = true,
-			desc = "Trouble document diagnostics",
+			"<leader>xX",
+			"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+			desc = "Buffer Diagnostics (Trouble)",
 		},
-		{ "<leader>xl", "<cmd>TroubleToggle loclist<cr>", noremap = true, desc = "Trouble loclist" },
-		{ "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", noremap = true, desc = "Trouble quickfix" },
-		{ "<leader>xr", "<cmd>TroubleToggle lsp_references<cr>", noremap = true, desc = "Trouble lsp references" },
+		{
+			"<leader>cs",
+			"<cmd>Trouble symbols toggle focus=false<cr>",
+			desc = "Symbols (Trouble)",
+		},
+		{
+			"<leader>cl",
+			"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+			desc = "LSP Definitions / references / ... (Trouble)",
+		},
+		{
+			"<leader>xL",
+			"<cmd>Trouble loclist toggle<cr>",
+			desc = "Location List (Trouble)",
+		},
+		{
+			"<leader>xQ",
+			"<cmd>Trouble qflist toggle<cr>",
+			desc = "Quickfix List (Trouble)",
+		},
 	},
 	opts = {
-		fold_open = "",
-		fold_closed = "",
-		action_keys = {
-			open_split = { "<c-s>" },
-			open_vsplit = { "<c-v>" },
-			open_tab = { "<c-t>" },
+		modes = {
+			symbols = {
+				desc = "document symbols",
+				mode = "lsp_document_symbols",
+				focus = false,
+				win = { position = "right" },
+				filter = {
+					-- remove Package since luals uses it for control flow structures
+					["not"] = { ft = "lua", kind = "Package" },
+					any = {
+						-- all symbol kinds for help / markdown files
+						ft = { "help", "markdown" },
+						-- default set of symbol kinds
+						kind = {
+							"Array",
+							"Boolean",
+							"Class",
+							"Constructor",
+							"Constant",
+							"Enum",
+							"EnumMember",
+							"Event",
+							"Field",
+							"File",
+							"Function",
+							"Interface",
+							"Key",
+							"Module",
+							"Method",
+							"Namespace",
+							"Number",
+							"Object",
+							"Package",
+							"Property",
+							"String",
+							"Struct",
+							"TypeParameter",
+							"Variable",
+						},
+					},
+				},
+			},
 		},
-		use_diagnostic_signs = true,
 	},
 }
 

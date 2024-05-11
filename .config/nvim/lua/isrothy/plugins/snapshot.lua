@@ -1,15 +1,15 @@
 return {
 	"mistricky/codesnap.nvim",
 	build = "make",
-	enabled = true,
+	enabled = false,
+	-- lazy = false,
 	cmd = {
-		"CodeSnapPreviewOn",
+		"CodeSnap",
 	},
 	opts = {
 		mac_window_bar = true,
-		opacity = true,
 		watermark = "",
-		preview_title = "",
 		watermark_font_family = "",
+		bg_theme = "summer",
 	},
 }

@@ -91,6 +91,7 @@ local TS = {
 local indent_blankline = {
 	"lukas-reineke/indent-blankline.nvim",
 	main = "ibl",
+	enabled = true,
 	opts = {
 		indent = {
 			char = "▎",
@@ -333,6 +334,12 @@ local regexplainer = {
 	},
 }
 
+local tree_pairs = {
+	"yorickpeterse/nvim-tree-pairs",
+	event = { "BufReadPost", "BufNewFile" },
+	opts = {}
+}
+
 return {
 	TS,
 	indent_blankline,
@@ -345,4 +352,5 @@ return {
 	node_marker,
 	treesj,
 	regexplainer,
+	tree_pairs,
 }
