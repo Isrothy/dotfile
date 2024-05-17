@@ -5,6 +5,7 @@ local expr_options = { expr = true, silent = true }
 
 map({ "n", "x" }, "<Space>", "<Nop>", default_options)
 map({ "n", "x", "i", "c", "t" }, "<F1>", "<Nop>", default_options)
+map({ "n", "x", "i", "c" }, "<c-z>", "<Nop>", default_options)
 vim.g.mapleader = " "
 
 map(
@@ -35,8 +36,8 @@ map("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"', {
 	desc = "Visually select changed text",
 })
 
-map("n", "<leader>o", "<C-o>", default_options)
-map("n", "<leader>i", "<C-i>", default_options)
+-- map("n", "<leader>o", "<C-o>", default_options)
+-- map("n", "<leader>i", "<C-i>", default_options)
 
 map("n", "<leader>wv", "<C-w>v", default_options)
 map("n", "<leader>ws", "<C-w>s", default_options)

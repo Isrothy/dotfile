@@ -26,15 +26,12 @@ local set_keymap = function(_, bufnr)
 	map("n", "<leader>gt", function()
 		require("telescope.builtin").lsp_type_definitions({ jump_type = "never" })
 	end, bufopts)
-
 	map("n", "<leader>gd", function()
 		require("telescope.builtin").lsp_definitions({ jump_type = "never" })
 	end, bufopts)
-
 	map("n", "<leader>gi", function()
 		require("telescope.builtin").lsp_implementations({ jump_type = "never" })
 	end, bufopts)
-
 	map("n", "<leader>gr", function()
 		require("telescope.builtin").lsp_references({
 			include_declaration = false,
@@ -44,13 +41,11 @@ local set_keymap = function(_, bufnr)
 	end, bufopts)
 
 	map("n", "K", vim.lsp.buf.hover, bufopts)
-	-- map("n", "K", '<cmd>lua require("pretty_hover").hover()<cr>', bufopts)
 	map("n", "<Leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
 	map("n", "<Leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
 	map("n", "<Leader>wl", function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, bufopts)
-	-- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
 	map("n", "<leader>rn", function()
 		return ":IncRename " .. vim.fn.expand("<cword>")
 	end, {
@@ -60,11 +55,9 @@ local set_keymap = function(_, bufnr)
 		expr = true,
 	})
 	map({ "n", "x" }, "<leader>ca", require("actions-preview").code_actions)
-	-- map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, bufopts)
 	map("n", "<leader>f", function()
 		vim.lsp.buf.format({ async = true })
 	end, bufopts)
-	-- range format
 	map("v", "<leader>f", function()
 		local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
 		local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
@@ -283,13 +276,13 @@ local Lspconfig = {
 				set_inlay_hint(client, bufnr)
 			end,
 		})
-		require("lspconfig").basedpyright.setup({
-			capabilities = make_capabilities(),
-			on_attach = function(client, bufnr)
-				set_keymap(client, bufnr)
-				set_inlay_hint(client, bufnr)
-			end,
-		})
+		-- require("lspconfig").basedpyright.setup({
+		-- 	capabilities = make_capabilities(),
+		-- 	on_attach = function(client, bufnr)
+		-- 		set_keymap(client, bufnr)
+		-- 		set_inlay_hint(client, bufnr)
+		-- 	end,
+		-- })
 		-- require("lspconfig").pylsp.setup({
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)
