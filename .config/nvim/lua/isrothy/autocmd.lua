@@ -60,10 +60,10 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 	callback = function(event)
 		local exclude = { "gitcommit" }
 		local buf = event.buf
-		if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
+		if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].last_loc then
 			return
 		end
-		vim.b[buf].lazyvim_last_loc = true
+		vim.b[buf].last_loc = true
 		local mark = vim.api.nvim_buf_get_mark(buf, '"')
 		local lcount = vim.api.nvim_buf_line_count(buf)
 		if mark[1] > 0 and mark[1] <= lcount then
@@ -165,6 +165,8 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 
 -- large file
 vim.api.nvim_create_autocmd({ "BufReadPre" }, {
+	group = vim.api.nvim_create_augroup("large_buf", { clear = true }),
+	pattern = "*",
 	callback = function()
 		local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf()))
 		if ok and stats and (stats.size > 1024 * 1024) then
@@ -173,6 +175,8 @@ vim.api.nvim_create_autocmd({ "BufReadPre" }, {
 			vim.opt_local.foldmethod = "manual"
 			vim.opt_local.spell = false
 			vim.opt_local.list = false
+			vim.b.matchup_matchparen_fallback = 0
+			vim.b.matchup_matchparen_enabled = 0
 			local status_ok, ts_config = pcall(require, "nvim-treesitter.configs")
 			if not status_ok then
 				return
@@ -198,6 +202,4 @@ vim.api.nvim_create_autocmd({ "BufReadPre" }, {
 			vim.b.large_buf = false
 		end
 	end,
-	group = vim.api.nvim_create_augroup("large_buf", { clear = true }),
-	pattern = "*",
 })

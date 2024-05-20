@@ -32,6 +32,7 @@ return {
 	{
 		"Isrothy/satellite.nvim",
 		event = { "BufReadPost", "BufNewFile" },
+		-- cmd = { "SatelliteDisable", "SatelliteEnable", "SatelliteRefresh" },
 		enabled = true,
 		opts = {
 			current_only = false,

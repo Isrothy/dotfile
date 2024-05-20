@@ -6,7 +6,6 @@ local TS = {
 	config = function()
 		require("nvim-treesitter.configs").setup({
 			sync_install = false,
-			-- ignore_install = { "comment" },
 			matchup = {
 				enable = false,
 				disable_virtual_text = true,
@@ -91,7 +90,6 @@ local TS = {
 local indent_blankline = {
 	"lukas-reineke/indent-blankline.nvim",
 	main = "ibl",
-	enabled = true,
 	opts = {
 		indent = {
 			char = "▎",
@@ -162,7 +160,6 @@ local indent_blankline = {
 }
 local iswap = {
 	"mizlan/iswap.nvim",
-	enabled = true,
 	cmd = {
 		"ISwap",
 		"ISwapWith",
@@ -199,11 +196,10 @@ local iswap = {
 }
 local rainbow = {
 	"HiPhish/rainbow-delimiters.nvim",
-	enabled = true,
+	enabled = false,
 	event = { "BufReadPost", "BufNewFile" },
 	config = function()
 		local rainbow_delimiters = require("rainbow-delimiters")
-
 		vim.g.rainbow_delimiters = {
 			strategy = {
 				[""] = rainbow_delimiters.strategy["global"],
@@ -231,14 +227,13 @@ local endwise = {
 
 local autotag = {
 	"windwp/nvim-ts-autotag",
-	-- event = { "InsertEnter" },
-	enabled = true,
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
-		enable = true,
-		enable_rename = true,
-		enable_close = true,
-		enable_close_on_slash = true,
+		opts = {
+			enable_rename = true,
+			enable_close = true,
+			enable_close_on_slash = true,
+		},
 	},
 }
 
@@ -254,14 +249,12 @@ local neogen = {
 
 local femaco = {
 	"AckslD/nvim-FeMaco.lua",
-	enabled = true,
 	cmd = "FeMaco",
 	opts = {},
 }
 
 local node_marker = {
 	"atusy/tsnode-marker.nvim",
-	enabled = true,
 	init = function()
 		vim.api.nvim_create_autocmd("FileType", {
 			group = vim.api.nvim_create_augroup("tsnode-marker-markdown", {}),
@@ -278,7 +271,6 @@ local node_marker = {
 
 local treesj = {
 	"Wansmer/treesj",
-	enabled = true,
 	keys = {
 		{ "<leader>s", desc = "Split lines" },
 		{ "<leader>j", desc = "Join lines" },
@@ -293,7 +285,6 @@ local treesj = {
 local regexplainer = {
 	"bennypowers/nvim-regexplainer",
 	keys = { "gR", desc = "Explain regex" },
-	enabled = true,
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",
 		"MunifTanjim/nui.nvim",
@@ -337,7 +328,7 @@ local regexplainer = {
 local tree_pairs = {
 	"yorickpeterse/nvim-tree-pairs",
 	event = { "BufReadPost", "BufNewFile" },
-	opts = {}
+	opts = {},
 }
 
 return {

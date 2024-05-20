@@ -1,11 +1,9 @@
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
 
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -53,26 +51,27 @@ ENABLE_CORRECTION=true
 
 source "$ZSH"/oh-my-zsh.sh
 source /opt/homebrew/share/zsh-autopair/autopair.zsh
-source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
+source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
 
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/opt/homebrew/opt/zip/bin:$PATH"
-# export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/Users/jiangjoshua/.rustup/toolchains/stable-aarch64-apple-darwin/bin:$PATH"
-export PATH="/opt/homebrew/opt/node@16/bin:$PATH"
+export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
+export PATH="/Users/jiangjoshua/.vscode/extensions/mgt19937.typst-preview-0.10.6-darwin-arm64/out:$PATH"
 export PATH=$PATH:$HOME/.local/bin
 
+export DYLD_LIBRARY_PATH="/opt/homebrew/lib"
 
 export JAVA_HOME=/opt/homebrew/Cellar/openjdk@17/17.0.7/libexec/openjdk.jdk/Contents/Home
 export JAVA_HOME=$(/usr/libexec/java_home)
-# export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
-# export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export MYVIMRC="/Users/jiangjoshua/.config/nvim/init.lua"
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib" LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -80,20 +79,11 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
 
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# if type rg &> /dev/null; then
-#   export FZF_DEFAULT_COMMAND='rg --files'
-#   export FZF_DEFAULT_OPTS='-m'
-# fi
 export FZF_DEFAULT_COMMAND="fd --type file --color=always"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--ansi"
 
 alias config='/usr/bin/git --git-dir=/Users/jiangjoshua/.cfg/ --work-tree=/Users/jiangjoshua'
-
-
-#[ -f "/Users/jiangjoshua/.ghcup/env" ] && source "/Users/jiangjoshua/.ghcup/env" # ghcup-env
 
 
 alias python="/opt/homebrew/bin/python3.12"
@@ -110,9 +100,13 @@ alias lt='ls --tree'
 alias pipupall="pip3 list -o | cut -f1 -d' ' | tr ' ' '\n' | awk '{if(NR>=3)print}' | cut -d' ' -f1 | xargs -n1 pip3 install -U"
 
 alias icat="kitty +kitten icat"
+alias d="kitten diff"
 
 alias preview="open -a preview"
-alias nano=micro
+alias typora="open -a typora"
 [ -f "/Users/jiangjoshua/.ghcup/env" ] && source "/Users/jiangjoshua/.ghcup/env" # ghcup-env
 
 source /Users/jiangjoshua/.config/broot/launcher/bash/br
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

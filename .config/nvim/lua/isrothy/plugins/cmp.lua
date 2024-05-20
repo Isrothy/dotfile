@@ -262,8 +262,8 @@ CMP.init = function()
 			cmp.setup.buffer({
 				sources = {
 					{ name = "calc" },
-					{ name = "buffer" },
-					{ name = "fuzzy_buffer" },
+					-- { name = "buffer" },
+					-- { name = "fuzzy_buffer" },
 				},
 			})
 		end,

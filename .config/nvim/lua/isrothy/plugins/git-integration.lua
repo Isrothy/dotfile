@@ -146,8 +146,9 @@ return {
 	{
 		"ejrichards/baredot.nvim",
 		event = "VeryLazy",
+		enabled = true,
 		opts = {
-			git_dir = "~/.cfg", -- Change this path
+			git_dir = "~/.cfg",
 		},
 	},
 }

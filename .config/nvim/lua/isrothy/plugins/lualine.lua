@@ -171,8 +171,11 @@ M.config = function()
 			},
 			lualine_z = {
 				{
-					"fancy_searchcount",
-					icon = { "󰱽", color = { fg = c.snow_storm.origin } },
+					require("noice").api.status.search.get,
+					cond = function()
+						return not vim.b.large_buf and require("noice").api.status.search.has()
+					end,
+					color = { fg = c.snow_storm.origin },
 				},
 				{
 					"selectioncount",

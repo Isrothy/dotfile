@@ -17,13 +17,4 @@ return {
 			vim.g.mkdp_auto_close = 1
 		end,
 	},
-	{
-		"zk-org/zk-nvim",
-		ft = "markdown",
-		config = function()
-			require("zk").setup({
-				-- See Setup section below
-			})
-		end,
-	},
 }

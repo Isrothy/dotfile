@@ -1,14 +1,3 @@
--- local border = {
--- 	{ "", "FloatBorder" },
--- 	{ "", "FloatBorder" },
--- 	{ "", "FloatBorder" },
--- 	{ " ", "FloatBorder" },
--- 	{ "", "FloatBorder" },
--- 	{ "", "FloatBorder" },
--- 	{ "", "FloatBorder" },
--- 	{ " ", "FloatBorder" },
--- }
-
 local map = vim.keymap.set
 
 local border = "rounded"
@@ -98,7 +87,7 @@ local mason = {
 				-- "flake8",
 			},
 			ui = {
-				border = "rounded",
+				border = border,
 			},
 		},
 		config = function(_, opts)
@@ -145,13 +134,13 @@ local Lspconfig = {
 			update_in_insert = true,
 			severity_sort = true,
 			float = {
-				border = "rounded",
+				border = border,
 				source = "always",
 			},
 		})
 		require("mason").setup()
 		require("mason-lspconfig").setup()
-		require("lspconfig.ui.windows").default_options.border = "rounded"
+		require("lspconfig.ui.windows").default_options.border = border
 
 		require("lspconfig").bashls.setup({
 			capabilities = make_capabilities(),
@@ -276,13 +265,13 @@ local Lspconfig = {
 				set_inlay_hint(client, bufnr)
 			end,
 		})
-		-- require("lspconfig").basedpyright.setup({
-		-- 	capabilities = make_capabilities(),
-		-- 	on_attach = function(client, bufnr)
-		-- 		set_keymap(client, bufnr)
-		-- 		set_inlay_hint(client, bufnr)
-		-- 	end,
-		-- })
+		require("lspconfig").basedpyright.setup({
+			capabilities = make_capabilities(),
+			on_attach = function(client, bufnr)
+				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
+			end,
+		})
 		-- require("lspconfig").pylsp.setup({
 		-- 	capabilities = make_capabilities(),
 		-- 	on_attach = function(client, bufnr)

@@ -33,11 +33,12 @@ opt.fillchars = {
 }
 
 opt.virtualedit = { "block", "onemore" }
-opt.wrap = false
+opt.wrap = true
 opt.linebreak = true
 -- opt.textwidth = 0
 -- opt.wrapmargin =40
 opt.scrolloff = 8
+opt.smoothscroll = true
 opt.sidescrolloff = 16
 opt.history = 2000
 opt.ttimeoutlen = 0
@@ -48,7 +49,7 @@ opt.wildmenu = true
 opt.scrollback = 2000
 
 o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
-o.splitkeep = "screen"
+-- o.splitkeep = "screen"
 
 -- opt.spell = true
 -- opt.spelllang = { 'en_us' }
