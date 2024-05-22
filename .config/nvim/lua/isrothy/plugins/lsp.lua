@@ -302,6 +302,7 @@ local Lspconfig = {
 		-- })
 		-- require("lspconfig").pyright.setup({
 		-- 	capabilities = make_capabilities(),
+		-- 	single_file_support = true,
 		-- 	on_attach = function(client, bufnr)
 		-- 		set_keymap(client, bufnr)
 		-- 		set_inlay_hint(client, bufnr)
@@ -352,19 +353,19 @@ local Lspconfig = {
 		-- 		},
 		-- 	},
 		-- })
-		require("lspconfig").ruff_lsp.setup({
-			capabilities = make_capabilities(),
-			on_attach = function(client, bufnr)
-				set_keymap(client, bufnr)
-				set_inlay_hint(client, bufnr)
-			end,
-			init_options = {
-				settings = {
-					-- Any extra CLI arguments for `ruff` go here.
-					args = {},
-				},
-			},
-		})
+		-- require("lspconfig").ruff_lsp.setup({
+		-- 	capabilities = make_capabilities(),
+		-- 	on_attach = function(client, bufnr)
+		-- 		set_keymap(client, bufnr)
+		-- 		set_inlay_hint(client, bufnr)
+		-- 	end,
+		-- 	init_options = {
+		-- 		settings = {
+		-- 			-- Any extra CLI arguments for `ruff` go here.
+		-- 			args = {},
+		-- 		},
+		-- 	},
+		-- })
 		require("lspconfig").r_language_server.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
@@ -615,7 +616,7 @@ local null_ls = {
 				null_ls.builtins.diagnostics.zsh,
 
 				-- null_ls.builtins.formatting.autopep8,
-				-- null_ls.builtins.formatting.black,
+				null_ls.builtins.formatting.black,
 				null_ls.builtins.formatting.cmake_format,
 				null_ls.builtins.formatting.markdownlint,
 				null_ls.builtins.formatting.shellharden.with({

@@ -175,7 +175,7 @@ M.config = function()
 					cond = function()
 						return not vim.b.large_buf and require("noice").api.status.search.has()
 					end,
-					color = { fg = c.snow_storm.origin },
+					color = { fg = c.polar_night.origin },
 				},
 				{
 					"selectioncount",

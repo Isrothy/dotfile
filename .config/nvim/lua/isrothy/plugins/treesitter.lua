@@ -158,6 +158,7 @@ local indent_blankline = {
 		vim.opt.list = true
 	end,
 }
+
 local iswap = {
 	"mizlan/iswap.nvim",
 	cmd = {
@@ -196,7 +197,7 @@ local iswap = {
 }
 local rainbow = {
 	"HiPhish/rainbow-delimiters.nvim",
-	enabled = false,
+	enabled = true,
 	event = { "BufReadPost", "BufNewFile" },
 	config = function()
 		local rainbow_delimiters = require("rainbow-delimiters")
@@ -219,23 +220,6 @@ local rainbow = {
 		}
 	end,
 }
-local endwise = {
-	"RRethy/nvim-treesitter-endwise",
-	enabled = true,
-	event = { "InsertEnter" },
-}
-
-local autotag = {
-	"windwp/nvim-ts-autotag",
-	event = { "BufReadPost", "BufNewFile" },
-	opts = {
-		opts = {
-			enable_rename = true,
-			enable_close = true,
-			enable_close_on_slash = true,
-		},
-	},
-}
 
 local neogen = {
 	"danymat/neogen",
@@ -243,7 +227,7 @@ local neogen = {
 	dependencies = "nvim-treesitter/nvim-treesitter",
 	cmd = "Neogen",
 	opts = {
-		snippet_engine = "luasnip",
+		snippet_engine = "nvim",
 	},
 }
 
@@ -255,6 +239,7 @@ local femaco = {
 
 local node_marker = {
 	"atusy/tsnode-marker.nvim",
+	enabled = true,
 	init = function()
 		vim.api.nvim_create_autocmd("FileType", {
 			group = vim.api.nvim_create_augroup("tsnode-marker-markdown", {}),
@@ -337,8 +322,6 @@ return {
 	iswap,
 	rainbow,
 	femaco,
-	endwise,
-	autotag,
 	neogen,
 	node_marker,
 	treesj,
