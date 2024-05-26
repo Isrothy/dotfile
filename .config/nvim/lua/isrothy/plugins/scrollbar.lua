@@ -30,9 +30,8 @@ return {
 		},
 	},
 	{
-		"Isrothy/satellite.nvim",
+		"lewis6991/satellite.nvim",
 		event = { "BufReadPost", "BufNewFile" },
-		-- cmd = { "SatelliteDisable", "SatelliteEnable", "SatelliteRefresh" },
 		enabled = true,
 		opts = {
 			current_only = false,
@@ -67,7 +66,7 @@ return {
 				},
 				marks = {
 					enable = true,
-					show_builtins = false, -- shows the builtin marks like [ ] < >
+					show_builtins = true, -- shows the builtin marks like [ ] < >
 				},
 			},
 		},

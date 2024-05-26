@@ -5,6 +5,11 @@ local g = vim.g
 g.compatible = 0
 opt.termguicolors = true
 
+o.guifont = "JetBrainsMono Nerd Font:h15"
+g.neovide_input_macos_option_key_is_meta = "both"
+g.neovide_underline_stroke_scale = 3
+-- o.linespace = 4
+
 opt.mouse = ""
 opt.syntax = "on"
 opt.cmdheight = 0

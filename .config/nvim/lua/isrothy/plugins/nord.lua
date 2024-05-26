@@ -38,7 +38,7 @@ M.config = function()
 
 			highlights.WhichKeyFloat = { bg = colors.polar_night.origin }
 
-			highlights.MatchParen = { bg = colors.polar_night.origin, standout = true }
+			highlights.MatchParen = { bg = colors.polar_night.origin, reverse = true }
 
 			highlights.NoiceLspProgressClient = { fg = colors.frost.ice, italic = true }
 			highlights.NoiceLspProgressTitle = { fg = colors.snow_storm.origin }

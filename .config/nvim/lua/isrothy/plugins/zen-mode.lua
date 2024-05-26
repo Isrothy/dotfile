@@ -1,7 +1,7 @@
 return {
 	{
 		"folke/zen-mode.nvim",
-		cmd = "ZenMode",
+		cmd = { "ZenMode" },
 		opts = {
 			plugins = {
 				options = {
@@ -22,7 +22,7 @@ return {
 	{
 		"folke/twilight.nvim",
 		cmd = {
-			"ZenMode",
+			-- "ZenMode",
 			"TZAtaraxis",
 			"TZMinimalist",
 			"TZNarrow",

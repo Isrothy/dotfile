@@ -59,7 +59,7 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/opt/homebrew/opt/zip/bin:$PATH"
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/Users/jiangjoshua/.rustup/toolchains/stable-aarch64-apple-darwin/bin:$PATH"
-export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
+# export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
 export PATH="/Users/jiangjoshua/.vscode/extensions/mgt19937.typst-preview-0.10.6-darwin-arm64/out:$PATH"
 export PATH=$PATH:$HOME/.local/bin
 
@@ -69,9 +69,8 @@ export JAVA_HOME=/opt/homebrew/Cellar/openjdk@17/17.0.7/libexec/openjdk.jdk/Cont
 export JAVA_HOME=$(/usr/libexec/java_home)
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export MYVIMRC="/Users/jiangjoshua/.config/nvim/init.lua"
-export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
-export LDFLAGS="-L/opt/homebrew/opt/llvm/lib" LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down

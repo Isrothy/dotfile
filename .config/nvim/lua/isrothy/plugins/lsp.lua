@@ -67,7 +67,7 @@ for type, icon in pairs(signs) do
 end
 
 local set_inlay_hint = function(client, bufnr)
-	local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
+	local inlay_hint = vim.lsp.inlay_hint
 	if inlay_hint and client.supports_method("textDocument/inlayHint") then
 		inlay_hint.enable(true)
 	end
@@ -272,50 +272,6 @@ local Lspconfig = {
 				set_inlay_hint(client, bufnr)
 			end,
 		})
-		-- require("lspconfig").pylsp.setup({
-		-- 	capabilities = make_capabilities(),
-		-- 	on_attach = function(client, bufnr)
-		-- 		set_keymap(client, bufnr)
-		-- 		set_inlay_hint(client, bufnr)
-		-- 	end,
-		-- 	settings = {
-		-- 		pylsp = {
-		-- 			plugins = {
-		-- 				flake8 = {
-		-- 					enabled = false,
-		-- 				},
-		-- 				pyflakes = {
-		-- 					enabled = false,
-		-- 				},
-		-- 				pylint = {
-		-- 					enabled = false,
-		-- 				},
-		-- 				pycodestyle = {
-		-- 					enabled = false,
-		-- 				},
-		-- 				mccabe = {
-		-- 					enabled = false,
-		-- 				},
-		-- 			},
-		-- 		},
-		-- 	},
-		-- })
-		-- require("lspconfig").pyright.setup({
-		-- 	capabilities = make_capabilities(),
-		-- 	single_file_support = true,
-		-- 	on_attach = function(client, bufnr)
-		-- 		set_keymap(client, bufnr)
-		-- 		set_inlay_hint(client, bufnr)
-		-- 	end,
-		-- })
-		-- require("lspconfig").jedi_language_server.setup({
-		-- 	capabilities = make_capabilities(),
-		-- 	on_attach = function(client, bufnr)
-		-- 		set_keymap(client, bufnr)
-		-- 		set_inlay_hint(client, bufnr)
-		-- 	end,
-		-- 	init_options = {},
-		-- })
 		-- require("lspconfig").pylyzer.setup({
 		-- 	capabilities = (function()
 		-- 		local cap = make_capabilities()
@@ -332,37 +288,6 @@ local Lspconfig = {
 		-- 			diagnostics = false,
 		-- 			inlayHints = false,
 		-- 			smartCompletion = false,
-		-- 		},
-		-- 	},
-		-- })
-		-- require("lspconfig").anakin_language_server.setup({
-		-- 	capabilities = make_capabilities(),
-		-- 	on_attach = function(client, bufnr)
-		-- 		set_keymap(client, bufnr)
-		-- 		set_inlay_hint(client, bufnr)
-		-- 	end,
-		-- 	settings = {
-		-- 		diagnostic_on_save = false,
-		-- 		anakinls = {
-		-- 			pycodestyle_config = {
-		-- 				ignore = {
-		-- 					"E501",
-		-- 					"W505",
-		-- 				},
-		-- 			},
-		-- 		},
-		-- 	},
-		-- })
-		-- require("lspconfig").ruff_lsp.setup({
-		-- 	capabilities = make_capabilities(),
-		-- 	on_attach = function(client, bufnr)
-		-- 		set_keymap(client, bufnr)
-		-- 		set_inlay_hint(client, bufnr)
-		-- 	end,
-		-- 	init_options = {
-		-- 		settings = {
-		-- 			-- Any extra CLI arguments for `ruff` go here.
-		-- 			args = {},
 		-- 		},
 		-- 	},
 		-- })
@@ -597,7 +522,7 @@ local null_ls = {
 				set_inlay_hint(client, bufnr)
 			end,
 			sources = {
-				-- null_ls.builtins.completion.spell,
+				null_ls.builtins.completion.spell,
 
 				null_ls.builtins.diagnostics.checkmake,
 				null_ls.builtins.diagnostics.hadolint,
@@ -646,6 +571,7 @@ vim.api.nvim_create_autocmd("FileType", {
 				set_keymap(client, bufnr)
 			end,
 			capabilities = make_capabilities(),
+			single_file_support = false,
 		})
 		vim.lsp.buf_attach_client(0, client)
 	end,
