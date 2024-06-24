@@ -71,6 +71,15 @@ M.config = function()
 
 			highlights["@error"] = {}
 
+			highlights.StartLogo1 = { fg = "#5E81AC" }
+			highlights.StartLogo2 = { fg = "#6688A8" }
+			highlights.StartLogo3 = { fg = "#6D8FA5" }
+			highlights.StartLogo4 = { fg = "#7595A1" }
+			highlights.StartLogo5 = { fg = "#7D9C9E" }
+			highlights.StartLogo6 = { fg = "#84A39A" }
+			highlights.StartLogo7 = { fg = "#8CAA97" }
+			highlights.StartLogo8 = { fg = "#94B093" }
+
 			-- highlights.InclineNormal = { bg = colors.polar_night.brighter, bold = true }
 			-- highlights.InclineNormalNC = { bg = colors.polar_night.brighter }
 			-- highlights.Headline1 = { bg = utils.darken(colors.aurora.green, 0.2), bold = true }

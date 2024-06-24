@@ -135,7 +135,7 @@ local Lspconfig = {
 			severity_sort = true,
 			float = {
 				border = border,
-				source = "always",
+				source = true,
 			},
 		})
 		require("mason").setup()
@@ -226,8 +226,6 @@ local Lspconfig = {
 		require("lspconfig").lua_ls.setup({
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
-				require("neodev").setup({})
-
 				set_keymap(client, bufnr)
 				set_inlay_hint(client, bufnr)
 				-- client.server_capabilities.documentFormattingProvider = false
@@ -271,25 +269,34 @@ local Lspconfig = {
 				set_keymap(client, bufnr)
 				set_inlay_hint(client, bufnr)
 			end,
+			settings = {
+				basedpyright = {
+					analysis = {
+						autoSearchPaths = true,
+						diagnosticMode = "openFilesOnly",
+						useLibraryCodeForTypes = true,
+					},
+				},
+			},
 		})
 		-- require("lspconfig").pylyzer.setup({
-		-- 	capabilities = (function()
-		-- 		local cap = make_capabilities()
-		-- 		cap.offsetEncoding = { "utf-16" }
-		-- 		return cap
-		-- 	end)(),
-		-- 	on_attach = function(client, bufnr)
-		-- 		set_keymap(client, bufnr)
-		-- 		-- set_inlay_hint(client, bufnr)
-		-- 	end,
-		-- 	settings = {
-		-- 		python = {
-		-- 			checkOnType = false,
-		-- 			diagnostics = false,
-		-- 			inlayHints = false,
-		-- 			smartCompletion = false,
-		-- 		},
-		-- 	},
+		--  capabilities = (function()
+		--      local cap = make_capabilities()
+		--      cap.offsetEncoding = { "utf-16" }
+		--      return cap
+		--  end)(),
+		--  on_attach = function(client, bufnr)
+		--      set_keymap(client, bufnr)
+		--      -- set_inlay_hint(client, bufnr)
+		--  end,
+		--  settings = {
+		--      python = {
+		--          checkOnType = false,
+		--          diagnostics = false,
+		--          inlayHints = false,
+		--          smartCompletion = false,
+		--      },
+		--  },
 		-- })
 		require("lspconfig").r_language_server.setup({
 			capabilities = make_capabilities(),
@@ -395,8 +402,22 @@ local clangd = {
 local java = {
 	"nvim-java/nvim-java",
 	ft = "java",
+	cmd = {
+		"JavaRunnerRunMain",
+		"JavaRunnerStopMain",
+		"JavaRunnerToggleLogs",
+		"JavaDapConfig",
+		"JavaTestRunCurrentClass",
+		"JavaTestDebugCurrentClass",
+		"JavaTestRunCurrentMethod",
+		"JavaTestDebugCurrentMethod",
+		"JavaTestViewLastReport",
+		"JavaProfile",
+		"JavaRefactorExtractVariable",
+	},
 	dependencies = {
 		"nvim-java/lua-async-await",
+		"nvim-java/nvim-java-refactor",
 		"nvim-java/nvim-java-core",
 		"nvim-java/nvim-java-test",
 		"nvim-java/nvim-java-dap",
@@ -419,6 +440,7 @@ local java = {
 			capabilities = make_capabilities(),
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
+				set_inlay_hint(client, bufnr)
 			end,
 		})
 	end,
@@ -526,17 +548,15 @@ local null_ls = {
 
 				null_ls.builtins.diagnostics.checkmake,
 				null_ls.builtins.diagnostics.hadolint,
-				-- null_ls.builtins.diagnostics.markdownlint,
 				null_ls.builtins.diagnostics.gitlint,
-				-- null_ls.builtins.diagnostics.textidote,
 				-- null_ls.builtins.diagnostics.pylint.with({
-				-- 	args = {
-				-- 		"--from-stdin",
-				-- 		"$FILENAME",
-				-- 		"-f",
-				-- 		"json",
-				-- 		"--errors-only",
-				-- 	},
+				--  args = {
+				--      "--from-stdin",
+				--      "$FILENAME",
+				--      "-f",
+				--      "json",
+				--      "--errors-only",
+				--  },
 				-- }),
 				null_ls.builtins.diagnostics.zsh,
 
@@ -563,28 +583,32 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = "markdown",
 	callback = function()
 		local root_dir = vim.fs.dirname(vim.fs.find({ ".ants" }, { upward = true })[1])
-		local client = vim.lsp.start({
-			name = "ants-ls",
-			cmd = { "ants-ls" },
-			root_dir = root_dir,
-			on_attach = function(client, bufnr)
-				set_keymap(client, bufnr)
-			end,
-			capabilities = make_capabilities(),
-			single_file_support = false,
-		})
-		vim.lsp.buf_attach_client(0, client)
+		if root_dir then
+			local client = vim.lsp.start({
+				name = "ants-ls",
+				cmd = { "ants-ls" },
+				root_dir = root_dir,
+				on_attach = function(client, bufnr)
+					set_keymap(client, bufnr)
+				end,
+				capabilities = make_capabilities(),
+				single_file_support = false,
+			})
+			if client then
+				vim.lsp.buf_attach_client(0, client)
+			end
+		end
 	end,
 })
 
 -- vim.lsp.start({
--- 	name = "ants-ls",
--- 	cmd = { "ants-ls" },
--- 	root_dir = vim.fs.dirname(vim.fs.find({ ".ants" }, { upward = true })[1]),
--- 	capabilities = make_capabilities(),
--- 	on_attach = function(client, bufnr)
--- 		set_keymap(client, bufnr)
--- 	end,
+--  name = "ants-ls",
+--  cmd = { "ants-ls" },
+--  root_dir = vim.fs.dirname(vim.fs.find({ ".ants" }, { upward = true })[1]),
+--  capabilities = make_capabilities(),
+--  on_attach = function(client, bufnr)
+--      set_keymap(client, bufnr)
+--  end,
 -- }, {})
 
 return {

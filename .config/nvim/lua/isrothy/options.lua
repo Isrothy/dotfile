@@ -38,7 +38,7 @@ opt.fillchars = {
 }
 
 opt.virtualedit = { "block", "onemore" }
-opt.wrap = true
+opt.wrap = false
 opt.linebreak = true
 -- opt.textwidth = 0
 -- opt.wrapmargin =40

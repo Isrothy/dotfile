@@ -24,7 +24,6 @@ local lightbulb = {
 			events = { "CursorHold", "CursorHoldI" },
 			pattern = { "*" },
 		},
-
 		ignore = {
 			clients = {},
 			ft = {},
@@ -119,7 +118,6 @@ local illuminate = {
 
 local trouble = {
 	"folke/trouble.nvim",
-	branch = "dev",
 	cmd = {
 		"Trouble",
 	},
@@ -203,10 +201,29 @@ local trouble = {
 	},
 }
 
+local lsplinks = {
+	"icholy/lsplinks.nvim",
+	keys = {
+		{
+			"gx",
+			function()
+				require("lsplinks").gx()
+			end,
+			mode = { "n" },
+			desc = "Open link",
+		},
+	},
+	opts = {
+		highlight = true,
+		hl_group = "Underlined",
+	},
+}
+
 return {
 	lightbulb,
 	actions_preview,
 	illuminate,
 	inc_rename,
 	trouble,
+	lsplinks,
 }

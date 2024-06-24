@@ -49,9 +49,13 @@ return {
 		},
 	},
 	{
-		"chrisgrieser/nvim-alt-substitute",
-		opts = true,
-		-- lazy-loading with `cmd =` does not work well with incremental preview
-		event = "CmdlineEnter",
+		"chrisgrieser/nvim-rip-substitute",
+		init = function()
+			vim.api.nvim_create_user_command("RipSub", function()
+				require("rip-substitute").sub()
+			end, {
+				desc = " rip substitute",
+			})
+		end,
 	},
 }

@@ -9,7 +9,7 @@ local M = {
 
 M.opts = {
 	cmdline = {
-		enabled = true, -- enables the Noice cmdline UI
+		enabled = false, -- enables the Noice cmdline UI
 		view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
 		opts = {}, -- global options for the cmdline. See section on views
 		format = {
@@ -33,7 +33,7 @@ M.opts = {
 	messages = {
 		-- NOTE: If you enable messages, then the cmdline is enabled automatically.
 		-- This is a current Neovim limitation.
-		enabled = true, -- enables the Noice messages UI
+		enabled = false, -- enables the Noice messages UI
 		view = "notify", -- default view for messages
 		view_error = "notify", -- view for errors
 		view_warn = "notify", -- view for warnings
@@ -91,12 +91,12 @@ M.opts = {
 		-- event is always "notify" and kind can be any log level as a string
 		-- The default routes will forward notifications to nvim-notify
 		-- Benefit of using Noice for this is the routing and consistent history view
-		enabled = true,
+		enabled = false,
 		view = "notify",
 	},
 	lsp = {
 		progress = {
-			enabled = true,
+			enabled = false,
 			-- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
 			-- See the section on formatting for more details on how to customize.
 			format = "lsp_progress",
@@ -130,7 +130,7 @@ M.opts = {
 		},
 		message = {
 			-- Messages shown by lsp servers
-			enabled = true,
+			enabled = false,
 			view = "notify",
 			opts = {},
 		},

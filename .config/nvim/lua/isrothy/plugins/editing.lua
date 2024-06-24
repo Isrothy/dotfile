@@ -192,7 +192,8 @@ return {
 					},
 				},
 				enabled = function()
-					return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
+					return vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt"
+						or require("cmp_dap").is_dap_buffer()
 				end,
 			})
 
@@ -236,16 +237,16 @@ return {
 				},
 			})
 
-			cmp.setup.cmdline(":", {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = cmp.config.sources({
-					{ name = "cmdline" },
-				}, {
-					{ name = "cmdline_history" },
-					{ name = "path" },
-					{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
-				}),
-			})
+			-- cmp.setup.cmdline(":", {
+			-- 	mapping = cmp.mapping.preset.cmdline(),
+			-- 	sources = cmp.config.sources({
+			-- 		{ name = "cmdline" },
+			-- 	}, {
+			-- 		{ name = "cmdline_history" },
+			-- 		{ name = "path" },
+			-- 		{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
+			-- 	}),
+			-- })
 		end,
 
 		init = function()

@@ -5,62 +5,52 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export ZSH="$HOME/.oh-my-zsh"
+source "$HOME"/.antigen.zsh
 
-zstyle ':omz:update' frequency 7
-zstyle ':omz:update' mode auto
+antigen use oh-my-zsh
 
-ZVM_INIT_MODE=sourcing
+antigen bundle aliases
+antigen bundle brew
+antigen bundle cabal
+antigen bundle colored-man-pages
+antigen bundle colorize
+antigen bundle command-not-found
+antigen bundle copybuffer
+antigen bundle copyfile
+antigen bundle copypath
+antigen bundle dirhistory
+antigen bundle fd
+antigen bundle fzf
+antigen bundle git
+antigen bundle gitignore
+antigen bundle history-substring-search
+antigen bundle jsontools
+antigen bundle macos
+antigen bundle ripgrep
+antigen bundle stack
+antigen bundle sudo
+antigen bundle web-search
+antigen bundle zoxide
 
-plugins=(
-  aliases
-  brew
-  cabal
-  colored-man-pages
-  colorize
-  command-not-found
-  copybuffer
-  copyfile
-  copypath
-  dirhistory
-  fast-syntax-highlighting
-  fd
-  fzf
-  fzf-tab
-  git
-  gitignore
-  history-substring-search
-  jsontools
-  macos
-  ripgrep
-  rust
-  stack
-  sudo
-  web-search
-  zsh-autosuggestions
-  zsh-vi-mode
-  zoxide
-)
+antigen bundle hlissner/zsh-autopair
+antigen bundle zsh-users/zsh-completions
+antigen bundle zdharma-continuum/fast-syntax-highlighting
+antigen bundle Aloxaf/fzf-tab
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle jeffreytse/zsh-vi-mode
 
-FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-chmod -R go-w "$(brew --prefix)/share"
+antigen apply
 
+source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 
 ZSH_COLORIZE_TOOL=chroma
 ENABLE_CORRECTION=true
 
-source "$ZSH"/oh-my-zsh.sh
-source /opt/homebrew/share/zsh-autopair/autopair.zsh
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
-
-
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/opt/homebrew/opt/zip/bin:$PATH"
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/Users/jiangjoshua/.rustup/toolchains/stable-aarch64-apple-darwin/bin:$PATH"
-# export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
-export PATH="/Users/jiangjoshua/.vscode/extensions/mgt19937.typst-preview-0.10.6-darwin-arm64/out:$PATH"
+export PATH="/Users/jiangjoshua/.vscode/extensions/mgt19937.typst-preview-0.11.7-darwin-arm64/out:$PATH"
 export PATH=$PATH:$HOME/.local/bin
 
 export DYLD_LIBRARY_PATH="/opt/homebrew/lib"
@@ -69,8 +59,6 @@ export JAVA_HOME=/opt/homebrew/Cellar/openjdk@17/17.0.7/libexec/openjdk.jdk/Cont
 export JAVA_HOME=$(/usr/libexec/java_home)
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export MYVIMRC="/Users/jiangjoshua/.config/nvim/init.lua"
-export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
-export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -82,8 +70,7 @@ export FZF_DEFAULT_COMMAND="fd --type file --color=always"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--ansi"
 
-alias config='/usr/bin/git --git-dir=/Users/jiangjoshua/.cfg/ --work-tree=/Users/jiangjoshua'
-
+alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 
 alias python="/opt/homebrew/bin/python3.12"
 alias python3="/opt/homebrew/bin/python3.12"
@@ -105,7 +92,7 @@ alias preview="open -a preview"
 alias typora="open -a typora"
 [ -f "/Users/jiangjoshua/.ghcup/env" ] && source "/Users/jiangjoshua/.ghcup/env" # ghcup-env
 
-source /Users/jiangjoshua/.config/broot/launcher/bash/br
+eval "$(zoxide init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

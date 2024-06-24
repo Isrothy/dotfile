@@ -27,6 +27,27 @@ local neovim_delta_corps_preist1 = {
 	[[███   ███   ███    ███ ███    ███ ███    ███ ███  ███   ███   ███ ]],
 	[[ ▀█   █▀    ██████████  ▀██████▀   ▀██████▀  █▀    ▀█   ███   █▀  ]],
 }
+
+local function header()
+	local lines = {}
+
+	for i, chars in pairs(neovim_delta_corps_preist1) do
+		local line = {
+			type = "text",
+			val = chars,
+			opts = {
+				hl = "StartLogo" .. i,
+				shrink_margin = false,
+				position = "center",
+			},
+		}
+
+		table.insert(lines, line)
+	end
+
+	return lines
+end
+
 return {
 	"goolord/alpha-nvim",
 	event = "VimEnter",
@@ -34,8 +55,7 @@ return {
 	config = function()
 		local alpha = require("alpha")
 		local dashboard = require("alpha.themes.dashboard")
-
-		dashboard.section.header.val = neovim_delta_corps_preist1
+		local fortune = require("alpha.fortune")
 
 		dashboard.section.buttons.val = {
 			dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
@@ -47,9 +67,19 @@ return {
 			dashboard.button("l", "󰒲 " .. " Lazy", ":Lazy<CR>"),
 			dashboard.button("q", " " .. " Quit", ":qa<CR>"),
 		}
+		dashboard.section.footer.val = fortune()
 		dashboard.config.opts.noautocmd = false
-		-- dashboard.section.footer.val = "hello"
-		alpha.setup(dashboard.config)
+
+		alpha.setup({
+			layout = {
+				{ type = "padding", val = 4 },
+				{ type = "group", val = header() },
+				{ type = "padding", val = 2 },
+				dashboard.section.buttons,
+				dashboard.section.footer,
+			},
+			opts = dashboard.config,
+		})
 
 		vim.cmd([[
 			augroup Alpha

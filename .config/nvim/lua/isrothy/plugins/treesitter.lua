@@ -5,6 +5,10 @@ local TS = {
 	enabled = true,
 	config = function()
 		require("nvim-treesitter.configs").setup({
+			ensure_installed = {},
+			ignore_install = {},
+			modules = {},
+			auto_install = true,
 			sync_install = false,
 			matchup = {
 				enable = false,

@@ -188,7 +188,7 @@ telescope.config = function()
 		},
 	})
 
-	require("telescope").load_extension("notify")
+	-- require("telescope").load_extension("notify")
 	require("telescope").load_extension("fzf")
 	require("telescope").load_extension("zoxide")
 	require("telescope").load_extension("frecency")
@@ -233,6 +233,17 @@ return {
 		config = function(_, opts)
 			require("project_nvim").setup(opts)
 		end,
+	},
+	{
+		"LukasPietzschmann/telescope-tabs",
+		event = "VeryLazy",
+		config = function()
+			require("telescope").load_extension("telescope-tabs")
+			require("telescope-tabs").setup({
+				show_preview = true,
+			})
+		end,
+		dependencies = { "nvim-telescope/telescope.nvim" },
 	},
 	{
 		"aaronhallaert/advanced-git-search.nvim",

@@ -38,7 +38,10 @@ return {
 				{
 					sign = {
 						-- name = { "GitSign*" },
-						namespace = { "gitsigns_extmark_signs_" },
+						--
+						--
+						--
+						namespace = { "gitsigns_" },
 						maxwidth = 1,
 						colwidth = 2,
 					},

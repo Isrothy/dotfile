@@ -13,7 +13,7 @@ local neotest = {
 		{
 			"<leader>tt",
 			function()
-				vim.notify("Running current test file", "info")
+				vim.notify("Running current test file")
 				require("neotest").run.run(vim.fn.expand("%"))
 			end,
 			desc = "Run File",
@@ -21,7 +21,7 @@ local neotest = {
 		{
 			"<leader>tT",
 			function()
-				vim.notify("Running all test files", "info")
+				vim.notify("Running all test files")
 				require("neotest").run.run(vim.loop.cwd())
 			end,
 			desc = "Run All Test Files",
@@ -29,7 +29,7 @@ local neotest = {
 		{
 			"<leader>tr",
 			function()
-				vim.notify("Running nearest test", "info")
+				vim.notify("Running nearest test")
 				require("neotest").run.run()
 			end,
 			desc = "Run Nearest",
@@ -37,7 +37,7 @@ local neotest = {
 		{
 			"<leader>tl",
 			function()
-				vim.notify("Running last test", "info")
+				vim.notify("Running last test")
 				require("neotest").run.run_last()
 			end,
 			desc = "Run Last",
@@ -66,7 +66,7 @@ local neotest = {
 		{
 			"<leader>tS",
 			function()
-				vim.notify("Stopping tests", "info")
+				vim.notify("Stopping tests")
 				require("neotest").run.stop()
 			end,
 			desc = "Stop",
@@ -74,8 +74,14 @@ local neotest = {
 	},
 	config = function()
 		require("neotest").setup({
-			status = { virtual_text = false },
-			output = { open_on_run = true },
+			status = {
+				virtual_text = false,
+				signs = true,
+			},
+			output = {
+				enabled = true,
+				open_on_run = true,
+			},
 			quickfix = {
 				enabled = true,
 				open = true,
@@ -96,19 +102,6 @@ local neotest = {
 	end,
 }
 
-local neodev = {
-	"folke/neodev.nvim",
-	opts = {
-		library = {
-			enabled = true,
-			runtime = true,
-			types = true,
-			plugins = { "neotest" },
-		},
-	},
-}
-
 return {
 	neotest,
-	neodev,
 }

@@ -61,6 +61,9 @@ M.config = function()
 		title = false,
 		filter = { range = true },
 		format = "{kind_icon}{symbol.name:Normal}",
+		-- The following line is needed to fix the background color
+		-- Set it to the lualine section you want to use
+		hl_group = "lualine_c_normal",
 	})
 
 	require("lualine").setup({
@@ -97,8 +100,8 @@ M.config = function()
 			lualine_a = {
 				{ "mode", fmt = trunc(80, 4, nil, true) },
 				{
-					require("noice").api.statusline.command.get,
-					cond = require("noice").api.statusline.command.has,
+					require("noice").api.status.command.get,
+					cond = require("noice").api.status.command.has,
 				},
 				{
 					"fancy_macro",
@@ -208,6 +211,10 @@ M.config = function()
 				-- },
 			},
 			lualine_c = {
+				-- {
+				-- 	symbols.get,
+				-- 	cond = symbols.has,
+				-- },
 				{
 					"aerial",
 					sep = " ⟩ ",
