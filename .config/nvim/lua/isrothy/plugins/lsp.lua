@@ -549,6 +549,7 @@ local null_ls = {
 				null_ls.builtins.diagnostics.checkmake,
 				null_ls.builtins.diagnostics.hadolint,
 				null_ls.builtins.diagnostics.gitlint,
+
 				-- null_ls.builtins.diagnostics.pylint.with({
 				--  args = {
 				--      "--from-stdin",
@@ -571,6 +572,7 @@ local null_ls = {
 						"zsh",
 					},
 				}),
+				null_ls.builtins.formatting.typstyle,
 				null_ls.builtins.formatting.stylua,
 
 				-- null_ls.builtins.hover.dictionary,

@@ -18,6 +18,7 @@ return {
 			},
 			bt_ignore = {
 				"terminal",
+				"nofile"
 			},
 			segments = {
 				{

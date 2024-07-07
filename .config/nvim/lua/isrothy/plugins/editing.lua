@@ -237,16 +237,16 @@ return {
 				},
 			})
 
-			-- cmp.setup.cmdline(":", {
-			-- 	mapping = cmp.mapping.preset.cmdline(),
-			-- 	sources = cmp.config.sources({
-			-- 		{ name = "cmdline" },
-			-- 	}, {
-			-- 		{ name = "cmdline_history" },
-			-- 		{ name = "path" },
-			-- 		{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
-			-- 	}),
-			-- })
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{ name = "cmdline" },
+				}, {
+					{ name = "cmdline_history" },
+					{ name = "path" },
+					{ name = "fuzzy_path", option = { fd_timeout_msec = 100 } },
+				}),
+			})
 		end,
 
 		init = function()

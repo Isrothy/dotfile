@@ -97,6 +97,8 @@ M.config = function()
 
 			highlights.VirtColumn = { fg = colors.polar_night.brightest }
 
+			highlights.NeominimapWarnBg = { bg = colors.aurora.yellow, fg = colors.polar_night.origin }
+
 			-- highlights.ScrollViewSearch = { fg = colors.frost.artic_water }
 
 			-- highlights.FlashLabel = { fg = colors.aurora.orange, bg = colors.polar_night.brightest, bold = true }

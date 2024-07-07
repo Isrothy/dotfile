@@ -65,11 +65,8 @@ opt.autoread = true
 opt.confirm = true
 opt.hidden = true
 
--- coding settings
-opt.encoding = "utf-8"
-
 --session
-o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,localoptions"
+o.sessionoptions = "blank,buffers,curdir,folds,help,localoptions,skiprtp,tabpages,winsize,winpos"
 
 -- indentation & format settings
 opt.autoindent = true

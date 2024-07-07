@@ -3,20 +3,13 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	opts = {
 		dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"),
-		options = {
-			"buffers",
-			"curdir",
-			"tabpages",
-			"winsize",
-			"help",
-			"globals",
-			"skiprtp",
-		},
 	},
 	keys = {
 		{
 			"<leader>ps",
-			function() require("persistence").load() end,
+			function()
+				require("persistence").load()
+			end,
 			desc = "Restore Session",
 		},
 		{
