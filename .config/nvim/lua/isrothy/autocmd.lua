@@ -172,6 +172,7 @@ vim.api.nvim_create_autocmd({ "BufReadPre" }, {
 		if ok and stats and (stats.size > 1024 * 1024) then
 			vim.b.large_buf = true
 			vim.cmd("syntax off")
+			-- vim.cmd("SatelliteDisable")
 			vim.opt_local.foldmethod = "manual"
 			vim.opt_local.spell = false
 			vim.opt_local.list = false
@@ -194,7 +195,7 @@ vim.api.nvim_create_autocmd({ "BufReadPre" }, {
 						or (type(old_disabled) == "function" and old_disabled(lang, buf))
 				end
 			end
-			vim.notify("Large buffer detected", "warn")
+			vim.notify("Large buffer detected", vim.diagnostic.severity.WARN)
 			vim.api.nvim_exec_autocmds("User", {
 				pattern = "LargeBuf",
 			})

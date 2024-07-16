@@ -51,6 +51,7 @@ end
 return {
 	"goolord/alpha-nvim",
 	event = "VimEnter",
+	enabled = true,
 
 	config = function()
 		local alpha = require("alpha")
@@ -63,7 +64,7 @@ return {
 			dashboard.button("r", " " .. " Recent files", ":Telescope frecency <CR>"),
 			dashboard.button("g", " " .. " Find text", ":Telescope live_grep <CR>"),
 			dashboard.button("c", " " .. " Config", ":e $MYVIMRC <CR>"),
-			dashboard.button("s", " " .. " Restore Session", [[:lua require("persistence").load() <cr>]]),
+			dashboard.button("s", " " .. " Restore Session", ":SessionLoad<CR>"),
 			dashboard.button("l", "󰒲 " .. " Lazy", ":Lazy<CR>"),
 			dashboard.button("q", " " .. " Quit", ":qa<CR>"),
 		}

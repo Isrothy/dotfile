@@ -143,10 +143,10 @@ return {
 					end, { "i", "s" }),
 				}),
 				formatting = {
-					format = function(entry, vim_item)
+					format = function(entry, item)
 						-- This concatonates the icons with the name of the item kind
-						vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
-						vim_item.menu = ({
+						item.kind = string.format("%s %s", kind_icons[item.kind], item.kind)
+						item.menu = ({
 							buffer = "[Buf]",
 							nvim_lsp = "[LSP]",
 							-- luasnip = "[LuaSnip]",
@@ -163,14 +163,21 @@ return {
 							zsh = "[ZSH]",
 						})[entry.source.name]
 
-						local kind = require("lspkind").cmp_format({
+						local color_item = require("nvim-highlight-colors").format(entry, { kind = item.kind })
+						item = require("lspkind").cmp_format({
 							with_text = false,
 							maxwidth = 64,
 							mode = "symbol_text",
 							ellipsis_char = "...",
-						})(entry, vim_item)
-						return kind
+						})(entry, item)
+						if color_item.abbr_hl_group then
+							item.kind_hl_group = color_item.abbr_hl_group
+							item.kind = color_item.abbr
+						end
+						return item
 					end,
+					fields = { "abbr", "kind", "menu" },
+					expandable_indicator = true,
 				},
 
 				sources = get_default_cmp_source(),
@@ -335,3 +342,4 @@ return {
 		opts = {},
 	},
 }
+

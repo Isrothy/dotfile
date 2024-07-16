@@ -12,13 +12,13 @@ return {
 			},
 			sign_priority = 7,
 			preview_config = {
-				border = "rounded",
+				border = "solid",
 			},
 			on_attach = function(buffer)
 				local gs = package.loaded.gitsigns
 
 				local function map(mode, l, r, desc)
-					vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
+					vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, noremap = true })
 				end
 
 				map("n", "]h", gs.next_hunk, "Next Hunk")

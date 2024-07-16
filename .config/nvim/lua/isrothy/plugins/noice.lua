@@ -9,9 +9,13 @@ local M = {
 
 M.opts = {
 	cmdline = {
-		enabled = false, -- enables the Noice cmdline UI
+		enabled = true, -- enables the Noice cmdline UI
 		view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
-		opts = {}, -- global options for the cmdline. See section on views
+		opts = {
+			border = {
+				style = vim.g.neovide and "solid" or "rounded",
+			},
+		}, -- global options for the cmdline. See section on views
 		format = {
 			-- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
 			-- view: (default is cmdline view)
@@ -30,15 +34,20 @@ M.opts = {
 			-- lua = false, -- to disable a format, set to `false`
 		},
 	},
+	popupmenu = {
+		enabled = true, -- enables the Noice popupmenu UI
+		---@type 'nui'|'cmp'
+		backend = "nui", -- backend to use to show regular cmdline completions
+		---@type NoicePopupmenuItemKind|false
+		-- Icons for completion item kinds (see defaults at noice.config.icons.kinds)
+		kind_icons = {}, -- set to `false` to disable icons
+	},
 	messages = {
-		-- NOTE: If you enable messages, then the cmdline is enabled automatically.
-		-- This is a current Neovim limitation.
-		enabled = false, -- enables the Noice messages UI
+		enabled = true, -- enables the Noice messages UI
 		view = "notify", -- default view for messages
 		view_error = "notify", -- view for errors
 		view_warn = "notify", -- view for warnings
 		view_history = "messages", -- view for :messages
-		-- view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
 		view_search = false, -- view for search count messages. Set to `false` to disable
 	},
 	redirect = {
@@ -86,23 +95,12 @@ M.opts = {
 		},
 	},
 	notify = {
-		-- Noice can be used as `vim.notify` so you can route any notification like other messages
-		-- Notification messages have their level and other properties set.
-		-- event is always "notify" and kind can be any log level as a string
-		-- The default routes will forward notifications to nvim-notify
-		-- Benefit of using Noice for this is the routing and consistent history view
-		enabled = false,
-		view = "notify",
+		enabled = true,
 	},
 	lsp = {
 		progress = {
-			enabled = false,
-			-- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
-			-- See the section on formatting for more details on how to customize.
-			format = "lsp_progress",
-			format_done = "lsp_progress_done",
+			enabled = true,
 			throttle = 1000 / 60, -- frequency to update lsp progress message
-			view = "mini",
 		},
 		override = {
 			-- override the default lsp markdown formatter with Noice
@@ -115,51 +113,29 @@ M.opts = {
 		hover = {
 			enabled = true,
 			view = nil, -- when nil, use defaults from documentation
-			opts = {}, -- merged with defaults from documentation
+			opts = {
+				border = {
+					style = "solid",
+				}, -- merged with defaults from documentation
+			},
 		},
 		signature = {
 			enabled = false,
-			auto_open = {
-				enabled = true,
-				trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
-				luasnip = false, -- Will open signature help when jumping to Luasnip insert nodes
-				throttle = 50, -- Debounce lsp signature help request by 50ms
-			},
-			view = nil, -- when nil, use defaults from documentation
-			opts = {}, -- merged with defaults from documentation
 		},
 		message = {
-			-- Messages shown by lsp servers
-			enabled = false,
+			enabled = true,
 			view = "notify",
 			opts = {},
 		},
-		-- defaults for hover and signature help
 		documentation = {
 			view = "hover",
-			opts = {
-				lang = "markdown",
-				replace = true,
-				render = "plain",
-				format = { "{message}" },
-				win_options = { concealcursor = "n", conceallevel = 3 },
-			},
 		},
-	},
-	health = {
-		checker = true, -- Disable if you don't want health checks to run
-	},
-	smart_move = {
-		-- noice tries to move out of the way of existing floating windows.
-		enabled = true, -- you can disable this behaviour here
-		-- add any filetypes here, that shouldn't trigger smart move.
-		excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
 	},
 	presets = {
 		-- you can enable a preset by setting it to true, or a table that will override the preset config
 		-- you can also add custom presets that you can enable/disable with enabled=true
 		bottom_search = false, -- use a classic bottom cmdline for search
-		command_palette = false, -- position the cmdline and popupmenu together
+		command_palette = true, -- position the cmdline and popupmenu together
 		long_message_to_split = true, -- long messages will be sent to a split
 		inc_rename = true, -- enables an input dialog for inc-rename.nvim
 		lsp_doc_border = true, -- add a border to hover docs and signature help

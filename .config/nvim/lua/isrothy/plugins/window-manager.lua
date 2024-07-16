@@ -74,10 +74,10 @@ return {
 				desc = "Move cursor right",
 			},
 
-			{ "<leader>bh", "<cmd>lua require('smart-splits').swap_buf_left()<cr>", desc = "Swap buffers left" },
-			{ "<leader>bj", "<cmd>lua require('smart-splits').swap_buf_down()<cr>", desc = "Swap buffers down" },
-			{ "<leader>bk", "<cmd>lua require('smart-splits').swap_buf_up()<cr>", desc = "Swap buffers up" },
-			{ "<leader>bl", "<cmd>lua require('smart-splits').swap_buf_right()<cr>", desc = "Swap buffers right" },
+			{ "<leader>bsh", "<cmd>lua require('smart-splits').swap_buf_left()<cr>", desc = "Swap buffers left" },
+			{ "<leader>bsj", "<cmd>lua require('smart-splits').swap_buf_down()<cr>", desc = "Swap buffers down" },
+			{ "<leader>bsk", "<cmd>lua require('smart-splits').swap_buf_up()<cr>", desc = "Swap buffers up" },
+			{ "<leader>bsl", "<cmd>lua require('smart-splits').swap_buf_right()<cr>", desc = "Swap buffers right" },
 
 			{ "<M-h>", "<cmd>lua require('smart-splits').resize_left()<cr>", desc = "Resize left" },
 			{ "<M-j>", "<cmd>lua require('smart-splits').resize_down()<cr>", desc = "Resize down" },

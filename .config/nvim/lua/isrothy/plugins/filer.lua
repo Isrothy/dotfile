@@ -231,7 +231,7 @@ return {
 
 			require("neo-tree").setup({
 				close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
-				popup_border_style = "rounded",
+				popup_border_style = "solid",
 				open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy" },
 
 				source_selector = {

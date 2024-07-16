@@ -305,7 +305,7 @@ local regexplainer = {
 		popup = {
 			border = {
 				padding = { 0, 0 },
-				style = "rounded",
+				style = "solid"
 			},
 		},
 		narrative = {

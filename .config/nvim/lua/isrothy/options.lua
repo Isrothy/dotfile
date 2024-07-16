@@ -66,7 +66,16 @@ opt.confirm = true
 opt.hidden = true
 
 --session
-o.sessionoptions = "blank,buffers,curdir,folds,help,localoptions,skiprtp,tabpages,winsize,winpos"
+opt.sessionoptions = {
+	"buffers",
+	"curdir",
+	"tabpages",
+	"winsize",
+	"help",
+	"globals",
+	"skiprtp",
+	"folds",
+}
 
 -- indentation & format settings
 opt.autoindent = true

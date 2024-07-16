@@ -1,6 +1,7 @@
 return {
 	{
 		dir = "~/neominimap.nvim",
+		-- "Isrothy/neominimap.nvim",
 		lazy = false,
 		enabled = true,
 		init = function()
@@ -20,7 +21,11 @@ return {
 				minimap_width = 20,
 				width_multiplier = 4,
 				diagnostic = {
+					enabled = true,
 					severity = vim.diagnostic.severity.HINT,
+				},
+				treesitter = {
+					enabled = true,
 				},
 				z_index = 1,
 				-- window_border = "none",
@@ -74,8 +79,8 @@ return {
 		end,
 	},
 	{
-		-- "gorbit99/codewindow.nvim",
-		dir = "~/codewindow.nvim",
+		"gorbit99/codewindow.nvim",
+		-- dir = "~/codewindow.nvim",
 		lazy = false,
 		enabled = false,
 		init = function()

@@ -1,6 +1,10 @@
-local map = vim.keymap.set
+local map = function(mode, lhs, rhs, opts)
+	opts = vim.tbl_extend("force", { noremap = true, silent = true }, opts or {})
+	vim.keymap.set(mode, lhs, rhs, opts)
+end
 
-local border = "rounded"
+local border = "solid"
+
 local make_capabilities = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
@@ -10,44 +14,47 @@ local make_capabilities = function()
 end
 
 local set_keymap = function(_, bufnr)
-	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	map("n", "<leader>gD", vim.lsp.buf.declaration, bufopts)
+	map("n", "<leader>gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
 	map("n", "<leader>gt", function()
 		require("telescope.builtin").lsp_type_definitions({ jump_type = "never" })
-	end, bufopts)
+	end, { buffer = bufnr, desc = "Go to type definition" })
 	map("n", "<leader>gd", function()
 		require("telescope.builtin").lsp_definitions({ jump_type = "never" })
-	end, bufopts)
+	end, { buffer = bufnr, desc = "Go to definition" })
 	map("n", "<leader>gi", function()
 		require("telescope.builtin").lsp_implementations({ jump_type = "never" })
-	end, bufopts)
+	end, { buffer = bufnr, desc = "Go to implementation" })
 	map("n", "<leader>gr", function()
 		require("telescope.builtin").lsp_references({
 			include_declaration = false,
 			include_current_line = false,
 			jump_type = "never",
 		})
-	end, bufopts)
+	end, { buffer = bufnr, desc = "Go to references" })
 
-	map("n", "K", vim.lsp.buf.hover, bufopts)
-	map("n", "<Leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-	map("n", "<Leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+	map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
+	map("n", "<Leader>wa", vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Add workspace " })
+	map("n", "<Leader>wr", vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = "Remove workspace " })
 	map("n", "<Leader>wl", function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-	end, bufopts)
+	end, { buffer = bufnr, desc = "List workspace" })
+	map("n", "<leader>ws", function()
+		require("telescope.builtin").lsp_dynamic_workspace_symbols({
+			jump_type = "never",
+		})
+	end)
 	map("n", "<leader>rn", function()
 		return ":IncRename " .. vim.fn.expand("<cword>")
 	end, {
-		noremap = true,
-		silent = true,
 		buffer = bufnr,
 		expr = true,
+		desc = "Rename",
 	})
-	map({ "n", "x" }, "<leader>ca", require("actions-preview").code_actions)
-	map("n", "<leader>f", function()
+	map({ "n", "x" }, "<leader>ca", require("actions-preview").code_actions, { buffer = bufnr, desc = "Code actions" })
+	map("n", "<leader>cf", function()
 		vim.lsp.buf.format({ async = true })
-	end, bufopts)
-	map("v", "<leader>f", function()
+	end, { buffer = bufnr, desc = "Code Format" })
+	map("v", "<leader>cf", function()
 		local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
 		local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
 		vim.lsp.buf.format({
@@ -57,7 +64,7 @@ local set_keymap = function(_, bufnr)
 			},
 			async = true,
 		})
-	end, bufopts)
+	end, { buffer = bufnr, desc = "Code Format" })
 end
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -475,10 +482,9 @@ local haskell_tools = {
 			hls = {
 				capabilities = make_capabilities(),
 				on_attach = function(client, bufnr)
-					local opts = { noremap = true, silent = true, buffer = bufnr }
 					set_keymap(client, bufnr)
 					set_inlay_hint(client, bufnr)
-					map("n", "<leader>cl", vim.lsp.codelens.run, opts)
+					map("n", "<leader>cl", vim.lsp.codelens.run, { buffer = bufnr, desc = "CodeLens" })
 				end,
 				default_settings = {
 					haskell = {
@@ -538,7 +544,7 @@ local null_ls = {
 		local null_ls = require("null-ls")
 
 		null_ls.setup({
-			border = "rounded",
+			border = border,
 			on_attach = function(client, bufnr)
 				set_keymap(client, bufnr)
 				set_inlay_hint(client, bufnr)

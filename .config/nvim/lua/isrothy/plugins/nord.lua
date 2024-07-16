@@ -34,8 +34,9 @@ M.config = function()
 			highlights.CmpDocumentation = { bg = colors.polar_night.brighter }
 
 			highlights.MarkSignHL = { fg = colors.aurora.green }
-			-- highlights.MarkSignNumHL = { fg = colors.aurora.green, bold = true }
 
+			highlights.NormalFloat = { fg = colors.snow_storm.origin, bg = colors.polar_night.bright }
+			highlights.FloatBorder = { fg = colors.snow_storm.origin }
 			highlights.WhichKeyFloat = { bg = colors.polar_night.origin }
 
 			highlights.MatchParen = { bg = colors.polar_night.origin, reverse = true }
@@ -51,7 +52,7 @@ M.config = function()
 
 			-- highlights.ColorColumn = { bg = colors.polar_night.brighter }
 
-			highlights.FloatBorder = { fg = colors.snow_storm.origin }
+			-- highlights.FloatBorder = { fg = colors.snow_storm.origin }
 
 			highlights.Folded = { fg = colors.frost.artic_water, bg = colors.polar_night.brighter }
 
@@ -98,6 +99,8 @@ M.config = function()
 			highlights.VirtColumn = { fg = colors.polar_night.brightest }
 
 			highlights.NeominimapWarnBg = { bg = colors.aurora.yellow, fg = colors.polar_night.origin }
+
+			-- highlights.NeominimapCursorLine = { bg = colors.aurora.yellow, fg = colors.polar_night.origin }
 
 			-- highlights.ScrollViewSearch = { fg = colors.frost.artic_water }
 

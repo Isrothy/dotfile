@@ -4,7 +4,7 @@ return {
 		cmd = "RunCode",
 		enabled = true,
 		keys = {
-			{ "<leader>cr", ":RunCode<cr>" },
+			{ "<leader>cr", ":RunCode<cr>", desc = "Code Runner" },
 		},
 		dependencies = "nvim-lua/plenary.nvim",
 		opts = {
