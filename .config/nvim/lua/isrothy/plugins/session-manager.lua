@@ -2,7 +2,8 @@ return {
 	{
 		"olimorris/persisted.nvim",
 		lazy = false, -- make sure the plugin is always loaded at startup
-		config = {
+		enabled = true,
+		opts = {
 			autosave = true,
 			use_git_branch = true,
 			silent = true,

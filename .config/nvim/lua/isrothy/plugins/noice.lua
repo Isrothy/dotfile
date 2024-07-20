@@ -13,7 +13,7 @@ M.opts = {
 		view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
 		opts = {
 			border = {
-				style = vim.g.neovide and "solid" or "rounded",
+				-- style = vim.g.neovide and "solid" or "rounded",
 			},
 		}, -- global options for the cmdline. See section on views
 		format = {
@@ -31,13 +31,12 @@ M.opts = {
 			calculator = { pattern = "^=", icon = "", lang = "vimnormal" },
 			term_run = { pattern = "^:%s*TermRun%s+", icon = "", lang = "bash" },
 			input = {}, -- Used by input()
-			-- lua = false, -- to disable a format, set to `false`
 		},
 	},
 	popupmenu = {
 		enabled = true, -- enables the Noice popupmenu UI
 		---@type 'nui'|'cmp'
-		backend = "nui", -- backend to use to show regular cmdline completions
+		backend = "cmp", -- backend to use to show regular cmdline completions
 		---@type NoicePopupmenuItemKind|false
 		-- Icons for completion item kinds (see defaults at noice.config.icons.kinds)
 		kind_icons = {}, -- set to `false` to disable icons
@@ -49,10 +48,6 @@ M.opts = {
 		view_warn = "notify", -- view for warnings
 		view_history = "messages", -- view for :messages
 		view_search = false, -- view for search count messages. Set to `false` to disable
-	},
-	redirect = {
-		view = "popup",
-		filter = { event = "msg_show" },
 	},
 	-- You can add any custom commands below that will be available with `:Noice command`
 	commands = {
@@ -113,14 +108,22 @@ M.opts = {
 		hover = {
 			enabled = true,
 			view = nil, -- when nil, use defaults from documentation
+			silent = true,
 			opts = {
 				border = {
-					style = "solid",
+					style = "rounded",
 				}, -- merged with defaults from documentation
+
+				scrollbar = false,
 			},
 		},
 		signature = {
-			enabled = false,
+			enabled = true,
+			opts = {
+				border = {
+					style = "rounded",
+				}, -- merged with defaults from documentation
+			},
 		},
 		message = {
 			enabled = true,
@@ -135,7 +138,7 @@ M.opts = {
 		-- you can enable a preset by setting it to true, or a table that will override the preset config
 		-- you can also add custom presets that you can enable/disable with enabled=true
 		bottom_search = false, -- use a classic bottom cmdline for search
-		command_palette = true, -- position the cmdline and popupmenu together
+		command_palette = false, -- position the cmdline and popupmenu together
 		long_message_to_split = true, -- long messages will be sent to a split
 		inc_rename = true, -- enables an input dialog for inc-rename.nvim
 		lsp_doc_border = true, -- add a border to hover docs and signature help
@@ -169,14 +172,14 @@ M.opts = {
 			},
 			opts = { skip = true },
 		},
-		{
-			filter = {
-				event = "msg_show",
-				kind = "",
-				max_width = 1,
-			},
-			opts = { skip = true },
-		},
+		-- {
+		-- 	filter = {
+		-- 		event = "msg_show",
+		-- 		kind = "",
+		-- 		max_width = 1,
+		-- 	},
+		-- 	opts = { skip = true },
+		-- },
 	}, -- @see the section on routes below
 }
 
@@ -198,6 +201,17 @@ M.config = function(_, opts)
 	vim.keymap.set("c", "<S-Enter>", function()
 		require("noice").redirect(vim.fn.getcmdline())
 	end, { desc = "Redirect Cmdline" })
+	vim.keymap.set({ "n", "i", "s" }, "<c-f>", function()
+		if not require("noice.lsp").scroll(4) then
+			return "<c-f>"
+		end
+	end, { silent = true, expr = true })
+
+	vim.keymap.set({ "n", "i", "s" }, "<c-b>", function()
+		if not require("noice.lsp").scroll(-4) then
+			return "<c-b>"
+		end
+	end, { silent = true, expr = true })
 end
 
 return M

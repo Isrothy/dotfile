@@ -12,7 +12,7 @@ return {
 			},
 			sign_priority = 7,
 			preview_config = {
-				border = "solid",
+				border = "rounded",
 			},
 			on_attach = function(buffer)
 				local gs = package.loaded.gitsigns

@@ -8,6 +8,9 @@ require("lazy").setup("isrothy.plugins", {
 		-- try to load one of these colorschemes when starting an installation during startup
 		colorscheme = { "nord" },
 	},
+	rocks = {
+		hererocks = false,
+	},
 	performance = {
 		cache = {
 			enabled = true,

@@ -1,0 +1,12 @@
+frame = "full"
+idle = true
+maximized = true
+tabs = false
+
+[font]
+normal = ["JetBrainsMono Nerd Font"]
+size = 15.0
+
+[font.features]
+"JetBrainsMono Nerd Font" = ["-cv06", "-cv07", "-cv08",  "-calt" ]
+

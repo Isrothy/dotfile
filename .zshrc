@@ -41,7 +41,7 @@ antigen bundle jeffreytse/zsh-vi-mode
 
 antigen apply
 
-source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
+source "$(brew --prefix)"/share/powerlevel10k/powerlevel10k.zsh-theme
 
 ZSH_COLORIZE_TOOL=chroma
 ENABLE_CORRECTION=true
@@ -55,6 +55,7 @@ export PATH=$PATH:$HOME/.local/bin
 
 export DYLD_LIBRARY_PATH="/opt/homebrew/lib"
 
+export SSL_CERT_FILE="$(brew --prefix)/etc/openssl/cert.pem"
 export JAVA_HOME=/opt/homebrew/Cellar/openjdk@17/17.0.7/libexec/openjdk.jdk/Contents/Home
 export JAVA_HOME=$(/usr/libexec/java_home)
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)

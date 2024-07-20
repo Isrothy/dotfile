@@ -35,9 +35,9 @@ M.config = function()
 
 			highlights.MarkSignHL = { fg = colors.aurora.green }
 
-			highlights.NormalFloat = { fg = colors.snow_storm.origin, bg = colors.polar_night.bright }
-			highlights.FloatBorder = { fg = colors.snow_storm.origin }
-			highlights.WhichKeyFloat = { bg = colors.polar_night.origin }
+			-- highlights.NormalFloat = { fg = colors.snow_storm.origin, bg = colors.polar_night.bright }
+			-- highlights.FloatBorder = { fg = colors.snow_storm.origin }
+			-- highlights.WhichKeyFloat = { bg = colors.polar_night.origin }
 
 			highlights.MatchParen = { bg = colors.polar_night.origin, reverse = true }
 

@@ -20,7 +20,7 @@ return {
 		opts = {
 			win = {
 				row = -1,
-				border = "solid",
+				border = "rounded",
 				padding = { 1, 2 }, -- extra window padding [top/bottom, right/left]
 				title = true,
 				title_pos = "center",

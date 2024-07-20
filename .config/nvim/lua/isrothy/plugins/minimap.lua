@@ -5,6 +5,7 @@ return {
 		lazy = false,
 		enabled = true,
 		init = function()
+			vim.opt.wrap = false
 			vim.opt.sidescrolloff = 36
 			vim.g.neominimap = {
 				auto_enable = true,
@@ -19,7 +20,7 @@ return {
 					return line_cnt < 4096 and not vim.b[bufnr].large_buf
 				end,
 				minimap_width = 20,
-				width_multiplier = 4,
+				x_multiplier = 4,
 				diagnostic = {
 					enabled = true,
 					severity = vim.diagnostic.severity.HINT,
@@ -28,8 +29,8 @@ return {
 					enabled = true,
 				},
 				z_index = 1,
-				-- window_border = "none",
-				window_border = { " ", " ", " ", " ", " ", " ", " ", " " },
+				window_border = "none",
+				-- window_border = { " ", " ", " ", " ", " ", " ", " ", " " },
 			}
 		end,
 	},

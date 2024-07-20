@@ -6,7 +6,7 @@ return {
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-nvim-lsp-document-symbol",
-			"hrsh7th/cmp-nvim-lsp-signature-help",
+			-- "hrsh7th/cmp-nvim-lsp-signature-help",
 			"hrsh7th/cmp-nvim-lua",
 			"hrsh7th/cmp-calc",
 			"hrsh7th/cmp-buffer",
@@ -46,7 +46,7 @@ return {
 				local cmp = require("cmp")
 				return cmp.config.sources({
 					{ name = "nvim_lsp" },
-					{ name = "nvim_lsp_signature_help" },
+					-- { name = "nvim_lsp_signature_help" },
 					{ name = "nvim_lsp_document_symbol" },
 					-- { name = "luasnip" },
 				}, {

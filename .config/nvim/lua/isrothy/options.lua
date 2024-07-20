@@ -5,10 +5,20 @@ local g = vim.g
 g.compatible = 0
 opt.termguicolors = true
 
-o.guifont = "JetBrainsMono Nerd Font:h15"
+---Neovide options
 g.neovide_input_macos_option_key_is_meta = "both"
 g.neovide_underline_stroke_scale = 3
--- o.linespace = 4
+g.neovide_floating_shadow = false
+g.neovide_transparency = 1
+g.neovide_window_blurred = true
+g.neovide_floating_blur_amount_x = 2.0
+g.neovide_floating_blur_amount_y = 2.0
+g.neovide_show_border = true
+g.neovide_touch_deadzone = 6.0
+g.neovide_cursor_animate_command_line = false
+g.neovide_cursor_smooth_blink = true
+
+
 
 opt.mouse = ""
 opt.syntax = "on"
@@ -71,9 +81,11 @@ opt.sessionoptions = {
 	"curdir",
 	"tabpages",
 	"winsize",
+	"folds",
 	"help",
 	"globals",
 	"skiprtp",
+	"terminal",
 	"folds",
 }
 

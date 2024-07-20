@@ -3,7 +3,7 @@ local map = function(mode, lhs, rhs, opts)
 	vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-local border = "solid"
+local border = "rounded"
 
 local make_capabilities = function()
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -11,6 +11,13 @@ local make_capabilities = function()
 	capabilities.textDocument.completion.completionItem.snippetSupport = true
 	capabilities.offsetEncoding = "utf-16"
 	return capabilities
+end
+
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+	opts = opts or {}
+	opts.border = opts.border or border
+	return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
 local set_keymap = function(_, bufnr)

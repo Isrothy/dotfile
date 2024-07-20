@@ -200,7 +200,7 @@ telescope.config = function()
 	require("telescope").load_extension("smart_open")
 	require("telescope").load_extension("projects")
 	require("telescope").load_extension("advanced_git_search")
-	require("telescope").load_extension("persisted")
+	-- require("telescope").load_extension("persisted")
 end
 
 return {

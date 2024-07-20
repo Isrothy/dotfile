@@ -70,10 +70,8 @@ return {
 				win_height = 12,
 				win_vheight = 12,
 				delay_syntax = 80,
-				border = vim.g.neovide and "solid" or "rounded",
-				-- border_chars = vim.g.neovide and { " ", " ", " ", " ", " ", " ", " ", " ", " " }
-				-- 	or { "│", "│", "─", "─", "╭", "╮", "╰", "╯", "█" },
-				show_title = false,
+				border = "rounded",
+				show_title = true,
 				should_preview_cb = function(bufnr, qwinid)
 					local ret = true
 					local bufname = vim.api.nvim_buf_get_name(bufnr)
