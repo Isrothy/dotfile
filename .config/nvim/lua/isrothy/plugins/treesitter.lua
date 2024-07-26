@@ -88,6 +88,7 @@ local TS = {
 				},
 			},
 		})
+		require("nvim-treesitter.install").prefer_git = true
 	end,
 }
 
@@ -228,7 +229,9 @@ local rainbow = {
 local neogen = {
 	"danymat/neogen",
 	enabled = true,
-	dependencies = "nvim-treesitter/nvim-treesitter",
+	dependencies = {
+		"nvim-treesitter/nvim-treesitter",
+	},
 	cmd = "Neogen",
 	opts = {
 		snippet_engine = "nvim",
@@ -305,7 +308,7 @@ local regexplainer = {
 		popup = {
 			border = {
 				padding = { 0, 0 },
-				style = "rounded"
+				style = "rounded",
 			},
 		},
 		narrative = {

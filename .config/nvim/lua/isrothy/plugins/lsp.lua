@@ -13,12 +13,12 @@ local make_capabilities = function()
 	return capabilities
 end
 
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-	opts = opts or {}
-	opts.border = opts.border or border
-	return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
+-- local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+-- function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+-- 	opts = opts or {}
+-- 	opts.border = opts.border or border
+-- 	return orig_util_open_floating_preview(contents, syntax, opts, ...)
+-- end
 
 local set_keymap = function(_, bufnr)
 	map("n", "<leader>gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
@@ -506,7 +506,7 @@ local haskell_tools = {
 
 local rustaceanvim = {
 	"mrcjkb/rustaceanvim",
-	version = "^4",
+	version = "^5",
 	ft = { "rust" },
 	init = function()
 		vim.g.rustaceanvim = {

@@ -45,6 +45,7 @@ return {
 			local function get_default_cmp_source()
 				local cmp = require("cmp")
 				return cmp.config.sources({
+					{ name = "lazydev", group_index = 0 },
 					{ name = "nvim_lsp" },
 					-- { name = "nvim_lsp_signature_help" },
 					{ name = "nvim_lsp_document_symbol" },
@@ -342,4 +343,3 @@ return {
 		opts = {},
 	},
 }
-

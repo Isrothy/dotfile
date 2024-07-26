@@ -17,4 +17,13 @@ return {
 			vim.g.mkdp_auto_close = 1
 		end,
 	},
+	{
+		{
+			"Kicamon/markdown-table-mode.nvim",
+			ft = { "markdown" },
+			config = function()
+				require("markdown-table-mode").setup()
+			end,
+		},
+	},
 }

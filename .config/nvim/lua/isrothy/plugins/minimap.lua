@@ -1,25 +1,30 @@
+---@module 'neominimap.config.meta'
 return {
 	{
-		dir = "~/neominimap.nvim",
-		-- "Isrothy/neominimap.nvim",
+		-- dir = "~/neominimap.nvim",
+		"Isrothy/neominimap.nvim",
 		lazy = false,
 		enabled = true,
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
 		init = function()
 			vim.opt.wrap = false
 			vim.opt.sidescrolloff = 36
+			---@type Neominimap.UserConfig
 			vim.g.neominimap = {
 				auto_enable = true,
 				log_level = vim.log.levels.OFF,
 				exclude_filetypes = {
 					"qf",
-					"help",
 					"neo-tree",
+					"help",
 				},
 				buf_filter = function(bufnr)
 					local line_cnt = vim.api.nvim_buf_line_count(bufnr)
 					return line_cnt < 4096 and not vim.b[bufnr].large_buf
 				end,
-				minimap_width = 20,
+				minimap_width = 21,
 				x_multiplier = 4,
 				diagnostic = {
 					enabled = true,
@@ -29,8 +34,8 @@ return {
 					enabled = true,
 				},
 				z_index = 1,
-				window_border = "none",
-				-- window_border = { " ", " ", " ", " ", " ", " ", " ", " " },
+				-- window_border = "none",
+				window_border = { "", "", "", " ", "", "", "", " " },
 			}
 		end,
 	},
@@ -61,18 +66,12 @@ return {
 				window = {
 					-- Whether window is focusable in normal way (with `wincmd` or mouse)
 					focusable = false,
-
 					-- Side to stick ('left' or 'right')
 					side = "right",
-
 					-- Whether to show count of multiple integration highlights
 					show_integration_count = true,
-
 					-- Total width
 					width = 10,
-
-					-- Value of 'winblend' option
-
 					-- Z-index
 					zindex = 10,
 				},

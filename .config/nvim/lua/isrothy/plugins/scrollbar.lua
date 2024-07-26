@@ -12,7 +12,7 @@ return {
 			},
 			current_only = false,
 			column = 1,
-			winblend = 25,
+			winblend = 0,
 			signs_on_startup = {
 				"marks",
 				"diagnostics",
@@ -30,7 +30,8 @@ return {
 		},
 	},
 	{
-		"lewis6991/satellite.nvim",
+		-- "Isrothy/satellite.nvim",
+		dir = "~/satellite.nvim",
 		event = { "BufReadPost", "BufNewFile" },
 		enabled = true,
 		opts = {
@@ -47,7 +48,7 @@ return {
 			width = 2,
 			handlers = {
 				cursor = {
-					enable = false,
+					enable = true,
 				},
 				search = {
 					enable = true,
