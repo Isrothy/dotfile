@@ -263,13 +263,18 @@ local node_marker = {
 
 local treesj = {
 	"Wansmer/treesj",
+	cmd = {
+		"TSJSplit",
+		"TSJSplit",
+		"TSJToogle",
+	},
 	keys = {
-		{ "<leader>s", desc = "Split lines" },
-		{ "<leader>j", desc = "Join lines" },
-		{ "<leader>m", desc = "Toggle split/join" },
+		{ "<leader>es", "<cmd>TSJSplit<cr>", desc = "Split lines" },
+		{ "<leader>ej", "<cmd>TSJJoin<cr>", desc = "Join lines" },
+		{ "<leader>et", "<cmd>TSJToogle<cr>", desc = "Toggle split/join" },
 	},
 	opts = {
-		use_default_keymaps = true,
+		use_default_keymaps = false,
 		max_join_length = 0xffffffff,
 	},
 }

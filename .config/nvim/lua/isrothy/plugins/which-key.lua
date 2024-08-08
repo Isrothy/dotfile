@@ -80,10 +80,19 @@ return {
 			})
 
 			wk.add({
+				{ "<leader>b", group = "Buffer" },
+				{ "<leader>e", group = "TreeSJ" },
 				{ "<leader>i", group = "ISwap" },
 				{ "<leader>t", group = "Neotest" },
 				{ "<leader>h", group = "Harpoon" },
 				{ "<leader>k", group = "Git conflict" },
+			})
+
+			wk.add({
+
+				{ "<leader>n", group = "Neominimap" },
+				{ "<leader>nb", group = "Neominimap for current buffer" },
+				{ "<leader>nw", group = "Neominimap for current window" },
 			})
 
 			wk.add({

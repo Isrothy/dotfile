@@ -587,6 +587,7 @@ local null_ls = {
 				}),
 				null_ls.builtins.formatting.typstyle,
 				null_ls.builtins.formatting.stylua,
+				null_ls.builtins.formatting.yamlfmt,
 
 				-- null_ls.builtins.hover.dictionary,
 			},

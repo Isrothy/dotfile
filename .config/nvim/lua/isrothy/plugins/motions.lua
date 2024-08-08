@@ -51,7 +51,7 @@ return {
 	{
 		"Aasim-A/scrollEOF.nvim",
 		event = { "BufReadPre", "BufNewFile" },
-		enabled = true,
+		enabled = false,
 		opts = { -- The pattern used for the internal autocmd to determine
 			-- where to run scrollEOF. See https://neovim.io/doc/user/autocmd.html#autocmd-pattern
 			pattern = "*",
