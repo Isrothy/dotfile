@@ -1,11 +1,12 @@
 return {
 	{
 		"folke/lazydev.nvim",
+		enabled = true,
 		ft = "lua", -- only load on lua files
 		opts = {
-			---@class lazydev.Config
 			library = {
 				"luvit-meta/library",
+				"LazyVim",
 			},
 		},
 	},

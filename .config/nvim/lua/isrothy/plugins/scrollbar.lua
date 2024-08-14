@@ -48,7 +48,7 @@ return {
 			width = 2,
 			handlers = {
 				cursor = {
-					enable = true,
+					enable = false,
 				},
 				search = {
 					enable = true,
@@ -56,6 +56,7 @@ return {
 				diagnostic = {
 					enable = true,
 					signs = { "-", "=", "≡" },
+					min_severity = vim.diagnostic.severity.HINT,
 				},
 				gitsigns = {
 					enable = true,

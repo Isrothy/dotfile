@@ -5,9 +5,6 @@ return {
 		-- "Isrothy/neominimap.nvim",
 		lazy = false,
 		enabled = true,
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
 		keys = {
 			{ "<leader>nt", "<cmd>Neominimap toggle<cr>", desc = "Toggle minimap" },
 			{ "<leader>no", "<cmd>Neominimap on<cr>", desc = "Enable minimap" },
@@ -41,19 +38,27 @@ return {
 					local line_cnt = vim.api.nvim_buf_line_count(bufnr)
 					return line_cnt < 4096 and not vim.b[bufnr].large_buf
 				end,
-				minimap_width = 21,
+				minimap_width = 23,
 				x_multiplier = 4,
 				sync_cursor = true,
 				diagnostic = {
 					enabled = true,
 					severity = vim.diagnostic.severity.HINT,
+					mode = "line",
+				},
+				git = {
+					enabled = true,
 				},
 				treesitter = {
 					enabled = true,
 				},
 				z_index = 1,
-				-- window_border = "none",
-				window_border = { "", "", "", " ", "", "", "", " " },
+				-- window_border = "single",
+				window_border = { "" },
+
+				winopt = {
+					signcolumn = "yes:1",
+				},
 			}
 		end,
 	},

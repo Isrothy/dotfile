@@ -17,11 +17,6 @@ M.opts = {
 			},
 		}, -- global options for the cmdline. See section on views
 		format = {
-			-- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
-			-- view: (default is cmdline view)
-			-- opts: any options passed to the view
-			-- icon_hl_group: optional hl_group for the icon
-			-- title: set to anything or empty string to hide
 			cmdline = { pattern = "^:", icon = "", lang = "vim" },
 			search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
 			search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
@@ -172,14 +167,6 @@ M.opts = {
 			},
 			opts = { skip = true },
 		},
-		-- {
-		-- 	filter = {
-		-- 		event = "msg_show",
-		-- 		kind = "",
-		-- 		max_width = 1,
-		-- 	},
-		-- 	opts = { skip = true },
-		-- },
 	}, -- @see the section on routes below
 }
 
