@@ -23,15 +23,19 @@ g.loaded_perl_provider = 0
 g.loaded_node_provider = 0
 g.loaded_python3_provider = 0
 
-opt.mouse = ""
+opt.mouse = "a"
 opt.syntax = "on"
+
 opt.cmdheight = 0
 opt.laststatus = 3
 opt.showcmd = true
 opt.cursorline = true
+opt.cursorlineopt = "number,screenline"
 opt.number = true
 opt.relativenumber = true
+
 o.pumheight = 10
+
 opt.swapfile = false
 opt.undofile = true
 
@@ -55,9 +59,11 @@ opt.wrap = false
 opt.linebreak = true
 -- opt.textwidth = 0
 -- opt.wrapmargin =40
+
 opt.scrolloff = 8
 opt.smoothscroll = true
 opt.sidescrolloff = 16
+
 opt.history = 2000
 opt.ttimeoutlen = 0
 opt.belloff = "all"
@@ -65,20 +71,17 @@ opt.conceallevel = 0
 opt.updatetime = 500
 opt.wildmenu = true
 opt.scrollback = 2000
+opt.jumpoptions = "stack,view"
 
 o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 -- o.splitkeep = "screen"
 
--- opt.spell = true
--- opt.spelllang = { 'en_us' }
 opt.completeopt = { "menu", "menuone", "noselect" }
 
--- buffer settings
 opt.autoread = true
 opt.confirm = true
 opt.hidden = true
 
---session
 opt.sessionoptions = {
 	"buffers",
 	"curdir",
@@ -92,7 +95,6 @@ opt.sessionoptions = {
 	"folds",
 }
 
--- indentation & format settings
 opt.autoindent = true
 opt.smartindent = true
 opt.cindent = true
@@ -104,7 +106,6 @@ opt.shiftwidth = 4
 opt.cinoptions = "g0,(0,l1,n-2"
 opt.backspace = { "indent", "eol", "start" }
 
--- -- hearch settings
 opt.hlsearch = true
 opt.incsearch = true
 opt.ignorecase = true

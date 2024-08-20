@@ -11,7 +11,7 @@ M.opts = {
 		min_width = 0.15,
 		default_direction = "right",
 		-- placement = "window",
-		placement = "edge",
+		placement = "window",
 		preserve_equality = true,
 	},
 	attach_mode = "global",

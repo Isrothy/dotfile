@@ -1,6 +1,7 @@
 local M = {
 	"folke/noice.nvim",
 	event = "VeryLazy",
+	enabled = true,
 	dependencies = {
 		"MunifTanjim/nui.nvim",
 		"rcarriga/nvim-notify",
@@ -25,7 +26,7 @@ M.opts = {
 			help = { pattern = "^:%s*he?l?p?%s+", icon = "󰋖" },
 			calculator = { pattern = "^=", icon = "", lang = "vimnormal" },
 			term_run = { pattern = "^:%s*TermRun%s+", icon = "", lang = "bash" },
-			input = {}, -- Used by input()
+			input = { view = "cmdline_input", icon = "󰥻 " }, -- Used by input()
 		},
 	},
 	popupmenu = {
@@ -85,7 +86,7 @@ M.opts = {
 		},
 	},
 	notify = {
-		enabled = true,
+		enabled = false,
 	},
 	lsp = {
 		progress = {

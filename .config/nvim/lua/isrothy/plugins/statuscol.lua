@@ -1,7 +1,16 @@
+local function is_neominimap(arg)
+	return vim.bo[arg.buf].filetype == "neominimap"
+end
+
+local function is_not_neominimap(arg)
+	return not is_neominimap(arg)
+end
+
 return {
 	"luukvbaal/statuscol.nvim",
 	event = { "BufReadPre", "BufNewFile" },
 	branch = "0.10",
+	enabled = true,
 	init = function()
 		vim.opt.number = true
 		vim.opt.relativenumber = true
@@ -18,16 +27,14 @@ return {
 			},
 			bt_ignore = {
 				"terminal",
-				"nofile"
 			},
 			segments = {
 				{
 					sign = {
 						namespace = { ".*" },
 						name = { ".*" },
-						maxwidth = 1,
-						colwidth = 2,
 					},
+					condition = { is_not_neominimap },
 				},
 				{
 					text = {
@@ -35,17 +42,29 @@ return {
 						" ",
 						builtin.foldfunc,
 					},
+					condition = { is_not_neominimap },
 				},
 				{
 					sign = {
-						-- name = { "GitSign*" },
-						--
-						--
-						--
 						namespace = { "gitsigns_" },
-						maxwidth = 1,
-						colwidth = 2,
 					},
+					condition = { is_not_neominimap },
+				},
+				{
+					sign = {
+						namespace = { "neominimap_search" },
+						maxwidth = 1,
+						colwidth = 1,
+					},
+					condition = { is_neominimap },
+				},
+				{
+					sign = {
+						namespace = { "neominimap_git" },
+						maxwidth = 1,
+						colwidth = 1,
+					},
+					condition = { is_neominimap },
 				},
 			},
 		}

@@ -84,7 +84,8 @@ alias pip="/opt/homebrew/bin/pip3.12"
 alias pip3="/opt/homebrew/bin/pip3.12"
 
 alias ls='lsd'
-alias l='ls -l'
+alias l='lsd'
+alias ll='l -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'

@@ -6,25 +6,26 @@ return {
 		lazy = false,
 		enabled = true,
 		keys = {
-			{ "<leader>nt", "<cmd>Neominimap toggle<cr>", desc = "Toggle minimap" },
 			{ "<leader>no", "<cmd>Neominimap on<cr>", desc = "Enable minimap" },
 			{ "<leader>nc", "<cmd>Neominimap off<cr>", desc = "Disable minimap" },
 			{ "<leader>nf", "<cmd>Neominimap focus<cr>", desc = "Focus on minimap" },
+			{ "<leader>nt", "<cmd>Neominimap toggle<cr>", desc = "Toggle minimap" },
 			{ "<leader>nu", "<cmd>Neominimap unfocus<cr>", desc = "Unfocus minimap" },
-			{ "<leader>ns", "<cmd>Neominimap toggleFocus<cr>", desc = "Focus on minimap" },
+			{ "<leader>ns", "<cmd>Neominimap toggleFocus<cr>", desc = "Switch focus on minimap" },
 			{ "<leader>nwt", "<cmd>Neominimap winToggle<cr>", desc = "Toggle minimap for current window" },
 			{ "<leader>nwr", "<cmd>Neominimap winRefresh<cr>", desc = "Refresh minimap for current window" },
 			{ "<leader>nwo", "<cmd>Neominimap winOn<cr>", desc = "Enable minimap for current window" },
 			{ "<leader>nwc", "<cmd>Neominimap winOff<cr>", desc = "Disable minimap for current window" },
-			{ "<leader>nwt", "<cmd>Neominimap winOn<cr>", desc = "Enable minimap for current window" },
 			{ "<leader>nbt", "<cmd>Neominimap bufToggle<cr>", desc = "Toggle minimap for current buffer" },
 			{ "<leader>nbr", "<cmd>Neominimap bufRefresh<cr>", desc = "Refresh minimap for current buffer" },
 			{ "<leader>nbo", "<cmd>Neominimap bufOn<cr>", desc = "Enable minimap for current buffer" },
 			{ "<leader>nbc", "<cmd>Neominimap bufOff<cr>", desc = "Disable minimap for current buffer" },
 		},
+
 		init = function()
 			vim.opt.wrap = false
 			vim.opt.sidescrolloff = 36
+
 			---@type Neominimap.UserConfig
 			vim.g.neominimap = {
 				auto_enable = true,
@@ -38,9 +39,17 @@ return {
 					local line_cnt = vim.api.nvim_buf_line_count(bufnr)
 					return line_cnt < 4096 and not vim.b[bufnr].large_buf
 				end,
-				minimap_width = 23,
 				x_multiplier = 4,
 				sync_cursor = true,
+				click = {
+					enabled = true,
+					auto_switch_focus = true,
+				},
+				layout = "float",
+				float = {
+					minimap_width = 22,
+					window_border = { "▏", "", "", "", "", "", "▏", "▏" },
+				},
 				diagnostic = {
 					enabled = true,
 					severity = vim.diagnostic.severity.HINT,
@@ -49,15 +58,12 @@ return {
 				git = {
 					enabled = true,
 				},
+				search = {
+					enabled = true,
+					mode = "sign",
+				},
 				treesitter = {
 					enabled = true,
-				},
-				z_index = 1,
-				-- window_border = "single",
-				window_border = { "" },
-
-				winopt = {
-					signcolumn = "yes:1",
 				},
 			}
 		end,
@@ -88,7 +94,7 @@ return {
 				-- Window options
 				window = {
 					-- Whether window is focusable in normal way (with `wincmd` or mouse)
-					focusable = false,
+					focusable = true,
 					-- Side to stick ('left' or 'right')
 					side = "right",
 					-- Whether to show count of multiple integration highlights
@@ -107,7 +113,7 @@ return {
 		lazy = false,
 		enabled = false,
 		init = function()
-			vim.opt.sidescrolloff = 36
+			-- vim.opt.sidescrolloff = 36
 			vim.g.codewindow = {
 				auto_enable = true,
 				exclude_filetypes = {

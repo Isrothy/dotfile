@@ -90,6 +90,7 @@ M.config = function()
 					"dapui_breakpoints",
 					"dapui_scopes",
 					"dapui_colsoles",
+					"neominimap",
 					"",
 				},
 			},

@@ -43,6 +43,7 @@ return {
 				"prompt",
 				"TelescopePrompt",
 				"noice",
+				"neominimap",
 				-- "neo-tree",
 			},
 			width = 2,
