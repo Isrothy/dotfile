@@ -1,10 +1,10 @@
 return {
-	"rafcamlet/nvim-luapad",
-	cmd = {
-		"Luapad",
-		"LuaRun",
-	},
-	opts = {
-		wipe = false,
-	},
+    "rafcamlet/nvim-luapad",
+    cmd = {
+        "Luapad",
+        "LuaRun",
+    },
+    opts = {
+        wipe = false,
+    },
 }

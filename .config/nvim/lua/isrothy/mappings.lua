@@ -1,6 +1,6 @@
 local map = function(mode, lhs, rhs, opts)
-	opts = vim.tbl_extend("force", { noremap = true, silent = true }, opts or {})
-	vim.keymap.set(mode, lhs, rhs, opts)
+    opts = vim.tbl_extend("force", { noremap = true, silent = true }, opts or {})
+    vim.keymap.set(mode, lhs, rhs, opts)
 end
 
 local default_options = { noremap = true, silent = true }
@@ -18,13 +18,13 @@ map({ "n", "v" }, "k", "v:count == 0 ? 'gk' : 'k'", expr_options)
 map({ "n", "v" }, "j", "v:count == 0 ? 'gj' : 'j'", expr_options)
 
 map("x", "g/", "<esc>/\\%V", {
-	silent = false,
-	desc = "Search inside visual selection",
+    silent = false,
+    desc = "Search inside visual selection",
 })
-map("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"', {
-	expr = true,
-	replace_keycodes = false,
-	desc = "Visually select changed text",
+map("n", "gV", "\"`[\" . strpart(getregtype(), 0, 1) . \"`]\"", {
+    expr = true,
+    replace_keycodes = false,
+    desc = "Visually select changed text",
 })
 
 -- map("n", "<leader>o", "<C-o>", default_options)
@@ -57,10 +57,10 @@ map("x", "@", ":norm @q<CR>")
 
 map("n", "<leader>yr", ":call setreg('+', getreg('@'))<CR>", { desc = "Paste register to system clipboard" })
 map(
-	"n",
-	"<leader>yp",
-	":call setreg('+', expand('%:.') .. ':' .. line('.'))<CR>",
-	{ desc = "Paste filename and line number to system clipboard" }
+    "n",
+    "<leader>yp",
+    ":call setreg('+', expand('%:.') .. ':' .. line('.'))<CR>",
+    { desc = "Paste filename and line number to system clipboard" }
 )
 
 vim.cmd([[

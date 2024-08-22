@@ -1,7 +1,7 @@
 return {
-	"nvim-lua/plenary.nvim",
-	cmd = {
-		"PlenaryBustedDirectory",
-		"PlenaryBustedFile",
-	},
+    "nvim-lua/plenary.nvim",
+    cmd = {
+        "PlenaryBustedDirectory",
+        "PlenaryBustedFile",
+    },
 }
