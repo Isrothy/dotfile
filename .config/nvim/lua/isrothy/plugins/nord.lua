@@ -33,7 +33,19 @@ M.config = function()
         on_highlights = function(highlights, colors)
             highlights.CmpDocumentation = { bg = colors.polar_night.brighter }
 
+            highlights.CursorLineNr = { bold = true }
+            -- highlights.CursorLineNr = { bg = colors.polar_night.bright, bold = true }
+            -- highlights.CursorLineFold = { bg = colors.polar_night.bright }
+            -- highlights.CursorLineSign = { bg = colors.polar_night.bright }
+            -- highlights.NeominimapCursorLineNr = { bg = colors.polar_night.origin }
+            -- highlights.NeominimapCursorLineSign = { bg = colors.polar_night.origin }
+            -- highlights.NeominimapCursorLineFold = { bg = colors.polar_night.origin }
+
             highlights.MarkSignHL = { fg = colors.aurora.green }
+
+            highlights.NeominimapMarkIcon = { fg = colors.aurora.green }
+
+            highlights.SatelliteMark = { fg = colors.aurora.green }
 
             -- highlights.NormalFloat = { fg = colors.snow_storm.origin, bg = colors.polar_night.bright }
             -- highlights.FloatBorder = { fg = colors.snow_storm.origin }
@@ -97,10 +109,6 @@ M.config = function()
             highlights.HighlightUndo = { bg = colors.polar_night.brightest }
 
             highlights.VirtColumn = { fg = colors.polar_night.brightest }
-
-            highlights.NeominimapWarnBg = { bg = colors.aurora.yellow, fg = colors.polar_night.origin }
-
-            -- highlights.NeominimapCursorLine = { bg = colors.aurora.yellow, fg = colors.polar_night.origin }
 
             -- highlights.ScrollViewSearch = { fg = colors.frost.artic_water }
 

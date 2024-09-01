@@ -31,8 +31,8 @@ return {
         },
     },
     {
-        -- "Isrothy/satellite.nvim",
-        dir = "~/satellite.nvim",
+        "Isrothy/satellite.nvim",
+        -- dir = "~/satellite.nvim",
         event = { "BufReadPost", "BufNewFile" },
         enabled = true,
         opts = {

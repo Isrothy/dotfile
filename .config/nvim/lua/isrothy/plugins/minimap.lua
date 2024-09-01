@@ -1,10 +1,11 @@
 ---@module 'neominimap.config.meta'
+
 return {
     {
-        dir = "~/neominimap.nvim",
-        -- "Isrothy/neominimap.nvim",
+        -- dir = "~/neominimap.nvim",
+        "Isrothy/neominimap.nvim",
+        version = "v3.x.x",
         lazy = false,
-        -- version = "v3.*.*",
         enabled = true,
         keys = {
             -- Global Minimap Controls
@@ -41,28 +42,36 @@ return {
             vim.opt.wrap = false
             vim.opt.sidescrolloff = 36
 
+            _G.MyStatusCol = function()
+                local ok, _ = pcall(require, "statuscol")
+                if ok then
+                    return _G.StatusCol()
+                else
+                    return ""
+                end
+            end
+
             ---@type Neominimap.UserConfig
             vim.g.neominimap = {
                 auto_enable = true,
-                log_level = vim.log.levels.TRACE,
+                log_level = vim.log.levels.OFF,
+
                 exclude_filetypes = {
                     "qf",
                     "neo-tree",
                     "help",
                 },
-                buf_filter = function(bufnr)
-                    local line_cnt = vim.api.nvim_buf_line_count(bufnr)
-                    return line_cnt < 4096 and not vim.b[bufnr].large_buf
-                end,
                 x_multiplier = 4,
                 sync_cursor = true,
                 click = {
                     enabled = true,
                     auto_switch_focus = true,
                 },
-                layout = "split",
+                layout = "float",
                 split = {
                     direction = "right",
+                    close_if_last_window = true,
+                    fix_width = false,
                 },
                 float = {
                     minimap_width = 22,
@@ -75,6 +84,12 @@ return {
                 },
                 git = {
                     enabled = true,
+                    mode = "sign",
+                },
+                mark = {
+                    enabled = true,
+                    mode = "icon",
+                    show_builtins = true,
                 },
                 search = {
                     enabled = true,
@@ -83,6 +98,13 @@ return {
                 treesitter = {
                     enabled = true,
                 },
+                buf_filter = function(bufnr)
+                    local line_cnt = vim.api.nvim_buf_line_count(bufnr)
+                    return line_cnt < 4096 and not vim.b[bufnr].large_buf
+                end,
+                winopt = function(wo)
+                    wo.statuscolumn = "%!v:lua.MyStatusCol()"
+                end,
             }
         end,
     },

@@ -52,7 +52,8 @@ return {
                 },
                 {
                     sign = {
-                        namespace = { "neominimap_search" },
+                        namespace = { "neominimap_search", "neominimap_mark" },
+                        -- name = { ".*" },
                         maxwidth = 1,
                         colwidth = 1,
                     },
@@ -62,7 +63,7 @@ return {
                     sign = {
                         namespace = { "neominimap_git" },
                         maxwidth = 1,
-                        colwidth = 1,
+                        colwidth = 2,
                     },
                     condition = { is_neominimap },
                 },
