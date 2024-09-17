@@ -10,6 +10,7 @@ vim.filetype.add({
         end,
         ["*_log"] = "log",
         ["*_LOG"] = "log",
+        [".yamlfmt"] = "yaml",
     },
     extension = {
         ["log"] = "log",

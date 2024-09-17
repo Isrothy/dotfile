@@ -1,4 +1,4 @@
-local opts = {
+local mini_bracket_opts = {
     buffer = { suffix = "", options = {} },
     comment = { suffix = "k", options = {} },
     conflict = { suffix = "x", options = {} },
@@ -15,63 +15,73 @@ local opts = {
     yank = { suffix = "y", options = {} },
 }
 
-local keys = {
+local mini_bracket_keys = {
     {
         "]e",
         "<cmd>lua MiniBracketed.diagnostic('forward',{ severity = vim.diagnostic.severity.ERROR })<cr>",
-        desc = "error forward",
+        desc = "Error forward",
     },
     {
         "[e",
         "<cmd>lua MiniBracketed.diagnostic('backward',{ severity = vim.diagnostic.severity.ERROR })<cr>",
-        desc = "error backword",
+        desc = "Error backword",
     },
     {
         "]E",
         "<cmd>lua MiniBracketed.diagnostic('last',{ severity = vim.diagnostic.severity.ERROR })<cr>",
-        desc = "error last",
+        desc = "Error last",
     },
     {
         "[E",
         "<cmd>lua MiniBracketed.diagnostic('first',{ severity = vim.diagnostic.severity.ERROR })<cr>",
-        desc = "error first",
+        desc = "Error first",
     },
     {
         "]w",
         "<cmd>lua MiniBracketed.diagnostic('forward',{ severity = vim.diagnostic.severity.WARN })<cr>",
-        desc = "warn forward",
+        desc = "Warn forward",
     },
     {
         "[w",
         "<cmd>lua MiniBracketed.diagnostic('backward',{ severity = vim.diagnostic.severity.WARN })<cr>",
-        desc = "warn backword",
+        desc = "Warn backword",
     },
     {
         "]W",
         "<cmd>lua MiniBracketed.diagnostic('last',{ severity = vim.diagnostic.severity.WARN })<cr>",
-        desc = "warn last",
+        desc = "Warn last",
     },
     {
         "[W",
         "<cmd>lua MiniBracketed.diagnostic('first',{ severity = vim.diagnostic.severity.WARN })<cr>",
-        desc = "warn first",
+        desc = "Warn first",
     },
 }
 
-for k, v in pairs(opts) do
+for k, v in pairs(mini_bracket_opts) do
     local m = string.upper(k:sub(1, 1)) .. k:sub(2)
     local s = v.suffix
     if s ~= "" then
-        table.insert(keys, { "]" .. s, desc = m .. " forward" })
-        table.insert(keys, { "[" .. s, desc = m .. " backword" })
-        table.insert(keys, { "]" .. string.upper(s), desc = m .. " last" })
-        table.insert(keys, { "[" .. string.upper(s), desc = m .. " first" })
+        table.insert(mini_bracket_keys, { "]" .. s, desc = m .. " forward" })
+        table.insert(mini_bracket_keys, { "[" .. s, desc = m .. " backword" })
+        table.insert(mini_bracket_keys, { "]" .. string.upper(s), desc = m .. " last" })
+        table.insert(mini_bracket_keys, { "[" .. string.upper(s), desc = m .. " first" })
     end
 end
 
 return {
-    "echasnovski/mini.bracketed",
-    enabled = true,
-    keys = keys,
-    opts = opts,
+    {
+        "echasnovski/mini.bracketed",
+        enabled = true,
+        keys = mini_bracket_keys,
+        opts = mini_bracket_opts,
+    },
+    {
+        "mawkler/refjump.nvim",
+        keys = {
+            { "]r", desc = "Lsp Reference forward" },
+            { "[r", desc = "Lsp Reference backward" },
+        },
+        opts = {},
+    },
 }

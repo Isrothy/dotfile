@@ -55,6 +55,8 @@ M.config = function()
         hl_group = "lualine_c_normal",
     })
 
+    local minimap_extension = require("neominimap.statusline").lualine_default
+
     require("lualine").setup({
         options = {
             icons_enabled = true,
@@ -248,6 +250,7 @@ M.config = function()
             "quickfix",
             "toggleterm",
             "trouble",
+            minimap_extension,
         },
     })
 end

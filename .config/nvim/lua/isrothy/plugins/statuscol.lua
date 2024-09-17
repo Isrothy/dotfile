@@ -52,7 +52,7 @@ return {
                 },
                 {
                     sign = {
-                        namespace = { "neominimap_search", "neominimap_mark" },
+                        namespace = { "neominimap_search", "neominimap_mark", "neominimap_todo_comment" },
                         -- name = { ".*" },
                         maxwidth = 1,
                         colwidth = 1,

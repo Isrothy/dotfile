@@ -1,9 +1,82 @@
 ---@module 'neominimap.config.meta'
 
+---@type Neominimap.Map.Handler
+local extmark_handler = {
+    name = "Todo Comment",
+    mode = "icon",
+    namespace = vim.api.nvim_create_namespace("neominimap_todo_comment"),
+    init = function() end,
+    autocmds = {
+        {
+            event = { "TextChanged", "TextChangedI" },
+            opts = {
+                callback = function(apply, args)
+                    local bufnr = tonumber(args.buf) ---@cast bufnr integer
+                    vim.schedule(function()
+                        apply(bufnr)
+                    end)
+                end,
+            },
+        },
+        {
+            event = "WinScrolled",
+            opts = {
+                callback = function(apply)
+                    local winid = vim.api.nvim_get_current_win()
+                    if not winid or not vim.api.nvim_win_is_valid(winid) then
+                        return
+                    end
+                    local bufnr = vim.api.nvim_win_get_buf(winid)
+                    vim.schedule(function()
+                        if bufnr and vim.api.nvim_buf_is_valid(bufnr) then
+                            apply(bufnr)
+                        end
+                    end)
+                end,
+            },
+        },
+    },
+    get_annotations = function(bufnr)
+        local ok, _ = pcall(require, "todo-comments")
+        if not ok then
+            return {}
+        end
+        local ns_id = vim.api.nvim_get_namespaces()["todo-comments"]
+        local extmarks = vim.api.nvim_buf_get_extmarks(bufnr, ns_id, 0, -1, {
+            details = true,
+        })
+        local icons = {
+            FIX = " ",
+            TODO = " ",
+            HACK = " ",
+            WARN = " ",
+            PERF = " ",
+            NOTE = " ",
+            TEST = "⏲ ",
+        }
+        local id = { FIX = 1, TODO = 2, HACK = 3, WARN = 4, PERF = 5, NOTE = 6, TEST = 7 }
+        return vim.tbl_map(function(extmark) ---@param extmark vim.api.keyset.get_extmark_item
+            local detail = extmark[4] ---@type vim.api.keyset.extmark_details
+            local group = detail.hl_group ---@type string
+            local kind = string.sub(group, 7)
+            local icon = icons[kind]
+            ---@type Neominimap.Map.Handler.Annotation
+            return {
+                lnum = extmark[2],
+                end_lnum = extmark[2],
+                id = id[kind],
+                highlight = "TodoFg" .. kind,
+                icon = icon,
+                priority = detail.priority,
+            }
+        end, extmarks)
+    end,
+}
+
 return {
     {
-        -- dir = "~/neominimap.nvim",
-        "Isrothy/neominimap.nvim",
+        dir = "~/neominimap.nvim",
+        -- "Isrothy/neominimap.nvim",
         version = "v3.x.x",
         lazy = false,
         enabled = true,
@@ -55,6 +128,7 @@ return {
             vim.g.neominimap = {
                 auto_enable = true,
                 log_level = vim.log.levels.OFF,
+                notification_level = vim.log.levels.OFF,
 
                 exclude_filetypes = {
                     "qf",
@@ -104,7 +178,12 @@ return {
                 end,
                 winopt = function(wo)
                     wo.statuscolumn = "%!v:lua.MyStatusCol()"
+                    wo.scrolloff = 99999
                 end,
+                ---@type Neominimap.Map.Handler[]
+                handlers = {
+                    extmark_handler,
+                },
             }
         end,
     },

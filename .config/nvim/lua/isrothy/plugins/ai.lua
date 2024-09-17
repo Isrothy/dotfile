@@ -51,7 +51,6 @@ local copilot = {
         end, 100)
     end,
 }
-
 local codeium = {
     "Exafunction/codeium.vim",
     event = "VeryLazy",

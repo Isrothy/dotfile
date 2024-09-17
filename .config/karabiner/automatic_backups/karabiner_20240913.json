@@ -65,10 +65,6 @@
                 {
                     "from": { "key_code": "caps_lock" },
                     "to": [{ "key_code": "f18" }]
-                },
-                {
-                    "from": { "key_code": "f17" },
-                    "to": [{ "key_code": "caps_lock" }]
                 }
             ]
         }

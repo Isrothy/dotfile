@@ -59,6 +59,7 @@ export MYVIMRC="/Users/jiangjoshua/.config/nvim/init.lua"
 export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
 
+
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
@@ -90,6 +91,5 @@ alias d="kitten diff"
 
 alias preview="open -a preview"
 alias typora="open -a typora"
-[ -f "/Users/jiangjoshua/.ghcup/env" ] && source "/Users/jiangjoshua/.ghcup/env" # ghcup-env
 
 eval "$(zoxide init zsh)"
