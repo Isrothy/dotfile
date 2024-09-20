@@ -95,11 +95,7 @@ local mason = {
         keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
         build = ":MasonUpdate",
         opts = {
-            ensure_installed = {
-                "stylua",
-                "shfmt",
-                -- "flake8",
-            },
+            ensure_installed = {},
             ui = {
                 border = border,
             },
@@ -136,9 +132,11 @@ local Lspconfig = {
     "neovim/nvim-lspconfig",
     dependencies = {
         "williamboman/mason-lspconfig.nvim",
+        "folke/neoconf.nvim",
     },
     event = { "BufReadPre", "BufNewFile" },
     config = function()
+        require("neoconf").setup({})
         vim.diagnostic.config({
             virtual_text = false,
             signs = {
@@ -417,6 +415,8 @@ local java = {
     "nvim-java/nvim-java",
     ft = "java",
     cmd = {
+        "JavaBuildBuildWorkspace",
+        "JavaBuildCleanWorkspace",
         "JavaRunnerRunMain",
         "JavaRunnerStopMain",
         "JavaRunnerToggleLogs",
@@ -428,34 +428,40 @@ local java = {
         "JavaTestViewLastReport",
         "JavaProfile",
         "JavaRefactorExtractVariable",
-    },
-    dependencies = {
-        "nvim-java/lua-async-await",
-        "nvim-java/nvim-java-refactor",
-        "nvim-java/nvim-java-core",
-        "nvim-java/nvim-java-test",
-        "nvim-java/nvim-java-dap",
-        "MunifTanjim/nui.nvim",
-        "neovim/nvim-lspconfig",
-        "mfussenegger/nvim-dap",
-        {
-            "williamboman/mason.nvim",
-            opts = {
-                registries = {
-                    "github:nvim-java/mason-registry",
-                    "github:mason-org/mason-registry",
-                },
-            },
-        },
+        "JavaRefactorExtractVariableAllOccurrence",
+        "JavaRefactorExtractConstant",
+        "JavaRefactorExtractMethod",
+        "JavaRefactorExtractField",
+        "JavaSettingsChangeRuntime",
     },
     config = function()
-        require("java").setup()
+        require("java").setup({
+            spring_boot_tools = {
+                enable = false,
+            },
+            jdk = {
+                auto_install = false,
+            },
+        })
         require("lspconfig").jdtls.setup({
             capabilities = make_capabilities(),
             on_attach = function(client, bufnr)
                 set_keymap(client, bufnr)
                 set_inlay_hint(client, bufnr)
             end,
+            settings = {
+                java = {
+                    configuration = {
+                        runtimes = {
+                            {
+                                name = "JavaSE-23",
+                                path = "/opt/homebrew/opt/openjdk@23",
+                                default = true,
+                            },
+                        },
+                    },
+                },
+            },
         })
     end,
 }

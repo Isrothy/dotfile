@@ -34,13 +34,6 @@ M.config = function()
             highlights.CmpDocumentation = { bg = colors.polar_night.brighter }
 
             highlights.CursorLineNr = { bold = true }
-            -- highlights.CursorLineNr = { bg = colors.polar_night.bright, bold = true }
-            -- highlights.CursorLineFold = { bg = colors.polar_night.bright }
-            -- highlights.CursorLineSign = { bg = colors.polar_night.bright }
-            -- highlights.NeominimapCursorLineNr = { bg = colors.polar_night.origin }
-            -- highlights.NeominimapCursorLineSign = { bg = colors.polar_night.origin }
-            -- highlights.NeominimapCursorLineFold = { bg = colors.polar_night.origin }
-
             highlights.MarkSignHL = { fg = colors.aurora.green }
 
             highlights.NeominimapMarkIcon = { fg = colors.aurora.green }
@@ -113,7 +106,6 @@ M.config = function()
             -- highlights.ScrollViewSearch = { fg = colors.frost.artic_water }
 
             -- highlights.FlashLabel = { fg = colors.aurora.orange, bg = colors.polar_night.brightest, bold = true }
-            --
         end,
     })
     vim.cmd.colorscheme("nord")

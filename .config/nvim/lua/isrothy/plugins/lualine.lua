@@ -11,12 +11,12 @@ local M = {
     },
 }
 
-local function tab_size()
+local tab_size = function()
     return (vim.bo.expandtab and "␠" or "␉") .. vim.bo.tabstop
 end
 
 ---- Truncating components in smaller window
-local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
+local trunc = function(trunc_width, trunc_len, hide_width, no_ellipsis)
     return function(str)
         local win_width = vim.fn.winwidth(0)
         if hide_width and win_width < hide_width then
@@ -29,7 +29,7 @@ local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
 end
 
 --- Using external source for diff
-local function diff_source()
+local diff_source = function()
     local gitsigns = vim.b.gitsigns_status_dict
     if gitsigns then
         return {
@@ -42,18 +42,6 @@ end
 
 M.config = function()
     local c = require("nord.colors").palette
-
-    local trouble = require("trouble")
-    local symbols = trouble.statusline({
-        mode = "lsp_document_symbols",
-        groups = {},
-        title = false,
-        filter = { range = true },
-        format = "{kind_icon}{symbol.name:Normal}",
-        -- The following line is needed to fix the background color
-        -- Set it to the lualine section you want to use
-        hl_group = "lualine_c_normal",
-    })
 
     local minimap_extension = require("neominimap.statusline").lualine_default
 
@@ -80,7 +68,6 @@ M.config = function()
                     "dapui_breakpoints",
                     "dapui_scopes",
                     "dapui_colsoles",
-                    "neominimap",
                     "",
                 },
             },

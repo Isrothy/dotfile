@@ -75,8 +75,8 @@ local extmark_handler = {
 
 return {
     {
-        dir = "~/neominimap.nvim",
-        -- "Isrothy/neominimap.nvim",
+        -- dir = "~/neominimap.nvim",
+        "Isrothy/neominimap.nvim",
         version = "v3.x.x",
         lazy = false,
         enabled = true,
@@ -224,51 +224,6 @@ return {
                     zindex = 10,
                 },
             })
-        end,
-    },
-    {
-        "gorbit99/codewindow.nvim",
-        -- dir = "~/codewindow.nvim",
-        lazy = false,
-        enabled = false,
-        init = function()
-            -- vim.opt.sidescrolloff = 36
-            vim.g.codewindow = {
-                auto_enable = true,
-                exclude_filetypes = {
-                    "qf",
-                    "help",
-                },
-                minimap_width = 20,
-                use_lsp = true,
-                use_treesitter = true,
-                use_git = true,
-                width_multiplier = 4,
-                z_index = 1,
-                show_cursor = true,
-                screen_bounds = "background",
-                window_border = "none",
-                -- window_border = { "", "", "", "", "", "", "", "" },
-                relative = "win",
-                events = {
-                    "LspAttach",
-                    "BufEnter",
-                    "BufNewFile",
-                    "BufRead",
-                    "TextChanged",
-                    "InsertLeave",
-                    "DiagnosticChanged",
-                    "FileWritePost",
-                },
-            }
-        end,
-        opts = {},
-    },
-    {
-        "wfxr/minimap.vim",
-        lazy = true,
-        init = function()
-            vim.g.minimap_auto_start = 1
         end,
     },
 }
