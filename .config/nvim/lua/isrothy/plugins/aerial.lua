@@ -1,7 +1,7 @@
 local M = {
     "stevearc/aerial.nvim",
     cmd = { "AerialToggle" },
-    enabled = true,
+    enabled = false,
 }
 
 M.opts = {

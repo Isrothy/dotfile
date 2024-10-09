@@ -73,6 +73,18 @@ local markdown = {
             require("markdown-table-mode").setup()
         end,
     },
+
+    {
+        "OXY2DEV/markview.nvim",
+        ft = { "markdown", "quarto", "rmd" }, -- If you decide to lazy-load anyway
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons",
+        },
+        opts = {
+            initial_state = false,
+        }
+    },
 }
 
 local yaml = {

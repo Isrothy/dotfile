@@ -1,6 +1,7 @@
 return {
     {
-        "hrsh7th/nvim-cmp",
+        "iguanacucumber/magazine.nvim",
+        name = "nvim-cmp", -- Otherwise highlighting gets messed up
         enabled = true,
         event = { "InsertEnter", "CmdlineEnter" },
         dependencies = {
@@ -17,11 +18,11 @@ return {
             "ray-x/cmp-treesitter",
             {
                 "tzachar/cmp-fuzzy-buffer",
-                dependencies = { "hrsh7th/nvim-cmp", "tzachar/fuzzy.nvim" },
+                dependencies = { "tzachar/fuzzy.nvim" },
             },
             {
                 "tzachar/cmp-fuzzy-path",
-                dependencies = { "hrsh7th/nvim-cmp", "tzachar/fuzzy.nvim" },
+                dependencies = { "tzachar/fuzzy.nvim" },
             },
             { "lukas-reineke/cmp-under-comparator" },
             { "onsails/lspkind-nvim" },
@@ -274,7 +275,6 @@ return {
             })
         end,
     },
-
     {
         "garymjr/nvim-snippets",
         opts = {
@@ -283,7 +283,6 @@ return {
         },
         dependencies = { "rafamadriz/friendly-snippets" },
     },
-
     {
         "windwp/nvim-autopairs",
         event = { "InsertEnter" },
@@ -317,6 +316,47 @@ return {
             local cmp = require("cmp")
             cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
         end,
+    },
+
+    {
+        "saghen/blink.cmp",
+        enabled = false,
+        lazy = false, -- lazy loading handled internally
+        -- optional: provides snippets for the snippet source
+        dependencies = "rafamadriz/friendly-snippets",
+
+        -- use a release tag to download pre-built binaries
+        version = "v0.*",
+        -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+        -- build = 'cargo build --release',
+        init = function()
+            vim.keymap.set({ "i" }, "<c-n>", "<Nop>")
+            vim.keymap.set({ "i" }, "<c-p>", "<Nop>")
+        end,
+        opts = {
+            highlight = {
+                -- sets the fallback highlight groups to nvim-cmp's highlight groups
+                -- useful for when your theme doesn't support blink.cmp
+                -- will be removed in a future release, assuming themes add support
+                use_nvim_cmp_as_default = true,
+            },
+            -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+            -- adjusts spacing to ensure icons are aligned
+            nerd_font_variant = "normal",
+
+            -- experimental auto-brackets support
+            -- accept = { auto_brackets = { enabled = true } }
+
+            -- experimental signature help support
+            -- trigger = { signature_help = { enabled = true } }
+            accept = {
+                create_undo_point = true,
+                auto_brackets = {
+                    enabled = true,
+                    default_brackets = { "(", ")" },
+                },
+            },
+        },
     },
 
     {

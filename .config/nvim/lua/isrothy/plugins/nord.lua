@@ -40,6 +40,9 @@ M.config = function()
 
             highlights.SatelliteMark = { fg = colors.aurora.green }
 
+            highlights.WinBar = { bg = colors.polar_night.brighter }
+            highlights.WinBarNC = { bg = colors.polar_night.brighter }
+
             -- highlights.NormalFloat = { fg = colors.snow_storm.origin, bg = colors.polar_night.bright }
             -- highlights.FloatBorder = { fg = colors.snow_storm.origin }
             -- highlights.WhichKeyFloat = { bg = colors.polar_night.origin }

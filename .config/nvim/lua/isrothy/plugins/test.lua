@@ -4,7 +4,7 @@ local neotest = {
         "nvim-lua/plenary.nvim",
         "antoinemadec/FixCursorHold.nvim",
         "nvim-treesitter/nvim-treesitter",
-        -- "mrcjkb/neotest-haskell",
+        "mrcjkb/neotest-haskell",
         "rcasia/neotest-java",
         "alfaix/neotest-gtest",
         "nvim-neotest/neotest-python",
@@ -93,10 +93,10 @@ local neotest = {
                 require("neotest-java")({
                     ignore_wrapper = false, -- whether to ignore maven/gradle wrapper
                 }),
-                -- require("neotest-haskell")({
-                -- 	build_tools = { "stack", "cabal" },
-                -- 	frameworks = { "hspec" },
-                -- }),
+                require("neotest-haskell")({
+                    build_tools = { "stack", "cabal" },
+                    frameworks = { "hspec" },
+                }),
             },
         })
     end,

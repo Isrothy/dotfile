@@ -6,7 +6,7 @@ local M = {
         "nvim-tree/nvim-web-devicons",
         "Isrothy/lualine-diagnostic-message",
         "meuter/lualine-so-fancy.nvim",
-        "stevearc/aerial.nvim",
+        -- "stevearc/aerial.nvim",
         "folke/noice.nvim",
     },
 }
@@ -15,7 +15,7 @@ local tab_size = function()
     return (vim.bo.expandtab and "␠" or "␉") .. vim.bo.tabstop
 end
 
----- Truncating components in smaller window
+-- Truncating components in smaller window
 local trunc = function(trunc_width, trunc_len, hide_width, no_ellipsis)
     return function(str)
         local win_width = vim.fn.winwidth(0)
@@ -28,7 +28,7 @@ local trunc = function(trunc_width, trunc_len, hide_width, no_ellipsis)
     end
 end
 
---- Using external source for diff
+-- Using external source for diff
 local diff_source = function()
     local gitsigns = vim.b.gitsigns_status_dict
     if gitsigns then
@@ -44,6 +44,18 @@ M.config = function()
     local c = require("nord.colors").palette
 
     local minimap_extension = require("neominimap.statusline").lualine_default
+
+    local trouble = require("trouble")
+    local symbols = trouble.statusline({
+        mode = "lsp_document_symbols",
+        groups = {},
+        title = false,
+        filter = { range = true },
+        format = "{kind_icon}{symbol.name:Normal} ⟩",
+        -- The following line is needed to fix the background color
+        -- Set it to the lualine section you want to use
+        hl_group = "lualine_c_normal",
+    })
 
     require("lualine").setup({
         options = {
@@ -68,6 +80,7 @@ M.config = function()
                     "dapui_breakpoints",
                     "dapui_scopes",
                     "dapui_colsoles",
+                    "trouble",
                     "",
                 },
             },
@@ -180,19 +193,9 @@ M.config = function()
                 -- },
             },
             lualine_c = {
-                -- {
-                --     symbols.get,
-                --     cond = symbols.has,
-                -- },
                 {
-                    "aerial",
-                    sep = " ⟩ ",
-                    sep_prefix = true,
-                    sep_highlight = "@text",
-                    depth = nil,
-                    dense = false,
-                    dense_sep = ".",
-                    colored = true,
+                    symbols.get,
+                    cond = symbols.has,
                 },
             },
             lualine_x = {

@@ -18,11 +18,6 @@ g.neovide_touch_deadzone = 6.0
 g.neovide_cursor_animate_command_line = false
 g.neovide_cursor_smooth_blink = true
 
-g.loaded_ruby_provider = 0
-g.loaded_perl_provider = 0
-g.loaded_node_provider = 0
-g.loaded_python3_provider = 0
-
 opt.mouse = "a"
 opt.syntax = "on"
 

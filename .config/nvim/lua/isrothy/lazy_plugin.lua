@@ -9,7 +9,7 @@ require("lazy").setup("isrothy.plugins", {
         colorscheme = { "nord" },
     },
     rocks = {
-        hererocks = false,
+        hererocks = true,
     },
     performance = {
         cache = {

@@ -130,7 +130,7 @@ local cc_filetypes = {
     rust = "101",
     haskell = "101",
     swift = "101",
-    markdown = "81",
+    -- markdown = "81",
 }
 vim.api.nvim_create_autocmd({ "FileType" }, {
     group = vim.api.nvim_create_augroup("colorcolumn", { clear = true }),

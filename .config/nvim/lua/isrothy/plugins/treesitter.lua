@@ -246,7 +246,7 @@ local femaco = {
 
 local node_marker = {
     "atusy/tsnode-marker.nvim",
-    enabled = true,
+    enabled = false,
     init = function()
         vim.api.nvim_create_autocmd("FileType", {
             group = vim.api.nvim_create_augroup("tsnode-marker-markdown", {}),
