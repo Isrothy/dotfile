@@ -46,13 +46,14 @@ export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 export PATH="/Users/jiangjoshua/.rustup/toolchains/stable-aarch64-apple-darwin/bin:$PATH"
 export PATH="/Users/jiangjoshua/.vscode/extensions/mgt19937.typst-preview-0.11.7-darwin-arm64/out:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
 export PATH=$PATH:$HOME/.local/bin
 
-export DYLD_LIBRARY_PATH="/opt/homebrew/lib"
+export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
 
 export CURL_CA_BUNDLE="$(brew --prefix)/etc/openssl@3/cert.pem"
 export SSL_CERT_FILE="$(brew --prefix)/etc/openssl/cert.pem"
-export JAVA_HOME=/opt/homebrew/Cellar/openjdk@17/17.0.7/libexec/openjdk.jdk/Contents/Home
+export JAVA_HOME="/opt/homebrew/Cellar/openjdk@17/17.0.7/libexec/openjdk.jdk/Contents/Home"
 export JAVA_HOME=$(/usr/libexec/java_home)
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export MYVIMRC="/Users/jiangjoshua/.config/nvim/init.lua"
@@ -93,3 +94,5 @@ alias preview="open -a preview"
 alias typora="open -a typora"
 
 eval "$(zoxide init zsh)"
+
+[ -f "/Users/jiangjoshua/.ghcup/env" ] && . "/Users/jiangjoshua/.ghcup/env" # ghcup-env

@@ -116,9 +116,9 @@ return {
             vim.opt.sidescrolloff = 36
 
             _G.MyStatusCol = function()
-                local ok, _ = pcall(require, "statuscol")
+                local ok, statuscol = pcall(require, "statuscol")
                 if ok then
-                    return _G.StatusCol()
+                    return statuscol.get_statuscol_string()
                 else
                     return ""
                 end
@@ -127,7 +127,7 @@ return {
             ---@type Neominimap.UserConfig
             vim.g.neominimap = {
                 auto_enable = true,
-                log_level = vim.log.levels.OFF,
+                log_level = vim.log.levels.DEBUG,
                 notification_level = vim.log.levels.OFF,
 
                 exclude_filetypes = {
@@ -178,7 +178,6 @@ return {
                 end,
                 winopt = function(wo)
                     wo.statuscolumn = "%!v:lua.MyStatusCol()"
-                    wo.scrolloff = 99999
                 end,
                 ---@type Neominimap.Map.Handler[]
                 handlers = {

@@ -235,6 +235,13 @@ local Lspconfig = {
                 set_inlay_hint(client, bufnr)
             end,
         })
+        require("lspconfig").texlab.setup({
+            capabilities = make_capabilities(),
+            on_attach = function(client, bufnr)
+                set_keymap(client, bufnr)
+                set_inlay_hint(client, bufnr)
+            end,
+        })
         require("lspconfig").lua_ls.setup({
             capabilities = make_capabilities(),
             on_attach = function(client, bufnr)

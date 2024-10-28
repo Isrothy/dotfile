@@ -6,7 +6,6 @@ local M = {
         "nvim-tree/nvim-web-devicons",
         "Isrothy/lualine-diagnostic-message",
         "meuter/lualine-so-fancy.nvim",
-        -- "stevearc/aerial.nvim",
         "folke/noice.nvim",
     },
 }
@@ -141,6 +140,7 @@ M.config = function()
                         hint = " ",
                         info = " ",
                     },
+                    first_line_only = true,
                 },
             },
             lualine_x = {

@@ -10,7 +10,7 @@ return {
         config = function()
             local c = require("nord.colors").palette
             require("octo").setup({
-                colors = { -- used for highlight groups (see Colors section below)
+                colors = {
                     white = c.snow_storm.origin,
                     grey = c.polar_night.brighter,
                     black = c.polar_night.origin,

@@ -5,16 +5,17 @@ return {
         enabled = true,
         event = { "InsertEnter", "CmdlineEnter" },
         dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
+            { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
+            { "iguanacucumber/mag-nvim-lua", name = "cmp-nvim-lua" },
+            { "iguanacucumber/mag-buffer", name = "cmp-buffer" },
+            { "iguanacucumber/mag-cmdline", name = "cmp-cmdline" },
+
+            "https://codeberg.org/FelipeLema/cmp-async-path",
+
             "hrsh7th/cmp-nvim-lsp-document-symbol",
             -- "hrsh7th/cmp-nvim-lsp-signature-help",
-            "hrsh7th/cmp-nvim-lua",
             "hrsh7th/cmp-calc",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-cmdline",
             "dmitmel/cmp-cmdline-history",
-            "hrsh7th/cmp-nvim-lua",
             "ray-x/cmp-treesitter",
             {
                 "tzachar/cmp-fuzzy-buffer",
@@ -50,7 +51,6 @@ return {
                     { name = "nvim_lsp" },
                     -- { name = "nvim_lsp_signature_help" },
                     { name = "nvim_lsp_document_symbol" },
-                    -- { name = "luasnip" },
                 }, {
                     { name = "calc" },
                     { name = "buffer" },
@@ -321,40 +321,67 @@ return {
     {
         "saghen/blink.cmp",
         enabled = false,
-        lazy = false, -- lazy loading handled internally
-        -- optional: provides snippets for the snippet source
+        lazy = false,
         dependencies = "rafamadriz/friendly-snippets",
 
         -- use a release tag to download pre-built binaries
         version = "v0.*",
-        -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-        -- build = 'cargo build --release',
+
         init = function()
-            vim.keymap.set({ "i" }, "<c-n>", "<Nop>")
-            vim.keymap.set({ "i" }, "<c-p>", "<Nop>")
+            -- vim.keymap.set({ "i" }, "<c-n>", "<Nop>")
+            -- vim.keymap.set({ "i" }, "<c-p>", "<Nop>")
         end,
         opts = {
+            keymap = {
+                show = "<C-space>",
+                hide = "<C-e>",
+                accept = "<Tab>",
+                select_prev = { "<Up>", "<C-p>" },
+                select_next = { "<Down>", "<C-n>" },
+
+                show_documentation = "<C-j>",
+                hide_documentation = "<C-j>",
+                scroll_documentation_up = "<C-b>",
+                scroll_documentation_down = "<C-f>",
+
+                snippet_forward = "<Tab>",
+                snippet_backward = "<S-Tab>",
+            },
             highlight = {
-                -- sets the fallback highlight groups to nvim-cmp's highlight groups
-                -- useful for when your theme doesn't support blink.cmp
-                -- will be removed in a future release, assuming themes add support
                 use_nvim_cmp_as_default = true,
             },
             -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
             -- adjusts spacing to ensure icons are aligned
-            nerd_font_variant = "normal",
+            nerd_font_variant = "mono",
 
             -- experimental auto-brackets support
-            -- accept = { auto_brackets = { enabled = true } }
 
             -- experimental signature help support
-            -- trigger = { signature_help = { enabled = true } }
+            trigger = { signature_help = { enabled = false } },
             accept = {
                 create_undo_point = true,
                 auto_brackets = {
                     enabled = true,
                     default_brackets = { "(", ")" },
                 },
+            },
+            documentation = {
+                min_width = 10,
+                max_width = 60,
+                max_height = 20,
+                border = "padded",
+                winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
+                -- which directions to show the documentation window,
+                -- for each of the possible autocomplete window directions,
+                -- falling back to the next direction when there's not enough space
+                direction_priority = {
+                    autocomplete_north = { "e", "w", "n", "s" },
+                    autocomplete_south = { "e", "w", "s", "n" },
+                },
+                -- Controls whether the documentation window will automatically show when selecting a completion item
+                auto_show = true,
+                auto_show_delay_ms = 100,
+                update_delay_ms = 50,
             },
         },
     },

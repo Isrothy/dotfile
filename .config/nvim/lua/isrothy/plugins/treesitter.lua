@@ -339,4 +339,5 @@ return {
     treesj,
     regexplainer,
     tree_pairs,
+    otter,
 }
