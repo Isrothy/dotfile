@@ -127,13 +127,14 @@ return {
             ---@type Neominimap.UserConfig
             vim.g.neominimap = {
                 auto_enable = true,
-                log_level = vim.log.levels.DEBUG,
+                log_level = vim.log.levels.OFF,
                 notification_level = vim.log.levels.OFF,
 
                 exclude_filetypes = {
                     "qf",
                     "neo-tree",
                     "help",
+                    "bigfile",
                 },
                 x_multiplier = 4,
                 sync_cursor = true,
@@ -172,10 +173,6 @@ return {
                 treesitter = {
                     enabled = true,
                 },
-                buf_filter = function(bufnr)
-                    local line_cnt = vim.api.nvim_buf_line_count(bufnr)
-                    return line_cnt < 4096 and not vim.b[bufnr].large_buf
-                end,
                 winopt = function(wo)
                     wo.statuscolumn = "%!v:lua.MyStatusCol()"
                 end,

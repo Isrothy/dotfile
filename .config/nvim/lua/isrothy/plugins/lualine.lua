@@ -80,6 +80,7 @@ M.config = function()
                     "dapui_scopes",
                     "dapui_colsoles",
                     "trouble",
+                    "snacks_dashboard",
                     "",
                 },
             },
@@ -163,13 +164,6 @@ M.config = function()
                 "fancy_lsp_servers",
             },
             lualine_z = {
-                -- {
-                --     require("noice").api.status.search.get,
-                --     cond = function()
-                --         return not vim.b.large_buf and require("noice").api.status.search.has()
-                --     end,
-                --     color = { fg = c.polar_night.origin },
-                -- },
                 "searchcount",
                 "selectioncount",
                 "location",

@@ -46,8 +46,11 @@ export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 export PATH="/Users/jiangjoshua/.rustup/toolchains/stable-aarch64-apple-darwin/bin:$PATH"
 export PATH="/Users/jiangjoshua/.vscode/extensions/mgt19937.typst-preview-0.11.7-darwin-arm64/out:$PATH"
-export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
-export PATH=$PATH:$HOME/.local/bin
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+export PATH="/opt/homebrew/anaconda3/bin":$PATH
+export PATH="/Applications/Docker.app/Contents/Resources/bin":$PATH
+export PATH="/Applications/Docker.app/Contents/Resources/cli-plugins/":$PATH
+export PATH="$HOME/.local/bin":$PATH
 
 export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
 
@@ -73,10 +76,7 @@ export FZF_DEFAULT_OPTS="--ansi"
 
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 
-alias python="/opt/homebrew/bin/python3.12"
-alias python3="/opt/homebrew/bin/python3.12"
-alias pip="/opt/homebrew/bin/pip3.12"
-alias pip3="/opt/homebrew/bin/pip3.12"
+alias neofetch='macchina'
 
 alias ls='lsd'
 alias l='lsd'
@@ -96,3 +96,9 @@ alias typora="open -a typora"
 eval "$(zoxide init zsh)"
 
 [ -f "/Users/jiangjoshua/.ghcup/env" ] && . "/Users/jiangjoshua/.ghcup/env" # ghcup-env
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$HOME"'/.local/google-cloud-sdk/path.zsh.inc' ]; then . "$HOME"'/.local/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "$HOME"'/.local/google-cloud-sdk/completion.zsh.inc' ]; then . "$HOME"'/.local/google-cloud-sdk/completion.zsh.inc'; fi

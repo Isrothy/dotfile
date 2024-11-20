@@ -3,6 +3,8 @@ return {
         "iguanacucumber/magazine.nvim",
         name = "nvim-cmp", -- Otherwise highlighting gets messed up
         enabled = true,
+        -- version = "0.3",
+        -- commit = "99d8bd4",
         event = { "InsertEnter", "CmdlineEnter" },
         dependencies = {
             { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
@@ -51,6 +53,7 @@ return {
                     { name = "nvim_lsp" },
                     -- { name = "nvim_lsp_signature_help" },
                     { name = "nvim_lsp_document_symbol" },
+                    -- { name = "luasnip" },
                 }, {
                     { name = "calc" },
                     { name = "buffer" },

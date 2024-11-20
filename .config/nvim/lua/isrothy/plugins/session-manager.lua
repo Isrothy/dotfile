@@ -8,13 +8,6 @@ return {
             autosave = true,
             use_git_branch = true,
             silent = true,
-            should_autosave = function()
-                -- do not autosave if the alpha dashboard is the current filetype
-                if vim.bo.filetype == "alpha" then
-                    return false
-                end
-                return true
-            end,
             on_autoload_no_session = function()
                 vim.notify("No existing session to load.", vim.log.levels.WARN)
             end,

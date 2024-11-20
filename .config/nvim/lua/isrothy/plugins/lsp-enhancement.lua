@@ -65,7 +65,7 @@ local inc_rename = {
 
 local illuminate = {
     "RRethy/vim-illuminate",
-    enabled = true,
+    enabled = false,
     event = { "BufReadPost", "BufNewFile" },
     opts = {
         delay = 200,

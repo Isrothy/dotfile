@@ -210,6 +210,7 @@ local Lspconfig = {
                 set_inlay_hint(client, bufnr)
             end,
         })
+
         require("lspconfig").fennel_language_server.setup({
             capabilities = make_capabilities(),
             on_attach = function(client, bufnr)
@@ -247,7 +248,7 @@ local Lspconfig = {
             on_attach = function(client, bufnr)
                 set_keymap(client, bufnr)
                 set_inlay_hint(client, bufnr)
-                -- client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentFormattingProvider = false
             end,
             settings = {
                 Lua = {
@@ -557,6 +558,26 @@ local jsonls = {
     end,
 }
 
+local typescript = {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    ft = {
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+    },
+    opts = {
+        on_attach = function(client, bufnr)
+            set_keymap(client, bufnr)
+            set_inlay_hint(client, bufnr)
+            client.server_capabilities.documentFormattingProvider = false
+        end,
+    },
+}
+
 local null_ls = {
     "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
@@ -592,6 +613,7 @@ local null_ls = {
                 null_ls.builtins.formatting.black,
                 null_ls.builtins.formatting.cmake_format,
                 null_ls.builtins.formatting.markdownlint,
+                null_ls.builtins.formatting.prettier,
                 null_ls.builtins.formatting.shellharden.with({
                     filetypes = {
                         "sh",
@@ -648,6 +670,7 @@ return {
     java,
     haskell_tools,
     rustaceanvim,
+    typescript,
     null_ls,
     jsonls,
 }

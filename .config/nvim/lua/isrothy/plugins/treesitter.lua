@@ -18,9 +18,6 @@ local TS = {
             highlight = {
                 enable = true,
                 additional_vim_regex_highlighting = false,
-                disable = function()
-                    return vim.b.large_buf
-                end,
             },
             incremental_selection = {
                 enable = true,
@@ -339,5 +336,4 @@ return {
     treesj,
     regexplainer,
     tree_pairs,
-    otter,
 }

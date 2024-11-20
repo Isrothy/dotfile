@@ -29,7 +29,11 @@ local typst = {
 }
 
 local log = {
-    { "mtdl9/vim-log-highlighting", ft = { "log" } },
+    {
+        "mtdl9/vim-log-highlighting",
+        ft = { "log" },
+        enabled = false,
+    },
 }
 
 local pkl = {
