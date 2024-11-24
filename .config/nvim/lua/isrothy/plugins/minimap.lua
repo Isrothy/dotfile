@@ -75,11 +75,10 @@ local extmark_handler = {
 
 return {
     {
-        dir = "~/neominimap.nvim",
-        -- "Isrothy/neominimap.nvim",
+        -- dir = "~/neominimap.nvim",
+        "Isrothy/neominimap.nvim",
         version = "v3.x.x",
         lazy = false,
-        enabled = true,
         keys = {
             -- Global Minimap Controls
             { "<leader>nm", "<cmd>Neominimap toggle<cr>", desc = "Toggle global minimap" },

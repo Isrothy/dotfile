@@ -334,7 +334,6 @@ local surround = {
 local textcase = {
     "johmsalas/text-case.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },
-    -- lazy = false,
     config = function()
         require("textcase").setup({
             default_keymappings_enabled = false,

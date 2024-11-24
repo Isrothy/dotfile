@@ -2,7 +2,6 @@ return {
     {
         "Darazaki/indent-o-matic",
         event = { "BufReadPre", "BufNewFile" },
-        enabled = true,
         opts = {
             max_lines = -1,
             standard_widths = { 2, 4, 8 },
@@ -46,7 +45,7 @@ return {
     {
         "mcauley-penney/visual-whitespace.nvim",
         event = { "BufReadPost", "BufNewFile" },
-        enabled = false,
+        enabled = true,
         opts = function()
             local c = require("nord.colors").palette
             return {

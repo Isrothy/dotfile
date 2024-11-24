@@ -2,10 +2,8 @@ return {
     {
         "iguanacucumber/magazine.nvim",
         name = "nvim-cmp", -- Otherwise highlighting gets messed up
-        enabled = true,
-        -- version = "0.3",
-        -- commit = "99d8bd4",
         event = { "InsertEnter", "CmdlineEnter" },
+        enabled = false,
         dependencies = {
             { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
             { "iguanacucumber/mag-nvim-lua", name = "cmp-nvim-lua" },
@@ -93,7 +91,6 @@ return {
                 Operator = "󰆕",
                 TypeParameter = "󰅲",
             }
-
             -- nvim-cmp setup
             local cmp = require("cmp")
             local compare = require("cmp.config.compare")
@@ -289,7 +286,6 @@ return {
     {
         "windwp/nvim-autopairs",
         event = { "InsertEnter" },
-        enabled = true,
         opts = {
             map_bs = true,
             map_c_h = true,
@@ -315,40 +311,43 @@ return {
         },
         config = function(_, opts)
             require("nvim-autopairs").setup(opts)
-            local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-            local cmp = require("cmp")
-            cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+            -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+            -- local cmp = require("cmp")
+            -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
         end,
     },
 
     {
         "saghen/blink.cmp",
-        enabled = false,
+        enabled = true,
         lazy = false,
-        dependencies = "rafamadriz/friendly-snippets",
+        dependencies = {
+            "rafamadriz/friendly-snippets",
+            "saghen/blink.compat",
+            "mikavilpas/blink-ripgrep.nvim",
+            "chrisgrieser/cmp_yanky",
+        },
 
-        -- use a release tag to download pre-built binaries
-        version = "v0.*",
-
+        version = "v0.5.1",
         init = function()
-            -- vim.keymap.set({ "i" }, "<c-n>", "<Nop>")
-            -- vim.keymap.set({ "i" }, "<c-p>", "<Nop>")
+            vim.keymap.set("i", "<c-b>", "<nop>", { silent = true })
+            vim.keymap.set("i", "<c-f>", "<nop>", { silent = true })
         end,
+
         opts = {
             keymap = {
-                show = "<C-space>",
-                hide = "<C-e>",
-                accept = "<Tab>",
-                select_prev = { "<Up>", "<C-p>" },
-                select_next = { "<Down>", "<C-n>" },
+                ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
+                ["<C-e>"] = { "hide" },
+                ["<C-y>"] = { "select_and_accept" },
 
-                show_documentation = "<C-j>",
-                hide_documentation = "<C-j>",
-                scroll_documentation_up = "<C-b>",
-                scroll_documentation_down = "<C-f>",
+                ["<C-p>"] = { "select_prev", "fallback" },
+                ["<C-n>"] = { "select_next", "fallback" },
 
-                snippet_forward = "<Tab>",
-                snippet_backward = "<S-Tab>",
+                ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+                ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+
+                ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+                ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
             },
             highlight = {
                 use_nvim_cmp_as_default = true,
@@ -356,8 +355,6 @@ return {
             -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
             -- adjusts spacing to ensure icons are aligned
             nerd_font_variant = "mono",
-
-            -- experimental auto-brackets support
 
             -- experimental signature help support
             trigger = { signature_help = { enabled = false } },
@@ -368,23 +365,78 @@ return {
                     default_brackets = { "(", ")" },
                 },
             },
-            documentation = {
-                min_width = 10,
-                max_width = 60,
-                max_height = 20,
-                border = "padded",
-                winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
-                -- which directions to show the documentation window,
-                -- for each of the possible autocomplete window directions,
-                -- falling back to the next direction when there's not enough space
-                direction_priority = {
-                    autocomplete_north = { "e", "w", "n", "s" },
-                    autocomplete_south = { "e", "w", "s", "n" },
+            windows = {
+                autocomplete = {
+                    auto_show = true,
+                    selection = "auto_insert",
+                    winblend = vim.o.pumblend,
+                    -- draw = {
+                    --     padding = { 1, 0 },
+                    --     columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
+                    --     components = {
+                    --         kind_icon = { width = { fill = true } },
+                    --     },
+                    -- },
                 },
-                -- Controls whether the documentation window will automatically show when selecting a completion item
-                auto_show = true,
-                auto_show_delay_ms = 100,
-                update_delay_ms = 50,
+                documentation = {
+                    border = "rounded",
+                    direction_priority = {
+                        autocomplete_north = { "e", "w", "n", "s" },
+                        autocomplete_south = { "e", "w", "s", "n" },
+                    },
+                    auto_show = true,
+                    auto_show_delay_ms = 100,
+                    update_delay_ms = 50,
+                },
+            },
+
+            sources = {
+                completion = {
+                    enabled_providers = {
+                        "lsp",
+                        "path",
+                        "snippets",
+                        "buffer",
+                        "ripgrep",
+                        "cmp_yanky",
+                        "lazydev",
+                    },
+                },
+                providers = {
+                    lsp = {
+                        fallback_for = { "lazydev" },
+                        score_offset = 6,
+                    },
+                    ripgrep = {
+                        module = "blink-ripgrep",
+                        name = "Ripgrep",
+                        -- the options below are optional, some default values are shown
+                        ---@module "blink-ripgrep"
+                        ---@type blink-ripgrep.Options
+                        opts = {
+                            -- the minimum length of the current word to start searching
+                            -- (if the word is shorter than this, the search will not start)
+                            prefix_min_len = 3,
+                            -- The number of lines to show around each match in the preview window
+                            context_size = 5,
+                        },
+                        score_offset = -3,
+                    },
+                    lazydev = {
+                        name = "LazyDev",
+                        module = "lazydev.integrations.blink",
+                        score_offset = 6,
+                    },
+                    buffer = {
+                        name = "Buffer",
+                        module = "blink.cmp.sources.buffer",
+                        score_offset = -3,
+                    },
+                    cmp_yanky = {
+                        name = "cmp_yanky",
+                        module = "blink.compat.source",
+                    },
+                },
             },
         },
     },
