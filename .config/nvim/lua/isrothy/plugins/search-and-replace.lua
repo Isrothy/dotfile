@@ -27,18 +27,29 @@ return {
             "SearchReplaceVisualSelectionCFile",
         },
         keys = {
-            { "<leader>rs", "<CMD>SearchReplaceSingleBufferSelections<CR>" },
-            { "<leader>ro", "<CMD>SearchReplaceSingleBufferOpen<CR>" },
-            { "<leader>rw", "<CMD>SearchReplaceSingleBufferCWord<CR>" },
-            { "<leader>re", "<CMD>SearchReplaceSingleBufferCExpr<CR>" },
-            { "<leader>rf", "<CMD>SearchReplaceSingleBufferFile<CR>" },
+            { "<leader>s", "", desc = "+SearchReplaceSingleBuffer" },
+            {
+                "<leader>ss",
+                "<CMD>SearchReplaceSingleBufferSelections<CR>",
+                desc = "SearchReplaceSingleBuffer [s]elction list",
+            },
+            { "<leader>so", "<CMD>SearchReplaceSingleBufferOpen<CR>", desc = "[o]pen" },
+            { "<leader>sw", "<CMD>SearchReplaceSingleBufferCWord<CR>", desc = "[w]ord" },
+            { "<leader>sW", "<CMD>SearchReplaceSingleBufferCWORD<CR>", desc = "[W]ORD" },
+            { "<leader>se", "<CMD>SearchReplaceSingleBufferCExpr<CR>", desc = "[e]xpr" },
+            { "<leader>sf", "<CMD>SearchReplaceSingleBufferCFile<CR>", desc = "[f]ile" },
 
-            { "<leader>rbs", "<CMD>SearchReplaceMultiBufferSelections<CR>" },
-            { "<leader>rbo", "<CMD>SearchReplaceMultiBufferOpen<CR>" },
-            { "<leader>rbw", "<CMD>SearchReplaceMultiBufferCWord<CR>" },
-            { "<leader>rbw", "<CMD>SearchReplaceMultiBufferCWORD<CR>" },
-            { "<leader>rbe", "<CMD>SearchReplaceMultiBufferCExpr<CR>" },
-            { "<leader>rbf", "<CMD>SearchReplaceMultiBufferCFile<CR>" },
+            { "<leader>sm", "", desc = "+SearchReplaceMultiBuffer" },
+            {
+                "<leader>sms",
+                "<CMD>SearchReplaceMultiBufferSelections<CR>",
+                desc = "SearchReplaceMultiBuffer [s]elction list",
+            },
+            { "<leader>smo", "<CMD>SearchReplaceMultiBufferOpen<CR>", desc = "[o]pen" },
+            { "<leader>smw", "<CMD>SearchReplaceMultiBufferCWord<CR>", desc = "[w]ord" },
+            { "<leader>smW", "<CMD>SearchReplaceMultiBufferCWORD<CR>", desc = "[W]ORD" },
+            { "<leader>sme", "<CMD>SearchReplaceMultiBufferCExpr<CR>", desc = "[e]xpr" },
+            { "<leader>smf", "<CMD>SearchReplaceMultiBufferCFile<CR>", desc = "[f]ile" },
 
             { "<C-r>", [[<CMD>SearchReplaceSingleBufferVisualSelection<CR>]], mode = "v" },
             { "<C-b>", [[<CMD>SearchReplaceWithinVisualSelectionCWord<CR>]], mode = "v" },
@@ -47,6 +58,9 @@ return {
             default_replace_single_buffer_options = "gcI",
             default_replace_multi_buffer_options = "egcI",
         },
+        init = function()
+            vim.o.inccommand = "split"
+        end,
     },
     {
         "chrisgrieser/nvim-rip-substitute",

@@ -56,6 +56,43 @@ local actions_preview = {
     },
 }
 
+local conform = {
+    "stevearc/conform.nvim",
+    cmd = "ConformInfo",
+    keys = {
+        {
+            "<leader>cF",
+            function()
+                require("conform").format({ formatters = { "injected" }, async = true })
+            end,
+            mode = { "n" },
+            desc = "Format Injected Langs",
+        },
+    },
+    opts = {
+        default_format_opts = {
+            timeout_ms = 3000,
+            async = true,
+            quiet = false,
+            lsp_format = "fallback",
+        },
+        formatters_by_ft = {
+            lua = { "stylua", lsp_format = "fallback" },
+            sh = { "shfmt", lsp_format = "fallback" },
+            c = { "clang-format", lsp_format = "fallback" },
+            cpp = { "clang-format", lsp_format = "fallback" },
+            javascript = { "prettier", lsp_format = "fallback" },
+            typescript = { "prettier", lsp_format = "fallback" },
+            markdown = {
+                lsp_format = "fallback",
+            },
+        },
+        formatters = {
+            injected = { options = { ignore_errors = true } },
+        },
+    },
+}
+
 local inc_rename = {
     "smjonas/inc-rename.nvim",
     enabled = true,
@@ -254,6 +291,7 @@ return {
     actions_preview,
     illuminate,
     inc_rename,
+    conform,
     trouble,
     lsplinks,
     symbol_usage,

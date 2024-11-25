@@ -126,7 +126,7 @@ return {
                             style = "rounded",
                         }, -- merged with defaults from documentation
 
-                        scrollbar = false,
+                        scrollbar = true,
                     },
                 },
                 signature = {

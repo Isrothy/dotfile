@@ -325,10 +325,9 @@ return {
             "rafamadriz/friendly-snippets",
             "saghen/blink.compat",
             "mikavilpas/blink-ripgrep.nvim",
-            "chrisgrieser/cmp_yanky",
         },
 
-        version = "v0.5.1",
+        version = "*",
         init = function()
             vim.keymap.set("i", "<c-b>", "<nop>", { silent = true })
             vim.keymap.set("i", "<c-f>", "<nop>", { silent = true })
@@ -337,8 +336,10 @@ return {
         opts = {
             keymap = {
                 ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
+                ["<C-z>"] = { "cancel" },
                 ["<C-e>"] = { "hide" },
                 ["<C-y>"] = { "select_and_accept" },
+                ["<CR>"] = { "accept", "fallback" },
 
                 ["<C-p>"] = { "select_prev", "fallback" },
                 ["<C-n>"] = { "select_next", "fallback" },
@@ -352,11 +353,8 @@ return {
             highlight = {
                 use_nvim_cmp_as_default = true,
             },
-            -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-            -- adjusts spacing to ensure icons are aligned
             nerd_font_variant = "mono",
 
-            -- experimental signature help support
             trigger = { signature_help = { enabled = false } },
             accept = {
                 create_undo_point = true,
@@ -370,13 +368,13 @@ return {
                     auto_show = true,
                     selection = "auto_insert",
                     winblend = vim.o.pumblend,
-                    -- draw = {
-                    --     padding = { 1, 0 },
-                    --     columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
-                    --     components = {
-                    --         kind_icon = { width = { fill = true } },
-                    --     },
-                    -- },
+                    -- padding = { 1, 2 },
+                    draw = {
+                        columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
+                        components = {
+                            kind_icon = { width = { fill = true } },
+                        },
+                    },
                 },
                 documentation = {
                     border = "rounded",
@@ -398,14 +396,12 @@ return {
                         "snippets",
                         "buffer",
                         "ripgrep",
-                        "cmp_yanky",
                         "lazydev",
                     },
                 },
                 providers = {
                     lsp = {
                         fallback_for = { "lazydev" },
-                        score_offset = 6,
                     },
                     ripgrep = {
                         module = "blink-ripgrep",
@@ -422,6 +418,11 @@ return {
                         },
                         score_offset = -3,
                     },
+                    snippets = {
+                        name = "Snippets",
+                        module = "blink.cmp.sources.snippets",
+                        score_offset = -3,
+                    },
                     lazydev = {
                         name = "LazyDev",
                         module = "lazydev.integrations.blink",
@@ -430,11 +431,7 @@ return {
                     buffer = {
                         name = "Buffer",
                         module = "blink.cmp.sources.buffer",
-                        score_offset = -3,
-                    },
-                    cmp_yanky = {
-                        name = "cmp_yanky",
-                        module = "blink.compat.source",
+                        allback_for = { "lsp" },
                     },
                 },
             },

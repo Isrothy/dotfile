@@ -72,8 +72,8 @@ local neotest = {
             desc = "Stop",
         },
     },
-    config = function()
-        require("neotest").setup({
+    opts = function()
+        return {
             status = {
                 virtual_text = false,
                 signs = true,
@@ -98,7 +98,7 @@ local neotest = {
                     frameworks = { "hspec" },
                 }),
             },
-        })
+        }
     end,
 }
 

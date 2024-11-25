@@ -57,23 +57,6 @@ return {
             wk.add({
                 { "<leader>gh", desc = "Hunk" },
             })
-            wk.add({
-                { "<leader>r", group = "Replace / SearchReplaceSingleBuffer" },
-                { "<leader>rs", desc = "SearchReplaceSingleBuffer [s]elction list" },
-                { "<leader>ro", desc = "[o]pen" },
-                { "<leader>rw", desc = "[w]ord" },
-                { "<leader>rW", desc = "[W]ORD" },
-                { "<leader>re", desc = "[e]xpr" },
-                { "<leader>rf", desc = "[f]ile" },
-
-                { "<leader>rb", group = "SearchReplaceMultiBuffer" },
-                { "<leader>rbs", desc = "SearchReplaceMultiBuffer [s]elction list" },
-                { "<leader>rbo", desc = "[o]pen" },
-                { "<leader>rbw", desc = "[w]ord" },
-                { "<leader>rbW", desc = "[W]ORD" },
-                { "<leader>rbe", desc = "[e]xpr" },
-                { "<leader>rbf", desc = "[f]ile" },
-            })
 
             wk.add({
                 { "<leader>bs", group = "Buffer swap" },

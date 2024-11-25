@@ -14,12 +14,12 @@ local make_capabilities = function()
     return capabilities
 end
 
--- local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
--- function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
--- 	opts = opts or {}
--- 	opts.border = opts.border or border
--- 	return orig_util_open_floating_preview(contents, syntax, opts, ...)
--- end
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+    opts = opts or {}
+    opts.border = opts.border or border
+    return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
 
 local set_keymap = function(_, bufnr)
     map("n", "<leader>gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
@@ -51,7 +51,7 @@ local set_keymap = function(_, bufnr)
             jump_type = "never",
         })
     end)
-    map("n", "<leader>rn", function()
+    map("n", "<leader>cr", function()
         return ":IncRename " .. vim.fn.expand("<cword>")
     end, {
         buffer = bufnr,
@@ -60,12 +60,12 @@ local set_keymap = function(_, bufnr)
     })
     map({ "n", "x" }, "<leader>ca", require("actions-preview").code_actions, { buffer = bufnr, desc = "Code actions" })
     map("n", "<leader>cf", function()
-        vim.lsp.buf.format({ async = true })
+        require("conform").format({ async = true })
     end, { buffer = bufnr, desc = "Code Format" })
     map("v", "<leader>cf", function()
         local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
         local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
-        vim.lsp.buf.format({
+        require("conform").format({
             range = {
                 ["start"] = { start_row, 0 },
                 ["end"] = { end_row, 0 },
@@ -168,6 +168,20 @@ local Lspconfig = {
                 set_keymap(client, bufnr)
                 set_inlay_hint(client, bufnr)
             end,
+            root_dir = function(fname)
+                return require("lspconfig.util").root_pattern(
+                    "Makefile",
+                    "configure.ac",
+                    "configure.in",
+                    "config.h.in",
+                    "meson.build",
+                    "meson_options.txt",
+                    "build.ninja"
+                )(fname) or require("lspconfig.util").root_pattern(
+                    "compile_commands.json",
+                    "compile_flags.txt"
+                )(fname) or require("lspconfig.util").find_git_ancestor(fname)
+            end,
             cmd = {
                 "/usr/bin/clangd",
                 "--background-index",
@@ -180,7 +194,7 @@ local Lspconfig = {
                 "--pch-storage=memory",
             },
         })
-        require("lspconfig").cmake.setup({
+        require("lspconfig").neocmake.setup({
             capabilities = make_capabilities(),
             on_attach = function(client, bufnr)
                 set_keymap(client, bufnr)
@@ -262,7 +276,7 @@ local Lspconfig = {
                         globals = { "vim" },
                     },
                     format = {
-                        enable = false,
+                        enable = true,
                         defaultConfig = {
                             indent_style = "space",
                             indent_size = "2",
@@ -373,7 +387,8 @@ local clangd = {
         clangd_capabilities.offsetEncoding = "utf-16"
         require("clangd_extensions").setup({
             inlay_hints = {
-                inline = vim.fn.has("nvim-0.10") == 1,
+                inline = false,
+                -- inline = vim.fn.has("nvim-0.10") == 1,
                 only_current_line = false,
                 only_current_line_autocmd = "CursorHold",
                 show_parameter_hints = true,
@@ -388,22 +403,22 @@ local clangd = {
             },
             ast = {
                 role_icons = {
-                    type = "󰉺",
-                    declaration = "󰙞",
-                    expression = "󰜌",
-                    specifier = "󰓼",
-                    statement = "󰜋",
-                    ["template argument"] = "",
+                    type = "",
+                    declaration = "",
+                    expression = "",
+                    specifier = "",
+                    statement = "",
+                    ["template argument"] = "",
                 },
 
                 kind_icons = {
-                    Compound = "󰛸",
-                    Recovery = "",
-                    TranslationUnit = "",
-                    PackExpansion = "",
-                    TemplateTypeParm = "󰆦",
-                    TemplateTemplateParm = "󰆩",
-                    TemplateParamObject = "󰆧",
+                    Compound = "",
+                    Recovery = "",
+                    TranslationUnit = "",
+                    PackExpansion = "",
+                    TemplateTypeParm = "",
+                    TemplateTemplateParm = "",
+                    TemplateParamObject = "",
                 },
 
                 highlights = {
@@ -477,7 +492,7 @@ local java = {
 
 local haskell_tools = {
     "MrcJkb/haskell-tools.nvim",
-    version = "^3",
+    version = "^4",
     ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
     init = function()
         vim.g.haskell_tools = {
@@ -485,7 +500,7 @@ local haskell_tools = {
                 repl = {
                     -- 'builtin': Use the simple builtin repl
                     -- 'toggleterm': Use akinsho/toggleterm.nvim
-                    handler = "builtin",
+                    handler = "toggleterm",
                     builtin = {
                         create_repl_window = function(view)
                             return view.create_repl_split({ size = vim.o.lines / 3 })
@@ -592,11 +607,12 @@ local null_ls = {
                 set_inlay_hint(client, bufnr)
             end,
             sources = {
-                null_ls.builtins.completion.spell,
+                -- null_ls.builtins.completion.spell,
 
                 null_ls.builtins.diagnostics.checkmake,
                 null_ls.builtins.diagnostics.hadolint,
                 null_ls.builtins.diagnostics.gitlint,
+                null_ls.builtins.diagnostics.cmake_lint,
                 -- null_ls.builtins.diagnostics.selene,
 
                 -- null_ls.builtins.diagnostics.pylint.with({
@@ -632,27 +648,27 @@ local null_ls = {
     end,
 }
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "markdown",
-    callback = function()
-        local root_dir = vim.fs.dirname(vim.fs.find({ ".ants" }, { upward = true })[1])
-        if root_dir then
-            local client = vim.lsp.start({
-                name = "ants-ls",
-                cmd = { "ants-ls" },
-                root_dir = root_dir,
-                on_attach = function(client, bufnr)
-                    set_keymap(client, bufnr)
-                end,
-                capabilities = make_capabilities(),
-                single_file_support = false,
-            })
-            if client then
-                vim.lsp.buf_attach_client(0, client)
-            end
-        end
-    end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = "markdown",
+--     callback = function()
+--         local root_dir = vim.fs.dirname(vim.fs.find({ ".ants" }, { upward = true })[1])
+--         if root_dir then
+--             local client = vim.lsp.start({
+--                 name = "ants-ls",
+--                 cmd = { "ants-ls" },
+--                 root_dir = root_dir,
+--                 on_attach = function(client, bufnr)
+--                     set_keymap(client, bufnr)
+--                 end,
+--                 capabilities = make_capabilities(),
+--                 single_file_support = false,
+--             })
+--             if client then
+--                 vim.lsp.buf_attach_client(0, client)
+--             end
+--         end
+--     end,
+-- })
 
 -- vim.lsp.start({
 --  name = "ants-ls",

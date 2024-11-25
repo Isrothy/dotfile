@@ -45,7 +45,6 @@ return {
     {
         "mcauley-penney/visual-whitespace.nvim",
         event = { "BufReadPost", "BufNewFile" },
-        enabled = true,
         opts = function()
             local c = require("nord.colors").palette
             return {

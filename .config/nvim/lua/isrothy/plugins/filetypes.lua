@@ -2,10 +2,6 @@ local swift = {
     { "keith/swift.vim", ft = { "swift" } },
 }
 
-local kotlin = {
-    { "udalov/kotlin-vim", ft = { "kotlin" } },
-}
-
 local kitty = {
     { "fladson/vim-kitty", ft = { "kitty" } },
 }
@@ -141,19 +137,38 @@ local yaml = {
 }
 local help = {
     "OXY2DEV/helpview.nvim",
-    -- lazy = false, -- Recommended
-
-    -- In case you still want to lazy load
     ft = "help",
-
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
     },
 }
 
+local cmake = {
+    "Civitasv/cmake-tools.nvim",
+    init = function()
+        local loaded = false
+        local function check()
+            local cwd = vim.uv.cwd()
+            if vim.fn.filereadable(cwd .. "/CMakeLists.txt") == 1 then
+                require("lazy").load({ plugins = { "cmake-tools.nvim" } })
+                loaded = true
+            end
+        end
+        check()
+        vim.api.nvim_create_autocmd("DirChanged", {
+            callback = function()
+                if not loaded then
+                    check()
+                end
+            end,
+        })
+    end,
+    opts = {},
+}
+
 return {
     swift,
-    kotlin,
+    cmake,
     kitty,
     typst,
     log,

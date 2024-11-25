@@ -1,7 +1,10 @@
 return {
     {
         "lukas-reineke/virt-column.nvim",
-        event = { "BufReadPost", "BufNewFile" },
+        event = {
+            "BufReadPost",
+            "BufNewFile",
+        },
         opts = {},
     },
 }

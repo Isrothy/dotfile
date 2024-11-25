@@ -3,9 +3,6 @@ return {
         "CRAG666/code_runner.nvim",
         cmd = "RunCode",
         enabled = true,
-        keys = {
-            { "<leader>cr", ":RunCode<cr>", desc = "Code Runner" },
-        },
         dependencies = "nvim-lua/plenary.nvim",
         opts = {
             mode = "toggleterm",
