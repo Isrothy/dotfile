@@ -22,8 +22,29 @@ return {
                     vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, noremap = true })
                 end
 
-                map("n", "]h", gs.next_hunk, "Next Hunk")
-                map("n", "[h", gs.prev_hunk, "Prev Hunk")
+                local wk = require("which-key")
+                wk.add({ { "<leader>gh", group = "GitSigns" } })
+
+                map("n", "]h", function()
+                    if vim.wo.diff then
+                        vim.cmd.normal({ "]c", bang = true })
+                    else
+                        gs.nav_hunk("next")
+                    end
+                end, "Next Hunk")
+                map("n", "[h", function()
+                    if vim.wo.diff then
+                        vim.cmd.normal({ "[c", bang = true })
+                    else
+                        gs.nav_hunk("prev")
+                    end
+                end, "Prev Hunk")
+                map("n", "]H", function()
+                    gs.nav_hunk("last")
+                end, "Last Hunk")
+                map("n", "[H", function()
+                    gs.nav_hunk("first")
+                end, "First Hunk")
                 map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
                 map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
                 map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
@@ -33,6 +54,9 @@ return {
                 map("n", "<leader>ghb", function()
                     gs.blame_line({ full = true })
                 end, "Blame Line")
+                map("n", "<leader>ghB", function()
+                    gs.blame()
+                end, "Blame Buffer")
                 map("n", "<leader>ghd", gs.diffthis, "Diff This")
                 map("n", "<leader>ghD", function()
                     gs.diffthis("~")

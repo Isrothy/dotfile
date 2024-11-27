@@ -1,0 +1,11 @@
+theme = "Lithium"
+show = [
+    "Machine",
+    "OperatingSystem",
+    "Kernel",
+    "DesktopEnvironment",
+    "Terminal",
+    "Shell",
+    "Processor",
+    "GPU",
+]

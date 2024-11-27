@@ -8,18 +8,18 @@ local border = "rounded"
 local make_capabilities = function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-    capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities.offsetEncoding = "utf-16"
+    capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
     return capabilities
 end
 
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-    opts = opts or {}
-    opts.border = opts.border or border
-    return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
+-- local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+-- vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
+--     opts = opts or {}
+--     opts.border = opts.border or border
+--     return orig_util_open_floating_preview(contents, syntax, opts, ...)
+-- end
 
 local set_keymap = function(_, bufnr)
     map("n", "<leader>gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
@@ -41,9 +41,9 @@ local set_keymap = function(_, bufnr)
     end, { buffer = bufnr, desc = "Go to references" })
 
     map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
-    map("n", "<Leader>wa", vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Add workspace " })
-    map("n", "<Leader>wr", vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = "Remove workspace " })
-    map("n", "<Leader>wl", function()
+    map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Add workspace " })
+    map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = "Remove workspace " })
+    map("n", "<leader>wl", function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, { buffer = bufnr, desc = "List workspace" })
     map("n", "<leader>ws", function()
@@ -56,7 +56,7 @@ local set_keymap = function(_, bufnr)
     end, {
         buffer = bufnr,
         expr = true,
-        desc = "Rename",
+        desc = "Rename symbol",
     })
     map({ "n", "x" }, "<leader>ca", require("actions-preview").code_actions, { buffer = bufnr, desc = "Code actions" })
     map("n", "<leader>cf", function()
@@ -82,9 +82,8 @@ for type, icon in pairs(signs) do
 end
 
 local set_inlay_hint = function(client, bufnr)
-    local inlay_hint = vim.lsp.inlay_hint
-    if inlay_hint and client.supports_method("textDocument/inlayHint") then
-        inlay_hint.enable(true)
+    if client.supports_method("textDocument/inlayHint") then
+        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
     end
 end
 
@@ -93,7 +92,6 @@ local mason = {
     {
         "williamboman/mason.nvim",
         cmd = "Mason",
-        keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
         build = ":MasonUpdate",
         opts = {
             ensure_installed = {},
@@ -135,7 +133,7 @@ local Lspconfig = {
         "williamboman/mason-lspconfig.nvim",
         "folke/neoconf.nvim",
     },
-    event = { "BufReadPre", "BufNewFile" },
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
         require("neoconf").setup({})
         vim.diagnostic.config({
@@ -383,8 +381,6 @@ local clangd = {
     enabled = true,
     ft = { "c", "cpp", "objc", "objcpp" },
     config = function()
-        local clangd_capabilities = make_capabilities()
-        clangd_capabilities.offsetEncoding = "utf-16"
         require("clangd_extensions").setup({
             inlay_hints = {
                 inline = false,
@@ -517,7 +513,6 @@ local haskell_tools = {
                 },
             },
             hls = {
-                capabilities = make_capabilities(),
                 on_attach = function(client, bufnr)
                     set_keymap(client, bufnr)
                     set_inlay_hint(client, bufnr)
@@ -555,21 +550,36 @@ local rustaceanvim = {
     end,
 }
 
-local jsonls = {
+local schemastore = {
     "b0o/schemastore.nvim",
-    ft = { "json", "jsonc" },
+    ft = { "json", "jsonc", "yaml" },
     config = function()
         require("lspconfig").jsonls.setup({
             capabilities = make_capabilities(),
             settings = {
                 json = {
                     schemas = require("schemastore").json.schemas(),
+                    validate = { enable = true },
                 },
             },
             on_attach = function(client, bufnr)
                 set_keymap(client, bufnr)
                 set_inlay_hint(client, bufnr)
             end,
+        })
+        require("lspconfig").yamlls.setup({
+            settings = {
+                yaml = {
+                    schemaStore = {
+                        -- You must disable built-in schemaStore support if you want to use
+                        -- this plugin and its advanced options like `ignore`.
+                        enable = false,
+                        -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+                        url = "",
+                    },
+                    schemas = require("schemastore").yaml.schemas(),
+                },
+            },
         })
     end,
 }
@@ -689,5 +699,5 @@ return {
     rustaceanvim,
     typescript,
     null_ls,
-    jsonls,
+    schemastore,
 }

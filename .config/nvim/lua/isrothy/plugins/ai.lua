@@ -2,25 +2,24 @@ return {
     {
         "monkoose/neocodeium",
         event = "VeryLazy",
-        enabled = true,
-        config = function()
+        opts = {
+            enabled = true,
+            show_label = true,
+            debounce = true,
+            silent = true,
+            max_lines = -1,
+            filetypes = {
+                help = false,
+                gitcommit = false,
+                gitrebase = false,
+                ["."] = false,
+            },
+        },
+        config = function(_, opts)
             local neocodeium = require("neocodeium")
-            neocodeium.setup({
-                enabled = true,
-                show_label = true,
-                manual = false,
-                debounce = true,
-                silent = true,
-                filetypes = {
-                    help = false,
-                    gitcommit = false,
-                    gitrebase = false,
-                    ["."] = false,
-                },
-            })
+            neocodeium.setup(opts)
             vim.keymap.set("i", "<c-;>", neocodeium.accept)
-            -- vim.keymap.set("i", "<c-'>", neocodeium.cleareium").accept_word()
-            -- end)
+            vim.keymap.set("i", "<c-o>", neocodeium.accept_word)
             vim.keymap.set("i", "<c-l>", neocodeium.accept_line)
             vim.keymap.set("i", "<c-.>", neocodeium.cycle_or_complete)
             vim.keymap.set("i", "<c-,>", function()

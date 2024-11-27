@@ -301,25 +301,25 @@ local surround = {
             desc = "Add a surrounding pair around the current line, on new lines (normal mode)",
         },
         {
-            "<m-g>s",
+            "gs",
             "<Plug>(nvim-surround-visual)",
             mode = "x",
             desc = "Add a surrounding pair around a visual selection",
         },
         {
-            "<m-g>S",
+            "gS",
             "<Plug>(nvim-surround-visual-line)",
             mode = "x",
             desc = "Add a surrounding pair around a visual selection, on new lines",
         },
         {
-            "<m-g>s",
+            "<c-g>s",
             "<Plug>(nvim-surround-insert)",
             mode = "i",
             desc = "Add a surrounding pair around the cursor (insert mode)",
         },
         {
-            "<m-g>S",
+            "<c-g>s",
             "<Plug>(nvim-surround-insert-line)",
             mode = "i",
             desc = "Add a surrounding pair around the cursor, on new lines (insert mode)",
@@ -334,6 +334,110 @@ local surround = {
 local textcase = {
     "johmsalas/text-case.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },
+    cmd = {
+        "TextCaseOpenTelescope",
+        "TextCaseOpenTelescopeQuickChange",
+        "TextCaseOpenTelescopeLSPChange",
+        "TextCaseStartReplacingCommand",
+    },
+    keys = {
+        {
+            "gac",
+            "<cmd>lua require('textcase').operator('to_camel_case')<CR>",
+            desc = "Convert toCamelCase",
+        },
+        {
+            "gad",
+            "<cmd>lua require('textcase').operator('to_dashed_case')<CR>",
+            desc = "Convert to-dashed-case",
+        },
+        {
+            "gal",
+            "<cmd>lua require('textcase').operator('to_lower_case')<CR>",
+            desc = "Convert to lower case",
+        },
+        {
+            "gap",
+            "<cmd>lua require('textcase').operator('to_pascal_case')<CR>",
+            desc = "Convert ToPascalCase",
+        },
+        {
+            "gas",
+            "<cmd>lua require('textcase').operator('to_snake_case')<CR>",
+            desc = "Convert to_snake_case",
+        },
+        {
+            "gau",
+            "<cmd>lua require('textcase').operator('to_upper_case')<CR>",
+            desc = "Convert To UPPER CASE",
+        },
+        {
+            "gaC",
+            "<cmd>lua require('textcase').lsp_rename('to_camel_case')<CR>",
+            desc = "Rename toCamelCase",
+        },
+        {
+            "gaD",
+            "<cmd>lua require('textcase').lsp_rename('to_dashed_case')<CR>",
+            desc = "Rename to-dashed-case",
+        },
+        {
+            "gaL",
+            "<cmd>lua require('textcase').lsp_rename('to_lower_case')<CR>",
+            desc = "Rename to lower case",
+        },
+        {
+            "gaP",
+            "<cmd>lua require('textcase').lsp_rename('to_pascal_case')<CR>",
+            desc = "Rename ToPascalCase",
+        },
+        {
+            "gaS",
+            "<cmd>lua require('textcase').lsp_rename('to_snake_case')<CR>",
+            desc = "Rename to_snake_case",
+        },
+        {
+            "gaU",
+            "<cmd>lua require('textcase').lsp_rename('to_upper_case')<CR>",
+            desc = "Rename To UPPER CASE",
+        },
+        {
+            "gaoc",
+            "<cmd>lua require('textcase').operator('to_camel_case')<CR>",
+            desc = "toCamelCase",
+            mode = { "n", "v" },
+        },
+        {
+            "gaod",
+            "<cmd>lua require('textcase').operator('to_dashed_case')<CR>",
+            desc = "to-dashed-case",
+            mode = { "n", "v" },
+        },
+        {
+            "gaol",
+            "<cmd>lua require('textcase').operator('to_lower_case')<CR>",
+            desc = "to lower case",
+            mode = { "n", "v" },
+        },
+        {
+            "gaop",
+            "<cmd>lua require('textcase').operator('to_pascal_case')<CR>",
+            desc = "ToPascalCase",
+            mode = { "n", "v" },
+        },
+        {
+            "gaos",
+            "<cmd>lua require('textcase').operator('to_snake_case')<CR>",
+            desc = "to_snake_case",
+            mode = { "n", "v" },
+        },
+        {
+            "gaou",
+            "<cmd>lua require('textcase').operator('to_upper_case')<CR>",
+            desc = "To UPPER CASE",
+            mode = { "n", "v" },
+        },
+    },
     config = function()
         require("textcase").setup({
             default_keymappings_enabled = false,

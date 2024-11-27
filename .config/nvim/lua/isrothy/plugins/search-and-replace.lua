@@ -27,11 +27,10 @@ return {
             "SearchReplaceVisualSelectionCFile",
         },
         keys = {
-            { "<leader>s", "", desc = "+SearchReplaceSingleBuffer" },
             {
                 "<leader>ss",
                 "<CMD>SearchReplaceSingleBufferSelections<CR>",
-                desc = "SearchReplaceSingleBuffer [s]elction list",
+                desc = "[s]elction list",
             },
             { "<leader>so", "<CMD>SearchReplaceSingleBufferOpen<CR>", desc = "[o]pen" },
             { "<leader>sw", "<CMD>SearchReplaceSingleBufferCWord<CR>", desc = "[w]ord" },
@@ -39,7 +38,6 @@ return {
             { "<leader>se", "<CMD>SearchReplaceSingleBufferCExpr<CR>", desc = "[e]xpr" },
             { "<leader>sf", "<CMD>SearchReplaceSingleBufferCFile<CR>", desc = "[f]ile" },
 
-            { "<leader>sm", "", desc = "+SearchReplaceMultiBuffer" },
             {
                 "<leader>sms",
                 "<CMD>SearchReplaceMultiBufferSelections<CR>",

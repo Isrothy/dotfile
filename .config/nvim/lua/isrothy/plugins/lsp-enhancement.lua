@@ -84,10 +84,31 @@ local conform = {
             javascript = { "prettier", lsp_format = "fallback" },
             typescript = { "prettier", lsp_format = "fallback" },
             markdown = {
+                "prettier",
+                "markdownlint-cli2",
+                "markdown-toc",
                 lsp_format = "fallback",
             },
+            ["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
         },
         formatters = {
+            ["markdown-toc"] = {
+                condition = function(_, ctx)
+                    for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
+                        if line:find("<!%-%- toc %-%->") then
+                            return true
+                        end
+                    end
+                end,
+            },
+            ["markdownlint-cli2"] = {
+                condition = function(_, ctx)
+                    local diag = vim.tbl_filter(function(d)
+                        return d.source == "markdownlint"
+                    end, vim.diagnostic.get(ctx.buf))
+                    return #diag > 0
+                end,
+            },
             injected = { options = { ignore_errors = true } },
         },
     },
@@ -98,59 +119,6 @@ local inc_rename = {
     enabled = true,
     event = { "LspAttach" },
     opts = { cmd_name = "IncRename" },
-}
-
-local illuminate = {
-    "RRethy/vim-illuminate",
-    enabled = false,
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-        delay = 200,
-        large_file_cutoff = 2000,
-        providers = {
-            "lsp",
-            -- "treesitter",
-            -- "regex",
-        },
-        large_file_overrides = {
-            providers = {},
-        },
-        filetypes_denylist = {
-            "TelescopePrompt",
-            "aerial",
-            "dirbuf",
-            "dirvish",
-            "fugitive",
-            "neo-tree",
-            "text",
-            "toggleterm",
-        },
-    },
-    config = function(_, opts)
-        require("illuminate").configure(opts)
-
-        local function map(key, dir, buffer)
-            vim.keymap.set("n", key, function()
-                require("illuminate")["goto_" .. dir .. "_reference"](true)
-            end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
-        end
-
-        map("]]", "next")
-        map("[[", "prev")
-
-        -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
-        vim.api.nvim_create_autocmd("FileType", {
-            callback = function()
-                local buffer = vim.api.nvim_get_current_buf()
-                map("]]", "next", buffer)
-                map("[[", "prev", buffer)
-            end,
-        })
-    end,
-    keys = {
-        { "]]", desc = "Next reference" },
-        { "[[", desc = "Prev reference" },
-    },
 }
 
 local trouble = {
@@ -258,7 +226,7 @@ local lsplinks = {
 
 local symbol_usage = {
     "Wansmer/symbol-usage.nvim",
-    event = "LspAttach", -- need run before LspAttach if you use nvim 0.9. On 0.10 use 'LspAttach'
+    event = "LspAttach",
     opts = {
         vt_position = "end_of_line",
         text_format = function(symbol)
@@ -289,7 +257,6 @@ local symbol_usage = {
 return {
     lightbulb,
     actions_preview,
-    illuminate,
     inc_rename,
     conform,
     trouble,

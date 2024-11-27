@@ -16,8 +16,9 @@ return {
                 desc = "Buffer Local Keymaps (which-key)",
             },
         },
-        sort = { "local", "order", "group", "alphanum", "mod", "lower", "icase" },
         opts = {
+            preset = "classic",
+            sort = { "local", "order", "group", "alphanum", "mod", "lower", "icase" },
             win = {
                 row = -1,
                 border = "rounded",
@@ -31,153 +32,34 @@ return {
                     -- winblend = 10, -- value between 0-100 0 for fully opaque and 100 for fully transparent
                 },
             },
-        },
-        config = function(_, opts)
-            require("which-key").setup(opts)
-
-            local wk = require("which-key")
-
-            wk.add({
-                { "<leader>f", group = "Telescope" },
-            })
-            wk.add({
-                { "<leader>d", group = "Dap" },
-            })
-            wk.add({
-                { "<leader>x", group = "Trouble" },
-            })
-            wk.add({
-                { "<leader>p", group = "Presistence" },
-            })
-
-            wk.add({
-                { "<leader>wp", desc = "Pick a window" },
-            })
-
-            wk.add({
-                { "<leader>gh", desc = "Hunk" },
-            })
-
-            wk.add({
-                { "<leader>bs", group = "Buffer swap" },
-            })
-
-            wk.add({
+            spec = {
                 { "<leader>b", group = "Buffer" },
+                { "<leader>bs", group = "Swap" },
+                { "<leader>c", group = "Code" },
+                { "<leader>d", group = "Dap" },
                 { "<leader>e", group = "TreeSJ" },
-                { "<leader>i", group = "ISwap" },
-                { "<leader>t", group = "Neotest" },
+                { "<leader>f", group = "Find" },
                 { "<leader>h", group = "Harpoon" },
+                { "<leader>i", group = "ISwap" },
                 { "<leader>k", group = "Git conflict" },
-            })
-
-            wk.add({
-
+                { "<leader>m", group = "Molten" },
                 { "<leader>n", group = "Neominimap" },
-                { "<leader>nb", group = "Neominimap for current buffer" },
-                { "<leader>nw", group = "Neominimap for current window" },
-            })
+                { "<leader>nb", group = "[b]uffer" },
+                { "<leader>nw", group = "[w]indow" },
+                { "<leader>nt", group = "[t]ab" },
 
-            wk.add({
+                { "<leader>s", group = "SearchReplaceSingleBuffer" },
+                { "<leader>sm", group = "[M]ultiBuffer" },
+
+                { "<leader>t", group = "Neotest" },
+                { "<leader>x", group = "Trouble" },
+
                 { "ga", group = "TextCase" },
-                {
-                    "gac",
-                    "<cmd>lua require('textcase').operator('to_camel_case')<CR>",
-                    name = "Convert toCamelCase",
-                },
-                {
-                    "gad",
-                    "<cmd>lua require('textcase').operator('to_dashed_case')<CR>",
-                    name = "Convert to-dashed-case",
-                },
-                {
-                    "gal",
-                    "<cmd>lua require('textcase').operator('to_lower_case')<CR>",
-                    name = "Convert to lower case",
-                },
-                {
-                    "gap",
-                    "<cmd>lua require('textcase').operator('to_pascal_case')<CR>",
-                    name = "Convert ToPascalCase",
-                },
-                {
-                    "gas",
-                    "<cmd>lua require('textcase').operator('to_snake_case')<CR>",
-                    name = "Convert to_snake_case",
-                },
-                {
-                    "gau",
-                    "<cmd>lua require('textcase').operator('to_upper_case')<CR>",
-                    name = "Convert To UPPER CASE",
-                },
-                {
-                    "gaC",
-                    "<cmd>lua require('textcase').lsp_rename('to_camel_case')<CR>",
-                    name = "Rename toCamelCase",
-                },
-                {
-                    "gaD",
-                    "<cmd>lua require('textcase').lsp_rename('to_dashed_case')<CR>",
-                    name = "Rename to-dashed-case",
-                },
-                {
-                    "gaL",
-                    "<cmd>lua require('textcase').lsp_rename('to_lower_case')<CR>",
-                    name = "Rename to lower case",
-                },
-                {
-                    "gaP",
-                    "<cmd>lua require('textcase').lsp_rename('to_pascal_case')<CR>",
-                    name = "Rename ToPascalCase",
-                },
-                {
-                    "gaS",
-                    "<cmd>lua require('textcase').lsp_rename('to_snake_case')<CR>",
-                    name = "Rename to_snake_case",
-                },
-                {
-                    "gaU",
-                    "<cmd>lua require('textcase').lsp_rename('to_upper_case')<CR>",
-                    name = "Rename To UPPER CASE",
-                },
                 { "gao", group = "Pending mode operator" },
-                {
-                    "gaoc",
-                    "<cmd>lua require('textcase').operator('to_camel_case')<CR>",
-                    name = "toCamelCase",
-                    mode = { "n", "v" },
-                },
-                {
-                    "gaod",
-                    "<cmd>lua require('textcase').operator('to_dashed_case')<CR>",
-                    name = "to-dashed-case",
-                    mode = { "n", "v" },
-                },
-                {
-                    "gaol",
-                    "<cmd>lua require('textcase').operator('to_lower_case')<CR>",
-                    name = "to lower case",
-                    mode = { "n", "v" },
-                },
-                {
-                    "gaop",
-                    "<cmd>lua require('textcase').operator('to_pascal_case')<CR>",
-                    name = "ToPascalCase",
-                    mode = { "n", "v" },
-                },
-                {
-                    "gaos",
-                    "<cmd>lua require('textcase').operator('to_snake_case')<CR>",
-                    name = "to_snake_case",
-                    mode = { "n", "v" },
-                },
-                {
-                    "gaou",
-                    "<cmd>lua require('textcase').operator('to_upper_case')<CR>",
-                    name = "To UPPER CASE",
-                    mode = { "n", "v" },
-                },
-            })
-        end,
+
+                { "[", group = "prev" },
+                { "]", group = "next" },
+            },
+        },
     },
 }

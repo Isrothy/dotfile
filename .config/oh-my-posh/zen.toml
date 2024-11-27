@@ -1,23 +1,10 @@
-version = 2
+version = 3
 final_space = true
 
-  # black = '#2E3440'
-	# dark_gray = '#3B4252'
-	# [[gray]] = '#434C5E'
-	# [[light_gray]] = '#4C566A'
-	# [[light_gray_bright]] = '#616E88'
-	# [[darkest_white]] = '#D8DEE9'
-	# [[darker_white]] = '#E5E9F0'
-	# [[white]] = '#ECEFF4'
-	# [[teal]] = '#8FBCBB
-	# [[off_blue]] = '#88C0D0'
-	# [[glacier]] = '#81A1C1'
-	# [[blue]] = '#5E81AC'
-	# [[red]] = '#BF616A'
-	# [[orange]] = '#D08770'
-	# [[yellow]] = '#EBCB8B'
-	# [[green]] = '#A3BE8C'
-	# [[purple]] = '#B48EAD'
+[secondary_prompt]
+  template = '❯❯ '
+  foreground = '#B48EAD'
+  background = 'transparent'
 
 [[blocks]]
   type = 'prompt'
@@ -25,24 +12,21 @@ final_space = true
   newline = true
 
   [[blocks.segments]]
-    type = 'path'
     style = 'plain'
-    background = 'transparent'
-    foreground = '#81A1C1'
     template = '{{ .Path }}'
+    foreground = '#81A1C1'
+    background = 'transparent'
+    type = 'path'
 
     [blocks.segments.properties]
       style = 'full'
 
   [[blocks.segments]]
-    type = 'git'
     style = 'plain'
+    template = ' {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}'
     foreground = '#616E88'
     background = 'transparent'
-    template = " {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}"
-
-    # template = " {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}"
-
+    type = 'git'
 
     [blocks.segments.properties]
       fetch_status = true
@@ -52,27 +36,27 @@ final_space = true
   overflow = 'hidden'
 
   [[blocks.segments]]
-    type = "status"
-    foreground = "#BF616A"
-    background = "transparant"
+    foreground = '#BF616A'
+    background = 'transparant'
+    type = 'status'
 
     [blocks.segments.properties]
-      status_template = "{{ reason .Code }} {{ .Code }}"
+      status_template = '{{ reason .Code }} {{ .Code }}'
 
   [[blocks.segments]]
-    type = 'executiontime'
     style = 'plain'
+    template = '{{ .FormattedMs }}'
     foreground = '#EBCB8B'
     background = 'transparent'
-    template = '{{ .FormattedMs }}'
+    type = 'executiontime'
 
     [blocks.segments.properties]
       threshold = 1000
 
   [[blocks.segments]]
-    type = "time"
-    style = "plain"
+    style = 'plain'
     foreground = '#A3BE8C'
+    type = 'time'
 
 [[blocks]]
   type = 'prompt'
@@ -80,17 +64,8 @@ final_space = true
   newline = true
 
   [[blocks.segments]]
-    type = 'text'
     style = 'plain'
-    foreground_templates = [
-      "{{if gt .Code 0}}red{{end}}",
-      "{{if eq .Code 0}}magenta{{end}}",
-    ]
-    background = 'transparent'
     template = '❯'
-
-
-[secondary_prompt]
-  foreground = '#B48EAD'
-  background = 'transparent'
-  template = '❯❯ '
+    background = 'transparent'
+    type = 'text'
+    foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}magenta{{end}}']

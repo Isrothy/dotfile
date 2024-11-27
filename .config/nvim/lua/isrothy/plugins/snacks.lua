@@ -1,22 +1,46 @@
+local header = ""
+    .. "██████   █████                   █████   █████  ███                  \n"
+    .. "░░██████ ░░███                   ░░███   ░░███  ░░░                  \n"
+    .. " ░███░███ ░███   ██████   ██████  ░███    ░███  ████  █████████████  \n"
+    .. " ░███░░███░███  ███░░███ ███░░███ ░███    ░███ ░░███ ░░███░░███░░███ \n"
+    .. " ░███ ░░██████ ░███████ ░███ ░███ ░░███   ███   ░███  ░███ ░███ ░███ \n"
+    .. " ░███  ░░█████ ░███░░░  ░███ ░███  ░░░█████░    ░███  ░███ ░███ ░███ \n"
+    .. " █████  ░░█████░░██████ ░░██████     ░░███      █████ █████░███ █████\n"
+    .. "░░░░░    ░░░░░  ░░░░░░   ░░░░░░       ░░░      ░░░░░ ░░░░░ ░░░ ░░░░░ \n"
+
 return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
     enabled = true,
+    dependencies = {
+        "ahmedkhalf/project.nvim",
+    },
     ---@type snacks.Config
     opts = {
         bigfile = { enabled = true },
         dashboard = {
-            width = 70,
+            -- width = 70,
             sections = {
                 { section = "header" },
                 { section = "keys", gap = 1, padding = 1 },
+                { section = "startup" },
+                {
+                    pane = 2,
+                    align = "right",
+                    section = "terminal",
+                    cmd = "macchina -c ~/.config/nvim/minimalist.toml",
+                    height = 11,
+                    padding = 0,
+                    ttl = 60 * 10,
+                    indent = 10,
+                },
                 {
                     pane = 2,
                     icon = " ",
                     title = "Recent Files",
                     section = "recent_files",
-                    limit = 6,
+                    limit = 5,
                     indent = 2,
                     padding = 1,
                 },
@@ -27,34 +51,32 @@ return {
                     section = "recent_files",
                     cwd = true,
                     indent = 2,
-                    limit = 6,
+                    limit = 5,
                     padding = 1,
                 },
-                {
-                    pane = 2,
-                    icon = " ",
-                    title = "Projects",
-                    section = "projects",
-                    indent = 2,
-                    limit = 6,
-                    padding = 1,
-                },
+                -- {
+                --     pane = 2,
+                --     icon = " ",
+                --     title = "Projects",
+                --     section = "projects",
+                --     indent = 2,
+                --     limit = 5,
+                --     padding = 1,
+                -- },
                 {
                     pane = 2,
                     icon = " ",
                     title = "Git Status",
                     section = "terminal",
                     enabled = function()
-                        local obj = vim.system({ "git", "rev-parse", "--is-inside-work-tree" }):wait()
-                        return obj.code == 0
+                        return Snacks.git.get_root() ~= nil
                     end,
-                    cmd = "hub status --short --branch --renames",
+                    cmd = "git status --short --branch --renames",
                     height = 5,
                     padding = 1,
-                    ttl = 5 * 60,
+                    ttl = 0,
                     indent = 3,
                 },
-                { section = "startup" },
             },
 
             preset = {
@@ -79,7 +101,18 @@ return {
                         desc = "Config",
                         action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
                     },
-                    { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+                    {
+                        icon = " ",
+                        key = "p",
+                        desc = "Projects",
+                        action = ":Telescope projects",
+                    },
+                    {
+                        icon = " ",
+                        key = "s",
+                        desc = "Restore Session",
+                        section = "session",
+                    },
                     {
                         icon = "󰒲 ",
                         key = "l",
@@ -89,15 +122,7 @@ return {
                     },
                     { icon = " ", key = "q", desc = "Quit", action = ":qa" },
                 },
-                header = [[
-██████   █████                   █████   █████  ███                  
-░░██████ ░░███                   ░░███   ░░███  ░░░                  
- ░███░███ ░███   ██████   ██████  ░███    ░███  ████  █████████████  
- ░███░░███░███  ███░░███ ███░░███ ░███    ░███ ░░███ ░░███░░███░░███ 
- ░███ ░░██████ ░███████ ░███ ░███ ░░███   ███   ░███  ░███ ░███ ░███ 
- ░███  ░░█████ ░███░░░  ░███ ░███  ░░░█████░    ░███  ░███ ░███ ░███ 
- █████  ░░█████░░██████ ░░██████     ░░███      █████ █████░███ █████
-░░░░░    ░░░░░  ░░░░░░   ░░░░░░       ░░░      ░░░░░ ░░░░░ ░░░ ░░░░░ ]],
+                header = header,
             },
         },
         notifier = {

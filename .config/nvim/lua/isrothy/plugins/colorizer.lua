@@ -5,7 +5,7 @@ return {
             "BufReadPost",
             "BufNewFile",
         },
-        enabled = true,
+        enabled = false,
         init = function()
             vim.opt.termguicolors = true
         end,
@@ -18,7 +18,7 @@ return {
     },
     {
         "brenoprata10/nvim-highlight-colors",
-        enabled = false,
+        enabled = true,
         event = {
             "BufReadPost",
             "BufNewFile",

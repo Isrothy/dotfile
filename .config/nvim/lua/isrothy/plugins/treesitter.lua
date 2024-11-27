@@ -11,7 +11,7 @@ local TS = {
             auto_install = true,
             sync_install = false,
             matchup = {
-                enable = false,
+                enable = true,
                 disable_virtual_text = true,
                 include_match_words = false,
             },
@@ -260,15 +260,33 @@ local node_marker = {
 
 local treesj = {
     "Wansmer/treesj",
-    cmd = {
-        "TSJSplit",
-        "TSJSplit",
-        "TSJToogle",
-    },
+    cmd = { "TSJSplit", "TSJSplit", "TSJToggle" },
     keys = {
-        { "<leader>es", "<cmd>TSJSplit<cr>", desc = "Split lines" },
-        { "<leader>ej", "<cmd>TSJJoin<cr>", desc = "Join lines" },
-        { "<leader>et", "<cmd>TSJToogle<cr>", desc = "Toggle split/join" },
+        {
+            "<leader>es",
+            "<cmd>lua require('treesj').split()<cr>",
+            desc = "Split lines",
+        },
+        {
+            "<leader>ej",
+            "<cmd>lua require('treesj').join()<cr>",
+            desc = "Join lines",
+        },
+        {
+            "<leader>et",
+            "<cmd>lua require('treesj').toggle()<cr>",
+            desc = "Toggle split/join",
+        },
+        {
+            "<leader>eS",
+            "<cmd>lua require('treesj').split({ split = { recursive = true } })<cr>",
+            desc = "Split lines recursively",
+        },
+        {
+            "<leader>eT",
+            "<cmd>lua require('treesj').toggle({ split = { recursive = true } })<cr>",
+            desc = "Toggle split/join recursively",
+        },
     },
     opts = {
         use_default_keymaps = false,

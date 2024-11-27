@@ -19,7 +19,7 @@ return {
                 require("toggleterm").exec(cmd)
             end, { nargs = "*", desc = "Alias for TermExec with dynamic command execution" })
         end,
-        opts = {
+        opts = require("nord.plugins.toggleterm").make_opts({
             open_mapping = [[<c-`>]],
             hide_numbers = true,
             autochdir = true,
@@ -29,7 +29,7 @@ return {
             winbar = {
                 enabled = true,
             },
-        },
+        }),
     },
     {
         "willothy/flatten.nvim",
