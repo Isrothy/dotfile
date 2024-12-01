@@ -18,8 +18,9 @@ return {
     },
     ---@type snacks.Config
     opts = {
-        bigfile = { enabled = true },
+        bigfile = { enabled = false },
         dashboard = {
+            enabled = true,
             -- width = 70,
             sections = {
                 { section = "header" },
@@ -32,7 +33,7 @@ return {
                     cmd = "macchina -c ~/.config/nvim/minimalist.toml",
                     height = 11,
                     padding = 0,
-                    ttl = 60 * 10,
+                    ttl = 60 * 60 * 24,
                     indent = 10,
                 },
                 {
@@ -132,8 +133,20 @@ return {
         quickfile = { enabled = true },
         statuscolumn = { enabled = false },
         words = { enabled = true },
+        profiler = {
+            pick = {
+                picker = "trouble",
+            },
+        },
     },
     keys = {
+        {
+            "<leader>ps",
+            function()
+                Snacks.profiler.scratch()
+            end,
+            desc = "Profiler Scratch Bufer",
+        },
         {
             "<leader>un",
             function()

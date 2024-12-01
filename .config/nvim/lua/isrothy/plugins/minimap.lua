@@ -134,6 +134,7 @@ return {
                     "neo-tree",
                     "help",
                     "bigfile",
+                    "oil",
                 },
                 x_multiplier = 4,
                 sync_cursor = true,

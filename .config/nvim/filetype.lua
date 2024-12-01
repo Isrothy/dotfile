@@ -5,4 +5,8 @@ vim.filetype.add({
         [".clang-format"] = "yaml",
         [".yamlfmt"] = "yaml",
     },
+    extension = {
+        ["log"] = { "log" },
+        ["LOG"] = { "log" },
+    },
 })

@@ -13,22 +13,32 @@ local telescope = {
 telescope.keys = {
     { "<leader>fa", "<cmd>Telescope autocommands<cr>", desc = "Autocommands" },
     { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-    { "<leader>fc", "<cmd>Telescope commands<cr>", desc = "Commands" },
-    { "<leader>fd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
+    { "<leader>fB", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Current buffer fuzzy find" },
+    { "<leader>fc", "<cmd>Telescope commands history<cr>", desc = "Commands history" },
+    { "<leader>fC", "<cmd>Telescope commands<cr>", desc = "Commands" },
+
+     { "<leader>fd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
+    { "<leader>fD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },
 
     { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
+
     { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
+    { "<leader>fG", "<cmd>Telescope git_files<cr>", desc = "Git files" },
+
     { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
+    { "<leader>fH", "<cmd>Telescope highlights<cr>", desc = "Highlight groups" },
 
     { "<leader>fj", "<cmd>Telescope jumplist<cr>", desc = "jumplist" },
     { "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
     { "<leader>fl", "<cmd>Telescope local_list<cr>", desc = "Local list" },
     { "<leader>fm", "<cmd>Telescope marks<cr>", desc = "Marks" },
+    { "<leader>fM", "<cmd>Telescope man_page<cr>", desc = "Man page" },
     { "<leader>fn", "<cmd>Telescope noice<cr>", desc = "Noice" },
     { "<leader>fo", "<cmd>Telescope frecency<cr>", desc = "Oldfiles" },
     { "<leader>fp", "<cmd>Telescope projects<cr>", desc = "Projects" },
     { "<leader>fq", "<cmd>Telescope quickfix<cr>", desc = "Quickfix" },
     { "<leader>fr", "<cmd>Telescope registers<cr>", desc = "Registers" },
+    { "<leader>fR", "<cmd>Telescope resume<cr>", desc = "Resume" },
     { "<leader>fs", "<cmd>Telescope persisted<cr>", desc = "Sessions" },
     { "<leader>ft", "<cmd>Telescope tags<cr>", desc = "Treesitter" },
     { "<leader>fu", "<cmd>Telescope undo<cr>", desc = "Undo" },
@@ -236,15 +246,6 @@ return {
         },
         config = function(_, opts)
             require("project_nvim").setup(opts)
-            -- local history = require("project_nvim.utils.history")
-            -- history.delete_project = function(project)
-            --     for k, v in pairs(history.recent_projects) do
-            --         if v == project.value then
-            --             history.recent_projects[k] = nil
-            --             return
-            --         end
-            --     end
-            -- end
         end,
     },
     {
@@ -263,14 +264,7 @@ return {
         cmd = { "AdvancedGitSearch" },
         dependencies = {
             "nvim-telescope/telescope.nvim",
-            -- to show diff splits and open commits in browser
-            "tpope/vim-fugitive",
-            -- to open commits in browser with fugitive
-            "tpope/vim-rhubarb",
-            -- optional: to replace the diff from fugitive with diffview.nvim
-            -- (fugitive is still needed to open in browser)
             "sindrets/diffview.nvim",
-            --- See dependencies
         },
     },
 }

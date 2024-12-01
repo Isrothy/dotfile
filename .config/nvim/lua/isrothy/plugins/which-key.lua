@@ -48,14 +48,21 @@ return {
                 { "<leader>nw", group = "[w]indow" },
                 { "<leader>nt", group = "[t]ab" },
 
-                { "<leader>s", group = "SearchReplaceSingleBuffer" },
+                { "<leader>o", group = "Overseer" },
+
+                { "<leader>s", group = "Search/Replace" },
                 { "<leader>sm", group = "[M]ultiBuffer" },
 
                 { "<leader>t", group = "Neotest" },
-                { "<leader>x", group = "Trouble" },
+                { "<leader>w", group = "Window" },
+                { "<leader>x", group = "Diagnostics" },
+                { "<leader>y", group = "Yank" },
+
+                { "<leader>W", group = "Wrokspace" },
 
                 { "ga", group = "TextCase" },
                 { "gao", group = "Pending mode operator" },
+                { "z", group = "Fold" },
 
                 { "[", group = "prev" },
                 { "]", group = "next" },

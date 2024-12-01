@@ -86,6 +86,9 @@ local neotest = {
                 enabled = true,
                 open = true,
             },
+            consumers = {
+                overseer = require("neotest.consumers.overseer"),
+            },
             adapters = {
                 require("rustaceanvim.neotest"),
                 require("neotest-python"),

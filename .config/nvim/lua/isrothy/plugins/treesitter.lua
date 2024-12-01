@@ -1,4 +1,4 @@
-local TS = {
+local treesitter = {
     "nvim-treesitter/nvim-treesitter",
     event = { "BufReadPost", "BufNewFile" },
     build = ":TSUpdate",
@@ -11,13 +11,16 @@ local TS = {
             auto_install = true,
             sync_install = false,
             matchup = {
-                enable = true,
+                enable = false,
                 disable_virtual_text = true,
                 include_match_words = false,
             },
             highlight = {
                 enable = true,
                 additional_vim_regex_highlighting = false,
+                disable = function(_, buf)
+                    return vim.b[buf].large_buf
+                end,
             },
             incremental_selection = {
                 enable = true,
@@ -296,7 +299,7 @@ local treesj = {
 
 local regexplainer = {
     "bennypowers/nvim-regexplainer",
-    keys = { "gR", desc = "Explain regex" },
+    keys = { "<leader>Re", desc = "Explain regex" },
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
         "MunifTanjim/nui.nvim",
@@ -318,7 +321,7 @@ local regexplainer = {
         debug = false,
         display = "popup",
         mappings = {
-            toggle = "gR",
+            toggle = "<leader>Re",
             -- examples, not defaults:
             -- show = 'gS',
             -- hide = 'gH',
@@ -344,7 +347,7 @@ local tree_pairs = {
 }
 
 return {
-    TS,
+    treesitter,
     indent_blankline,
     iswap,
     rainbow,

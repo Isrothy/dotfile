@@ -45,7 +45,9 @@ return {
                 "TelescopePrompt",
                 "noice",
                 "neominimap",
-                -- "neo-tree",
+                "neo-tree",
+                "oil",
+                "grug-far"
             },
             width = 2,
             handlers = {

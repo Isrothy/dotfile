@@ -100,6 +100,16 @@ return {
                 -- highlights.ScrollViewSearch = { fg = colors.frost.artic_water }
 
                 -- highlights.FlashLabel = { fg = colors.aurora.orange, bg = colors.polar_night.brightest, bold = true }
+
+                highlights.LualineNeoCodeiumEnabled = { fg = colors.aurora.green, bg = colors.polar_night.bright }
+                highlights.LualineNeoCodeiumDisabled = { fg = colors.aurora.red, bg = colors.polar_night.bright }
+                highlights.LualineNeoCodeiumBuffer = { fg = colors.aurora.red, bg = colors.polar_night.bright }
+                highlights.LualineNeoCodeiumFiletype = { fg = colors.aurora.red, bg = colors.polar_night.bright }
+                highlights.LualineNeoCodeiumEncoding = { fg = colors.aurora.red, bg = colors.polar_night.bright }
+
+                highlights.LualineNeoCodeiumConnected = { fg = colors.aurora.green, bg = colors.polar_night.bright }
+                highlights.LualineNeoCodeiumConnecting = { fg = colors.aurora.yellow, bg = colors.polar_night.bright }
+                highlights.LualineNeoCodeiumDisconnected = { fg = colors.aurora.red, bg = colors.polar_night.bright }
             end,
         },
         config = function(_, opts)

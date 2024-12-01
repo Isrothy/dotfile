@@ -48,19 +48,19 @@ map({ "i", "c", "t" }, "<M-j>", "<Down>", { noremap = false, desc = "Down" })
 map({ "i", "c", "t" }, "<M-k>", "<Up>", { noremap = false, desc = "Up" })
 map({ "i", "c", "t" }, "<M-l>", "<Right>", { noremap = false, desc = "Right" })
 
-map("n", "<leader>qd", vim.diagnostic.setqflist, { desc = "Quickfix diagnostics" })
-map("n", "<leader>ld", vim.diagnostic.setloclist, { desc = "Local diagnostics" })
-map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Current line diagnostics" })
+map("n", "<leader>xq", vim.diagnostic.setqflist, { desc = "Quickfix list" })
+map("n", "<leader>xl", vim.diagnostic.setloclist, { desc = "Location list" })
+map("n", "<leader>xd", vim.diagnostic.open_float, { desc = "Current line" })
 
 map("x", ".", ":norm .<CR>")
 map("x", "@", ":norm @q<CR>")
 
-map("n", "<leader>yr", ":call setreg('+', getreg('@'))<CR>", { desc = "Paste register to system clipboard" })
+map("n", "<leader>yr", ":call setreg('+', getreg('@'))<CR>", { desc = "Yank register to system clipboard" })
 map(
     "n",
     "<leader>yp",
     ":call setreg('+', expand('%:.') .. ':' .. line('.'))<CR>",
-    { desc = "Paste filename and line number to system clipboard" }
+    { desc = "Yank filename and line number to system clipboard" }
 )
 
 vim.cmd([[

@@ -38,6 +38,7 @@ return {
                 dap.listeners.before.event_exited["dapui_config"] = function()
                     dapui.close({})
                 end
+                require("overseer").enable_dap()
             end,
         },
 

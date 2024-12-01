@@ -34,7 +34,6 @@ M.config = function(_, opts)
     end, {
         desc = "Previous todo comment",
     })
-    vim.keymap.set("n", "<leader>qt", "<cmd>TodoQuickFix<cr>", { desc = "Quickfix todolist" })
 end
 
 return M

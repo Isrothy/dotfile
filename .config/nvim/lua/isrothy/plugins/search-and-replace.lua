@@ -60,6 +60,15 @@ return {
             vim.o.inccommand = "split"
         end,
     },
+
+    {
+        "MagicDuck/grug-far.nvim",
+        cmd = {
+            "GrugFar",
+        },
+        opts = { headerMaxWidth = 80 },
+    },
+
     {
         "chrisgrieser/nvim-rip-substitute",
         init = function()

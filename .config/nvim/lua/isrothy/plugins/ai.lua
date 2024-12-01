@@ -12,6 +12,7 @@ return {
                 help = false,
                 gitcommit = false,
                 gitrebase = false,
+                DressingInput = false,
                 ["."] = false,
             },
         },

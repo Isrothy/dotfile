@@ -14,13 +14,6 @@ local make_capabilities = function()
     return capabilities
 end
 
--- local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
--- vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
---     opts = opts or {}
---     opts.border = opts.border or border
---     return orig_util_open_floating_preview(contents, syntax, opts, ...)
--- end
-
 local set_keymap = function(_, bufnr)
     map("n", "<leader>gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
     map("n", "<leader>gt", function()
@@ -41,24 +34,19 @@ local set_keymap = function(_, bufnr)
     end, { buffer = bufnr, desc = "Go to references" })
 
     map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
-    map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Add workspace " })
-    map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = "Remove workspace " })
-    map("n", "<leader>wl", function()
+    map("n", "<leader>Wa", vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Add workspace " })
+    map("n", "<leader>Wr", vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = "Remove workspace " })
+    map("n", "<leader>Wl", function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, { buffer = bufnr, desc = "List workspace" })
-    map("n", "<leader>ws", function()
+    map("n", "<leader>Ws", function()
         require("telescope.builtin").lsp_dynamic_workspace_symbols({
             jump_type = "never",
         })
-    end)
-    map("n", "<leader>cr", function()
-        return ":IncRename " .. vim.fn.expand("<cword>")
-    end, {
-        buffer = bufnr,
-        expr = true,
-        desc = "Rename symbol",
-    })
+    end, { buffer = bufnr, desc = "Workspace symbols" })
+    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename symbol" })
     map({ "n", "x" }, "<leader>ca", require("actions-preview").code_actions, { buffer = bufnr, desc = "Code actions" })
+
     map("n", "<leader>cf", function()
         require("conform").format({ async = true })
     end, { buffer = bufnr, desc = "Code Format" })
@@ -72,7 +60,32 @@ local set_keymap = function(_, bufnr)
             },
             async = true,
         })
-    end, { buffer = bufnr, desc = "Code Format" })
+    end, {
+        buffer = bufnr,
+        desc = "Code Format",
+    })
+
+    map("n", "<leader>cF", function()
+        require("conform").format({ formatters = { "injected" }, async = true })
+    end, {
+        buffer = bufnr,
+        desc = "Format Injected Langs",
+    })
+    map("v", "<leader>cF", function()
+        local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
+        local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
+        require("conform").format({
+            range = {
+                ["start"] = { start_row, 0 },
+                ["end"] = { end_row, 0 },
+            },
+            async = true,
+            formatters = { "injected" },
+        })
+    end, {
+        buffer = bufnr,
+        desc = "Code Format",
+    })
 end
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -312,25 +325,6 @@ local Lspconfig = {
                 },
             },
         })
-        -- require("lspconfig").pylyzer.setup({
-        --  capabilities = (function()
-        --      local cap = make_capabilities()
-        --      cap.offsetEncoding = { "utf-16" }
-        --      return cap
-        --  end)(),
-        --  on_attach = function(client, bufnr)
-        --      set_keymap(client, bufnr)
-        --      -- set_inlay_hint(client, bufnr)
-        --  end,
-        --  settings = {
-        --      python = {
-        --          checkOnType = false,
-        --          diagnostics = false,
-        --          inlayHints = false,
-        --          smartCompletion = false,
-        --      },
-        --  },
-        -- })
         require("lspconfig").r_language_server.setup({
             capabilities = make_capabilities(),
             on_attach = function(client, bufnr)
@@ -599,7 +593,6 @@ local typescript = {
         on_attach = function(client, bufnr)
             set_keymap(client, bufnr)
             set_inlay_hint(client, bufnr)
-            client.server_capabilities.documentFormattingProvider = false
         end,
     },
 }
@@ -617,8 +610,6 @@ local null_ls = {
                 set_inlay_hint(client, bufnr)
             end,
             sources = {
-                -- null_ls.builtins.completion.spell,
-
                 null_ls.builtins.diagnostics.checkmake,
                 null_ls.builtins.diagnostics.hadolint,
                 null_ls.builtins.diagnostics.gitlint,

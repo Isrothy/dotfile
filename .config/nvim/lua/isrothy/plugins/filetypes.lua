@@ -26,9 +26,8 @@ local typst = {
 
 local log = {
     {
-        "mtdl9/vim-log-highlighting",
+        "fei6409/log-highlight.nvim",
         ft = { "log" },
-        enabled = false,
     },
 }
 

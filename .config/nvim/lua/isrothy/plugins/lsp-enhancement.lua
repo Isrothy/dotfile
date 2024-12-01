@@ -59,16 +59,6 @@ local actions_preview = {
 local conform = {
     "stevearc/conform.nvim",
     cmd = "ConformInfo",
-    keys = {
-        {
-            "<leader>cF",
-            function()
-                require("conform").format({ formatters = { "injected" }, async = true })
-            end,
-            mode = { "n" },
-            desc = "Format Injected Langs",
-        },
-    },
     opts = {
         default_format_opts = {
             timeout_ms = 3000,
@@ -114,13 +104,6 @@ local conform = {
     },
 }
 
-local inc_rename = {
-    "smjonas/inc-rename.nvim",
-    enabled = true,
-    event = { "LspAttach" },
-    opts = { cmd_name = "IncRename" },
-}
-
 local trouble = {
     "folke/trouble.nvim",
     cmd = {
@@ -128,35 +111,41 @@ local trouble = {
     },
     dependencies = "nvim-tree/nvim-web-devicons",
     keys = {
+        { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+        { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer diagnostics (Trouble)" },
+        { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location list (Trouble)" },
+        { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix list (Trouble)" },
+
+        { "<leader>cs", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols (Trouble)" },
+        { "<leader>cS", "<cmd>Trouble lsp toggle<cr>", desc = "LSP references/definitions/... (Trouble)" },
+
         {
-            "<leader>xx",
-            "<cmd>Trouble diagnostics toggle<cr>",
-            desc = "Diagnostics (Trouble)",
+            "[q",
+            function()
+                if require("trouble").is_open() then
+                    require("trouble").prev({ skip_groups = true, jump = true })
+                else
+                    local ok, err = pcall(vim.cmd.cprev)
+                    if not ok then
+                        vim.notify(err, vim.log.levels.ERROR)
+                    end
+                end
+            end,
+            desc = "Previous Trouble/Quickfix Item",
         },
         {
-            "<leader>xX",
-            "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-            desc = "Buffer Diagnostics (Trouble)",
-        },
-        {
-            "<leader>xs",
-            "<cmd>Trouble symbols toggle focus=false<cr>",
-            desc = "Symbols (Trouble)",
-        },
-        {
-            "<leader>xl",
-            "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-            desc = "LSP Definitions / references / ... (Trouble)",
-        },
-        {
-            "<leader>xL",
-            "<cmd>Trouble loclist toggle<cr>",
-            desc = "Location List (Trouble)",
-        },
-        {
-            "<leader>xQ",
-            "<cmd>Trouble qflist toggle<cr>",
-            desc = "Quickfix List (Trouble)",
+            "]q",
+            function()
+                if require("trouble").is_open() then
+                    require("trouble").next({ skip_groups = true, jump = true })
+                else
+                    local ok, err = pcall(vim.cmd.cnext)
+                    if not ok then
+                        vim.notify(err, vim.log.levels.ERROR)
+                    end
+                end
+            end,
+            desc = "Next Trouble/Quickfix Item",
         },
     },
     opts = {
@@ -257,7 +246,6 @@ local symbol_usage = {
 return {
     lightbulb,
     actions_preview,
-    inc_rename,
     conform,
     trouble,
     lsplinks,

@@ -1,15 +1,3 @@
-local M = {
-    "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
-    enabled = true,
-    dependencies = {
-        "nvim-tree/nvim-web-devicons",
-        "Isrothy/lualine-diagnostic-message",
-        "meuter/lualine-so-fancy.nvim",
-        "folke/noice.nvim",
-    },
-}
-
 local tab_size = function()
     return (vim.bo.expandtab and "␠" or "␉") .. vim.bo.tabstop
 end
@@ -39,204 +27,255 @@ local diff_source = function()
     end
 end
 
-M.config = function()
-    local c = require("nord.colors").palette
+local function neocodeium_component()
+    local neocodeium = require("neocodeium")
+    if not neocodeium then
+        return ""
+    end
 
-    local minimap_extension = require("neominimap.statusline").lualine_default
-
-    local trouble = require("trouble")
-    local symbols = trouble.statusline({
-        mode = "lsp_document_symbols",
-        groups = {},
-        title = false,
-        filter = { range = true },
-        format = "{kind_icon}{symbol.name:Normal} ⟩",
-        -- The following line is needed to fix the background color
-        -- Set it to the lualine section you want to use
-        hl_group = "lualine_c_normal",
-    })
-
-    require("lualine").setup({
-        options = {
-            icons_enabled = true,
-            -- component_separators = { left = '╲', right = '╱' },
-            component_separators = "",
-            -- section_separators = { left = "", right = "" },
-            section_separators = "",
-            disabled_filetypes = {
-                statusline = {
-                    "dashboard",
-                    "alpha",
-                },
-                winbar = {
-                    "neo-tree",
-                    "aerial",
-                    "packer",
-                    "alpha",
-                    "dap-repl",
-                    "dapui_watches",
-                    "dapui_stacks",
-                    "dapui_breakpoints",
-                    "dapui_scopes",
-                    "dapui_colsoles",
-                    "trouble",
-                    "snacks_dashboard",
-                    "",
-                },
-            },
-            always_divide_middle = true,
-            globalstatus = true,
+    local symbols = {
+        status = {
+            [0] = "󰚩 ", -- Enabled
+            [1] = "󱚧 ", -- Disabled Globally
+            [2] = "󱙻 ", -- Disabled for Buffer
+            [3] = "󱙺 ", -- Disabled for Buffer filetype
+            [4] = "󱙺 ", -- Disabled for Buffer with enabled function
+            [5] = "󱚠 ", -- Disabled for Buffer encoding
         },
-        sections = {
-            lualine_a = {
-                { "mode", fmt = trunc(80, 4, nil, true) },
-                {
-                    require("noice").api.status.command.get,
-                    cond = require("noice").api.status.command.has,
-                },
-                {
-                    "fancy_macro",
-                    icon = {
-                        "⏺",
-                        color = { fg = c.polar_night.origin },
-                    },
-                },
-            },
-            lualine_b = {
-                {
-                    "b:gitsigns_head",
-                    icon = "",
-                },
-                {
-                    "diff",
-                    source = diff_source,
-                    colored = true,
-                    symbols = {
-                        added = " ",
-                        modified = " ",
-                        removed = " ",
-                    },
-                },
-            },
-            lualine_c = {
-                -- { require("NeoComposer.ui").status_recording },
-                {
-                    "filename",
-                    file_status = true,
-                    newfile_status = true,
-                    symbols = {
-                        modified = "[+]", -- Text to show when the file is modified.
-                        readonly = "[-]", -- Text to show when the file is non-modifiable or readonly.
-                        unnamed = "[UNNAMED]", -- Text to show for unnamed buffers.
-                        newfile = "[New]",
-                    },
-                    fmt = trunc(90, 30, 50),
-                    path = 0,
-                },
-                {
-                    "diagnostic-message",
-                    icons = {
-                        error = " ",
-                        warn = " ",
-                        hint = " ",
-                        info = " ",
-                    },
-                    first_line_only = true,
-                },
-            },
-            lualine_x = {
-                -- mixed_indent,
-                -- trailing_whitespace,
-                tab_size,
-                "encoding",
-                {
-                    "fileformat",
-                    icons_enabled = true,
-                    symbols = {
-                        unix = " ",
-                        dos = " ",
-                        mac = " ",
-                    },
-                },
-            },
-            lualine_y = {
-                "fancy_filetype",
-                "fancy_lsp_servers",
-            },
-            lualine_z = {
-                "searchcount",
-                "selectioncount",
-                "location",
-                "filesize",
-            },
+        server_status = {
+            [0] = "󰣺 ", -- Connected
+            [1] = "󰣻 ", -- Connecting
+            [2] = "󰣽 ", -- Disconnected
         },
-        inactive_sections = {
-            lualine_a = {},
-            lualine_b = {},
-            lualine_c = {},
-            lualine_x = {},
-            lualine_y = {},
-            lualine_z = {},
+    }
+    local highlights = {
+        status = {
+            [0] = "%#LualineNeoCodeiumEnabled#",
+            [1] = "%#LualineNeoCodeiumDisabled#",
+            [2] = "%#LualineNeoCodeiumBuffer#",
+            [3] = "%#LualineNeoCodeiumFiletype#",
+            [4] = "%#LualineNeoCodeiumFiletype#",
+            [5] = "%#LualineNeoCodeiumEncoding#",
         },
-        winbar = {
-            lualine_a = {},
-            lualine_b = {
-                -- {
-                -- 	symbols.get,
-                -- 	cond = symbols.has,
-                -- },
-            },
-            lualine_c = {
-                {
-                    symbols.get,
-                    cond = symbols.has,
-                },
-            },
-            lualine_x = {
-                {
-                    "diagnostics",
-                    update_in_insert = true,
-                    symbols = {
-                        error = " ",
-                        warn = " ",
-                        hint = " ",
-                        info = " ",
-                    },
-                },
-            },
-            lualine_y = {
-                { "filetype", icon_only = true },
-                { "filename", fmt = trunc(90, 30, 50), path = 1 },
-            },
-            lualine_z = {},
+        server_status = {
+            [0] = "%#LualineNeoCodeiumConnected#",
+            [1] = "%#LualineNeoCodeiumConnecting#",
+            [2] = "%#LualineNeoCodeiumDisconnected#",
         },
-
-        inactive_winbar = {
-            lualine_a = {},
-            lualine_b = {},
-            lualine_c = {},
-            lualine_x = {},
-            lualine_y = {
-                { "filetype", icon_only = true },
-                { "filename", fmt = trunc(90, 30, 50), path = 1 },
-            },
-            lualine_z = {},
-        },
-        tabline = {},
-        extensions = {
-            "aerial",
-            "lazy",
-            "mason",
-            "neo-tree",
-            "nvim-dap-ui",
-            "oil",
-            "overseer",
-            "quickfix",
-            "toggleterm",
-            "trouble",
-            minimap_extension,
-        },
-    })
+    }
+    local plugin_status, server_status = require("neocodeium").get_status()
+    return highlights.status[plugin_status]
+        .. symbols.status[plugin_status]
+        .. highlights.server_status[server_status]
+        .. symbols.server_status[server_status]
 end
 
-return M
+return {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    dependencies = {
+        "nvim-tree/nvim-web-devicons",
+        "Isrothy/lualine-diagnostic-message",
+        "meuter/lualine-so-fancy.nvim",
+        "folke/noice.nvim",
+    },
+
+    opts = function()
+        local c = require("nord.colors").palette
+        local minimap_extension = require("neominimap.statusline").lualine_default
+        local trouble = require("trouble")
+        local symbols = trouble.statusline({
+            mode = "lsp_document_symbols",
+            groups = {},
+            title = false,
+            filter = { range = true },
+            format = "{kind_icon}{symbol.name:Normal} ⟩",
+            hl_group = "lualine_c_normal",
+        })
+
+        return {
+            options = {
+                icons_enabled = true,
+                component_separators = "",
+                section_separators = "",
+                disabled_filetypes = {
+                    statusline = {
+                        "dashboard",
+                        "alpha",
+                    },
+                    winbar = {
+                        "neo-tree",
+                        "aerial",
+                        "packer",
+                        "alpha",
+                        "dap-repl",
+                        "dapui_watches",
+                        "dapui_stacks",
+                        "dapui_breakpoints",
+                        "dapui_scopes",
+                        "dapui_colsoles",
+                        "trouble",
+                        "snacks_dashboard",
+                        "oil",
+                        "grug-far",
+                        "",
+                    },
+                },
+                always_divide_middle = true,
+                globalstatus = true,
+            },
+            sections = {
+                lualine_a = {
+                    { "mode", fmt = trunc(80, 4, nil, true) },
+                    {
+                        require("noice").api.status.command.get,
+                        cond = require("noice").api.status.command.has,
+                    },
+                    {
+                        "fancy_macro",
+                        icon = { "⏺", color = { fg = c.polar_night.origin } },
+                    },
+                },
+                lualine_b = {
+                    { "b:gitsigns_head", icon = "" },
+                    {
+                        "diff",
+                        source = diff_source,
+                        colored = true,
+                        symbols = {
+                            added = " ",
+                            modified = " ",
+                            removed = " ",
+                        },
+                    },
+                },
+                lualine_c = {
+                    {
+                        "filename",
+                        file_status = true,
+                        newfile_status = true,
+                        symbols = {
+                            modified = "[+]", -- Text to show when the file is modified.
+                            readonly = "[-]", -- Text to show when the file is non-modifiable or readonly.
+                            unnamed = "[UNNAMED]", -- Text to show for unnamed buffers.
+                            newfile = "[New]",
+                        },
+                        fmt = trunc(90, 30, 50),
+                        path = 0,
+                    },
+                    {
+                        "diagnostic-message",
+                        icons = {
+                            error = " ",
+                            warn = " ",
+                            hint = " ",
+                            info = " ",
+                        },
+                        first_line_only = true,
+                    },
+                },
+                lualine_x = {
+                    tab_size,
+                    "encoding",
+                    {
+                        "fileformat",
+                        icons_enabled = true,
+                        symbols = {
+                            unix = " ",
+                            dos = " ",
+                            mac = " ",
+                        },
+                    },
+                },
+                lualine_y = {
+                    "fancy_filetype",
+                    "fancy_lsp_servers",
+                    neocodeium_component,
+                },
+                lualine_z = {
+                    "searchcount",
+                    "selectioncount",
+                    "location",
+                    "filesize",
+                },
+            },
+            inactive_sections = {
+                lualine_a = {},
+                lualine_b = {},
+                lualine_c = {},
+                lualine_x = {},
+                lualine_y = {},
+                lualine_z = {},
+            },
+            winbar = {
+                lualine_a = {},
+                lualine_b = {},
+                lualine_c = {
+                    {
+                        symbols.get,
+                        cond = symbols.has,
+                    },
+                },
+                lualine_x = {
+                    {
+                        "diagnostics",
+                        update_in_insert = true,
+                        symbols = {
+                            error = " ",
+                            warn = " ",
+                            hint = " ",
+                            info = " ",
+                        },
+                    },
+                },
+                lualine_y = {
+                    { "filetype", icon_only = true },
+                    { "filename", fmt = trunc(90, 30, 50), path = 1 },
+                },
+                lualine_z = {},
+            },
+
+            inactive_winbar = {
+                lualine_a = {},
+                lualine_b = {},
+                lualine_c = {},
+                lualine_x = {},
+                lualine_y = {
+                    { "filetype", icon_only = true },
+                    { "filename", fmt = trunc(90, 30, 50), path = 1 },
+                },
+                lualine_z = {},
+            },
+            tabline = {},
+            extensions = {
+                "aerial",
+                "lazy",
+                "mason",
+                "neo-tree",
+                "nvim-dap-ui",
+                "oil",
+                "overseer",
+                "quickfix",
+                "toggleterm",
+                "trouble",
+                minimap_extension,
+            },
+        }
+    end,
+
+    config = function(_, opts)
+        local group = vim.api.nvim_create_augroup("Lualine.NeoCodeium", { clear = true })
+        vim.api.nvim_create_autocmd({ "User" }, {
+            pattern = { "NeoCodeiumServer*", "NeoCodeium*{En,Dis}abled" },
+            group = group,
+            callback = function()
+                require("lualine").refresh({
+                    scope = "tabpage",
+                    place = { "statusline" },
+                })
+            end,
+        })
+
+        require("lualine").setup(opts)
+    end,
+}

@@ -2,10 +2,12 @@ return {
     {
         "andymass/vim-matchup",
         event = { "BufReadPost", "BufNewFile" },
-        enabled = true,
+        enabled = false,
         init = function()
             vim.g.matchup_motion_override_Npercent = 0
             vim.g.matchup_matchparen_fallback = 0
+            vim.g.matchup_motion_enabled = 0
+            vim.g.matchup_text_obj_enabled = 0
             vim.g.matchup_delim_noskips = 2
             vim.g.matchup_matchparen_deferred = 1
             vim.g.matchup_matchparen_deferred_show_delay = 60
@@ -30,7 +32,19 @@ return {
             },
         },
         init = function()
-            -- `matchparen.vim` needs to be disabled manually in case of lazy loading
+            vim.g.loaded_matchparen = 1
+            vim.g.loaded_matchit = 1
+        end,
+    },
+    {
+        "monkoose/matchparen.nvim",
+        event = { "BufReadPost", "BufNewFile" },
+        enabled = false,
+        opts = {
+            on_startup = true,
+            hl_group = "MatchParen",
+        },
+        init = function()
             vim.g.loaded_matchparen = 1
             vim.g.loaded_matchit = 1
         end,

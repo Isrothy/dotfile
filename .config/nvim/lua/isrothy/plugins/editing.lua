@@ -276,14 +276,6 @@ return {
         end,
     },
     {
-        "garymjr/nvim-snippets",
-        opts = {
-            friendly_snippets = true,
-            global_snippets = { "all", "global" },
-        },
-        dependencies = { "rafamadriz/friendly-snippets" },
-    },
-    {
         "windwp/nvim-autopairs",
         event = { "InsertEnter" },
         opts = {
@@ -291,6 +283,7 @@ return {
             map_c_h = true,
             check_ts = true,
             map_c_w = true,
+            map_cr = true,
             enable_check_bracket_line = true,
             ignored_next_char = "[%w%.]",
             disable_filetype = {
