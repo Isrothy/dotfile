@@ -8,7 +8,7 @@ return {
       transparent = false,
       terminal_colors = true,
       diff = { mode = "bg" },
-      borders = true,
+      borders = false,
       errors = { mode = "none" },
       styles = {
         comments = { italic = true },
@@ -36,6 +36,10 @@ return {
         highlights.NeominimapMarkIcon = { fg = colors.aurora.green }
         highlights.SatelliteMark = { fg = colors.aurora.green }
 
+        highlights.VertSplit = { fg = colors.polar_night.brighter }
+        highlights.WinSeparator = { fg = colors.polar_night.brighter }
+        -- highlights.FloatBorder = { fg = colors.polar_night.brighter }
+
         highlights.EmissionAdded = { bg = colors.polar_night.brighter }
         highlights.EmissionRemoved = { bg = colors.polar_night.brighter }
 
@@ -47,7 +51,6 @@ return {
         highlights.SnacksDashboardIcon = { fg = colors.frost.ice }
 
         -- highlights.NormalFloat = { fg = colors.snow_storm.origin, bg = colors.polar_night.bright }
-        -- highlights.FloatBorder = { fg = colors.snow_storm.origin }
         -- highlights.WhichKeyFloat = { bg = colors.polar_night.origin }
 
         highlights.MatchParen = { bg = colors.polar_night.origin, reverse = true }

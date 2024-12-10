@@ -2,7 +2,6 @@ local map = vim.keymap.set
 
 local yanky = {
   "gbprod/yanky.nvim",
-  enabled = true,
   dependencies = {
     {
       "kkharji/sqlite.lua",
@@ -26,156 +25,151 @@ local yanky = {
   end,
   keys = {
     {
-      "<leader>y",
-      "\"+<Plug>(YankyYank)",
+      "<LEADER>y",
+      "\"+<PLUG>(YankyYank)",
       mode = { "n", "x" },
-      desc = "Yank text to system clipboard",
+      desc = "Yank Text to System Clipboard",
     },
     {
-      "<leader>Y",
-      "\"+<Plug>(YankyYank)",
+      "<LEADER>Y",
+      "\"+<PLUG>(YankyYank)",
       mode = { "x" },
-      desc = "Yank text to system clipboard",
+      desc = "Yank Text to System Clipboard",
     },
     {
-      "<leader>Y",
-      "\"+<Plug>(YankyYank)$",
+      "<LEADER>Y",
+      "\"+<PLUG>(YankyYank)$",
       mode = { "n" },
-      desc = "Yank text to system clipboard until end of line",
+      desc = "Yank Text to System Clipboard Until End of Line",
     },
     {
-      "<leader>p",
-      "\"+<Plug>(YankyPutAfter)",
+      "<LEADER>p",
+      "\"+<PLUG>(YankyPutAfter)",
       mode = { "n", "x" },
-      desc = "Put text from system clipboard after cursor",
+      desc = "Put Text from System Clipboard After Cursor",
     },
     {
-      "<leader>P",
-      "\"+<Plug>(YankyPutBefore)",
+      "<LEADER>P",
+      "\"+<PLUG>(YankyPutBefore)",
       mode = { "n", "x" },
-      desc = "Put text from system clipboard before cursor",
+      desc = "Put Text from System Clipboard Before Cursor",
     },
-    { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
-    { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after cursor" },
-    { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before cursor" },
+    { "y", "<PLUG>(YankyYank)", mode = { "n", "x" }, desc = "Yank Text" },
+    { "p", "<PLUG>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put Yanked Text After Cursor" },
+    { "P", "<PLUG>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put Yanked Text Before Cursor" },
     {
       "gp",
-      "<Plug>(YankyGPutAfter)",
+      "<PLUG>(YankyGPutAfter)",
       mode = { "n", "x" },
-      desc = "Put yanked text after selection",
+      desc = "Put Yanked Text After Selection",
     },
     {
       "gP",
-      "<Plug>(YankyGPutBefore)",
+      "<PLUG>(YankyGPutBefore)",
       mode = { "n", "x" },
-      desc = "Put yanked text before selection",
+      desc = "Put Yanked Text Before Selection",
     },
-    { "[y", "<Plug>(YankyCycleForward)", desc = "Cycle forward through yank history" },
-    { "]y", "<Plug>(YankyCycleBackward)", desc = "Cycle backward through yank history" },
-    { "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
+    { "[y", "<PLUG>(YankyCycleForward)", desc = "Cycle Forward Through Yank History" },
+    { "]y", "<PLUG>(YankyCycleBackward)", desc = "Cycle Backward Through Yank History" },
+    { "]p", "<PLUG>(YankyPutIndentAfterLinewise)", desc = "Put Indented After Cursor (Linewise)" },
     {
       "[p",
-      "<Plug>(YankyPutIndentBeforeLinewise)",
-      desc = "Put indented before cursor (linewise)",
+      "<PLUG>(YankyPutIndentBeforeLinewise)",
+      desc = "Put Indented Before Cursor (Linewise)",
     },
-    { "]P", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
+    { "]P", "<PLUG>(YankyPutIndentAfterLinewise)", desc = "Put indented After Cursor (Linewise)" },
     {
       "[P",
-      "<Plug>(YankyPutIndentBeforeLinewise)",
-      desc = "Put indented before cursor (linewise)",
+      "<PLUG>(YankyPutIndentBeforeLinewise)",
+      desc = "Put Indented Before Cursor (linewise)",
     },
-    { ">p", "<Plug>(YankyPutIndentAfterShiftRight)", desc = "Put and indent right" },
-    { "<p", "<Plug>(YankyPutIndentAfterShiftLeft)", desc = "Put and indent left" },
-    { ">P", "<Plug>(YankyPutIndentBeforeShiftRight)", desc = "Put before and indent right" },
-    { "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)", desc = "Put before and indent left" },
-    { "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put after applying a filter" },
-    { "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put before applying a filter" },
+    { ">p", "<PLUG>(YankyPutIndentAfterShiftRight)", desc = "Put and Indent Right" },
+    { "<p", "<PLUG>(YankyPutIndentAfterShiftLeft)", desc = "Put and Indent Left" },
+    { ">P", "<PLUG>(YankyPutIndentBeforeShiftRight)", desc = "Put Before and Indent Right" },
+    { "<P", "<PLUG>(YankyPutIndentBeforeShiftLeft)", desc = "Put Before and Indent Left" },
+    { "=p", "<PLUG>(YankyPutAfterFilter)", desc = "Put After Applying a Filter" },
+    { "=P", "<PLUG>(YankyPutBeforeFilter)", desc = "Put Before Applying a Filter" },
 
     {
       "gyc",
-      "<Plug>(YankyYank)y<cmd>normal gcc<CR>p",
-      { desc = "Duplicate a line and comment out the first line" },
+      "<PLUG>(YankyYank)y<CMD>normal gcc<CR>p",
+      desc = "Duplicate a Line and Comment Out the First Line",
+    },
+    {
+      "gyr",
+      ":call setreg('+', getreg('@'))<CR>",
+      desc = "Yank Register to System Clipboard",
+    },
+    {
+      "gyp",
+      ":call setreg('+', expand('%:.') .. ':' .. line('.'))<CR>",
+      desc = "Yank Filename and Line Number to System Clipboard",
     },
   },
 }
 
 local substitute = {
   "gbprod/substitute.nvim",
-  init = function()
-    map(
-      "n",
-      "gr",
-      "<cmd>lua require('substitute').operator()<cr>",
-      { noremap = true, silent = true, desc = "substitute" }
-    )
-    map(
-      "n",
-      "<leader>gr",
-      "<cmd>lua require('substitute').operator({register = '+'})<cr>",
-      { noremap = true, silent = true, desc = "substitute with system clipboard" }
-    )
-    map(
-      "n",
-      "grr",
-      "<cmd>lua require('substitute').line()<cr>",
-      { noremap = true, silent = true, desc = "substitute line" }
-    )
-    map(
-      "n",
-      "<leader>grr",
-      "<cmd>lua require('substitute').line({register = '+'})<cr>",
-      { noremap = true, silent = true, desc = "substitute line with system clipboard" }
-    )
-    map(
-      "n",
-      "gR",
-      "<cmd>lua require('substitute').eol()<cr>",
-      { noremap = true, silent = true, desc = "substitute eol" }
-    )
-    map(
-      "n",
-      "<leader>gR",
-      "<cmd>lua require('substitute').eol({register = '+'})<cr>",
-      { noremap = true, silent = true, desc = "substitute eol with system clipboard" }
-    )
-    map(
+  keys = {
+    {
+      "s",
+      "<CMD>lua require('substitute').operator()<CR>",
+      desc = "Substitute",
+    },
+    {
+      "<LEADER>s",
+      "<CMD>lua require('substitute').operator({register = '+'})<CR>",
+      { desc = "Substitute with System Clipboard" },
+    },
+    {
+      "ss",
+      "<CMD>lua require('substitute').line()<CR>",
+      { noremap = true, silent = true, desc = "Substitute Line" },
+    },
+    {
+      "<LEADER>ss",
+      "<CMD>lua require('substitute').line({register = '+'})<CR>",
+      { noremap = true, silent = true, desc = "Substitute Line with System Clipboard" },
+    },
+    {
+      "S",
+      "<CMD>lua require('substitute').eol()<CR>",
+      { noremap = true, silent = true, desc = "Substitute EOL" },
+    },
+    {
+      "<LEADER>S",
+      "<CMD>lua require('substitute').eol({register = '+'})<CR>",
+      { noremap = true, silent = true, desc = "Substitute EOL with System Clipboard" },
+    },
+    {
+      "s",
+      "<CMD>lua require('substitute').visual()<CR>",
+      desc = "Substitute Visual",
+      mode = { "x" },
+    },
+    {
+      "<LEADER>s",
+      "<CMD>lua require('substitute').visual({register = '+'})<CR>",
+      desc = "Substitute Visual with System Clipboard",
+      mode = "x",
+    },
+    {
       "x",
-      "gr",
-      "<cmd>lua require('substitute').visual()<cr>",
-      { noremap = true, silent = true, desc = "substitute visual" }
-    )
-    map(
+      "<CMD>lua require('substitute.exchange').operator()<CR>",
+      desc = "Exchange",
+    },
+    {
+      "xx",
+      "<CMD>lua require('substitute.exchange').line()<CR>",
+      desc = "Exchange Line",
+    },
+    {
       "x",
-      "<leader>gr",
-      "<cmd>lua require('substitute').visual({register = '+'})<cr>",
-      { noremap = true, silent = true, desc = "substitute visual with system clipboard" }
-    )
-
-    map(
-      "n",
-      "gx",
-      "<cmd>lua require('substitute.exchange').operator()<cr>",
-      { noremap = true, silent = true, desc = "exchange" }
-    )
-    map(
-      "n",
-      "gxx",
-      "<cmd>lua require('substitute.exchange').line()<cr>",
-      { noremap = true, silent = true, desc = "exchange line" }
-    )
-    map(
-      "x",
-      "gx",
-      "<cmd>lua require('substitute.exchange').visual()<cr>",
-      { noremap = true, silent = true, desc = "exchange visual" }
-    )
-    map(
-      "n",
-      "gxc",
-      "<cmd>lua require('substitute.exchange').cancel()<cr>",
-      { noremap = true, silent = true, desc = "cancel exchange" }
-    )
-  end,
+      "<CMD>lua require('substitute.exchange').visual()<CR>",
+      mode = "x",
+      desc = "Exchange Visual",
+    },
+  },
   opts = {
     on_substitute = function()
       require("yanky.integration").substitute()
@@ -185,7 +179,7 @@ local substitute = {
       timer = 500,
     },
     range = {
-      prefix = "gr",
+      prefix = "",
       prompt_current_text = false,
       confirm = false,
       complete_word = false,
@@ -218,13 +212,12 @@ local stay_in_place = {
 
 local dial = {
   "monaqa/dial.nvim",
-  enabled = true,
   keys = {
-    { "<C-a>", mode = "n", desc = "Increment" },
-    { "<C-x>", mode = "n", desc = "Decrement" },
-    { "<C-a>", mode = "v", desc = "Increment" },
-    { "<C-x>", mode = "v", desc = "Decrement" },
-    { "g<C-a>", mode = "v", desc = "G increment" },
+    { "<C-A>", mode = "n", desc = "Increment" },
+    { "<C-X>", mode = "n", desc = "Decrement" },
+    { "<C-A>", mode = "v", desc = "Increment" },
+    { "<C-X>", mode = "v", desc = "Decrement" },
+    { "g<C-A>", mode = "v", desc = "G increment" },
     { "g<C-x>", mode = "v", desc = "G decrement" },
   },
   config = function()
@@ -299,36 +292,36 @@ local dial = {
       },
     })
 
-    map("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
-    map("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true })
-    map("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })
-    map("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
-    map("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
-    map("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
+    map("n", "<C-A>", require("dial.map").inc_normal(), { noremap = true, desc = "Increment" })
+    map("n", "<C-X>", require("dial.map").dec_normal(), { noremap = true, desc = "Decrement" })
+    map("v", "<C-A>", require("dial.map").inc_visual(), { noremap = true, desc = "Increment" })
+    map("v", "<C-X>", require("dial.map").dec_visual(), { noremap = true, desc = "Decrement" })
+    map("v", "g<C-A>", require("dial.map").inc_gvisual(), { noremap = true, desc = "G Increment" })
+    map("v", "g<C-X>", require("dial.map").dec_gvisual(), { noremap = true, desc = "G Decrement" })
   end,
 }
 
 local mini_move = {
   "echasnovski/mini.move",
   keys = {
-    { "<M-left>", mode = { "n", "x" }, desc = "Move left" },
-    { "<M-right>", mode = { "n", "x" }, desc = "Move right" },
-    { "<M-up>", mode = { "n", "x" }, desc = "Move up" },
-    { "<M-down>", mode = { "n", "x" }, desc = "Move down" },
+    { "<M-LEFT>", mode = { "n", "x" }, desc = "Move Left" },
+    { "<M-RIGHT>", mode = { "n", "x" }, desc = "Move Right" },
+    { "<M-UP>", mode = { "n", "x" }, desc = "Move Up" },
+    { "<M-DOWN>", mode = { "n", "x" }, desc = "Move Down" },
   },
   opts = {
     mappings = {
       -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
-      left = "<M-left>",
-      right = "<M-right>",
-      down = "<M-down>",
-      up = "<M-up>",
+      left = "<M-LEFT>",
+      right = "<M-RIGHT>",
+      down = "<M-DOWN>",
+      up = "<M-UP>",
 
       -- Move current line in Normal mode
-      line_left = "<M-left>",
-      line_right = "<M-right>",
-      line_down = "<M-down>",
-      line_up = "<M-up>",
+      line_left = "<M-LEFT>",
+      line_right = "<M-RIGHT>",
+      line_down = "<M-DOWN>",
+      line_up = "<M-UP>",
     },
   },
 }
@@ -338,69 +331,69 @@ local surround = {
   keys = {
     {
       "ds",
-      "<cmd><Plug>(nvim-surround-delete)<cr>",
+      "<CMD><PLUG>(nvim-surround-delete)<CR>",
       mode = "n",
-      desc = "Delete a surrounding pair",
+      desc = "Delete a Surrounding Pair",
     },
     {
       "cs",
-      "<cmd><Plug>(nvim-surround-change)<cr>",
+      "<CMD><PLUG>(nvim-surround-change)<CR>",
       mode = "n",
-      desc = "Change a surrounding pair",
+      desc = "Change a Surrounding Pair",
     },
     {
       "cS",
-      "<cmd><Plug>(nvim-surround-change-line)<cr>",
+      "<CMD><PLUG>(nvim-surround-change-line)<CR>",
       mode = "n",
-      desc = "Change a surrounding pair, putting replacements on new lines",
+      desc = "Change a Surrounding Pair, Putting Replacements on New Lines",
     },
     {
       "gs",
-      "<Plug>(nvim-surround-normal)",
+      "<PLUG>(nvim-surround-normal)",
       mode = "n",
-      desc = "Add a surrounding pair around a motion (normal mode)",
+      desc = "Add a Surrounding Pair Around a Motion",
     },
     {
       "gss",
-      "<Plug>(nvim-surround-normal-cur)",
+      "<PLUG>(nvim-surround-normal-cur)",
       mode = "n",
-      desc = "Add a surrounding pair around the current line (normal mode)",
+      desc = "Add a Surrounding Pair Around The Current Line",
     },
     {
       "gS",
-      "<Plug>(nvim-surround-normal-line)",
+      "<PLUG>(nvim-surround-normal-line)",
       mode = "n",
-      desc = "Add a surrounding pair around a motion, on new lines (normal mode)",
+      desc = "Add a Surrounding Pair Around a Motion, on New Lines",
     },
     {
       "gSS",
-      "<Plug>(nvim-surround-normal-cur-line)",
+      "<PLUG>(nvim-surround-normal-cur-line)",
       mode = "n",
-      desc = "Add a surrounding pair around the current line, on new lines (normal mode)",
+      desc = "Add a Surrounding Pair Around The Current Line, on New Lines",
     },
     {
       "gs",
-      "<Plug>(nvim-surround-visual)",
+      "<PLUG>(nvim-surround-visual)",
       mode = "x",
-      desc = "Add a surrounding pair around a visual selection",
+      desc = "Add a Surrounding Pair Around a Visual Selection",
     },
     {
       "gS",
-      "<Plug>(nvim-surround-visual-line)",
+      "<PLUG>(nvim-surround-visual-line)",
       mode = "x",
-      desc = "Add a surrounding pair around a visual selection, on new lines",
+      desc = "Add a Surrounding Pair Around a Visual Selection, on New Lines",
     },
     {
       "<c-g>s",
-      "<Plug>(nvim-surround-insert)",
+      "<PLUG>(nvim-surround-insert)",
       mode = "i",
-      desc = "Add a surrounding pair around the cursor (insert mode)",
+      desc = "Add a Surrounding Pair Around the Cursor",
     },
     {
       "<c-g>s",
-      "<Plug>(nvim-surround-insert-line)",
+      "<PLUG>(nvim-surround-insert-line)",
       mode = "i",
-      desc = "Add a surrounding pair around the cursor, on new lines (insert mode)",
+      desc = "Add a Surrounding Pair Around the Cursor, on New Lines",
     },
   },
   opts = {
@@ -421,97 +414,97 @@ local textcase = {
   keys = {
     {
       "gac",
-      "<cmd>lua require('textcase').operator('to_camel_case')<CR>",
+      "<CMD>lua require('textcase').operator('to_camel_case')<CR>",
       desc = "Convert toCamelCase",
     },
     {
       "gad",
-      "<cmd>lua require('textcase').operator('to_dashed_case')<CR>",
+      "<CMD>lua require('textcase').operator('to_dashed_case')<CR>",
       desc = "Convert to-dashed-case",
     },
     {
       "gal",
-      "<cmd>lua require('textcase').operator('to_lower_case')<CR>",
+      "<CMD>lua require('textcase').operator('to_lower_case')<CR>",
       desc = "Convert to lower case",
     },
     {
       "gap",
-      "<cmd>lua require('textcase').operator('to_pascal_case')<CR>",
+      "<CMD>lua require('textcase').operator('to_pascal_case')<CR>",
       desc = "Convert ToPascalCase",
     },
     {
       "gas",
-      "<cmd>lua require('textcase').operator('to_snake_case')<CR>",
+      "<CMD>lua require('textcase').operator('to_snake_case')<CR>",
       desc = "Convert to_snake_case",
     },
     {
       "gau",
-      "<cmd>lua require('textcase').operator('to_upper_case')<CR>",
+      "<CMD>lua require('textcase').operator('to_upper_case')<CR>",
       desc = "Convert To UPPER CASE",
     },
     {
       "gaC",
-      "<cmd>lua require('textcase').lsp_rename('to_camel_case')<CR>",
+      "<CMD>lua require('textcase').lsp_rename('to_camel_case')<CR>",
       desc = "Rename toCamelCase",
     },
     {
       "gaD",
-      "<cmd>lua require('textcase').lsp_rename('to_dashed_case')<CR>",
+      "<CMD>lua require('textcase').lsp_rename('to_dashed_case')<CR>",
       desc = "Rename to-dashed-case",
     },
     {
       "gaL",
-      "<cmd>lua require('textcase').lsp_rename('to_lower_case')<CR>",
+      "<CMD>lua require('textcase').lsp_rename('to_lower_case')<CR>",
       desc = "Rename to lower case",
     },
     {
       "gaP",
-      "<cmd>lua require('textcase').lsp_rename('to_pascal_case')<CR>",
+      "<CMD>lua require('textcase').lsp_rename('to_pascal_case')<CR>",
       desc = "Rename ToPascalCase",
     },
     {
       "gaS",
-      "<cmd>lua require('textcase').lsp_rename('to_snake_case')<CR>",
+      "<CMD>lua require('textcase').lsp_rename('to_snake_case')<CR>",
       desc = "Rename to_snake_case",
     },
     {
       "gaU",
-      "<cmd>lua require('textcase').lsp_rename('to_upper_case')<CR>",
+      "<CMD>lua require('textcase').lsp_rename('to_upper_case')<CR>",
       desc = "Rename To UPPER CASE",
     },
     {
       "gaoc",
-      "<cmd>lua require('textcase').operator('to_camel_case')<CR>",
+      "<CMD>lua require('textcase').operator('to_camel_case')<CR>",
       desc = "toCamelCase",
       mode = { "n", "v" },
     },
     {
       "gaod",
-      "<cmd>lua require('textcase').operator('to_dashed_case')<CR>",
+      "<CMD>lua require('textcase').operator('to_dashed_case')<CR>",
       desc = "to-dashed-case",
       mode = { "n", "v" },
     },
     {
       "gaol",
-      "<cmd>lua require('textcase').operator('to_lower_case')<CR>",
+      "<CMD>lua require('textcase').operator('to_lower_case')<CR>",
       desc = "to lower case",
       mode = { "n", "v" },
     },
     {
       "gaop",
-      "<cmd>lua require('textcase').operator('to_pascal_case')<CR>",
+      "<CMD>lua require('textcase').operator('to_pascal_case')<CR>",
       desc = "ToPascalCase",
       mode = { "n", "v" },
     },
     {
       "gaos",
-      "<cmd>lua require('textcase').operator('to_snake_case')<CR>",
+      "<CMD>lua require('textcase').operator('to_snake_case')<CR>",
       desc = "to_snake_case",
       mode = { "n", "v" },
     },
     {
       "gaou",
-      "<cmd>lua require('textcase').operator('to_upper_case')<CR>",
+      "<CMD>lua require('textcase').operator('to_upper_case')<CR>",
       desc = "To UPPER CASE",
       mode = { "n", "v" },
     },

@@ -10,7 +10,7 @@ return {
   },
   {
     "tzachar/highlight-undo.nvim",
-    keys = { { "u" }, { "<C-r>" } },
+    keys = { { "u" }, { "<C-R>" } },
     enabled = true,
     opts = {
       duration = 300,
@@ -22,9 +22,9 @@ return {
         opts = {},
       },
       redo = {
-        hlgroup = "HighlightUndo",
-        mode = "n",
-        lhs = "<C-r>",
+        hlgroup = "HighlighTUNDO",
+        MODE = "N",
+        LHS = "<C-R>",
         map = "redo",
         opts = {},
       },

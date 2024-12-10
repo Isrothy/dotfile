@@ -74,47 +74,47 @@ local extmark_handler = {
 }
 
 return {
-  -- dir = "~/neominimap.nvim",
-  "Isrothy/neominimap.nvim",
+  dir = "~/neominimap.nvim",
+  -- "Isrothy/neominimap.nvim",
   version = "v3.x.x",
   lazy = false,
   keys = {
     -- Global Minimap Controls
-    { "<leader>nm", "<cmd>Neominimap toggle<cr>", desc = "Toggle global minimap" },
-    { "<leader>no", "<cmd>Neominimap on<cr>", desc = "Enable global minimap" },
-    { "<leader>nc", "<cmd>Neominimap off<cr>", desc = "Disable global minimap" },
-    { "<leader>nr", "<cmd>Neominimap refresh<cr>", desc = "Refresh global minimap" },
+    { "<LEADER>mm", "<CMD>Neominimap toggle<CR>", desc = "Toggle Global Minimap" },
+    { "<LEADER>mo", "<CMD>Neominimap on<CR>", desc = "Enable Global Minimap" },
+    { "<LEADER>mc", "<CMD>Neominimap off<CR>", desc = "Disable Global Minimap" },
+    { "<LEADER>mr", "<CMD>Neominimap refresh<CR>", desc = "Refresh Global Minimap" },
 
     -- Window-Specific Minimap Controls
-    { "<leader>nwt", "<cmd>Neominimap winToggle<cr>", desc = "Toggle minimap for current window" },
+    { "<LEADER>mwt", "<CMD>Neominimap winToggle<CR>", desc = "Toggle Minimap for Current Window" },
     {
-      "<leader>nwr",
-      "<cmd>Neominimap winRefresh<cr>",
-      desc = "Refresh minimap for current window",
+      "<LEADER>mwr",
+      "<CMD>Neominimap winRefresh<CR>",
+      desc = "Refresh Minimap for Current Window",
     },
-    { "<leader>nwo", "<cmd>Neominimap winOn<cr>", desc = "Enable minimap for current window" },
-    { "<leader>nwc", "<cmd>Neominimap winOff<cr>", desc = "Disable minimap for current window" },
+    { "<LEADER>mwo", "<CMD>Neominimap winOn<CR>", desc = "Enable Minimap for Current Window" },
+    { "<LEADER>mwc", "<CMD>Neominimap winOff<CR>", desc = "Disable Minimap for Current Window" },
 
     -- Tab-Specific Minimap Controls
-    { "<leader>ntt", "<cmd>Neominimap tabToggle<cr>", desc = "Toggle minimap for current tab" },
-    { "<leader>ntr", "<cmd>Neominimap tabRefresh<cr>", desc = "Refresh minimap for current tab" },
-    { "<leader>nto", "<cmd>Neominimap tabOn<cr>", desc = "Enable minimap for current tab" },
-    { "<leader>ntc", "<cmd>Neominimap tabOff<cr>", desc = "Disable minimap for current tab" },
+    { "<LEADER>mtt", "<CMD>Neominimap tabToggle<CR>", desc = "Toggle Minimap for Current Tab" },
+    { "<LEADER>mtr", "<CMD>Neominimap tabRefresh<CR>", desc = "Refresh Minimap for Current Tab" },
+    { "<LEADER>mto", "<CMD>Neominimap tabOn<CR>", desc = "Enable Minimap for Current Tab" },
+    { "<LEADER>mtc", "<CMD>Neominimap tabOff<CR>", desc = "Disable Minimap for Current Tab" },
 
     -- Buffer-Specific Minimap Controls
-    { "<leader>nbt", "<cmd>Neominimap bufToggle<cr>", desc = "Toggle minimap for current buffer" },
+    { "<LEADER>mbt", "<CMD>Neominimap bufToggle<CR>", desc = "Toggle Minimap for Current Buffer" },
     {
-      "<leader>nbr",
-      "<cmd>Neominimap bufRefresh<cr>",
+      "<LEADER>mbr",
+      "<CMD>Neominimap bufRefresh<CR>",
       desc = "Refresh minimap for current buffer",
     },
-    { "<leader>nbo", "<cmd>Neominimap bufOn<cr>", desc = "Enable minimap for current buffer" },
-    { "<leader>nbc", "<cmd>Neominimap bufOff<cr>", desc = "Disable minimap for current buffer" },
+    { "<LEADER>mbo", "<CMD>Neominimap bufOn<CR>", desc = "Enable Minimap for Current Buffer" },
+    { "<LEADER>mbc", "<CMD>Neominimap bufOff<CR>", desc = "Disable Minimap for Current Buffer" },
 
     ---Focus Controls
-    { "<leader>nf", "<cmd>Neominimap focus<cr>", desc = "Focus on minimap" },
-    { "<leader>nu", "<cmd>Neominimap unfocus<cr>", desc = "Unfocus minimap" },
-    { "<leader>ns", "<cmd>Neominimap toggleFocus<cr>", desc = "Switch focus on minimap" },
+    { "<LEADER>mf", "<CMD>Neominimap focus<CR>", desc = "Focus on Minimap" },
+    { "<LEADER>mu", "<CMD>Neominimap unfocus<CR>", desc = "Unfocus Minimap" },
+    { "<LEADER>ms", "<CMD>Neominimap toggleFocus<CR>", desc = "Switch Focus on Minimap" },
   },
 
   init = function()
@@ -139,7 +139,6 @@ return {
       exclude_filetypes = {
         "qf",
         "neo-tree",
-        "help",
         "bigfile",
         "oil",
         "dbout",
@@ -154,7 +153,8 @@ return {
       split = {
         direction = "right",
         close_if_last_window = true,
-        fix_width = false,
+        fix_width = true,
+        minimap_width = 20,
       },
       float = {
         minimap_width = 22,

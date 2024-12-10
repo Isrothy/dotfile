@@ -3,7 +3,7 @@ return {
     "tris203/precognition.nvim",
     keys = {
       {
-        "~",
+        "\\",
         function()
           require("precognition").peek()
         end,
@@ -13,10 +13,10 @@ return {
   },
   {
     "folke/flash.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    event = "VeryLazy",
     keys = {
       {
-        "s",
+        "<LEADER>v",
         mode = { "n", "x", "o" },
         function()
           require("flash").jump()
@@ -24,7 +24,7 @@ return {
         desc = "Flash",
       },
       {
-        "S",
+        "<LEADER>V",
         mode = { "n", "o", "x" },
         function()
           require("flash").treesitter()

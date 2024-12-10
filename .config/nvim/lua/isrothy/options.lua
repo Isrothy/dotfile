@@ -1,5 +1,4 @@
 local opt = vim.opt
-local o = vim.o
 local g = vim.g
 
 g.compatible = 0
@@ -18,7 +17,8 @@ g.neovide_touch_deadzone = 6.0
 g.neovide_cursor_animate_command_line = false
 g.neovide_cursor_smooth_blink = true
 
-opt.mouse = "a"
+opt.mouse = ""
+
 opt.syntax = "on"
 
 opt.cmdheight = 0
@@ -28,15 +28,12 @@ opt.cursorline = true
 opt.cursorlineopt = "number,screenline"
 opt.number = true
 opt.relativenumber = true
-
-o.pumheight = 10
+opt.pumheight = 10
 
 opt.swapfile = false
 opt.undofile = true
 
 opt.nrformats = { "alpha", "bin", "octal", "hex" }
-
-o.matchpairs = vim.o.matchpairs .. ",<:>"
 
 opt.fillchars = {
   vert = "│",
@@ -50,11 +47,11 @@ opt.fillchars = {
 }
 
 opt.virtualedit = { "block", "onemore" }
+opt.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 opt.wrap = false
 opt.linebreak = true
 -- opt.textwidth = 0
 -- opt.wrapmargin =40
-
 opt.scrolloff = 8
 opt.smoothscroll = true
 opt.sidescrolloff = 16
@@ -67,11 +64,6 @@ opt.updatetime = 500
 opt.wildmenu = true
 opt.scrollback = 2000
 opt.jumpoptions = "stack,view"
-
-o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
--- o.splitkeep = "screen"
-
-opt.completeopt = { "menu", "menuone", "noselect" }
 
 opt.autoread = true
 opt.confirm = true
@@ -105,15 +97,14 @@ opt.hlsearch = true
 opt.incsearch = true
 opt.ignorecase = true
 opt.smartcase = true
-
 opt.gp = "rg"
 
-g.html_indent_autotags = "html,head,body"
-g.markdown_recommended_style = 0
-
-o.foldlevelstart = 99
-o.foldenable = true
+opt.foldlevelstart = 99
+opt.foldenable = true
 opt.foldcolumn = "1"
 opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldtext = "v:lua.get_foldtext()"
 opt.foldmethod = "expr"
+
+g.html_indent_autotags = "html,head,body"
+g.markdown_recommended_style = 0

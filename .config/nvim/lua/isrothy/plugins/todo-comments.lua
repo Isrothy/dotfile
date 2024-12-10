@@ -26,13 +26,13 @@ M.config = function(_, opts)
   vim.keymap.set("n", "]t", function()
     require("todo-comments").jump_next()
   end, {
-    desc = "Next todo comment",
+    desc = "Next Todo Tomment",
   })
 
   vim.keymap.set("n", "[t", function()
     require("todo-comments").jump_prev()
   end, {
-    desc = "Previous todo comment",
+    desc = "Previous Todo Tomment",
   })
 end
 

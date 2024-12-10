@@ -1,7 +1,6 @@
 return {
   {
     "windwp/nvim-autopairs",
-    enabled = true,
     event = { "InsertEnter" },
     opts = {
       map_bs = true,
@@ -41,10 +40,9 @@ return {
   },
   {
     "saghen/blink.cmp",
-    lazy = true,
-    enabled = true,
     version = "v0.*",
     build = "cargo build --release",
+    event = { "InsertEnter" },
     dependencies = {
       "rafamadriz/friendly-snippets",
       "saghen/blink.compat",
@@ -53,14 +51,15 @@ return {
     },
 
     init = function()
-      vim.keymap.set("i", "<c-b>", "<nop>", { silent = true })
-      vim.keymap.set("i", "<c-f>", "<nop>", { silent = true })
+      vim.keymap.set("i", "<C-B>", "<NOP>", { silent = true })
+      vim.keymap.set("i", "<C-F>", "<NOP>", { silent = true })
     end,
 
     opts = {
       keymap = {
         preset = "super-tab",
-        ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
+        ["<CR>"] = { "accept", "fallback" },
+        ["<C-K>"] = { "show", "show_documentation", "hide_documentation" },
       },
       blocked_filetypes = {
         "bigfile",
@@ -174,7 +173,6 @@ return {
 
   {
     "RRethy/nvim-treesitter-endwise",
-    enabled = true,
     event = { "InsertEnter" },
   },
 
@@ -192,8 +190,6 @@ return {
   },
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
-    event = { "BufReadPost", "BufNewFile" },
-    enabled = true,
     init = function()
       local get_option = vim.filetype.get_option
       vim.filetype.get_option = function(filetype, option)
@@ -211,28 +207,28 @@ return {
     cmd = { "TSJSplit", "TSJSplit", "TSJToggle" },
     keys = {
       {
-        "<leader>es",
-        "<cmd>lua require('treesj').split()<cr>",
+        "<LEADER>es",
+        "<CMD>lua require('treesj').split()<CR>",
         desc = "Split lines",
       },
       {
-        "<leader>ej",
-        "<cmd>lua require('treesj').join()<cr>",
+        "<LEADER>ej",
+        "<CMD>lua require('treesj').join()<CR>",
         desc = "Join lines",
       },
       {
-        "<leader>et",
-        "<cmd>lua require('treesj').toggle()<cr>",
+        "<LEADER>et",
+        "<CMD>lua require('treesj').toggle()<CR>",
         desc = "Toggle split/join",
       },
       {
-        "<leader>eS",
-        "<cmd>lua require('treesj').split({ split = { recursive = true } })<cr>",
+        "<LEADER>eS",
+        "<CMD>lua require('treesj').split({ split = { recursive = true } })<CR>",
         desc = "Split lines recursively",
       },
       {
-        "<leader>eT",
-        "<cmd>lua require('treesj').toggle({ split = { recursive = true } })<cr>",
+        "<LEADER>eT",
+        "<CMD>lua require('treesj').toggle({ split = { recursive = true } })<CR>",
         desc = "Toggle split/join recursively",
       },
     },
@@ -262,19 +258,19 @@ return {
       "ISwapNodeWithRight",
     },
     keys = {
-      { "<leader>is", [[<cmd>ISwap<cr>]], desc = "ISwap" },
-      { "<leader>iw", [[<cmd>ISwapWith<cr>]], desc = "ISwap with" },
-      { "<leader>in", [[<cmd>ISwapNode<cr>]], desc = "ISwap node" },
-      { "<leader>im", [[<cmd>ISwapNodeWith<cr>]], desc = "ISwap node with" },
+      { "<LEADER>is", [[<CMD>ISwap<CR>]], desc = "ISwap" },
+      { "<LEADER>iw", [[<CMD>ISwapWith<CR>]], desc = "ISwap with" },
+      { "<LEADER>in", [[<CMD>ISwapNode<CR>]], desc = "ISwap node" },
+      { "<LEADER>im", [[<CMD>ISwapNodeWith<CR>]], desc = "ISwap node with" },
       {
-        "<m-i>",
-        [[<cmd>ISwapNodeWithLeft<cr>]],
+        "<M-i>",
+        [[<CMD>ISwapNodeWithLeft<CR>]],
         desc = "ISwap node with left",
         mode = { "n", "v" },
       },
       {
-        "<m-o>",
-        [[<cmd>ISwapNodeWithRight]],
+        "<M-o>",
+        [[<CMD>ISwapNodeWithRight]],
         desc = "ISwap node with right",
         mode = { "n", "v" },
       },

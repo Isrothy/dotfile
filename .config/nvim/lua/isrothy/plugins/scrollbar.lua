@@ -48,7 +48,8 @@ return {
         "neo-tree",
         "oil",
         "grug-far",
-        "bigfile"
+        "bigfile",
+        "dbout",
       },
       width = 2,
       handlers = {

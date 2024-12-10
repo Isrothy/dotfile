@@ -23,7 +23,7 @@ return {
         end
 
         local wk = require("which-key")
-        wk.add({ { "<leader>gh", group = "GitSigns" } })
+        wk.add({ { "<LEADER>gh", group = "GitSigns" } })
 
         map("n", "]h", function()
           if vim.wo.diff then
@@ -45,20 +45,20 @@ return {
         map("n", "[H", function()
           gs.nav_hunk("first")
         end, "First Hunk")
-        map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-        map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-        map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
-        map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
-        map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
-        map("n", "<leader>ghp", gs.preview_hunk_inline, "Preview Hunk Inline")
-        map("n", "<leader>ghb", function()
+        map({ "n", "v" }, "<LEADER>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
+        map({ "n", "v" }, "<LEADER>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
+        map("n", "<LEADER>ghS", gs.stage_buffer, "Stage Buffer")
+        map("n", "<LEADER>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
+        map("n", "<LEADER>ghR", gs.reset_buffer, "Reset Buffer")
+        map("n", "<LEADER>ghp", gs.preview_hunk_inline, "Preview Hunk Inline")
+        map("n", "<LEADER>ghb", function()
           gs.blame_line({ full = true })
         end, "Blame Line")
-        map("n", "<leader>ghB", function()
+        map("n", "<LEADER>ghB", function()
           gs.blame()
         end, "Blame Buffer")
-        map("n", "<leader>ghd", gs.diffthis, "Diff This")
-        map("n", "<leader>ghD", function()
+        map("n", "<LEADER>ghd", gs.diffthis, "Diff This")
+        map("n", "<LEADER>ghD", function()
           gs.diffthis("~")
         end, "Diff This ~")
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
@@ -80,33 +80,33 @@ return {
     },
     keys = {
       {
-        "<leader>ko",
-        "<Plug>(git-conflict-ours)",
+        "<LEADER>ko",
+        "<PLUG>(git-conflict-ours)",
         desc = "Choose our version",
       },
       {
-        "<leader>kt",
-        "<Plug>(git-conflict-theirs)",
+        "<LEADER>kt",
+        "<PLUG>(git-conflict-theirs)",
         desc = "Choose their version",
       },
       {
-        "<leader>kb",
-        "<Plug>(git-conflict-both)",
+        "<LEADER>kb",
+        "<PLUG>(git-conflict-both)",
         desc = "Choose both versions",
       },
       {
-        "<leader>kn",
-        "<Plug>(git-conflict-none)",
+        "<LEADER>kn",
+        "<PLUG>(git-conflict-none)",
         desc = "Choose no version",
       },
       -- {
       -- 	"[x",
-      -- 	"<Plug>(git-conflict-prev-conflict)",
+      -- 	"<PLUG>(git-conflict-prev-conflict)",
       -- 	desc = "Previous conflict",
       -- },
       -- {
       -- 	"]x",
-      -- 	"<Plug>(git-conflict-next-conflict)",
+      -- 	"<PLUG>(git-conflict-next-conflict)",
       -- 	desc = "Next conflict",
       -- },
     },
@@ -154,7 +154,7 @@ return {
     cmd = { "GitDevOpen" },
     keys = {
       {
-        "<leader>go",
+        "<LEADER>go",
         function()
           local repo = vim.fn.input("Repository name / URI: ")
           if repo ~= "" then
@@ -222,7 +222,7 @@ return {
     },
     keys = {
       {
-        "<leader>gl",
+        "<LEADER>gl",
         function()
           require("gitgraph").draw({}, { all = true, max_count = 5000 })
         end,

@@ -111,19 +111,19 @@ local trouble = {
   },
   dependencies = "nvim-tree/nvim-web-devicons",
   keys = {
-    { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+    { "<LEADER>xx", "<CMD>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)" },
     {
-      "<leader>xX",
-      "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+      "<LEADER>xX",
+      "<CMD>Trouble diagnostics toggle filter.buf=0<CR>",
       desc = "Buffer diagnostics (Trouble)",
     },
-    { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location list (Trouble)" },
-    { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix list (Trouble)" },
+    { "<LEADER>xL", "<CMD>Trouble loclist toggle<CR>", desc = "Location list (Trouble)" },
+    { "<LEADER>xQ", "<CMD>Trouble qflist toggle<CR>", desc = "Quickfix list (Trouble)" },
 
-    { "<leader>cs", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols (Trouble)" },
+    { "<LEADER>cs", "<CMD>Trouble symbols toggle<CR>", desc = "Symbols (Trouble)" },
     {
-      "<leader>cS",
-      "<cmd>Trouble lsp toggle<cr>",
+      "<LEADER>cS",
+      "<CMD>Trouble lsp toggle<CR>",
       desc = "LSP references/definitions/... (Trouble)",
     },
 

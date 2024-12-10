@@ -21,58 +21,58 @@ local make_capabilities = function()
 end
 
 local set_keymap = function(_, bufnr)
-  map("n", "<leader>fD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Find declaration" })
-  map("n", "<leader>ft", function()
+  map("n", "<LEADER>fD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Find Declaration" })
+  map("n", "<LEADER>ft", function()
     require("telescope.builtin").lsp_type_definitions({ jump_type = "never" })
-  end, { buffer = bufnr, desc = "Find type definition" })
-  map("n", "<leader>fd", function()
+  end, { buffer = bufnr, desc = "Find Type Definition" })
+  map("n", "<LEADER>fd", function()
     require("telescope.builtin").lsp_definitions({ jump_type = "never" })
   end, { buffer = bufnr, desc = "Find definition" })
-  map("n", "<leader>fi", function()
+  map("n", "<LEADER>fi", function()
     require("telescope.builtin").lsp_implementations({ jump_type = "never" })
-  end, { buffer = bufnr, desc = "Find implementation" })
-  map("n", "<leader>fr", function()
+  end, { buffer = bufnr, desc = "Find Implementation" })
+  map("n", "<LEADER>fr", function()
     require("telescope.builtin").lsp_references({
       include_declaration = false,
       include_current_line = false,
       jump_type = "never",
     })
-  end, { buffer = bufnr, desc = "Find references" })
+  end, { buffer = bufnr, desc = "Find References" })
 
   map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
-  map("n", "<leader>ch", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
+  map("n", "<LEADER>ch", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
   map(
     "n",
-    "<leader>Wa",
+    "<LEADER>Wa",
     vim.lsp.buf.add_workspace_folder,
-    { buffer = bufnr, desc = "Add workspace " }
+    { buffer = bufnr, desc = "Add Workspace" }
   )
   map(
     "n",
-    "<leader>Wr",
+    "<LEADER>Wr",
     vim.lsp.buf.remove_workspace_folder,
-    { buffer = bufnr, desc = "Remove workspace " }
+    { buffer = bufnr, desc = "Remove Workspace" }
   )
-  map("n", "<leader>Wl", function()
+  map("n", "<LEADER>Wl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, { buffer = bufnr, desc = "List workspace" })
-  map("n", "<leader>Ws", function()
+  map("n", "<LEADER>Ws", function()
     require("telescope.builtin").lsp_dynamic_workspace_symbols({
       jump_type = "never",
     })
-  end, { buffer = bufnr, desc = "Workspace symbols" })
-  map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename symbol" })
+  end, { buffer = bufnr, desc = "Workspace Symbols" })
+  map("n", "<LEADER>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename Symbol" })
   map(
     { "n", "x" },
-    "<leader>ca",
+    "<LEADER>ca",
     require("actions-preview").code_actions,
-    { buffer = bufnr, desc = "Code actions" }
+    { buffer = bufnr, desc = "Code Actions" }
   )
 
-  map("n", "<leader>cf", function()
+  map("n", "<LEADER>cf", function()
     require("conform").format({ async = true })
   end, { buffer = bufnr, desc = "Code Format" })
-  map("v", "<leader>cf", function()
+  map("v", "<LEADER>cf", function()
     local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
     local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
     require("conform").format({
@@ -87,13 +87,13 @@ local set_keymap = function(_, bufnr)
     desc = "Code Format",
   })
 
-  map("n", "<leader>cF", function()
+  map("n", "<LEADER>cF", function()
     require("conform").format({ formatters = { "injected" }, async = true })
   end, {
     buffer = bufnr,
     desc = "Format Injected Langs",
   })
-  map("v", "<leader>cF", function()
+  map("v", "<LEADER>cF", function()
     local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
     local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
     require("conform").format({
@@ -387,8 +387,7 @@ local clangd = {
   config = function()
     require("clangd_extensions").setup({
       inlay_hints = {
-        inline = false,
-        -- inline = vim.fn.has("nvim-0.10") == 1,
+        inline = vim.fn.has("nvim-0.10") == 1,
         only_current_line = false,
         only_current_line_autocmd = "CursorHold",
         show_parameter_hints = true,
@@ -520,7 +519,7 @@ local haskell_tools = {
         on_attach = function(client, bufnr)
           set_keymap(client, bufnr)
           set_inlay_hint(client, bufnr)
-          map("n", "<leader>cl", vim.lsp.codelens.run, { buffer = bufnr, desc = "CodeLens" })
+          map("n", "<localLEADER>cl", vim.lsp.codelens.run, { buffer = bufnr, desc = "CodeLens" })
         end,
         default_settings = {
           haskell = {
@@ -624,27 +623,11 @@ local null_ls = {
         null_ls.builtins.diagnostics.hadolint,
         null_ls.builtins.diagnostics.gitlint,
         null_ls.builtins.diagnostics.cmake_lint,
-        -- null_ls.builtins.diagnostics.sqruff,
-        -- null_ls.builtins.diagnostics.sqlfluff.with({
-        --   extra_args = { "--dialect", "mysql" },
-        -- }),
-        -- null_ls.builtins.diagnostics.selene,
 
-        -- null_ls.builtins.diagnostics.pylint.with({
-        --  args = {
-        --      "--from-stdin",
-        --      "$FILENAME",
-        --      "-f",
-        --      "json",
-        --      "--errors-only",
-        --  },
-        -- }),
         null_ls.builtins.diagnostics.zsh,
 
         -- null_ls.builtins.formatting.autopep8,
-        -- null_ls.builtins.formatting.sqlfmt,
         null_ls.builtins.formatting.black,
-        -- null_ls.builtins.formatting.sqruff,
         null_ls.builtins.formatting.cmake_format,
         null_ls.builtins.formatting.markdownlint,
         null_ls.builtins.formatting.prettier,

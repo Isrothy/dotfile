@@ -2,7 +2,7 @@ return {
   {
     "akinsho/toggleterm.nvim",
     version = "*",
-    keys = { "<c-`>" },
+    keys = { "<C-`>" },
     cmd = {
       "TermExec",
       "ToggleTerm",
@@ -20,7 +20,7 @@ return {
       end, { nargs = "*", desc = "Alias for TermExec with dynamic command execution" })
     end,
     opts = require("nord.plugins.toggleterm").make_opts({
-      open_mapping = [[<c-`>]],
+      open_mapping = [[<C-`>]],
       hide_numbers = true,
       autochdir = true,
       insert_mappings = true,

@@ -23,17 +23,75 @@ return {
       "MunifTanjim/nui.nvim",
     },
 
-    -- stylua: ignore
     keys = {
-    { "<S-Enter>", function() require("noice").redirect(vim.fn.getcmdline()) end, mode = "c", desc = "Redirect Cmdline" },
-    { "<leader>sl", function() require("noice").cmd("last") end, desc = "Noice Last Message" },
-    { "<leader>sh", function() require("noice").cmd("history") end, desc = "Noice History" },
-    { "<leader>sa", function() require("noice").cmd("all") end, desc = "Noice All" },
-    { "<leader>sd", function() require("noice").cmd("dismiss") end, desc = "Dismiss All" },
-    { "<leader>st", function() require("noice").cmd("pick") end, desc = "Noice Picker (Telescope/FzfLua)" },
-    { "<c-f>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, silent = true, expr = true, desc = "Scroll Forward", mode = {"i", "n", "s"} },
-    { "<c-b>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true, expr = true, desc = "Scroll Backward", mode = {"i", "n", "s"}},
-  },
+      {
+        "<S-ENTER>",
+        function()
+          require("noice").redirect(vim.fn.getcmdline())
+        end,
+        mode = "c",
+        desc = "Redirect Cmdline",
+      },
+      {
+        "<LEADER>nl",
+        function()
+          require("noice").cmd("last")
+        end,
+        desc = "Noice Last Message",
+      },
+      {
+        "<LEADER>nh",
+        function()
+          require("noice").cmd("history")
+        end,
+        desc = "Noice History",
+      },
+      {
+        "<LEADER>na",
+        function()
+          require("noice").cmd("all")
+        end,
+        desc = "Noice All",
+      },
+      {
+        "<LEADER>nd",
+        function()
+          require("noice").cmd("dismiss")
+        end,
+        desc = "Dismiss All",
+      },
+      {
+        "<LEADER>nt",
+        function()
+          require("noice").cmd("pick")
+        end,
+        desc = "Noice Picker (Telescope/FzfLua)",
+      },
+      {
+        "<C-F>",
+        function()
+          if not require("noice.lsp").scroll(4) then
+            return "<C-F>"
+          end
+        end,
+        silent = true,
+        expr = true,
+        desc = "Scroll Forward",
+        mode = { "i", "n", "s" },
+      },
+      {
+        "<C-B>",
+        function()
+          if not require("noice.lsp").scroll(-4) then
+            return "<C-B>"
+          end
+        end,
+        silent = true,
+        expr = true,
+        desc = "Scroll Backward",
+        mode = { "i", "n", "s" },
+      },
+    },
 
     opts = {
       cmdline = {

@@ -9,15 +9,32 @@ return {
     enable = true,
     keys = {
       {
-        "<leader>?",
+        "<LEADER>?",
         function()
           require("which-key").show({ global = false })
         end,
-        desc = "Buffer Local Keymaps (which-key)",
+        desc = "Buffer Local Keymaps (Which-Key)",
       },
     },
     opts = {
       preset = "modern",
+      plugins = {
+        marks = true,
+        registers = true,
+        spelling = {
+          enabled = true,
+          suggestions = 20,
+        },
+        presets = {
+          operators = true, -- adds help for operators like d, y, ...
+          motions = true, -- adds help for motions
+          text_objects = true, -- help for text objects triggered after entering an operator
+          windows = true, -- default bindings on <c-w>
+          nav = true, -- misc bindings to work with windows
+          z = true, -- bindings for folds, spelling and others prefixed with z
+          g = true, -- bindings for prefixed with g
+        },
+      },
       sort = { "local", "order", "group", "alphanum", "mod", "lower", "icase" },
       win = {
         border = "rounded",
@@ -36,39 +53,43 @@ return {
       --   scroll_up = "<c-p>", -- binding to scroll up inside the popup
       -- },
       spec = {
-        { "<leader>b", group = "Buffer" },
-        { "<leader>bs", group = "Swap" },
-        { "<leader>c", group = "Code" },
-        { "<leader>d", group = "Dap" },
-        { "<leader>e", group = "TreeSJ" },
-        { "<leader>f", group = "Find" },
-        -- { "<leader>g", group = "Git" },
-        { "<leader>h", group = "Harpoon" },
-        { "<leader>i", group = "ISwap" },
-        { "<leader>k", group = "Git conflict" },
-        { "<leader>m", group = "Molten" },
-        { "<leader>n", group = "Neominimap" },
-        { "<leader>nb", group = "[b]uffer" },
-        { "<leader>nw", group = "[w]indow" },
-        { "<leader>nt", group = "[t]ab" },
+        { "<LEADER>b", group = "Buffer" },
+        { "<LEADER>bs", group = "Swap" },
+        { "<LEADER>c", group = "Code" },
+        { "<LEADER>d", group = "Dap" },
+        { "<LEADER>e", group = "TreeSJ" },
+        { "<LEADER>f", group = "Find" },
+        { "<LEADER>g", group = "Git" },
+        { "<LEADER>h", group = "Harpoon" },
+        -- { "<LEADER>i", group = "ISwap" },
+        { "<LEADER>k", group = "Git Conflict" },
+        { "<LEADER>l", group = "Neotree" },
+        { "<LEADER>m", group = "Minimap" },
+        { "<LEADER>mb", group = "[b]uffer" },
+        { "<LEADER>mw", group = "[w]indow" },
+        { "<LEADER>mt", group = "[t]ab" },
+        { "<LEADER>n", group = "Noice" },
 
-        { "<leader>o", group = "Overseer" },
-        -- { "<leader>p", group = "Profiler" },
+        { "<LEADER>o", group = "Overseer" },
 
-        { "<leader>s", group = "Noice" },
-        { "<leader>t", group = "Neotest" },
-        { "<leader>w", group = "Window" },
-        { "<leader>x", group = "Diagnostics" },
-        -- { "<leader>y", group = "Yank" },
+        { "<LEADER>q", group = "Profiler" },
+        { "<LEADER>r", group = "Refactors" },
 
-        { "<leader>W", group = "Wrokspace" },
+        { "<LEADER>t", group = "Neotest" },
+        { "<LEADER>u", group = "Toggle" },
+
+        { "<LEADER>w", proxy = "<c-w>", group = "windows" },
+        { "<LEADER>W", group = "Wrokspace" },
+        { "<LEADER>x", group = "Diagnostics" },
 
         { "ga", group = "TextCase" },
-        { "gao", group = "Pending mode operator" },
+        { "gao", group = "Pending Mode Operator" },
         -- { "z", group = "Fold" },
 
-        { "[", group = "prev" },
-        { "]", group = "next" },
+        { "[", group = "Prev" },
+        { "]", group = "Next" },
+
+        { "<LEADER><TAB>", group = "Tab" },
       },
     },
   },

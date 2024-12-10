@@ -1,11 +1,30 @@
-# BEGIN_KITTY_FONTS
-font_family      family='JetBrains Mono' style=SemiBold variable_name=JetBrainsMono
-bold_font        family='JetBrains Mono' variable_name=JetBrainsMono style=ExtraBold
-italic_font      family='JetBrains Mono' variable_name=JetBrainsMonoItalic style='SemiBold Italic'
-bold_italic_font family='JetBrains Mono' variable_name=JetBrainsMonoItalic style='ExtraBold Italic'
-# END_KITTY_FONTS
+# font_family        Fira Code Retina
+# bold_font          Fira Code Bold
+# bold_font          auto
+# italic_font        auto
+# bold_italic_font   auto
 
-font_size 15
+# font_family          JetBrainsMono Nerd Font Mono Regular
+# bold_font            JetBrainsMono Nerd Font Mono Bold
+# italic_font          JetBrainsMono Nerd Font Mono Italic
+# bold_italic_font     JetBrainsMono Nerd Font Mono Bold Italic
+
+font_family          JetBrains Mono SemiBold
+bold_font            JetBrains Mono ExtraBold
+italic_font          JetBrains Mono SemiBold Italic
+bold_italic_font     JetBrains Mono ExtraBold Italic
+
+# font_family             SF Mono Regular
+# bold_font               SF Mono Bold
+# italic_font             SF Mono Regular Italic
+# bold_italic_font        SF Mono Bold Italic
+
+# font_family        Iosevka Term Regular
+# bold_font          Iosevka Term Bold
+# italic_font        Iosevka Term Italic
+# bold_italic_font   Iosevka Term Bold Italic
+
+font_size 16.0
 
 modify_font cell_height +5px
 modify_font cell_width 105%
@@ -29,13 +48,10 @@ font_features JetBrainsMonoNFM-Bold         +cv06 +cv07 +cv08 +calt
 font_features JetBrainsMonoNFM-Italic       +cv06 +cv07 +cv08 +calt
 font_features JetBrainsMonoNFM-BoldItalic   +cv06 +cv07 +cv08 +calt
 
-font_features JetBrainsMono-Regular                       +cv06 +cv07 +cv08 +calt
-font_features JetBrainsMono-Regular_SemiBold              +cv06 +cv07 +cv08 +calt
-font_features JetBrainsMono-Regular_Bold                  +cv06 +cv07 +cv08 +calt
-font_features JetBrainsMono-Regular_ExtraBold             +cv06 +cv07 +cv08 +calt
-font_features JetBrainsMono-Italic_SemiBold-Italic        +cv06 +cv07 +cv08 +calt
-font_features JetBrainsMono-Italic_Bold-Italic            +cv06 +cv07 +cv08 +calt
-font_features JetBrainsMono-Italic_ExtraBold-Italic       +cv06 +cv07 +cv08 +calt
+font_features JetBrainsMono-Regular              +ss02 +calt
+font_features JetBrainsMono-Regular_Bold         +ss02 +calt
+font_features JetBrainsMono-Italic               +ss02 +calt
+font_features JetBrainsMono-Italic_Bold-Italic   +ss02 +calt
 
 # font_features Iosevka-Term-Italic        +ss05
 # font_features Iosevka-Term-Bold-Italic   +ss05
@@ -54,7 +70,7 @@ tab_separator ""
 tab_powerline_style angled
 tab_title_template   " {index}: {tab.active_exe} "
 # macos_titlebar_color dark
-macos_option_as_alt no
+macos_option_as_alt yes
 macos_menubar_title_max_length 24
 
 editor  /usr/local/bin/nvim

@@ -20,14 +20,14 @@ return {
     config = function(_, opts)
       local neocodeium = require("neocodeium")
       neocodeium.setup(opts)
-      vim.keymap.set("i", "<c-;>", neocodeium.accept)
-      vim.keymap.set("i", "<c-o>", neocodeium.accept_word)
-      vim.keymap.set("i", "<c-l>", neocodeium.accept_line)
-      vim.keymap.set("i", "<c-.>", neocodeium.cycle_or_complete)
-      vim.keymap.set("i", "<c-,>", function()
+      vim.keymap.set("i", "<C-;>", neocodeium.accept)
+      vim.keymap.set("i", "<C-O>", neocodeium.accept_word)
+      vim.keymap.set("i", "<C-L>", neocodeium.accept_line)
+      vim.keymap.set("i", "<C-.>", neocodeium.cycle_or_complete)
+      vim.keymap.set("i", "<C-,>", function()
         neocodeium.cycle_or_complete(-1)
       end)
-      vim.keymap.set("i", "<c-'>", neocodeium.clear)
+      vim.keymap.set("i", "<C-'>", neocodeium.clear)
     end,
   },
 }

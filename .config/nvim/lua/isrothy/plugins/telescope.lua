@@ -11,49 +11,49 @@ local telescope = {
 }
 
 telescope.keys = {
-  { "<leader>fa", "<cmd>Telescope autocommands<cr>", desc = "Autocommands" },
-  { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+  { "<LEADER>fa", "<CMD>Telescope Autocommands<CR>", desc = "Autocommands" },
+  { "<LEADER>fb", "<CMD>Telescope Buffers<CR>", desc = "Buffers" },
   {
-    "<leader>fB",
-    "<cmd>Telescope current_buffer_fuzzy_find<cr>",
-    desc = "Current buffer fuzzy find",
+    "<LEADER>fB",
+    "<CMD>Telescope current_buffer_fuzzy_find<CR>",
+    desc = "Current Buffer Fuzzy Find",
   },
-  { "<leader>fc", "<cmd>Telescope commands history<cr>", desc = "Commands history" },
-  { "<leader>fC", "<cmd>Telescope commands<cr>", desc = "Commands" },
+  { "<LEADER>fc", "<CMD>Telescope commands history<CR>", desc = "Commands History" },
+  { "<LEADER>fC", "<CMD>Telescope commands<CR>", desc = "Commands" },
 
-  { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
+  { "<LEADER>ff", "<CMD>Telescope find_files<CR>", desc = "Find Files" },
 
-  { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
-  { "<leader>fG", "<cmd>Telescope git_files<cr>", desc = "Git files" },
+  { "<LEADER>fg", "<CMD>Telescope live_grep<CR>", desc = "Live Grep" },
+  { "<LEADER>fG", "<CMD>Telescope git_files<CR>", desc = "Git Files" },
 
-  { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
-  { "<leader>fH", "<cmd>Telescope highlights<cr>", desc = "Highlight groups" },
+  { "<LEADER>fh", "<CMD>Telescope help_tags<CR>", desc = "Help Tags" },
+  { "<LEADER>fH", "<CMD>Telescope highlights<CR>", desc = "Highlight Groups" },
 
-  { "<leader>fj", "<cmd>Telescope jumplist<cr>", desc = "jumplist" },
-  { "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
-  { "<leader>fl", "<cmd>Telescope local_list<cr>", desc = "Local list" },
-  { "<leader>fm", "<cmd>Telescope marks<cr>", desc = "Marks" },
-  { "<leader>fM", "<cmd>Telescope man_page<cr>", desc = "Man page" },
-  { "<leader>fn", "<cmd>Telescope noice<cr>", desc = "Noice" },
-  { "<leader>fo", "<cmd>Telescope frecency<cr>", desc = "Oldfiles" },
-  { "<leader>fp", "<cmd>Telescope projects<cr>", desc = "Projects" },
-  { "<leader>fq", "<cmd>Telescope quickfix<cr>", desc = "Quickfix" },
-  { "<leader>fR", "<cmd>Telescope resume<cr>", desc = "Resume" },
-  { "<leader>fs", "<cmd>Telescope persisted<cr>", desc = "Sessions" },
-  { "<leader>fu", "<cmd>Telescope undo<cr>", desc = "Undo" },
-  { "<leader>fv", "<cmd>Telescope vim_options<cr>", desc = "Vim options" },
+  { "<LEADER>fj", "<CMD>Telescope jumplist<CR>", desc = "Jumplist" },
+  { "<LEADER>fk", "<CMD>Telescope keymaps<CR>", desc = "Keymaps" },
+  { "<LEADER>fl", "<CMD>Telescope local_list<CR>", desc = "Local List" },
+  { "<LEADER>fm", "<CMD>Telescope marks<CR>", desc = "Marks" },
+  { "<LEADER>fM", "<CMD>Telescope man_page<CR>", desc = "Man Page" },
+  { "<LEADER>fn", "<CMD>Telescope noice<CR>", desc = "Noice" },
+  { "<LEADER>fo", "<CMD>Telescope frecency<CR>", desc = "Oldfiles" },
+  { "<LEADER>fp", "<CMD>Telescope projects<CR>", desc = "Projects" },
+  { "<LEADER>fq", "<CMD>Telescope quickfix<CR>", desc = "Quickfix" },
+  { "<LEADER>fR", "<CMD>Telescope resume<CR>", desc = "Resume" },
+  { "<LEADER>fs", "<CMD>Telescope persisted<CR>", desc = "Sessions" },
+  { "<LEADER>fu", "<CMD>Telescope undo<CR>", desc = "Undo" },
+  { "<LEADER>fv", "<CMD>Telescope vim_options<CR>", desc = "Vim Options" },
 
-  { "<leader>fy", "<cmd>Telescope yank_history<cr>", desc = "Yank history" },
-  { "<leader>fz", "<cmd>Telescope zoxide list<cr>", desc = "Zoxide" },
+  { "<LEADER>fy", "<CMD>Telescope yank_history<CR>", desc = "Yank History" },
+  { "<LEADER>fz", "<CMD>Telescope zoxide list<CR>", desc = "Zoxide" },
 
-  { "<leader>f\"", "<cmd>Telescope registers<cr>", desc = "Registers" },
+  { "<LEADER>f\"", "<CMD>Telescope registers<CR>", desc = "Registers" },
 
   {
-    "<leader>xt",
-    "<cmd>Telescope diagnostics bufnr=0<cr>",
-    desc = "Buffer diagnostics (Telescopt)",
+    "<LEADER>xt",
+    "<CMD>Telescope diagnostics bufnr=0<CR>",
+    desc = "Buffer Diagnostics (Telescopt)",
   },
-  { "<leader>xT", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics (Telescopt)" },
+  { "<LEADER>xT", "<CMD>Telescope diagnostics<CR>", desc = "Diagnostics (Telescopt)" },
 }
 
 telescope.config = function()
@@ -139,7 +139,7 @@ telescope.config = function()
             -- you want to use the following actions. This means installing as a dependency of
             -- telescope in it's `requirements` and loading this extension from there instead of
             -- having the separate plugin definition as outlined above. See issue #6.
-            ["<cr>"] = require("telescope-undo.actions").yank_additions,
+            ["<CR>"] = require("telescope-undo.actions").yank_additions,
             ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
             ["<C-cr>"] = require("telescope-undo.actions").restore,
           },
@@ -189,7 +189,7 @@ telescope.config = function()
         entry_default_author_or_date = "author", -- one of "author" or "date"
         keymaps = {
           -- following keymaps can be overridden
-          toggle_date_author = "<C-w>",
+          toggle_date_author = "<C-W>",
           open_commit_in_browser = "<C-o>",
           copy_commit_hash = "<C-y>",
         },
@@ -208,17 +208,14 @@ telescope.config = function()
     },
   })
 
-  -- require("telescope").load_extension("notify")
   require("telescope").load_extension("fzf")
   require("telescope").load_extension("zoxide")
   require("telescope").load_extension("frecency")
-  -- require("telescope").load_extension("aerial")
   require("telescope").load_extension("noice")
   require("telescope").load_extension("undo")
   require("telescope").load_extension("smart_open")
   require("telescope").load_extension("projects")
   require("telescope").load_extension("advanced_git_search")
-  -- require("telescope").load_extension("persisted")
 end
 
 return {

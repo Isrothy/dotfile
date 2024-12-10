@@ -51,7 +51,7 @@ return {
           require("treesitter_indent_object.textobj").select_indent_outer()
         end,
         mode = { "x", "o" },
-        desc = "Select context-aware indent (outer)",
+        desc = "Select Context-Aware Indent (Outer)",
       },
       {
         "aI",
@@ -59,7 +59,7 @@ return {
           require("treesitter_indent_object.textobj").select_indent_outer(true)
         end,
         mode = { "x", "o" },
-        desc = "Select context-aware indent (outer, line-wise)",
+        desc = "Select Context-Aware Indent (Outer, Line-Wise)",
       },
       {
         "ii",
@@ -67,7 +67,7 @@ return {
           require("treesitter_indent_object.textobj").select_indent_inner()
         end,
         mode = { "x", "o" },
-        desc = "Select context-aware indent (inner, partial range)",
+        desc = "Select Context-Aware Indent (Inner, Partial Range)",
       },
       {
         "iI",
@@ -75,7 +75,7 @@ return {
           require("treesitter_indent_object.textobj").select_indent_inner(true, "V")
         end,
         mode = { "x", "o" },
-        desc = "Select context-aware indent (inner, entire range) in line-wise visual mode",
+        desc = "Select Context-Aware Indent (Inner, Entire Range) in Line-Wise Visual Mode",
       },
     },
   },
@@ -131,24 +131,24 @@ return {
         keymap(
           { "o", "x" },
           map,
-          "<cmd>lua require('various-textobjs')." .. objName .. "()<CR>",
-          { desc = objName .. " textobj" }
+          "<CMD>lua require('various-textobjs')." .. objName .. "()<CR>",
+          { desc = objName .. " Textobj" }
         )
       end
 
       for objName, map in pairs(innerOuterMaps) do
-        local name = " " .. objName .. " textobj"
+        local name = " " .. objName .. " Textobj"
         keymap(
           { "o", "x" },
           "a" .. map,
-          "<cmd>lua require('various-textobjs')." .. objName .. "('outer')<CR>",
-          { desc = "outer" .. name }
+          "<CMD>lua require('various-textobjs')." .. objName .. "('outer')<CR>",
+          { desc = "Outer" .. name }
         )
         keymap(
           { "o", "x" },
           "i" .. map,
-          "<cmd>lua require('various-textobjs')." .. objName .. "('inner')<CR>",
-          { desc = "inner" .. name }
+          "<CMD>lua require('various-textobjs')." .. objName .. "('inner')<CR>",
+          { desc = "Inner" .. name }
         )
       end
 
@@ -159,18 +159,18 @@ return {
           pattern = textobj.fts,
           callback = function()
             for objName, map in pairs(textobj.map) do
-              local name = " " .. objName .. " textobj"
+              local name = " " .. objName .. " Textobj"
               keymap(
                 { "o", "x" },
                 "a" .. map,
-                ("<cmd>lua require('various-textobjs').%s('%s')<CR>"):format(objName, "outer"),
-                { desc = "outer" .. name, buffer = true }
+                ("<CMD>lua require('various-textobjs').%s('%s')<CR>"):format(objName, "outer"),
+                { desc = "Outer" .. name, buffer = true }
               )
               keymap(
                 { "o", "x" },
                 "i" .. map,
-                ("<cmd>lua require('various-textobjs').%s('%s')<CR>"):format(objName, "inner"),
-                { desc = "inner" .. name, buffer = true }
+                ("<CMD>lua require('various-textobjs').%s('%s')<CR>"):format(objName, "inner"),
+                { desc = "Inner" .. name, buffer = true }
               )
             end
           end,

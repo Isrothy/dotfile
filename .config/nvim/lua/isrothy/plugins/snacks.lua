@@ -32,7 +32,7 @@ return {
     },
     dashboard = {
       enabled = true,
-      -- width = 70,
+      width = 52,
       sections = {
         { section = "header" },
         { section = "keys", gap = 1, padding = 1 },
@@ -154,78 +154,78 @@ return {
     },
   },
   keys = {
-    -- {
-    --   "<leader>ps",
-    --   function()
-    --     Snacks.profiler.scratch()
-    --   end,
-    --   desc = "Profiler Scratch Bufer",
-    -- },
     {
-      "<leader>.",
+      "<LEADER>qs",
+      function()
+        Snacks.profiler.scratch()
+      end,
+      desc = "Profiler Scratch Bufer",
+    },
+    {
+      "<LEADER>.",
       function()
         Snacks.scratch()
       end,
       desc = "Toggle Scratch Buffer",
     },
+    -- {
+    --   "<LEADER>S",
+    --   function()
+    --     Snacks.scratch.select()
+    --   end,
+    --   desc = "Select Scratch Buffer",
+    -- },
     {
-      "<leader>S",
-      function()
-        Snacks.scratch.select()
-      end,
-      desc = "Select Scratch Buffer",
-    },
-    {
-      "<leader>un",
+      "<LEADER>un",
       function()
         Snacks.notifier.hide()
       end,
       desc = "Dismiss All Notifications",
     },
     {
-      "<leader>bd",
+      "<LEADER>bd",
       function()
         Snacks.bufdelete()
       end,
-      desc = "Delete Buffer",
+      desc = "Delete Current Buffer",
     },
     {
-      "<leader>gg",
+      "<LEADER>gg",
       function()
         Snacks.lazygit()
       end,
       desc = "Lazygit",
     },
     {
-      "<leader>gb",
+      "<LEADER>gb",
       function()
         Snacks.git.blame_line()
       end,
       desc = "Git Blame Line",
     },
     {
-      "<leader>gB",
+      "<LEADER>gB",
       function()
         Snacks.gitbrowse()
       end,
       desc = "Git Browse",
     },
     {
-      "<leader>gf",
+      "<LEADER>gf",
       function()
         Snacks.lazygit.log_file()
       end,
       desc = "Lazygit Current File History",
     },
     {
-      "<leader>gl",
+      "<LEADER>gl",
       function()
         Snacks.lazygit.log()
       end,
       desc = "Lazygit Log (cwd)",
     },
     {
-      "<leader>cR",
+      "<LEADER>cR",
       function()
         Snacks.rename.rename_file()
       end,
@@ -247,24 +247,6 @@ return {
       desc = "Prev Reference",
       mode = { "n", "t" },
     },
-    {
-      "<leader>N",
-      desc = "Neovim News",
-      function()
-        Snacks.win({
-          file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
-          width = 0.6,
-          height = 0.6,
-          wo = {
-            spell = false,
-            wrap = false,
-            signcolumn = "yes",
-            statuscolumn = " ",
-            conceallevel = 3,
-          },
-        })
-      end,
-    },
   },
   init = function()
     vim.api.nvim_create_autocmd("User", {
@@ -280,22 +262,25 @@ return {
         vim.print = _G.dd -- Override print to use snacks for `:=` command
 
         -- Create some toggle mappings
-        Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
-        Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-        Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
-        Snacks.toggle.diagnostics():map("<leader>ud")
-        Snacks.toggle.line_number():map("<leader>ul")
+        Snacks.toggle.option("spell", { name = "Spelling" }):map("<LEADER>us")
+        Snacks.toggle.option("wrap", { name = "Wrap" }):map("<LEADER>uw")
+        Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<LEADER>uL")
+        Snacks.toggle.diagnostics():map("<LEADER>ud")
+        Snacks.toggle.line_number():map("<LEADER>ul")
         Snacks.toggle
           .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
-          :map("<leader>uc")
-        Snacks.toggle.treesitter():map("<leader>uT")
+          :map("<LEADER>uc")
         Snacks.toggle
-          .option("background", { off = "light", on = "dark", name = "Dark Background" })
-          :map("<leader>ub")
-        Snacks.toggle.inlay_hints():map("<leader>uh")
+          .option(
+            "showtabline",
+            { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "Tabline" }
+          )
+          :map("<LEADER>uA")
+        Snacks.toggle.treesitter():map("<LEADER>uT")
+        Snacks.toggle.inlay_hints():map("<LEADER>uh")
 
-        -- Snacks.toggle.profiler():map("<leader>pp")
-        -- Snacks.toggle.profiler_highlights():map("<leader>ph")
+        Snacks.toggle.profiler():map("<LEADER>qp")
+        Snacks.toggle.profiler_highlights():map("<LEADER>qh")
       end,
     })
   end,

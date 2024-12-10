@@ -223,17 +223,30 @@ return {
       "s1n7ax/nvim-window-picker",
     },
     keys = {
-      { "<F2>", "<cmd>Neotree filesystem toggle left<cr>", desc = "Neotree toggle filesystem" },
-      { "<F3>", "<cmd>Neotree buffers toggle left<cr>", desc = "Neotree toggle buffers" },
-      { "<F4>", "<cmd>Neotree git_status toggle left<cr>", desc = "Neotree toggle git status" },
+      {
+        "<LEADER>lf",
+        "<CMD>Neotree filesystem toggle left<CR>",
+        desc = "Neotree Toggle Filesystem",
+      },
+      { "<LEADER>lb", "<CMD>Neotree buffers toggle left<CR>", desc = "Neotree Toggle Buffers" },
+      {
+        "<LEADER>lg",
+        "<CMD>Neotree git_status toggle left<CR>",
+        desc = "Neotree Toggle Git Status",
+      },
+      {
+        "<LEADER>lr",
+        "<CMD>Neotree reveal<CR>",
+        desc = "Neotree Reveal Current File",
+      },
     },
     config = function()
       local events = require("neo-tree.events")
 
       require("neo-tree").setup({
-        close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+        close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
         popup_border_style = "rounded",
-        open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy" },
+        open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy", "neominimap" },
 
         source_selector = {
           winbar = true, -- toggle to show selector on winbar
@@ -265,11 +278,11 @@ return {
           width = 36,
           auto_expand_width = false,
           mappings = {
-            ["<esc>"] = function()
+            ["<ESC>"] = function()
               vim.cmd("nohl")
             end,
-            ["<space>"] = "noop",
-            ["<tab>"] = function(state)
+            ["<SPACE>"] = "noop",
+            ["<TAB>"] = function(state)
               local node = state.tree:get_node()
               if require("neo-tree.utils").is_expandable(node) then
                 state.commands["toggle_node"](state)
@@ -279,21 +292,53 @@ return {
               end
             end,
             -- ["o"] = "open_with_window_picker",
-            ["t"] = "open_tabnew",
-            ["s"] = "split_with_window_picker",
-            ["v"] = "vsplit_with_window_picker",
-            ["C"] = "close_node",
-            ["a"] = {
+            ["a"] = "noop",
+            ["A"] = "noop",
+            ["t"] = "noop",
+            ["s"] = "noop",
+            ["v"] = "noop",
+            ["y"] = "noop",
+            ["x"] = "noop",
+            ["p"] = "noop",
+            ["P"] = "noop",
+            ["c"] = "noop",
+            ["m"] = "noop",
+            ["q"] = "noop",
+            ["r"] = "noop",
+            ["i"] = "noop",
+
+            ["<LOCALLEADER>t"] = "open_tabnew",
+            ["<LOCALLEADER>s"] = "split_with_window_picker",
+            ["<LOCALLEADER>v"] = "vsplit_with_window_picker",
+            ["<LOCALLEADER>a"] = {
               "add",
               -- some commands may take optional config options, see `:h neo-tree-mappings` for details
               config = {
-                show_path = "relative", -- "none", "relative", "absolute"
+                show_path = "relative", -- "noop", "relative", "absolute"
               },
             },
+            ["<LOCALLEADER>y"] = "copy_to_clipboard",
+            ["<LOCALLEADER>x"] = "cut_to_clipboard",
+            ["<LOCALLEADER>p"] = "paste_from_clipboard",
+            ["<LOCALLEADER>c"] = {
+              "copy",
+              config = {
+                show_path = "relative", -- "noop", "relative", "absolute"
+              },
+            },
+            ["<LOCALLEADER>P"] = {
+              "toggle_preview",
+              config = { use_float = true, use_image_nvim = true },
+            },
+            ["<LOCALLEADER>m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
+            ["<LOCALLEADER>q"] = "close_window",
+            ["<LOCALLEADER>R"] = "refresh",
+            ["<LOCALLEADER>i"] = "show_file_details",
+
             ["h"] = "",
             ["l"] = "",
 
-            ["z"] = "none",
+            ["z"] = "noop",
 
             ["zo"] = neotree_zo,
             ["zO"] = neotree_zO,
@@ -307,10 +352,10 @@ return {
             ["zM"] = neotree_zM,
             ["zr"] = neotree_zr,
             ["zR"] = neotree_zR,
-            ["<m-h>"] = "none",
-            ["<m-j>"] = "none",
-            ["<m-k>"] = "none",
-            ["<m-l>"] = "none",
+            ["<M-h>"] = "noop",
+            ["<M-j>"] = "noop",
+            ["<M-k>"] = "noop",
+            ["<M-l>"] = "noop",
           },
         },
         filesystem = {
@@ -329,18 +374,53 @@ return {
           -- instead of relying on nvim autocmd events.
           window = {
             mappings = {
-              ["i"] = "run_command",
+              ["<LOCALLEADER>e"] = "run_command",
               ["[c"] = "prev_git_modified",
               ["]c"] = "next_git_modified",
-              ["gA"] = "git_add_all",
-              ["gu"] = "git_unstage_file",
-              ["ga"] = "git_add_file",
-              ["gr"] = "git_revert_file",
-              ["gc"] = "git_commit",
-              ["gp"] = "git_push",
-              ["gg"] = "git_commit_and_push",
-              ["/"] = "none",
-              ["<leader>ip"] = "image_preview",
+              ["<LOCALLEADER>gA"] = "git_add_all",
+              ["<LOCALLEADER>gu"] = "git_unstage_file",
+              ["<LOCALLEADER>ga"] = "git_add_file",
+              ["<LOCALLEADER>gr"] = "git_revert_file",
+              ["<LOCALLEADER>gc"] = "git_commit",
+              ["<LOCALLEADER>gp"] = "git_push",
+              ["<LOCALLEADER>gg"] = "git_commit_and_push",
+              ["<LOCALLEADER>I"] = "image_preview",
+
+              ["<LOCALLEADER>H"] = "toggle_hidden",
+              ["<LOCALLEADER>/"] = "fuzzy_finder",
+              ["<LOCALLEADER>D"] = "fuzzy_finder_directory",
+              ["<LOCALLEADER>#"] = "fuzzy_sorter", -- fuzzy sorting using the fzy algorithm
+              ["<LOCALLEADER>f"] = "filter_on_submit",
+              ["<LOCALLEADER><c-x>"] = "clear_filter",
+              ["<LOCALLEADER>o"] = {
+                "show_help",
+                nowait = false,
+                config = { title = "Order by", prefix_key = "<LOCALLEADER>o" },
+              },
+              ["<LOCALLEADER>oc"] = { "order_by_created", nowait = false },
+              ["<LOCALLEADER>od"] = { "order_by_diagnostics", nowait = false },
+              ["<LOCALLEADER>og"] = { "order_by_git_status", nowait = false },
+              ["<LOCALLEADER>om"] = { "order_by_modified", nowait = false },
+              ["<LOCALLEADER>on"] = { "order_by_name", nowait = false },
+              ["<LOCALLEADER>os"] = { "order_by_size", nowait = false },
+              ["<LOCALLEADER>ot"] = { "order_by_type", nowait = false },
+
+              ["H"] = "noop",
+              ["/"] = "noop",
+              ["D"] = "noop",
+              ["#"] = "noop",
+              ["f"] = "noop",
+              ["<c-x>"] = "noop",
+              ["[g"] = "noop",
+              ["]g"] = "noop",
+              ["o"] = "noop",
+              ["oc"] = "noop",
+              ["od"] = "noop",
+              ["og"] = "noop",
+              ["om"] = "noop",
+              ["on"] = "noop",
+              ["os"] = "noop",
+              ["ot"] = "noop",
             },
           },
           commands = {
@@ -368,13 +448,39 @@ return {
           show_unloaded = true,
           window = {
             mappings = {
-              ["gA"] = "git_add_all",
-              ["gu"] = "git_unstage_file",
-              ["ga"] = "git_add_file",
-              ["gr"] = "git_revert_file",
-              ["gc"] = "git_commit",
-              ["gp"] = "git_push",
-              ["gg"] = "git_commit_and_push",
+
+              ["<LOCALLEADER>d"] = "buffer_delete",
+              ["<BS>"] = "navigate_up",
+              ["."] = "set_root",
+              ["<LOCALLEADER>o"] = {
+                "show_help",
+                nowait = false,
+                config = { title = "Order by", prefix_key = "<LOCALLEADER>o" },
+              },
+              ["<LOCALLEADER>oc"] = { "order_by_created", nowait = false },
+              ["<LOCALLEADER>od"] = { "order_by_diagnostics", nowait = false },
+              ["<LOCALLEADER>og"] = { "order_by_git_status", nowait = false },
+              ["<LOCALLEADER>om"] = { "order_by_modified", nowait = false },
+              ["<LOCALLEADER>on"] = { "order_by_name", nowait = false },
+              ["<LOCALLEADER>os"] = { "order_by_size", nowait = false },
+              ["<LOCALLEADER>ot"] = { "order_by_type", nowait = false },
+
+              ["<LOCALLEADER>gA"] = "git_add_all",
+              ["<LOCALLEADER>gu"] = "git_unstage_file",
+              ["<LOCALLEADER>ga"] = "git_add_file",
+              ["<LOCALLEADER>gr"] = "git_revert_file",
+              ["<LOCALLEADER>gc"] = "git_commit",
+              ["<LOCALLEADER>gp"] = "git_push",
+              ["<LOCALLEADER>gg"] = "git_commit_and_push",
+
+              ["bd"] = "noop",
+              ["o"] = "noop",
+              ["oc"] = "noop",
+              ["od"] = "noop",
+              ["om"] = "noop",
+              ["on"] = "noop",
+              ["os"] = "noop",
+              ["ot"] = "noop",
             },
           },
         },
@@ -382,8 +488,41 @@ return {
         git_status = {
           window = {
             mappings = {
-              ["A"] = "none",
-              ["gA"] = "git_add_all",
+              ["<LOCALLEADER>gu"] = "git_unstage_file",
+              ["<LOCALLEADER>ga"] = "git_add_file",
+              ["<LOCALLEADER>gr"] = "git_revert_file",
+              ["<LOCALLEADER>gc"] = "git_commit",
+              ["<LOCALLEADER>gp"] = "git_push",
+              ["<LOCALLEADER>gg"] = "git_commit_and_push",
+              ["<LOCALLEADER>gA"] = "git_add_all",
+
+              ["<LOCALLEADER>o"] = {
+                "show_help",
+                nowait = false,
+                config = { title = "Order by", prefix_key = "<LOCALLEADER>o" },
+              },
+              ["<LOCALLEADER>oc"] = { "order_by_created", nowait = false },
+              ["<LOCALLEADER>od"] = { "order_by_diagnostics", nowait = false },
+              ["<LOCALLEADER>og"] = { "order_by_git_status", nowait = false },
+              ["<LOCALLEADER>om"] = { "order_by_modified", nowait = false },
+              ["<LOCALLEADER>on"] = { "order_by_name", nowait = false },
+              ["<LOCALLEADER>os"] = { "order_by_size", nowait = false },
+              ["<LOCALLEADER>ot"] = { "order_by_type", nowait = false },
+
+              ["A"] = "noop",
+              ["gu"] = "noop",
+              ["ga"] = "noop",
+              ["gr"] = "noop",
+              ["gc"] = "noop",
+              ["gp"] = "noop",
+              ["gg"] = "noop",
+              ["o"] = "noop",
+              ["oc"] = "noop",
+              ["od"] = "noop",
+              ["om"] = "noop",
+              ["on"] = "noop",
+              ["os"] = "noop",
+              ["ot"] = "noop",
             },
           },
         },
@@ -402,7 +541,7 @@ return {
             handler = function(args)
               vim.keymap.set(
                 "i",
-                "<esc>",
+                "<ESC>",
                 vim.cmd.stopinsert,
                 { noremap = true, buffer = args.bufnr }
               )
@@ -418,6 +557,9 @@ return {
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = { "Oil" },
+    keys = {
+      { "<LEADER>z", "<CMD>Oil<CR>", desc = "Oil" },
+    },
     opts = {
       columns = {
         "icon",
@@ -426,24 +568,25 @@ return {
         -- "mtime",
       },
       keymaps = {
-        ["g?"] = "actions.show_help",
+        ["<LOCALLEADER>?"] = "actions.show_help",
         ["<CR>"] = "actions.select",
-        ["<C-v>"] = "actions.select_vsplit",
-        ["<C-s>"] = "actions.select_split",
-        ["<C-t>"] = "actions.select_tab",
-        ["<C-p>"] = "actions.preview",
-        ["<C-c>"] = "actions.close",
-        -- ["<C-l>"] = "actions.refresh",
-        ["<C-r>"] = "actions.refresh",
+        ["<LOCALLEADER>v"] = "actions.select_vsplit",
+        ["<LOCALLEADER>s"] = "actions.select_split",
+        ["<LOCALLEADER>t"] = "actions.select_tab",
+        ["<LOCALLEADER>p"] = "actions.preview",
+        ["<LOCALLEADER>c"] = "actions.close",
+        ["<LEADLIEADER>r"] = "actions.refresh",
         ["-"] = "actions.parent",
+        ["<BS>"] = "actions.parent",
+        ["<LOCALLEADER>u"] = "actions.parent",
         ["_"] = "actions.open_cwd",
         ["`"] = "actions.cd",
         ["~"] = "actions.tcd",
-        ["go"] = "actions.change_sort",
-        ["gx"] = "actions.open_external",
-        ["g."] = "actions.toggle_hidden",
-        ["g\\"] = "actions.toggle_trash",
-        ["<tab>"] = {
+        ["<LOCALLEADER>o"] = "actions.change_sort",
+        ["<LOCALLEADER>x"] = "actions.open_external",
+        ["<LOCALLEADER>."] = "actions.toggle_hidden",
+        ["<LOCALLEADER>\\"] = "actions.toggle_trash",
+        ["<TAB>"] = {
           callback = function()
             local oil = require("oil")
             local bufnr = vim.api.nvim_get_current_buf()
@@ -472,7 +615,7 @@ return {
             end
           end,
         },
-        ["gs"] = {
+        ["<LOCALLEADER>f"] = {
           callback = function()
             local oil = require("oil")
 
