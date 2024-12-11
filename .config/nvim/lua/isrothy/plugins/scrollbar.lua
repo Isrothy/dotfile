@@ -1,36 +1,5 @@
 return {
   {
-    "dstein64/nvim-scrollview",
-    event = { "BufReadPost", "BufNewFile" },
-    enabled = false,
-    opts = {
-      excluded_filetypes = {
-        "",
-        "prompt",
-        "TelescopePrompt",
-        "noice",
-        "neo-tree",
-      },
-      current_only = false,
-      column = 1,
-      winblend = 50,
-      signs_on_startup = {
-        "marks",
-        "diagnostics",
-        "folds",
-        "search",
-      },
-      signs_column = -1,
-      diagnostics_error_symbol = "-",
-      diagnostics_hint_symbol = "-",
-      diagnostics_info_symbol = "-",
-      diagnostics_warn_symbol = "-",
-      -- signs_max_per_row = 1,
-      -- base = "buffer",
-      -- column = 80,
-    },
-  },
-  {
     "Isrothy/satellite.nvim",
     -- dir = "~/satellite.nvim",
     event = { "BufReadPost", "BufNewFile" },

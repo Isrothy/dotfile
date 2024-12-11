@@ -13,6 +13,16 @@ return {
         desc = "Pick a Window",
         mode = "n",
       },
+      {
+        "<LEADER>wc",
+        function()
+          local picked_window_id = require("window-picker").pick_window()
+            or vim.api.nvim_get_current_win()
+          vim.api.nvim_win_close(picked_window_id, true)
+        end,
+        desc = "Close a Window",
+        mode = "n",
+      },
     },
     opts = {
       hint = "statusline-winbar",
@@ -39,7 +49,7 @@ return {
       },
       picker_config = {
         statusline_winbar_picker = {
-          selection_display = function(char, windowid)
+          selection_display = function(char, _)
             return "%=" .. char .. "%="
           end,
           use_winbar = "never", -- "always" | "never" | "smart"

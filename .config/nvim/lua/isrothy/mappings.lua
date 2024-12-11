@@ -46,9 +46,8 @@ map("n", "gV", "\"`[\" . strpart(getregtype(), 0, 1) . \"`]\"", {
 -- map("n", "<LEADER>o", "<C-o>", default_options)
 -- map("n", "<LEADER>i", "<C-i>", default_options)
 
--- map("n", "<LEADER>wv", "<C-W>v", { desc = "Split Window Vertically" })
 -- map("n", "<LEADER>ws", "<C-W>s", { desc = "Split Window Horizontally" })
-map("n", "<LEADER>wc", "<C-W>c", { desc = "Close Window" })
+map("n", "<LEADER>wd", "<C-W>c", { desc = "Close Window" })
 -- map("n", "<LEADER>wo", "<C-W>o", { desc = "Close Other Windows" })
 
 map("n", "<ESC>", ":nohlsearch<CR>", { desc = "Clear Search Highlight" })
@@ -85,13 +84,40 @@ map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
-map("n", "<LEADER><TAB>l", "<CMD>tablast<CR>", { desc = "Last Tab" })
 map("n", "<LEADER><TAB>o", "<CMD>tabonly<CR>", { desc = "Close Other Tabs" })
+map("n", "<LEADER><TAB>d", "<CMD>tabclose<CR>", { desc = "Close Tab" })
 map("n", "<LEADER><TAB>f", "<CMD>tabfirst<CR>", { desc = "First Tab" })
+map("n", "<LEADER><TAB>l", "<CMD>tablast<CR>", { desc = "Last Tab" })
 map("n", "<LEADER><TAB><TAB>", "<CMD>tabnew<CR>", { desc = "New Tab" })
 map("n", "<LEADER><TAB>]", "<CMD>tabnext<CR>", { desc = "Next Tab" })
-map("n", "<LEADER><TAB>d", "<CMD>tabclose<CR>", { desc = "Close Tab" })
 map("n", "<LEADER><TAB>[", "<CMD>tabprevious<CR>", { desc = "Previous Tab" })
+
+map("n", "]<TAB>", "<CMD>tabnext<CR>", { desc = "Next Tab" })
+map("n", "[<TAB>", "<CMD>tabprevious<CR>", { desc = "Previous Tab" })
+map("n", "]<S-TAB>", "<CMD>tablast<CR>", { desc = "Next Tab" })
+map("n", "[<S-TAB>", "<CMD>tabfirst<CR>", { desc = "Previous Tab" })
+
+vim.keymap.set("n", "<leader><Tab>c", function()
+  vim.ui.input({ prompt = "Enter tab number to close: " }, function(input)
+    local tab_number = tonumber(input)
+    if tab_number then
+      vim.cmd("tabclose " .. tab_number)
+    else
+      print("Invalid tab number")
+    end
+  end)
+end, { desc = "Close a Tab" })
+
+vim.keymap.set("n", "<leader><Tab>p", function()
+  vim.ui.input({ prompt = "Enter tab number to pick: " }, function(input)
+    local tab_number = tonumber(input)
+    if tab_number then
+      vim.cmd("tabn " .. tab_number)
+    else
+      print("Invalid tab number")
+    end
+  end)
+end, { desc = "Pick a Tab" })
 
 vim.cmd([[
 cnoreabbrev W! w!

@@ -73,9 +73,15 @@ local extmark_handler = {
   end,
 }
 
+---@param winid integer
+---@return boolean
+local is_float_window = function(winid)
+  return vim.api.nvim_win_get_config(winid).relative ~= ""
+end
+
 return {
-  dir = "~/neominimap.nvim",
-  -- "Isrothy/neominimap.nvim",
+  -- dir = "~/neominimap.nvim",
+  "Isrothy/neominimap.nvim",
   version = "v3.x.x",
   lazy = false,
   keys = {
@@ -181,6 +187,20 @@ return {
       treesitter = {
         enabled = true,
       },
+      tab_filter = function(tab_id)
+        local win_list = vim.api.nvim_tabpage_list_wins(tab_id)
+        local exclude_ft =
+          { "qf", "trouble", "neo-tree", "alpha", "neominimap", "snacks_dashboard" }
+        for _, win_id in ipairs(win_list) do
+          if not is_float_window(win_id) then
+            local bufnr = vim.api.nvim_win_get_buf(win_id)
+            if not vim.tbl_contains(exclude_ft, vim.bo[bufnr].filetype) then
+              return true
+            end
+          end
+        end
+        return false
+      end,
       winopt = function(wo)
         wo.statuscolumn = "%!v:lua.MyStatusCol()"
       end,

@@ -20,6 +20,15 @@ return {
         tsx = "rainbow-parens",
         verilog = "rainbow-blocks",
       },
+      highlight = {
+        "RainbowDelimiterRed",
+        "RainbowDelimiterYellow",
+        "RainbowDelimiterBlue",
+        "RainbowDelimiterViolet",
+        "RainbowDelimiterOrange",
+        "RainbowDelimiterGreen",
+        "RainbowDelimiterCyan",
+      },
     }
   end,
 }

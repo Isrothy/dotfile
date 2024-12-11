@@ -39,47 +39,6 @@ local custom_textobjects = {
 
 return {
   {
-    "kiyoon/treesitter-indent-object.nvim",
-    enabled = true,
-    dependencies = {
-      "lukas-reineke/indent-blankline.nvim",
-    },
-    keys = {
-      {
-        "ai",
-        function()
-          require("treesitter_indent_object.textobj").select_indent_outer()
-        end,
-        mode = { "x", "o" },
-        desc = "Select Context-Aware Indent (Outer)",
-      },
-      {
-        "aI",
-        function()
-          require("treesitter_indent_object.textobj").select_indent_outer(true)
-        end,
-        mode = { "x", "o" },
-        desc = "Select Context-Aware Indent (Outer, Line-Wise)",
-      },
-      {
-        "ii",
-        function()
-          require("treesitter_indent_object.textobj").select_indent_inner()
-        end,
-        mode = { "x", "o" },
-        desc = "Select Context-Aware Indent (Inner, Partial Range)",
-      },
-      {
-        "iI",
-        function()
-          require("treesitter_indent_object.textobj").select_indent_inner(true, "V")
-        end,
-        mode = { "x", "o" },
-        desc = "Select Context-Aware Indent (Inner, Entire Range) in Line-Wise Visual Mode",
-      },
-    },
-  },
-  {
     "chrisgrieser/nvim-various-textobjs",
     event = { "BufRead", "BufNewFile" },
     enabled = true,

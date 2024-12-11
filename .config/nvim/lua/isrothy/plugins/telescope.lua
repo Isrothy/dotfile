@@ -31,7 +31,7 @@ telescope.keys = {
 
   { "<LEADER>fj", "<CMD>Telescope jumplist<CR>", desc = "Jumplist" },
   { "<LEADER>fk", "<CMD>Telescope keymaps<CR>", desc = "Keymaps" },
-  { "<LEADER>fl", "<CMD>Telescope local_list<CR>", desc = "Local List" },
+  { "<LEADER>fl", "<CMD>Telescope loclist<CR>", desc = "Local List" },
   { "<LEADER>fm", "<CMD>Telescope marks<CR>", desc = "Marks" },
   { "<LEADER>fM", "<CMD>Telescope man_page<CR>", desc = "Man Page" },
   { "<LEADER>fn", "<CMD>Telescope noice<CR>", desc = "Noice" },
@@ -57,12 +57,12 @@ telescope.keys = {
 }
 
 telescope.config = function()
-  -- local command_center = require("command_center")
   local previewers = require("telescope.previewers")
   local Job = require("plenary.job")
 
   local new_maker = function(filepath, bufnr, opts)
     filepath = vim.fn.expand(filepath)
+    ---@diagnostic disable-next-line: missing-fields
     Job:new({
       command = "file",
       args = { "--mime-type", "-b", filepath },

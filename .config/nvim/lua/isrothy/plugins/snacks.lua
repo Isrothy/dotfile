@@ -15,6 +15,86 @@ return {
   enabled = true,
   ---@type snacks.Config
   opts = {
+    input = {
+      enabled = true,
+    },
+    scroll = {
+      enabled = false,
+    },
+    indent = {
+      enabled = true,
+      indent = {
+        char = "▎",
+        blank = " ",
+        only_scope = false, -- only show indent guides of the scope
+        only_current = false, -- only show indent guides in the current window
+        hl = "SnacksIndent",
+      },
+      scope = {
+        animate = {
+          enabled = false,
+        },
+        char = "▎",
+        underline = true, -- underline the start of the scope
+        only_current = false, -- only show scope in the current window
+        hl = {
+          "RainbowDelimiterRed",
+          "RainbowDelimiterOrange",
+          "RainbowDelimiterYellow",
+          "RainbowDelimiterGreen",
+          "RainbowDelimiterBlue",
+          "RainbowDelimiterCyan",
+          "RainbowDelimiterViolet",
+        },
+      },
+      blank = {
+        char = "▎",
+        hl = "SnacksIndentBlank", ---@type string|string[] hl group for blank spaces
+      },
+      chunk = {
+        enabled = false,
+        only_current = false,
+        hl = {
+          "RainbowDelimiterRed",
+          "RainbowDelimiterOrange",
+          "RainbowDelimiterYellow",
+          "RainbowDelimiterGreen",
+          "RainbowDelimiterBlue",
+          "RainbowDelimiterCyan",
+          "RainbowDelimiterViolet",
+        },
+        char = {
+          corner_top = "╭",
+          corner_bottom = "╰",
+          horizontal = "─",
+          vertical = "│",
+          arrow = ">",
+        },
+      },
+      treesitter = {
+        enabled = true,
+        ---@type string[]|false
+        blocks = {
+          "function_declaration",
+          "function_definition",
+          "method_declaration",
+          "method_definition",
+          "class_declaration",
+          "class_definition",
+          "do_statement",
+          "while_statement",
+          "repeat_statement",
+          "if_statement",
+          "for_statement",
+          "catch_clause",
+          "switch_case",
+          "switch_statement",
+          "switch_default",
+          "chunk",
+          "assignment_statement",
+        },
+      },
+    },
     bigfile = {
       enabled = true,
       ---@param ctx {buf: number, ft:string}
@@ -32,7 +112,7 @@ return {
     },
     dashboard = {
       enabled = true,
-      width = 52,
+      width = 60,
       sections = {
         { section = "header" },
         { section = "keys", gap = 1, padding = 1 },
@@ -64,15 +144,6 @@ return {
           limit = 5,
           padding = 1,
         },
-        -- {
-        --     pane = 2,
-        --     icon = " ",
-        --     title = "Projects",
-        --     section = "projects",
-        --     indent = 2,
-        --     limit = 5,
-        --     padding = 1,
-        -- },
         {
           pane = 2,
           icon = " ",
@@ -140,6 +211,12 @@ return {
         header = header,
       },
     },
+    dim = {
+      enabled = true,
+      animate = {
+        enabled = false,
+      },
+    },
     notifier = {
       enabled = true,
       timeout = 3000,
@@ -152,6 +229,16 @@ return {
         picker = "auto",
       },
     },
+    zen = {
+      enabled = true,
+      toggles = {
+        dim = true,
+        git_signs = false,
+        mini_diff_signs = false,
+        diagnostics = false,
+        inlay_hints = false,
+      },
+    },
   },
   keys = {
     {
@@ -162,26 +249,26 @@ return {
       desc = "Profiler Scratch Bufer",
     },
     {
-      "<LEADER>.",
+      "<LEADER>..",
       function()
         Snacks.scratch()
       end,
       desc = "Toggle Scratch Buffer",
     },
-    -- {
-    --   "<LEADER>S",
-    --   function()
-    --     Snacks.scratch.select()
-    --   end,
-    --   desc = "Select Scratch Buffer",
-    -- },
     {
-      "<LEADER>un",
+      "<LEADER>.s",
       function()
-        Snacks.notifier.hide()
+        Snacks.scratch.select()
       end,
-      desc = "Dismiss All Notifications",
+      desc = "Select Scratch Buffer",
     },
+    -- {
+    --   "<LEADER>un",
+    --   function()
+    --     Snacks.notifier.hide()
+    --   end,
+    --   desc = "Dismiss All Notifications",
+    -- },
     {
       "<LEADER>bd",
       function()
@@ -232,6 +319,20 @@ return {
       desc = "Rename File",
     },
     {
+      "<LEADER>z",
+      function()
+        Snacks.zen()
+      end,
+      desc = "Toggle Zen Mode",
+    },
+    {
+      "<LEADER>Z",
+      function()
+        Snacks.zen.zoom()
+      end,
+      desc = "Toggle Zoom",
+    },
+    {
       "]]",
       function()
         Snacks.words.jump(vim.v.count1)
@@ -278,9 +379,10 @@ return {
           :map("<LEADER>uA")
         Snacks.toggle.treesitter():map("<LEADER>uT")
         Snacks.toggle.inlay_hints():map("<LEADER>uh")
-
         Snacks.toggle.profiler():map("<LEADER>qp")
         Snacks.toggle.profiler_highlights():map("<LEADER>qh")
+        Snacks.toggle.indent():map("<LEADER>ug")
+        Snacks.toggle.dim():map("<LEADER>uD")
       end,
     })
   end,

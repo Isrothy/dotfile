@@ -23,6 +23,13 @@ local yanky = {
       },
     }
   end,
+  config = function(_, opts)
+    require("yanky").setup(opts)
+    local telescope = require("telescope")
+    if telescope then
+      telescope.load_extension("yank_history")
+    end
+  end,
   keys = {
     {
       "<LEADER>y",
@@ -194,22 +201,6 @@ local substitute = {
   },
 }
 
-local stay_in_place = {
-  "gbprod/stay-in-place.nvim",
-  keys = {
-    { ">", mode = { "n", "x" } },
-    { "<", mode = { "n", "x" } },
-    { "=", mode = { "n", "x" } },
-    { ">>", mode = { "n" } },
-    { "<<", mode = { "n" } },
-    { "==", mode = { "n" } },
-  },
-  opts = {
-    set_keymaps = true,
-    preserve_visual_selection = true,
-  },
-}
-
 local dial = {
   "monaqa/dial.nvim",
   keys = {
@@ -304,24 +295,24 @@ local dial = {
 local mini_move = {
   "echasnovski/mini.move",
   keys = {
-    { "<M-LEFT>", mode = { "n", "x" }, desc = "Move Left" },
-    { "<M-RIGHT>", mode = { "n", "x" }, desc = "Move Right" },
-    { "<M-UP>", mode = { "n", "x" }, desc = "Move Up" },
-    { "<M-DOWN>", mode = { "n", "x" }, desc = "Move Down" },
+    { "<M-H>", mode = { "n", "x" }, desc = "Move Left" },
+    { "<M-L>", mode = { "n", "x" }, desc = "Move Right" },
+    { "<M-K>", mode = { "n", "x" }, desc = "Move Up" },
+    { "<M-J>", mode = { "n", "x" }, desc = "Move Down" },
   },
   opts = {
     mappings = {
       -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
-      left = "<M-LEFT>",
-      right = "<M-RIGHT>",
-      down = "<M-DOWN>",
-      up = "<M-UP>",
+      left = "<M-H>",
+      right = "<M-L>",
+      up = "<M-K>",
+      down = "<M-J>",
 
       -- Move current line in Normal mode
-      line_left = "<M-LEFT>",
-      line_right = "<M-RIGHT>",
-      line_down = "<M-DOWN>",
-      line_up = "<M-UP>",
+      line_left = "<M-H>",
+      line_right = "<M-L>",
+      line_up = "<M-K>",
+      line_down = "<M-J>",
     },
   },
 }
@@ -521,7 +512,6 @@ local textcase = {
 return {
   yanky,
   substitute,
-  stay_in_place,
   dial,
   mini_move,
   surround,

@@ -6,14 +6,14 @@ local M = {
 }
 
 M.keys = {
-  {
-    "<S-TAB>",
-    "<CMD>BufferLineCyclePrev<CR>",
-    noremap = true,
-    silent = true,
-    desc = "Previous Buffer",
-  },
-  { "<TAB>", "<CMD>BufferLineCycleNext<CR>", noremap = true, silent = true, desc = "Next Buffer" },
+  -- {
+  --   "<S-TAB>",
+  --   "<CMD>BufferLineCyclePrev<CR>",
+  --   noremap = true,
+  --   silent = true,
+  --   desc = "Previous Buffer",
+  -- },
+  -- { "<TAB>", "<CMD>BufferLineCycleNext<CR>", noremap = true, silent = true, desc = "Next Buffer" },
   {
     "<M-,>",
     "<CMD>BufferLineMovePrev<CR>",
@@ -37,14 +37,14 @@ M.keys = {
   },
   { "<LEADER>bp", "<CMD>BufferLinePick<CR>", noremap = true, silent = true, desc = "Pick Buffer" },
   {
-    "<LEADER>bl",
+    "<LEADER>bh",
     "<CMD>BufferLineCloseLeft<CR>",
     noremap = true,
     silent = true,
     desc = "Close Left Buffers",
   },
   {
-    "<LEADER>br",
+    "<LEADER>bl",
     "<CMD>BufferLineCloseRight<CR>",
     noremap = true,
     silent = true,
@@ -143,7 +143,6 @@ M.config = function()
       show_tab_indicators = true,
       show_duplicate_prefix = true,
       separator_style = "thin",
-      -- separator_style = "slant",
       enforce_regular_tabs = false,
       always_show_bufferline = true,
     },

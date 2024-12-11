@@ -27,6 +27,7 @@ return {
     },
     config = function(_, opts)
       local persisted = require("persisted")
+      ---@diagnostic disable-next-line: duplicate-set-field
       persisted.branch = function()
         local branch = vim.fn.systemlist("git branch --show-current")[1]
         return vim.v.shell_error == 0 and branch or nil
