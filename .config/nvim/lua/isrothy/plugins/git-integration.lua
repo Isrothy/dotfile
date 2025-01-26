@@ -131,25 +131,6 @@ return {
     opts = {},
   },
   {
-    "NeogitOrg/neogit",
-    cmd = {
-      "Neogit",
-    },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    opts = {
-      graph_style = "unicode",
-      integrations = {
-        telescope = true,
-        diffview = true,
-        fzf_lua = nil,
-      },
-    },
-  },
-  {
     "moyiz/git-dev.nvim",
     cmd = { "GitDevOpen" },
     keys = {

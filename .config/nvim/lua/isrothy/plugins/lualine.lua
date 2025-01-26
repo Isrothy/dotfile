@@ -81,7 +81,7 @@ return {
   },
 
   opts = function()
-    local c = require("nord.colors").palette
+    local c = require("nordify.palette")["dark"]
     local minimap_extension = require("neominimap.statusline").lualine_default
     local trouble = require("trouble")
     local symbols = trouble.statusline({

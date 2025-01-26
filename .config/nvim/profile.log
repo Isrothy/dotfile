@@ -1,7 +1,0 @@
-50%  loader.lua:0
-  <- 50%  require < create_autocmds < create_autocmds < neominimap.lua:0 < nvim_exec2 < cmd < loader.lua:505 < xpcall < try
-  <- 50%  require < init.lua:0 < require < create_autocmds < neominimap.lua:0 < nvim_exec2 < cmd < loader.lua:505 < xpcall
-25%  
-  <- 100%  read < loadfile < loader.lua:0 < require < init.lua:0 < require < create_autocmds < neominimap.lua:0 < nvim_exec2
-25%  set
-  <- 100%  mark_set_keymap < mark.lua:31 < init < register < init.lua:74 < tbl_map < init.lua:0 < require < create_autocmds

@@ -19,7 +19,7 @@ return {
         require("toggleterm").exec(cmd)
       end, { nargs = "*", desc = "Alias for TermExec with dynamic command execution" })
     end,
-    opts = require("nord.plugins.toggleterm").make_opts({
+    opts = require("nordify.plugins.toggleterm").make_opts({
       open_mapping = [[<C-`>]],
       hide_numbers = true,
       autochdir = true,
@@ -47,7 +47,7 @@ return {
           kitty = true, -- Flatten all instance in the current Kitty session
           wezterm = false, -- Flatten all instance in the current Wezterm session
         },
-        callbacks = {
+        hooks = {
           should_block = function(argv)
             return vim.tbl_contains(argv, "-b")
           end,

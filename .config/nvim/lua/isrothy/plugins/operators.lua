@@ -8,28 +8,10 @@ local yanky = {
       enabled = not jit.os:find("Windows"),
     },
   },
-  opts = function()
-    local mapping = require("yanky.telescope.mapping")
-    local mappings = mapping.get_defaults()
-    mappings.i["<c-p>"] = nil
-    return {
-      highlight = { timer = 200 },
-      ring = { storage = jit.os:find("Windows") and "shada" or "sqlite" },
-      picker = {
-        telescope = {
-          use_default_mappings = false,
-          mappings = mappings,
-        },
-      },
-    }
-  end,
-  config = function(_, opts)
-    require("yanky").setup(opts)
-    local telescope = require("telescope")
-    if telescope then
-      telescope.load_extension("yank_history")
-    end
-  end,
+  opts = {
+    highlight = { timer = 200 },
+    ring = { storage = jit.os:find("Windows") and "shada" or "sqlite" },
+  },
   keys = {
     {
       "<LEADER>y",
@@ -126,27 +108,27 @@ local substitute = {
     {
       "<LEADER>s",
       "<CMD>lua require('substitute').operator({register = '+'})<CR>",
-      { desc = "Substitute with System Clipboard" },
+      desc = "Substitute with System Clipboard",
     },
     {
       "ss",
       "<CMD>lua require('substitute').line()<CR>",
-      { noremap = true, silent = true, desc = "Substitute Line" },
+      desc = "Substitute Line",
     },
     {
       "<LEADER>ss",
       "<CMD>lua require('substitute').line({register = '+'})<CR>",
-      { noremap = true, silent = true, desc = "Substitute Line with System Clipboard" },
+      desc = "Substitute Line with System Clipboard",
     },
     {
       "S",
       "<CMD>lua require('substitute').eol()<CR>",
-      { noremap = true, silent = true, desc = "Substitute EOL" },
+      desc = "Substitute EOL",
     },
     {
       "<LEADER>S",
       "<CMD>lua require('substitute').eol({register = '+'})<CR>",
-      { noremap = true, silent = true, desc = "Substitute EOL with System Clipboard" },
+      desc = "Substitute EOL with System Clipboard",
     },
     {
       "s",
@@ -169,6 +151,11 @@ local substitute = {
       "xx",
       "<CMD>lua require('substitute.exchange').line()<CR>",
       desc = "Exchange Line",
+    },
+    {
+      "X",
+      "<CMD>lua require('substitute.exchange').eol()<CR>",
+      desc = "Exchange EOL",
     },
     {
       "x",
@@ -302,13 +289,11 @@ local mini_move = {
   },
   opts = {
     mappings = {
-      -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
       left = "<M-H>",
       right = "<M-L>",
       up = "<M-K>",
       down = "<M-J>",
 
-      -- Move current line in Normal mode
       line_left = "<M-H>",
       line_right = "<M-L>",
       line_up = "<M-K>",
@@ -395,11 +380,7 @@ local surround = {
 
 local textcase = {
   "johmsalas/text-case.nvim",
-  dependencies = { "nvim-telescope/telescope.nvim" },
   cmd = {
-    "TextCaseOpenTelescope",
-    "TextCaseOpenTelescopeQuickChange",
-    "TextCaseOpenTelescopeLSPChange",
     "TextCaseStartReplacingCommand",
   },
   keys = {
@@ -505,7 +486,6 @@ local textcase = {
       default_keymappings_enabled = false,
       prefix = "ga",
     })
-    require("telescope").load_extension("textcase")
   end,
 }
 

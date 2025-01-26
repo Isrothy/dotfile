@@ -1,4 +1,5 @@
 local telescope = {
+  enabled = false,
   "nvim-telescope/telescope.nvim",
   cmd = { "Telescope" },
   dependencies = {
@@ -219,57 +220,57 @@ telescope.config = function()
 end
 
 return {
-  telescope,
-  {
-    "luc-tielen/telescope_hoogle",
-    ft = "haskell",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-    },
-    config = function()
-      require("telescope").load_extension("hoogle")
-    end,
-  },
-  {
-    "danielfalk/smart-open.nvim",
-    branch = "0.1.x",
-    dependencies = { "kkharji/sqlite.lua" },
-  },
-  {
-    "wintermute-cell/gitignore.nvim",
-    cmd = { "GitIgnore" },
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-    },
-  },
-  {
-    "ahmedkhalf/project.nvim",
-    event = "VeryLazy",
-    cmd = { "ProjectRoot", "AddProject" },
-    opts = {
-      manual_mode = true,
-    },
-    config = function(_, opts)
-      require("project_nvim").setup(opts)
-    end,
-  },
-  {
-    "LukasPietzschmann/telescope-tabs",
-    event = "VeryLazy",
-    config = function()
-      require("telescope").load_extension("telescope-tabs")
-      require("telescope-tabs").setup({
-        show_preview = true,
-      })
-    end,
-    dependencies = { "nvim-telescope/telescope.nvim" },
-  },
-  {
-    "aaronhallaert/advanced-git-search.nvim",
-    cmd = { "AdvancedGitSearch" },
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-      "sindrets/diffview.nvim",
-    },
-  },
+  -- telescope,
+  -- {
+  --   "luc-tielen/telescope_hoogle",
+  --   ft = "haskell",
+  --   dependencies = {
+  --     "nvim-telescope/telescope.nvim",
+  --   },
+  --   config = function()
+  --     require("telescope").load_extension("hoogle")
+  --   end,
+  -- },
+  -- {
+  --   "danielfalk/smart-open.nvim",
+  --   branch = "0.1.x",
+  --   dependencies = { "kkharji/sqlite.lua" },
+  -- },
+  -- {
+  --   "wintermute-cell/gitignore.nvim",
+  --   cmd = { "GitIgnore" },
+  --   dependencies = {
+  --     "nvim-telescope/telescope.nvim",
+  --   },
+  -- },
+  -- {
+  --   "ahmedkhalf/project.nvim",
+  --   event = "VeryLazy",
+  --   cmd = { "ProjectRoot", "AddProject" },
+  --   opts = {
+  --     manual_mode = true,
+  --   },
+  --   config = function(_, opts)
+  --     require("project_nvim").setup(opts)
+  --   end,
+  -- },
+  -- {
+  --   "LukasPietzschmann/telescope-tabs",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("telescope").load_extension("telescope-tabs")
+  --     require("telescope-tabs").setup({
+  --       show_preview = true,
+  --     })
+  --   end,
+  --   dependencies = { "nvim-telescope/telescope.nvim" },
+  -- },
+  -- {
+  --   "aaronhallaert/advanced-git-search.nvim",
+  --   cmd = { "AdvancedGitSearch" },
+  --   dependencies = {
+  --     "nvim-telescope/telescope.nvim",
+  --     "sindrets/diffview.nvim",
+  --   },
+  -- },
 }

@@ -15,11 +15,105 @@ return {
   enabled = true,
   ---@type snacks.Config
   opts = {
+    picker = {
+      prompt = " ",
+      layout = {
+        cycle = true,
+        --- Use the default layout or vertical if the window is too narrow
+        preset = function()
+          return vim.o.columns >= 120 and "default" or "vertical"
+        end,
+      },
+    },
     input = {
       enabled = true,
     },
     scroll = {
       enabled = false,
+    },
+    statuscolumn = {
+      left = { "mark", "sign" },
+      right = { "fold", "git" },
+      folds = {
+        open = true, -- show open fold icons
+        git_hl = true, -- use Git Signs hl for fold icons
+      },
+      git = {
+        patterns = { "GitSign" },
+      },
+      refresh = 50, -- refresh at most every 50ms
+    },
+    scope = {
+      enabled = true,
+      cursor = false,
+      treesitter = {
+        enabled = true,
+        blocks = {
+          "chunk",
+          "table_constructor",
+          "function_declaration",
+          "function_definition",
+          "method_declaration",
+          "method_definition",
+          "class_declaration",
+          "class_definition",
+          "do_statement",
+          "while_statement",
+          "repeat_statement",
+          "switch_statement",
+          "case_statement",
+          "if_statement",
+          "for_statement",
+          "arguments",
+        },
+      },
+      keys = {
+        ---@type table<string, snacks.scope.TextObject|{desc?:string}>
+        textobject = {
+          ii = {
+            min_size = 2,
+            edge = false,
+            treesitter = { blocks = { enabled = true } },
+            desc = "Inner Scope",
+          },
+          ai = {
+            min_size = 2,
+            treesitter = { blocks = { enabled = true } },
+            desc = "Full Scope",
+          },
+          -- iI = {
+          --   min_size = 2,
+          --   edge = false, -- don't include the edge
+          --   linewise = true,
+          --   treesitter = { blocks = true },
+          --   desc = "Inner Scope",
+          -- },
+          -- aI = {
+          --   min_size = 2,
+          --   edge = true, -- include the edge
+          --   linewise = true,
+          --   treesitter = { blocks = true },
+          --   desc = "Scope with Edge",
+          -- },
+        },
+        ---@type table<string, snacks.scope.Jump|{desc?:string}>
+        jump = {
+          ["[i"] = {
+            min_size = 2,
+            bottom = false,
+            edge = true,
+            treesitter = { blocks = { enabled = true } },
+            desc = "Jump to Top Edge of Scope",
+          },
+          ["]i"] = {
+            min_size = 2,
+            bottom = true,
+            edge = true,
+            treesitter = { blocks = { enabled = true } },
+            desc = "Jump to Bottom Edge of Scope",
+          },
+        },
+      },
     },
     indent = {
       enabled = true,
@@ -30,76 +124,37 @@ return {
         only_current = false, -- only show indent guides in the current window
         hl = "SnacksIndent",
       },
+      animate = { enabled = false },
       scope = {
-        animate = {
-          enabled = false,
-        },
         char = "▎",
         underline = true, -- underline the start of the scope
         only_current = false, -- only show scope in the current window
-        hl = {
-          "RainbowDelimiterRed",
-          "RainbowDelimiterOrange",
-          "RainbowDelimiterYellow",
-          "RainbowDelimiterGreen",
-          "RainbowDelimiterBlue",
-          "RainbowDelimiterCyan",
-          "RainbowDelimiterViolet",
-        },
+        hl = "SnacksIndentScope",
+        -- hl = {
+        --   "RainbowDelimiterRed",
+        --   "RainbowDelimiterOrange",
+        --   "RainbowDelimiterYellow",
+        --   "RainbowDelimiterGreen",
+        --   "RainbowDelimiterBlue",
+        --   "RainbowDelimiterCyan",
+        --   "RainbowDelimiterViolet",
+        -- },
       },
       blank = {
         char = "▎",
         hl = "SnacksIndentBlank", ---@type string|string[] hl group for blank spaces
       },
-      chunk = {
-        enabled = false,
-        only_current = false,
-        hl = {
-          "RainbowDelimiterRed",
-          "RainbowDelimiterOrange",
-          "RainbowDelimiterYellow",
-          "RainbowDelimiterGreen",
-          "RainbowDelimiterBlue",
-          "RainbowDelimiterCyan",
-          "RainbowDelimiterViolet",
-        },
-        char = {
-          corner_top = "╭",
-          corner_bottom = "╰",
-          horizontal = "─",
-          vertical = "│",
-          arrow = ">",
-        },
-      },
-      treesitter = {
-        enabled = true,
-        ---@type string[]|false
-        blocks = {
-          "function_declaration",
-          "function_definition",
-          "method_declaration",
-          "method_definition",
-          "class_declaration",
-          "class_definition",
-          "do_statement",
-          "while_statement",
-          "repeat_statement",
-          "if_statement",
-          "for_statement",
-          "catch_clause",
-          "switch_case",
-          "switch_statement",
-          "switch_default",
-          "chunk",
-          "assignment_statement",
-        },
-      },
+      treesitter = { enabled = true },
     },
     bigfile = {
       enabled = true,
       ---@param ctx {buf: number, ft:string}
       setup = function(ctx)
-        Snacks.util.wo(0, { foldmethod = "manual", statuscolumn = "", conceallevel = 0 })
+        Snacks.util.wo(0, {
+          foldmethod = "manual",
+          statuscolumn = "",
+          conceallevel = 0,
+        })
         vim.b.minianimate_disable = true
         vim.opt_local.swapfile = false
         vim.opt_local.foldmethod = "manual"
@@ -187,12 +242,12 @@ return {
             desc = "Config",
             action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
           },
-          {
-            icon = " ",
-            key = "p",
-            desc = "Projects",
-            action = ":Telescope projects",
-          },
+          -- {
+          --   icon = " ",
+          --   key = "p",
+          --   desc = "Projects",
+          --   action = ":Telescope projects",
+          -- },
           {
             icon = " ",
             key = "s",
@@ -222,7 +277,6 @@ return {
       timeout = 3000,
     },
     quickfile = { enabled = true },
-    statuscolumn = { enabled = false },
     words = { enabled = true },
     profiler = {
       pick = {
@@ -241,6 +295,192 @@ return {
     },
   },
   keys = {
+    {
+      "<LEADER>fa",
+      function()
+        Snacks.picker.autocmds()
+      end,
+      desc = "Autocommands",
+    },
+    {
+      "<LEADER>fb",
+      function()
+        Snacks.picker.buffers()
+      end,
+      desc = "Buffers",
+    },
+    {
+      "<LEADER>fc",
+      function()
+        Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+      end,
+      desc = "Config File",
+    },
+    {
+      "<LEADER>ff",
+      function()
+        Snacks.picker.files()
+      end,
+      desc = "Files",
+    },
+    {
+      "<LEADER>fg",
+      function()
+        Snacks.picker.git_files()
+      end,
+      desc = "Find Git Files",
+    },
+    {
+      "<LEADER>fh",
+      function()
+        Snacks.picker.help()
+      end,
+      desc = "Help Pages",
+    },
+    {
+      "<LEADER>fH",
+      function()
+        Snacks.picker.highlights()
+      end,
+      desc = "Highlights",
+    },
+    {
+      "<LEADER>fj",
+      function()
+        Snacks.picker.jumps()
+      end,
+      desc = "Jumps",
+    },
+    {
+      "<LEADER>fk",
+      function()
+        Snacks.picker.keymaps()
+      end,
+      desc = "Keymaps",
+    },
+    {
+      "<LEADER>fl",
+      function()
+        Snacks.picker.loclist()
+      end,
+      desc = "Location List",
+    },
+    {
+      "<LEADER>fM",
+      function()
+        Snacks.picker.man()
+      end,
+      desc = "Man Pages",
+    },
+    {
+      "<LEADER>fm",
+      function()
+        Snacks.picker.marks()
+      end,
+      desc = "Marks",
+    },
+    {
+      "<LEADER>fq",
+      function()
+        Snacks.picker.qflist()
+      end,
+      desc = "Quickfix List",
+    },
+    {
+      "<LEADER>fp",
+      function()
+        Snacks.picker.projects()
+      end,
+      desc = "Projects",
+    },
+    {
+      "<LEADER>fR",
+      function()
+        Snacks.picker.recent()
+      end,
+      desc = "Recent",
+    },
+    {
+      "<LEADER>fx",
+      function()
+        Snacks.picker.diagnostics()
+      end,
+      desc = "Diagnostics",
+    },
+    {
+      "<LEADER>fz",
+      function()
+        Snacks.picker.zoxide()
+      end,
+      desc = "Zoxide",
+    },
+    {
+      "<LEADER>f\"",
+      function()
+        Snacks.picker.registers()
+      end,
+      desc = "Registers",
+    },
+    {
+      "<LEADER>f:",
+      function()
+        Snacks.picker.command_history()
+      end,
+      desc = "Command History",
+    },
+    {
+      "<LEADER>s.",
+      function()
+        Snacks.picker.resume()
+      end,
+      desc = "Resume",
+    },
+
+    {
+      "<LEADER>gc",
+      function()
+        Snacks.picker.git_log()
+      end,
+      desc = "Git Log",
+    },
+    {
+      "<LEADER>gs",
+      function()
+        Snacks.picker.git_status()
+      end,
+      desc = "Git Status",
+    },
+
+    {
+      "<LEADER>/b",
+      function()
+        Snacks.picker.lines()
+      end,
+      desc = "Buffer Lines",
+    },
+    {
+      "<LEADER>/B",
+      function()
+        Snacks.picker.grep_buffers()
+      end,
+      desc = "Grep Open Buffers",
+    },
+    {
+      "<LEADER>/g",
+      function()
+        Snacks.picker.grep()
+      end,
+      desc = "Grep",
+    },
+    {
+      "<LEADER>/w",
+      function()
+        Snacks.picker.grep_word()
+      end,
+      desc = "Visual selection or word",
+      mode = { "n", "x" },
+    },
+
     {
       "<LEADER>qs",
       function()

@@ -1,44 +1,5 @@
 return {
   {
-    "windwp/nvim-autopairs",
-    event = { "InsertEnter" },
-    opts = {
-      map_bs = true,
-      map_c_h = true,
-      check_ts = true,
-      map_c_w = true,
-      map_cr = true,
-      enable_check_bracket_line = true,
-      ignored_next_char = "[%w%.]",
-      disable_filetype = {
-        "TelescopePrompt",
-        "spectre_panel",
-      },
-      fast_wrap = {
-        map = "<M-e>",
-        chars = { "{", "[", "(", "\"", "'" },
-        pattern = [=[[%'%"%>%]%)%}%,]]=],
-        end_key = "$",
-        keys = "qwertyuiopzxcvbnmasdfghjkl",
-        check_comma = true,
-        manual_position = true,
-        highlight = "Search",
-        highlight_grey = "Comment",
-      },
-    },
-    config = function(_, opts)
-      require("nvim-autopairs").setup(opts)
-      -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-      -- local cmp = require("cmp")
-      -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-    end,
-  },
-  {
-    "saghen/blink.compat",
-    version = "*",
-    optional = true,
-  },
-  {
     "saghen/blink.cmp",
     version = "v0.*",
     build = "cargo build --release",
@@ -80,18 +41,13 @@ return {
         menu = {
           draw = {
             columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
-            -- columns = { { "item_idx" }, { "kind_icon" }, { "label", "label_description", gap = 1 } },
-            -- components = {
-            --     item_idx = {
-            --         text = function(ctx)
-            --             return tostring(ctx.idx)
-            --         end,
-            --     },
-            -- },
           },
         },
         list = {
-          selection = "auto_insert",
+          selection = {
+            preselect = false,
+            auto_insert = true,
+          },
         },
         accept = {
           create_undo_point = true,
@@ -122,21 +78,36 @@ return {
       },
 
       sources = {
-        completion = {
-          enabled_providers = {
+        default = {
+          "lsp",
+          "path",
+          "snippets",
+          "buffer",
+          "ripgrep",
+          "ecolog",
+        },
+        per_filetype = {
+          lua = {
             "lsp",
             "path",
             "snippets",
             "buffer",
             "ripgrep",
             "lazydev",
+          },
+          sql = {
+            "snippets",
+            "ripgrep",
+            "dadbod",
+          },
+          mysql = {
+            "snippets",
+            "ripgrep",
             "dadbod",
           },
         },
         providers = {
-          lsp = {
-            fallback_for = { "lazydev" },
-          },
+          lsp = {},
           ripgrep = {
             module = "blink-ripgrep",
             name = "Ripgrep",
@@ -160,22 +131,64 @@ return {
           lazydev = {
             name = "LazyDev",
             module = "lazydev.integrations.blink",
-            score_offset = 6,
+            score_offset = 9,
           },
           buffer = {
             name = "Buffer",
             module = "blink.cmp.sources.buffer",
-            fallback_for = { "lsp" },
+            -- fallbacks = { "lsp" },
           },
           dadbod = {
             name = "Dadbod",
             module = "vim_dadbod_completion.blink",
           },
+          ecolog = {
+            name = "ecolog",
+            module = "ecolog.integrations.cmp.blink_cmp",
+          },
         },
       },
     },
   },
-
+  {
+    "saghen/blink.compat",
+    version = "*",
+    optional = true,
+  },
+  {
+    "windwp/nvim-autopairs",
+    event = { "InsertEnter" },
+    opts = {
+      map_bs = true,
+      map_c_h = true,
+      check_ts = true,
+      map_c_w = true,
+      map_cr = true,
+      enable_check_bracket_line = true,
+      ignored_next_char = "[%w%.]",
+      disable_filetype = {
+        "TelescopePrompt",
+        "spectre_panel",
+      },
+      fast_wrap = {
+        map = "<M-e>",
+        chars = { "{", "[", "(", "\"", "'" },
+        pattern = [=[[%'%"%>%]%)%}%,]]=],
+        end_key = "$",
+        keys = "qwertyuiopzxcvbnmasdfghjkl",
+        check_comma = true,
+        manual_position = true,
+        highlight = "Search",
+        highlight_grey = "Comment",
+      },
+    },
+    config = function(_, opts)
+      require("nvim-autopairs").setup(opts)
+      -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+      -- local cmp = require("cmp")
+      -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+    end,
+  },
   {
     "RRethy/nvim-treesitter-endwise",
     event = { "InsertEnter" },
@@ -251,42 +264,6 @@ return {
     cmd = "Neogen",
     opts = {
       snippet_engine = "nvim",
-    },
-  },
-  {
-    "mizlan/iswap.nvim",
-    cmd = {
-      "ISwap",
-      "ISwapWith",
-      "ISwapNode",
-      "ISwapNodeWith",
-      "ISwapNodeWithLeft",
-      "ISwapNodeWithRight",
-    },
-    keys = {
-      { "<LEADER>is", [[<CMD>ISwap<CR>]], desc = "ISwap" },
-      { "<LEADER>iw", [[<CMD>ISwapWith<CR>]], desc = "ISwap with" },
-      { "<LEADER>in", [[<CMD>ISwapNode<CR>]], desc = "ISwap node" },
-      { "<LEADER>im", [[<CMD>ISwapNodeWith<CR>]], desc = "ISwap node with" },
-      {
-        "<M-i>",
-        [[<CMD>ISwapNodeWithLeft<CR>]],
-        desc = "ISwap node with left",
-        mode = { "n", "v" },
-      },
-      {
-        "<M-o>",
-        [[<CMD>ISwapNodeWithRight]],
-        desc = "ISwap node with right",
-        mode = { "n", "v" },
-      },
-    },
-    opts = {
-      flash_style = "simultaneous",
-      move_cursor = true,
-      autoswap = nil,
-      debug = nil,
-      hl_grey_priority = "1000",
     },
   },
 }

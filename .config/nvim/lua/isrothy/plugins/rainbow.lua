@@ -8,12 +8,13 @@ return {
       strategy = {
         [""] = rainbow_delimiters.strategy["global"],
         vim = rainbow_delimiters.strategy["local"],
-        html = rainbow_delimiters.strategy["local"],
+        -- html = rainbow_delimiters.strategy["local"],
         commonlisp = rainbow_delimiters.strategy["local"],
         fennel = rainbow_delimiters.strategy["local"],
       },
       query = {
         [""] = "rainbow-delimiters",
+        cpp = "rainbow-delimiters",
         lua = "rainbow-blocks",
         javascript = "rainbow-parens",
         typescript = "rainbow-parens",
@@ -21,13 +22,13 @@ return {
         verilog = "rainbow-blocks",
       },
       highlight = {
+        "RainbowDelimiterCyan",
         "RainbowDelimiterRed",
         "RainbowDelimiterYellow",
         "RainbowDelimiterBlue",
         "RainbowDelimiterViolet",
         "RainbowDelimiterOrange",
         "RainbowDelimiterGreen",
-        "RainbowDelimiterCyan",
       },
     }
   end,

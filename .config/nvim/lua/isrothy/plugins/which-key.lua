@@ -78,9 +78,11 @@ return {
         { "<LEADER>t", group = "Neotest" },
         { "<LEADER>u", group = "Toggle" },
 
-        { "<LEADER>w", proxy = "<c-w>", group = "windows" },
+        { "<LEADER>w", proxy = "<C-W>", group = "windows" },
         { "<LEADER>W", group = "Wrokspace" },
         { "<LEADER>x", group = "Diagnostics" },
+
+        { "<LEADER>/", group = "Grep" },
 
         { "ga", group = "TextCase" },
         { "gao", group = "Pending Mode Operator" },

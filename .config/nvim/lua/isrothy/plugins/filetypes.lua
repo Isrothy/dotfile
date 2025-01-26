@@ -132,7 +132,6 @@ local yaml = {
   ft = { "yaml" },
   dependencies = {
     "nvim-treesitter/nvim-treesitter",
-    "nvim-telescope/telescope.nvim",
   },
 }
 local help = {

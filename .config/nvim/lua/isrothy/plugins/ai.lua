@@ -14,6 +14,7 @@ return {
         gitrebase = false,
         DressingInput = false,
         bigfile = false,
+        snacks_picker_input = false,
         ["."] = false,
       },
     },

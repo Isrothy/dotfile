@@ -14,33 +14,47 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
-local make_capabilities = function()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  ---@diagnostic disable-next-line: inject-field
-  capabilities.offsetEncoding = "utf-16"
-  capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
-  return capabilities
-end
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = {
+    text = { "", "", "", "" },
+  },
+  underline = true,
+  update_in_insert = true,
+  severity_sort = true,
+  float = {
+    border = border,
+    source = true,
+  },
+})
 
 local set_keymap = function(_, bufnr)
-  map("n", "<LEADER>fD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Find Declaration" })
+  map("n", "<LEADER>fD", function()
+    Snacks.picker.lsp_declarations({ auto_confirm = false })
+  end, { buffer = bufnr, desc = "Declaration" })
+
   map("n", "<LEADER>ft", function()
-    require("telescope.builtin").lsp_type_definitions({ jump_type = "never" })
-  end, { buffer = bufnr, desc = "Find Type Definition" })
+    Snacks.picker.lsp_type_definitions({ auto_confirm = false })
+  end, { buffer = bufnr, desc = "Type Definition" })
+
   map("n", "<LEADER>fd", function()
-    require("telescope.builtin").lsp_definitions({ jump_type = "never" })
-  end, { buffer = bufnr, desc = "Find definition" })
+    Snacks.picker.lsp_definitions({ auto_confirm = false })
+  end, { buffer = bufnr, desc = "definition" })
+
   map("n", "<LEADER>fi", function()
-    require("telescope.builtin").lsp_implementations({ jump_type = "never" })
-  end, { buffer = bufnr, desc = "Find Implementation" })
+    Snacks.picker.lsp_implementations({ auto_confirm = false })
+  end, { buffer = bufnr, desc = "Implementation" })
+
   map("n", "<LEADER>fr", function()
-    require("telescope.builtin").lsp_references({
-      include_declaration = false,
-      include_current_line = false,
-      jump_type = "never",
-    })
-  end, { buffer = bufnr, desc = "Find References" })
+    Snacks.picker.lsp_references({ auto_confirm = false, include_current = true })
+  end, { buffer = bufnr, desc = "References" })
+
+  -- map("n", "<LEADER>fI", function()
+  --   require("fzf-lua").lsp_incoming_calls()
+  -- end, { buffer = bufnr, desc = "Find Incoming Calls" })
+  -- map("n", "<LEADER>fO", function()
+  --   require("fzf-lua").lsp_outgoing_calls()
+  -- end, { buffer = bufnr, desc = "Find Outgoing Calls" })
 
   map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
   map("n", "<LEADER>ch", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
@@ -60,17 +74,17 @@ local set_keymap = function(_, bufnr)
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, { buffer = bufnr, desc = "List workspace" })
   map("n", "<LEADER>Ws", function()
-    require("telescope.builtin").lsp_dynamic_workspace_symbols({
-      jump_type = "never",
-    })
+    vim.lsp.buf.workspace_symbol()
   end, { buffer = bufnr, desc = "Workspace Symbols" })
+
   map("n", "<LEADER>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename Symbol" })
-  map(
-    { "n", "x" },
-    "<LEADER>ca",
-    require("actions-preview").code_actions,
-    { buffer = bufnr, desc = "Code Actions" }
-  )
+  -- map({ "n", "x" }, "<LEADER>ca", function()
+  --   require("fzf-lua").lsp_code_actions()
+  -- end, { buffer = bufnr, desc = "Code Actions" })
+
+  map({ "n", "x" }, "<LEADER>ca", function()
+    vim.lsp.buf.code_action()
+  end, { buffer = bufnr, desc = "Code Actions" })
 
   map("n", "<LEADER>cf", function()
     require("conform").format({ async = true })
@@ -169,39 +183,29 @@ local Lspconfig = {
   "neovim/nvim-lspconfig",
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
-    "folke/neoconf.nvim",
+    -- "folke/neoconf.nvim",
     "folke/noice.nvim",
   },
   event = { "VeryLazy" },
   lazy = vim.fn.argc(-1) == 0,
   config = function()
-    require("neoconf").setup({})
-    vim.diagnostic.config({
-      virtual_text = false,
-      signs = {
-        text = { " ", " ", " ", " " },
-      },
-      underline = true,
-      update_in_insert = true,
-      severity_sort = true,
-      float = {
-        border = border,
-        source = true,
-      },
-    })
+    -- require("neoconf").setup({})
     require("mason").setup()
     require("mason-lspconfig").setup()
-    require("lspconfig.ui.windows").default_options.border = border
 
     require("lspconfig").bashls.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
       end,
     })
     require("lspconfig").clangd.setup({
-      capabilities = make_capabilities(),
+      capabilities = vim.tbl_extend(
+        "force",
+        require("blink.cmp").get_lsp_capabilities(),
+        { offsetEncoding = "utf-16" }
+      ),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
@@ -218,7 +222,7 @@ local Lspconfig = {
         )(fname) or require("lspconfig.util").root_pattern(
           "compile_commands.json",
           "compile_flags.txt"
-        )(fname) or require("lspconfig.util").find_git_ancestor(fname)
+        )(fname)
       end,
       cmd = {
         "/usr/bin/clangd",
@@ -233,31 +237,31 @@ local Lspconfig = {
       },
     })
     require("lspconfig").neocmake.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
       end,
     })
     require("lspconfig").cssls.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
       end,
     })
     require("lspconfig").dockerls.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
       end,
     })
     require("lspconfig").emmet_ls.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
     })
     require("lspconfig").eslint.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
@@ -265,24 +269,24 @@ local Lspconfig = {
     })
 
     require("lspconfig").fennel_language_server.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
       end,
     })
     require("lspconfig").gradle_ls.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
       end,
     })
     require("lspconfig").html.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
     })
     require("lspconfig").kotlin_language_server.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       single_file_support = true,
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
@@ -290,14 +294,14 @@ local Lspconfig = {
       end,
     })
     require("lspconfig").texlab.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
       end,
     })
     require("lspconfig").lua_ls.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
@@ -326,7 +330,7 @@ local Lspconfig = {
       },
     })
     require("lspconfig").ocamllsp.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       single_file_support = true,
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
@@ -334,7 +338,7 @@ local Lspconfig = {
       end,
     })
     require("lspconfig").basedpyright.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
@@ -350,7 +354,7 @@ local Lspconfig = {
       },
     })
     require("lspconfig").r_language_server.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
@@ -359,14 +363,14 @@ local Lspconfig = {
     require("lspconfig").sourcekit.setup({
       filetypes = { "swift", "objective-c" },
       single_file_support = true,
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
       end,
     })
     require("lspconfig").tinymist.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
@@ -374,7 +378,7 @@ local Lspconfig = {
       single_file_support = true,
     })
     require("lspconfig").vimls.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
@@ -385,7 +389,6 @@ local Lspconfig = {
 
 local clangd = {
   "p00f/clangd_extensions.nvim",
-  enabled = true,
   ft = { "c", "cpp", "objc", "objcpp" },
   config = function()
     require("clangd_extensions").setup({
@@ -470,7 +473,7 @@ local java = {
       },
     })
     require("lspconfig").jdtls.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       on_attach = function(client, bufnr)
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
@@ -561,7 +564,7 @@ local schemastore = {
   ft = { "json", "jsonc", "yaml" },
   config = function()
     require("lspconfig").jsonls.setup({
-      capabilities = make_capabilities(),
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
       settings = {
         json = {
           schemas = require("schemastore").json.schemas(),
@@ -653,38 +656,6 @@ local null_ls = {
     })
   end,
 }
-
--- vim.api.nvim_create_autocmd("FileType", {
---     pattern = "markdown",
---     callback = function()
---         local root_dir = vim.fs.dirname(vim.fs.find({ ".ants" }, { upward = true })[1])
---         if root_dir then
---             local client = vim.lsp.start({
---                 name = "ants-ls",
---                 cmd = { "ants-ls" },
---                 root_dir = root_dir,
---                 on_attach = function(client, bufnr)
---                     set_keymap(client, bufnr)
---                 end,
---                 capabilities = make_capabilities(),
---                 single_file_support = false,
---             })
---             if client then
---                 vim.lsp.buf_attach_client(0, client)
---             end
---         end
---     end,
--- })
-
--- vim.lsp.start({
---  name = "ants-ls",
---  cmd = { "ants-ls" },
---  root_dir = vim.fs.dirname(vim.fs.find({ ".ants" }, { upward = true })[1]),
---  capabilities = make_capabilities(),
---  on_attach = function(client, bufnr)
---      set_keymap(client, bufnr)
---  end,
--- }, {})
 
 return {
   mason,

@@ -1,6 +1,7 @@
+local set = vim.keymap.set
 local map = function(mode, lhs, rhs, opts)
   opts = vim.tbl_extend("force", { noremap = true, silent = true }, opts or {})
-  vim.keymap.set(mode, lhs, rhs, opts)
+  set(mode, lhs, rhs, opts)
 end
 
 vim.g.mapleader = " "
@@ -43,12 +44,7 @@ map("n", "gV", "\"`[\" . strpart(getregtype(), 0, 1) . \"`]\"", {
   desc = "Visually Select Changed Text",
 })
 
--- map("n", "<LEADER>o", "<C-o>", default_options)
--- map("n", "<LEADER>i", "<C-i>", default_options)
-
--- map("n", "<LEADER>ws", "<C-W>s", { desc = "Split Window Horizontally" })
-map("n", "<LEADER>wd", "<C-W>c", { desc = "Close Window" })
--- map("n", "<LEADER>wo", "<C-W>o", { desc = "Close Other Windows" })
+map("n", "<LEADER>wd", "<C-W>c", { desc = "Close Current Window" })
 
 map("n", "<ESC>", ":nohlsearch<CR>", { desc = "Clear Search Highlight" })
 
@@ -85,7 +81,7 @@ map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
 map("n", "<LEADER><TAB>o", "<CMD>tabonly<CR>", { desc = "Close Other Tabs" })
-map("n", "<LEADER><TAB>d", "<CMD>tabclose<CR>", { desc = "Close Tab" })
+map("n", "<LEADER><TAB>d", "<CMD>tabclose<CR>", { desc = "Close Current Tab" })
 map("n", "<LEADER><TAB>f", "<CMD>tabfirst<CR>", { desc = "First Tab" })
 map("n", "<LEADER><TAB>l", "<CMD>tablast<CR>", { desc = "Last Tab" })
 map("n", "<LEADER><TAB><TAB>", "<CMD>tabnew<CR>", { desc = "New Tab" })
@@ -97,7 +93,7 @@ map("n", "[<TAB>", "<CMD>tabprevious<CR>", { desc = "Previous Tab" })
 map("n", "]<S-TAB>", "<CMD>tablast<CR>", { desc = "Next Tab" })
 map("n", "[<S-TAB>", "<CMD>tabfirst<CR>", { desc = "Previous Tab" })
 
-vim.keymap.set("n", "<leader><Tab>c", function()
+map("n", "<leader><Tab>c", function()
   vim.ui.input({ prompt = "Enter tab number to close: " }, function(input)
     local tab_number = tonumber(input)
     if tab_number then
@@ -108,7 +104,7 @@ vim.keymap.set("n", "<leader><Tab>c", function()
   end)
 end, { desc = "Close a Tab" })
 
-vim.keymap.set("n", "<leader><Tab>p", function()
+map("n", "<leader><Tab>p", function()
   vim.ui.input({ prompt = "Enter tab number to pick: " }, function(input)
     local tab_number = tonumber(input)
     if tab_number then

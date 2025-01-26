@@ -6,9 +6,21 @@ return {
       {
         "<LEADER>wp",
         function()
-          local picked_window_id = require("window-picker").pick_window()
-            or vim.api.nvim_get_current_win()
-          vim.api.nvim_set_current_win(picked_window_id)
+          local picked_window_id = require("window-picker").pick_window({
+            filter_rules = {
+              autoselect_one = false,
+              include_current_win = true,
+              bo = {
+                filetype = {
+                  "satellite",
+                },
+                buftype = {},
+              },
+            },
+          })
+          if picked_window_id then
+            vim.api.nvim_set_current_win(picked_window_id)
+          end
         end,
         desc = "Pick a Window",
         mode = "n",
@@ -16,16 +28,29 @@ return {
       {
         "<LEADER>wc",
         function()
-          local picked_window_id = require("window-picker").pick_window()
-            or vim.api.nvim_get_current_win()
-          vim.api.nvim_win_close(picked_window_id, true)
+          local picked_window_id = require("window-picker").pick_window({
+            filter_rules = {
+              autoselect_one = false,
+              include_current_win = true,
+              bo = {
+                filetype = {
+                  "satellite",
+                },
+                buftype = {},
+              },
+            },
+          })
+          if picked_window_id then
+            vim.api.nvim_win_close(picked_window_id, true)
+          end
         end,
-        desc = "Close a Window",
+        desc = "Choose a window to close",
         mode = "n",
       },
     },
     opts = {
       hint = "statusline-winbar",
+      selection_chars = "FJDKSLA;CMRUEIWOQP",
       -- hint = "floating-big-letter",
       filter_rules = {
         autoselect_one = false,

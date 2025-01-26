@@ -291,7 +291,6 @@ return {
                 vim.cmd("Neotree reveal")
               end
             end,
-            -- ["o"] = "open_with_window_picker",
             ["a"] = "noop",
             ["A"] = "noop",
             ["t"] = "noop",
@@ -305,6 +304,7 @@ return {
             ["m"] = "noop",
             ["q"] = "noop",
             ["r"] = "noop",
+            ["b"] = "noop",
             ["i"] = "noop",
 
             ["<LOCALLEADER>t"] = "open_tabnew",
@@ -334,6 +334,8 @@ return {
             ["<LOCALLEADER>q"] = "close_window",
             ["<LOCALLEADER>R"] = "refresh",
             ["<LOCALLEADER>i"] = "show_file_details",
+            ["<LOCALLEADER>r"] = "rename",
+            ["<LOCALLEADER>b"] = "rename_basename",
 
             ["h"] = "",
             ["l"] = "",

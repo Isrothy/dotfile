@@ -4,13 +4,14 @@ local lightbulb = {
   event = { "LspAttach" },
   opts = {
     priority = 10,
-    hide_in_unfocused_buffer = true,
-    link_highlights = true,
+    hide_in_unfocused_buffer = false,
+    link_highlights = false,
     validate_config = "auto",
     action_kinds = nil,
     sign = {
       enabled = true,
-      text = "💡",
+      text = "⬥",
+      lens_text = "●",
       hl = "LightBulbSign",
     },
     virtual_text = { enabled = false },
@@ -28,30 +29,6 @@ local lightbulb = {
       clients = {},
       ft = {},
       actions_without_kind = false,
-    },
-  },
-}
-
-local actions_preview = {
-  "aznhe21/actions-preview.nvim",
-  enabled = true,
-  opts = {
-    diff = {
-      ctxlen = 3,
-    },
-    backend = { "telescope", "nui" },
-    telescope = {
-      sorting_strategy = "ascending",
-      layout_strategy = "vertical",
-      layout_config = {
-        width = 0.8,
-        height = 0.9,
-        prompt_position = "top",
-        preview_cutoff = 20,
-        preview_height = function(_, _, max_lines)
-          return max_lines - 15
-        end,
-      },
     },
   },
 }
@@ -254,7 +231,7 @@ local symbol_usage = {
 
 return {
   lightbulb,
-  actions_preview,
+  -- actions_preview,
   conform,
   trouble,
   lsplinks,

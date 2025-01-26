@@ -80,8 +80,8 @@ local is_float_window = function(winid)
 end
 
 return {
-  -- dir = "~/neominimap.nvim",
-  "Isrothy/neominimap.nvim",
+  dir = "~/neominimap.nvim",
+  -- "Isrothy/neominimap.nvim",
   version = "v3.x.x",
   lazy = false,
   keys = {
@@ -127,14 +127,14 @@ return {
     -- vim.opt.wrap = false
     -- vim.opt.sidescrolloff = 36
 
-    _G.MyStatusCol = function()
-      local ok, statuscol = pcall(require, "statuscol")
-      if ok then
-        return statuscol.get_statuscol_string()
-      else
-        return ""
-      end
-    end
+    -- _G.MyStatusCol = function()
+    --   local ok, statuscol = pcall(require, "statuscol")
+    --   if ok then
+    --     return statuscol.get_statuscol_string()
+    --   else
+    --     return ""
+    --   end
+    -- end
 
     ---@type Neominimap.UserConfig
     vim.g.neominimap = {
@@ -202,7 +202,7 @@ return {
         return false
       end,
       winopt = function(wo)
-        wo.statuscolumn = "%!v:lua.MyStatusCol()"
+        -- wo.statuscolumn = "%!w:lua.MyStatusCol()"
       end,
       ---@type Neominimap.Map.Handler[]
       handlers = {

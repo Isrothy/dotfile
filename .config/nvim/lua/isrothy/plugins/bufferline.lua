@@ -33,7 +33,7 @@ M.keys = {
     "<CMD>BufferLinePickClose<CR>",
     noremap = true,
     silent = true,
-    desc = "Close Buffer",
+    desc = "Choose a Buffer to Close",
   },
   { "<LEADER>bp", "<CMD>BufferLinePick<CR>", noremap = true, silent = true, desc = "Pick Buffer" },
   {
@@ -146,7 +146,7 @@ M.config = function()
       enforce_regular_tabs = false,
       always_show_bufferline = true,
     },
-    highlights = require("nord.plugins.bufferline").akinsho(),
+    highlights = require("nordify.plugins.bufferline").get("dark"),
   })
 end
 
