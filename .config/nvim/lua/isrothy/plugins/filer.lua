@@ -43,9 +43,7 @@ local function neotree_zo(state, open_all)
 end
 
 --- Recursively open the current folder and all folders it contains.
-local function neotree_zO(state)
-  neotree_zo(state, true)
-end
+local function neotree_zO(state) neotree_zo(state, true) end
 
 -- The nodes inside the root folder are depth 2.
 local MIN_DEPTH = 2
@@ -90,9 +88,7 @@ local function neotree_zc(state, close_all)
 end
 
 -- Close all containing folders back to the top level.
-local function neotree_zC(state)
-  neotree_zc(state, true)
-end
+local function neotree_zC(state) neotree_zc(state, true) end
 
 --- Open a closed folder or close an open one, with an optional count.
 local function neotree_za(state, toggle_all)
@@ -109,9 +105,7 @@ local function neotree_za(state, toggle_all)
 end
 
 --- Recursively close an open folder or recursively open a closed folder.
-local function neotree_zA(state)
-  neotree_za(state, true)
-end
+local function neotree_zA(state) neotree_za(state, true) end
 
 --- Set depthlevel, analagous to foldlevel, for the neo-tree file tree.
 local function set_depthlevel(state, depthlevel)
@@ -197,6 +191,7 @@ end
 -- Expand all folders. Set depthlevel to the deepest node level.
 local function neotree_zR(state)
   local top_level_nodes = state.tree:get_nodes()
+
   local max_depth = 1
   for _, node in ipairs(top_level_nodes) do
     max_depth = math.max(max_depth, recursive_open(state, node))
@@ -206,13 +201,10 @@ local function neotree_zR(state)
   redraw_after_depthlevel_change(state, false)
 end
 
-local function on_move(data)
-  Snacks.rename.on_rename_file(data.source, data.destination)
-end
+local function on_move(data) Snacks.rename.on_rename_file(data.source, data.destination) end
 
 return {
   {
-
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     cmd = { "Neotree" },
@@ -224,26 +216,30 @@ return {
     },
     keys = {
       {
-        "<LEADER>lf",
-        "<CMD>Neotree filesystem toggle left<CR>",
-        desc = "Neotree Toggle Filesystem",
-      },
-      { "<LEADER>lb", "<CMD>Neotree buffers toggle left<CR>", desc = "Neotree Toggle Buffers" },
-      {
-        "<LEADER>lg",
-        "<CMD>Neotree git_status toggle left<CR>",
-        desc = "Neotree Toggle Git Status",
+        "<LEADER>ef",
+        function() require("neo-tree.command").execute({ toggle = true }) end,
+        desc = "Neotree Filesystem",
       },
       {
-        "<LEADER>lr",
-        "<CMD>Neotree reveal<CR>",
-        desc = "Neotree Reveal Current File",
+        "<LEADER>be",
+        function() require("neo-tree.command").execute({ source = "buffers", toggle = true }) end,
+        desc = "Neotree Buffers",
+      },
+      {
+        "<LEADER>ge",
+        function() require("neo-tree.command").execute({ source = "git_status", toggle = true }) end,
+        desc = "Neotree Git Status",
+      },
+      { "<LEADER>er", "<CMD>Neotree reveal<CR>", desc = "Neotree Reveal Current File" },
+      {
+        "<leader>ee",
+        function() require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() }) end,
+        desc = "NeoTree Filesystem (cwd)",
       },
     },
-    config = function()
+    opts = function()
       local events = require("neo-tree.events")
-
-      require("neo-tree").setup({
+      return {
         close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
         popup_border_style = "rounded",
         open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy", "neominimap" },
@@ -278,10 +274,8 @@ return {
           width = 36,
           auto_expand_width = false,
           mappings = {
-            ["<ESC>"] = function()
-              vim.cmd("nohl")
-            end,
-            ["<SPACE>"] = "noop",
+            ["<ESC>"] = function() vim.cmd("nohl") end,
+            ["<SPACE>"] = "none",
             ["<TAB>"] = function(state)
               local node = state.tree:get_node()
               if require("neo-tree.utils").is_expandable(node) then
@@ -291,21 +285,21 @@ return {
                 vim.cmd("Neotree reveal")
               end
             end,
-            ["a"] = "noop",
-            ["A"] = "noop",
-            ["t"] = "noop",
-            ["s"] = "noop",
-            ["v"] = "noop",
-            ["y"] = "noop",
-            ["x"] = "noop",
-            ["p"] = "noop",
-            ["P"] = "noop",
-            ["c"] = "noop",
-            ["m"] = "noop",
-            ["q"] = "noop",
-            ["r"] = "noop",
-            ["b"] = "noop",
-            ["i"] = "noop",
+            ["a"] = "none",
+            ["A"] = "none",
+            ["t"] = "none",
+            ["s"] = "none",
+            ["v"] = "none",
+            ["y"] = "none",
+            ["x"] = "none",
+            ["p"] = "none",
+            ["P"] = "none",
+            ["c"] = "none",
+            ["m"] = "none",
+            ["q"] = "none",
+            ["r"] = "none",
+            ["b"] = "none",
+            ["i"] = "none",
 
             ["<LOCALLEADER>t"] = "open_tabnew",
             ["<LOCALLEADER>s"] = "split_with_window_picker",
@@ -314,7 +308,7 @@ return {
               "add",
               -- some commands may take optional config options, see `:h neo-tree-mappings` for details
               config = {
-                show_path = "relative", -- "noop", "relative", "absolute"
+                show_path = "relative", -- "none", "relative", "absolute"
               },
             },
             ["<LOCALLEADER>y"] = "copy_to_clipboard",
@@ -323,7 +317,7 @@ return {
             ["<LOCALLEADER>c"] = {
               "copy",
               config = {
-                show_path = "relative", -- "noop", "relative", "absolute"
+                show_path = "relative", -- "none", "relative", "absolute"
               },
             },
             ["<LOCALLEADER>P"] = {
@@ -340,7 +334,7 @@ return {
             ["h"] = "",
             ["l"] = "",
 
-            ["z"] = "noop",
+            ["z"] = "none",
 
             ["zo"] = neotree_zo,
             ["zO"] = neotree_zO,
@@ -354,10 +348,10 @@ return {
             ["zM"] = neotree_zM,
             ["zr"] = neotree_zr,
             ["zR"] = neotree_zR,
-            ["<M-h>"] = "noop",
-            ["<M-j>"] = "noop",
-            ["<M-k>"] = "noop",
-            ["<M-l>"] = "noop",
+            ["<M-h>"] = "none",
+            ["<M-j>"] = "none",
+            ["<M-k>"] = "none",
+            ["<M-l>"] = "none",
           },
         },
         filesystem = {
@@ -407,22 +401,22 @@ return {
               ["<LOCALLEADER>os"] = { "order_by_size", nowait = false },
               ["<LOCALLEADER>ot"] = { "order_by_type", nowait = false },
 
-              ["H"] = "noop",
-              ["/"] = "noop",
-              ["D"] = "noop",
-              ["#"] = "noop",
-              ["f"] = "noop",
-              ["<c-x>"] = "noop",
-              ["[g"] = "noop",
-              ["]g"] = "noop",
-              ["o"] = "noop",
-              ["oc"] = "noop",
-              ["od"] = "noop",
-              ["og"] = "noop",
-              ["om"] = "noop",
-              ["on"] = "noop",
-              ["os"] = "noop",
-              ["ot"] = "noop",
+              ["H"] = "none",
+              ["/"] = "none",
+              ["D"] = "none",
+              ["#"] = "none",
+              ["f"] = "none",
+              ["<c-x>"] = "none",
+              ["[g"] = "none",
+              ["]g"] = "none",
+              ["o"] = "none",
+              ["oc"] = "none",
+              ["od"] = "none",
+              ["og"] = "none",
+              ["om"] = "none",
+              ["on"] = "none",
+              ["os"] = "none",
+              ["ot"] = "none",
             },
           },
           commands = {
@@ -475,14 +469,14 @@ return {
               ["<LOCALLEADER>gp"] = "git_push",
               ["<LOCALLEADER>gg"] = "git_commit_and_push",
 
-              ["bd"] = "noop",
-              ["o"] = "noop",
-              ["oc"] = "noop",
-              ["od"] = "noop",
-              ["om"] = "noop",
-              ["on"] = "noop",
-              ["os"] = "noop",
-              ["ot"] = "noop",
+              ["bd"] = "none",
+              ["o"] = "none",
+              ["oc"] = "none",
+              ["od"] = "none",
+              ["om"] = "none",
+              ["on"] = "none",
+              ["os"] = "none",
+              ["ot"] = "none",
             },
           },
         },
@@ -511,20 +505,20 @@ return {
               ["<LOCALLEADER>os"] = { "order_by_size", nowait = false },
               ["<LOCALLEADER>ot"] = { "order_by_type", nowait = false },
 
-              ["A"] = "noop",
-              ["gu"] = "noop",
-              ["ga"] = "noop",
-              ["gr"] = "noop",
-              ["gc"] = "noop",
-              ["gp"] = "noop",
-              ["gg"] = "noop",
-              ["o"] = "noop",
-              ["oc"] = "noop",
-              ["od"] = "noop",
-              ["om"] = "noop",
-              ["on"] = "noop",
-              ["os"] = "noop",
-              ["ot"] = "noop",
+              ["A"] = "none",
+              ["gu"] = "none",
+              ["ga"] = "none",
+              ["gr"] = "none",
+              ["gc"] = "none",
+              ["gp"] = "none",
+              ["gg"] = "none",
+              ["o"] = "none",
+              ["oc"] = "none",
+              ["od"] = "none",
+              ["om"] = "none",
+              ["on"] = "none",
+              ["os"] = "none",
+              ["ot"] = "none",
             },
           },
         },
@@ -533,34 +527,43 @@ return {
           { event = events.FILE_RENAMED, handler = on_move },
           {
             event = "neo_tree_popup_input_ready",
-            handler = function()
-              vim.cmd("stopinsert")
-            end,
+            handler = function() vim.cmd("stopinsert") end,
           },
           {
             event = "neo_tree_popup_input_ready",
             ---@param args { bufnr: integer, winid: integer }
             handler = function(args)
-              vim.keymap.set(
-                "i",
-                "<ESC>",
-                vim.cmd.stopinsert,
-                { noremap = true, buffer = args.bufnr }
-              )
+              vim.keymap.set("i", "<ESC>", vim.cmd.stopinsert, { noremap = true, buffer = args.bufnr })
             end,
           },
         },
-      })
-
-      vim.g.neo_tree_remove_legacy_commands = 1
+      }
     end,
+    init = function()
+      vim.api.nvim_create_autocmd("BufEnter", {
+        group = vim.api.nvim_create_augroup("Neotree_start_directory", { clear = true }),
+        desc = "Start Neo-tree with directory",
+        once = true,
+        callback = function()
+          if package.loaded["neo-tree"] then
+            return
+          else
+            local stats = vim.uv.fs_stat(vim.fn.argv(0))
+            if stats and stats.type == "directory" then
+              require("neo-tree")
+            end
+          end
+        end,
+      })
+    end,
+    deactivate = function() vim.cmd([[Neotree close]]) end,
   },
   {
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = { "Oil" },
     keys = {
-      { "<LEADER>O", "<CMD>Oil<CR>", desc = "Oil" },
+      { "<LEADER>,", "<CMD>Oil<CR>", desc = "Oil" },
     },
     opts = {
       columns = {

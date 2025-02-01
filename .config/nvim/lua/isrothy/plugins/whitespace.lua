@@ -53,7 +53,8 @@ return {
     "mcauley-penney/visual-whitespace.nvim",
     event = { "BufReadPost", "BufNewFile" },
     opts = function()
-      local c = require("nordify.palette")["dark"]
+      -- local c = require("nordify.palette")["dark"]
+      local c = require("nord.colors").palette ---@type Nord.Palette
       return {
         highlight = { fg = c.polar_night.light, bg = c.polar_night.brighter },
         space_char = "·",

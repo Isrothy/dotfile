@@ -130,8 +130,7 @@ M.config = function()
       diagnostics_indicator = function(_, _, diagnostics_dict, _)
         local s = ""
         for e, n in pairs(diagnostics_dict) do
-          local sym = e == "error" and " "
-            or (e == "warning" and " " or (e == "hint" and "󰌶 " or " "))
+          local sym = e == "error" and " " or (e == "warning" and " " or (e == "hint" and "󰌶 " or " "))
           s = s .. sym .. n
         end
         return s
@@ -146,7 +145,9 @@ M.config = function()
       enforce_regular_tabs = false,
       always_show_bufferline = true,
     },
-    highlights = require("nordify.plugins.bufferline").get("dark"),
+    -- highlights = require("nordify.plugins.bufferline").get("dark"),
+    -- highlights = require("nordify.plugins.bufferline").get("dark"),
+    highlights = require("nord.plugins.bufferline").akinsho(),
   })
 end
 

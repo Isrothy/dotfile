@@ -2,7 +2,6 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = { "VeryLazy" },
-    enabled = true,
     opts = {
       current_line_blame = true,
       current_line_blame_opts = {
@@ -39,28 +38,18 @@ return {
             gs.nav_hunk("prev")
           end
         end, "Prev Hunk")
-        map("n", "]H", function()
-          gs.nav_hunk("last")
-        end, "Last Hunk")
-        map("n", "[H", function()
-          gs.nav_hunk("first")
-        end, "First Hunk")
+        map("n", "]H", function() gs.nav_hunk("last") end, "Last Hunk")
+        map("n", "[H", function() gs.nav_hunk("first") end, "First Hunk")
         map({ "n", "v" }, "<LEADER>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
         map({ "n", "v" }, "<LEADER>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
         map("n", "<LEADER>ghS", gs.stage_buffer, "Stage Buffer")
         map("n", "<LEADER>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
         map("n", "<LEADER>ghR", gs.reset_buffer, "Reset Buffer")
         map("n", "<LEADER>ghp", gs.preview_hunk_inline, "Preview Hunk Inline")
-        map("n", "<LEADER>ghb", function()
-          gs.blame_line({ full = true })
-        end, "Blame Line")
-        map("n", "<LEADER>ghB", function()
-          gs.blame()
-        end, "Blame Buffer")
+        map("n", "<LEADER>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
+        map("n", "<LEADER>ghB", function() gs.blame() end, "Blame Buffer")
         map("n", "<LEADER>ghd", gs.diffthis, "Diff This")
-        map("n", "<LEADER>ghD", function()
-          gs.diffthis("~")
-        end, "Diff This ~")
+        map("n", "<LEADER>ghD", function() gs.diffthis("~") end, "Diff This ~")
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
       end,
       trouble = true,
@@ -117,7 +106,6 @@ return {
     },
   },
   {
-
     "sindrets/diffview.nvim",
     dependencies = "nvim-lua/plenary.nvim",
     cmd = {
@@ -142,7 +130,7 @@ return {
             require("git-dev").open(repo)
           end
         end,
-        desc = "[O]pen a remote git repository",
+        desc = "Open a remote git repository",
       },
     },
     opts = {
@@ -151,6 +139,7 @@ return {
   },
   {
     "ejrichards/baredot.nvim",
+    enabled = true,
     event = "VeryLazy",
     opts = {
       git_dir = "~/.cfg",
@@ -193,20 +182,14 @@ return {
         fields = { "hash", "timestamp", "author", "branch_name", "tag" },
       },
       hooks = {
-        on_select_commit = function(commit)
-          print("selected commit:", commit.hash)
-        end,
-        on_select_range_commit = function(from, to)
-          print("selected range:", from.hash, to.hash)
-        end,
+        on_select_commit = function(commit) print("selected commit:", commit.hash) end,
+        on_select_range_commit = function(from, to) print("selected range:", from.hash, to.hash) end,
       },
     },
     keys = {
       {
         "<LEADER>gl",
-        function()
-          require("gitgraph").draw({}, { all = true, max_count = 5000 })
-        end,
+        function() require("gitgraph").draw({}, { all = true, max_count = 5000 }) end,
         desc = "GitGraph - Draw",
       },
     },

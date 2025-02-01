@@ -44,6 +44,8 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/opt/homebrew/opt/zip/bin:$PATH"
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="/opt/homebrew/lib/ruby/gems/3.3.0/bin:$PATH"
 export PATH="/Users/jiangjoshua/.rustup/toolchains/nightly-aarch64-apple-darwin/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 export PATH="/opt/homebrew/anaconda3/bin":$PATH
@@ -71,7 +73,8 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 export FZF_DEFAULT_COMMAND="fd --type file --color=always"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS="--ansi"
+# export FZF_DEFAULT_OPTS="--ansi  --color bg+:#3B4252"
+export FZF_DEFAULT_OPTS="--ansi  --color bg+:#D8DEE9"
 
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 

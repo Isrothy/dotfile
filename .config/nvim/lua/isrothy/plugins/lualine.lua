@@ -1,6 +1,4 @@
-local tab_size = function()
-  return (vim.bo.expandtab and "␠" or "␉") .. vim.bo.tabstop
-end
+local tab_size = function() return (vim.bo.expandtab and "␠" or "␉") .. vim.bo.tabstop end
 
 -- Truncating components in smaller window
 local trunc = function(trunc_width, trunc_len, hide_width, no_ellipsis)
@@ -81,7 +79,8 @@ return {
   },
 
   opts = function()
-    local c = require("nordify.palette")["dark"]
+    -- local c = require("nordify.palette")["dark"]
+    local c = require("nord.colors").palette ---@type Nord.Palette
     local minimap_extension = require("neominimap.statusline").lualine_default
     local trouble = require("trouble")
     local symbols = trouble.statusline({

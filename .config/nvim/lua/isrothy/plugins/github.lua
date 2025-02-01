@@ -29,7 +29,8 @@ return {
       { "#", "#<C-X><C-O>", mode = "i", ft = "octo", silent = true },
     },
     config = function()
-      local c = require("nordify.palette")["dark"]
+      -- local c = require("nordify.palette")["dark"]
+      local c = require("nord.colors").palette ---@type Nord.Palette
       require("octo").setup({
         colors = {
           white = c.snow_storm.origin,
