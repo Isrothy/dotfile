@@ -11,7 +11,7 @@ return {
       {
         "<LEADER>?",
         function() require("which-key").show({ global = false }) end,
-        desc = "Buffer Local Keymaps (Which-Key)",
+        desc = "Buffer local keymaps (Which-Key)",
       },
     },
     opts = {
@@ -91,6 +91,10 @@ return {
         { "<LEADER><TAB>", group = "Tab" },
 
         { "<LEADER><LEADER>", group = "LSP" },
+
+        { "<LOCALLEADER>v", group = "VimTeX", cond = function() return vim.bo.filetype == "tex" end },
+        { "<LOCALLEADER>vw", group = "Count", cond = function() return vim.bo.filetype == "tex" end },
+        { "<LOCALLEADER>vW", group = "Count Detailed", cond = function() return vim.bo.filetype == "tex" end },
       },
     },
   },

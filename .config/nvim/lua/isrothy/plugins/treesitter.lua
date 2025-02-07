@@ -15,6 +15,9 @@ return {
       disable_virtual_text = true,
       include_match_words = false,
     },
+    textobjects = {
+      select = { enable = false },
+    },
     highlight = {
       enable = true,
       additional_vim_regex_highlighting = false,

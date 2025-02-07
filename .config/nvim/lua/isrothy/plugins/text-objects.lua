@@ -1,40 +1,10 @@
 local custom_textobjects = {
-  f = {
-    a = "@function.outer",
-    i = "@function.inner",
-  },
   o = {
-    a = { "@conditional.outer", "@loop.outer" },
-    i = { "@conditional.inner", "@loop.inner" },
+    a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+    i = { "@block.inner", "@conditional.inner", "@loop.inner" },
   },
-  c = {
-    a = "@class.outer",
-    i = "@class.inner",
-  },
-  C = {
-    a = "@comment.outer",
-    i = "@comment.inner",
-  },
-  s = {
-    a = "@statement.outer",
-    i = "@statement.inner",
-  },
-  b = {
-    a = "@block.outer",
-    i = "@block.inner",
-  },
-  p = {
-    a = "@parameter.outer",
-    i = "@parameter.inner",
-  },
-  t = {
-    a = "@call.outer",
-    i = "@call.inner",
-  },
-  m = {
-    a = "@method.outer",
-    i = "@method.inner",
-  },
+  f = { a = "@function.outer", i = "@function.inner" },
+  c = { a = "@class.outer", i = "@class.inner" },
 }
 
 return {
@@ -50,7 +20,7 @@ return {
         subword = "S", -- lowercase taken for sentence textobj
         notebookCell = "N",
         closedFold = "z", -- z is the common prefix for folds
-        chainMember = "m",
+        chainMember = ".",
         lineCharacterwise = "_",
         greedyOuterIndentation = "g",
         anyQuote = "q",
@@ -91,7 +61,7 @@ return {
           { "o", "x" },
           map,
           "<CMD>lua require('various-textobjs')." .. objName .. "()<CR>",
-          { desc = objName .. " Textobj" }
+          { desc = objName .. " textobj" }
         )
       end
 
@@ -101,13 +71,13 @@ return {
           { "o", "x" },
           "a" .. map,
           "<CMD>lua require('various-textobjs')." .. objName .. "('outer')<CR>",
-          { desc = "Outer" .. name }
+          { desc = "outer" .. name }
         )
         keymap(
           { "o", "x" },
           "i" .. map,
           "<CMD>lua require('various-textobjs')." .. objName .. "('inner')<CR>",
-          { desc = "Inner" .. name }
+          { desc = "inner" .. name }
         )
       end
 
@@ -123,13 +93,13 @@ return {
                 { "o", "x" },
                 "a" .. map,
                 ("<CMD>lua require('various-textobjs').%s('%s')<CR>"):format(objName, "outer"),
-                { desc = "Outer" .. name, buffer = true }
+                { desc = "outer" .. name, buffer = true }
               )
               keymap(
                 { "o", "x" },
                 "i" .. map,
                 ("<CMD>lua require('various-textobjs').%s('%s')<CR>"):format(objName, "inner"),
-                { desc = "Inner" .. name, buffer = true }
+                { desc = "inner" .. name, buffer = true }
               )
             end
           end,
@@ -144,53 +114,33 @@ return {
   },
   {
     "echasnovski/mini.ai",
-    enabled = true,
-    event = { "BufReadPost", "BufNewFile" },
+    event = "VeryLazy",
     depenencies = {
       "nvim-treesitter",
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
-    config = function()
-      local spec_treesitter = require("mini.ai").gen_spec.treesitter
-      local custom_textobj = {}
-      for key, val in pairs(custom_textobjects) do
-        custom_textobj[key] = spec_treesitter(val)
-      end
-
-      require("mini.ai").setup({
-        -- Table with textobject id as fields, textobject specification as values.
-        -- Also use this to disable builtin textobjects. See |MiniAi.config|.
-        custom_textobjects = custom_textobj,
-
-        -- Module mappings. Use `''` (empty string) to disable one.
-        mappings = {
-          -- Main textobject prefixes
-          around = "a",
-          inside = "i",
-          -- Next/last variants
-          around_next = "an",
-          inside_next = "in",
-          around_last = "al",
-          inside_last = "il",
-
-          -- Move cursor to corresponding edge of `a` textobject
-          goto_left = "g[",
-          goto_right = "g]",
+    opts = function()
+      local ai = require("mini.ai")
+      return {
+        n_lines = 500,
+        custom_textobjects = {
+          o = ai.gen_spec.treesitter({ -- code block
+            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+          }),
+          f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
+          C = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
+          t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" }, -- tags
+          u = ai.gen_spec.function_call(), -- u for "Usage"
+          U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
         },
 
-        -- Number of lines within which textobject is searched
-        n_lines = 50,
-
-        -- How to search for object (first inside current line, then inside
-        -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
-        -- 'cover_or_nearest', 'next', 'previous', 'nearest'.
         search_method = "cover_or_next",
-      })
+      }
     end,
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     event = { "BufReadPost", "BufNewFile" },
-    enabled = true,
   },
 }

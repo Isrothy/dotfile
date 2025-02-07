@@ -41,6 +41,7 @@ opt.linebreak = true
 opt.scrolloff = 8
 opt.smoothscroll = true
 opt.sidescrolloff = 16
+opt.signcolumn = "yes"
 
 opt.history = 2000
 opt.ttimeoutlen = 0

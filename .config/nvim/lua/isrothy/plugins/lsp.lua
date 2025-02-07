@@ -31,17 +31,17 @@ vim.diagnostic.config({
 local set_keymap = function(_, bufnr)
   map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
   map("n", "<LEADER><LEADER>h", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
-  map("n", "<LEADER><LEADER>n", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename Symbol" })
+  map("n", "<LEADER><LEADER>n", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename symbol" })
 
-  map("n", "<LEADER>Wa", vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Add Workspace" })
-  map("n", "<LEADER>Wr", vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = "Remove Workspace" })
+  map("n", "<LEADER>Wa", vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Add workspace" })
+  map("n", "<LEADER>Wr", vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = "Remove workspace" })
   map(
     "n",
     "<LEADER>Wl",
     function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
     { buffer = bufnr, desc = "List workspace" }
   )
-  map("n", "<LEADER>Ws", function() vim.lsp.buf.workspace_symbol() end, { buffer = bufnr, desc = "Workspace Symbols" })
+  map("n", "<LEADER>Ws", function() vim.lsp.buf.workspace_symbol() end, { buffer = bufnr, desc = "Workspace symbols" })
 end
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -216,6 +216,21 @@ local Lspconfig = {
         set_keymap(client, bufnr)
         set_inlay_hint(client, bufnr)
       end,
+      settings = {
+        texlab = {
+          bibtexFormatter = "texlab",
+          chktex = {
+            onEdit = true,
+            onOpenAndSave = true,
+          },
+          diagnosticsDelay = 300,
+          formatterLineLength = 80,
+          latexFormatter = "texlab",
+          latexindent = {
+            modifyLineBreaks = true,
+          },
+        },
+      },
     })
     require("lspconfig").lua_ls.setup({
       capabilities = require("blink.cmp").get_lsp_capabilities(),

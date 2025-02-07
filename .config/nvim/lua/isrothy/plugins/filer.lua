@@ -218,23 +218,23 @@ return {
       {
         "<LEADER>ef",
         function() require("neo-tree.command").execute({ toggle = true }) end,
-        desc = "Neotree Filesystem",
+        desc = "Neotree filesystem",
       },
       {
         "<LEADER>be",
         function() require("neo-tree.command").execute({ source = "buffers", toggle = true }) end,
-        desc = "Neotree Buffers",
+        desc = "Neotree buffers",
       },
       {
         "<LEADER>ge",
         function() require("neo-tree.command").execute({ source = "git_status", toggle = true }) end,
-        desc = "Neotree Git Status",
+        desc = "Neotree Git status",
       },
-      { "<LEADER>er", "<CMD>Neotree reveal<CR>", desc = "Neotree Reveal Current File" },
+      { "<LEADER>er", "<CMD>Neotree reveal<CR>", desc = "Neotree reveal current file" },
       {
         "<leader>ee",
         function() require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() }) end,
-        desc = "NeoTree Filesystem (cwd)",
+        desc = "NeoTree filesystem (cwd)",
       },
     },
     opts = function()
@@ -641,7 +641,7 @@ return {
               grug_far.update_instance_prefills("explorer", prefills, false)
             end
           end,
-          desc = "oil: Search in directory",
+          desc = "Oil: Search in directory",
         },
       },
       use_default_keymaps = false,

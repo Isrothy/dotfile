@@ -58,14 +58,14 @@ return {
       function()
         require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
       end,
-      desc = "Breakpoint Condition",
+      desc = "Breakpoint condition",
     },
     {
       "<LEADER>db",
       function()
         require("dap").toggle_breakpoint()
       end,
-      desc = "Toggle Breakpoint",
+      desc = "Toggle breakpoint",
     },
     {
       "<LEADER>dc",
@@ -79,7 +79,7 @@ return {
       function()
         require("dap").run_to_cursor()
       end,
-      desc = "Run to Cursor",
+      desc = "Run to cursor",
     },
     {
       "<LEADER>dg",
@@ -93,7 +93,7 @@ return {
       function()
         require("dap").step_into()
       end,
-      desc = "Step Into",
+      desc = "Step into",
     },
     {
       "<LEADER>dj",
@@ -114,21 +114,21 @@ return {
       function()
         require("dap").run_last()
       end,
-      desc = "Run Last",
+      desc = "Run last",
     },
     {
       "<LEADER>do",
       function()
         require("dap").step_out()
       end,
-      desc = "Step Out",
+      desc = "Step out",
     },
     {
       "<LEADER>dO",
       function()
         require("dap").step_over()
       end,
-      desc = "Step Over",
+      desc = "Step over",
     },
     {
       "<LEADER>dp",
@@ -170,7 +170,7 @@ return {
       function()
         require("neotest").run.run({ strategy = "dap" })
       end,
-      desc = "Debug Nearest",
+      desc = "Debug nearest",
     },
 
     -- {

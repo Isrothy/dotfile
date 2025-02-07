@@ -191,7 +191,6 @@ return {
     "RRethy/nvim-treesitter-endwise",
     event = { "InsertEnter" },
   },
-
   {
     "windwp/nvim-ts-autotag",
     event = { "BufReadPost", "BufNewFile" },
@@ -239,16 +238,6 @@ return {
     opts = {
       use_default_keymaps = false,
       max_join_length = 0xffffffff,
-    },
-  },
-  {
-    "danymat/neogen",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-    },
-    cmd = "Neogen",
-    opts = {
-      snippet_engine = "nvim",
     },
   },
 }

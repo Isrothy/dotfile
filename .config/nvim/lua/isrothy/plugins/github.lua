@@ -8,11 +8,11 @@ return {
     },
     cmd = { "Octo" },
     keys = {
-      { "<LEADER>gi", "<cmd>Octo issue list<CR>", desc = "List Issues (Octo)" },
-      { "<LEADER>gI", "<cmd>Octo issue search<CR>", desc = "Search Issues (Octo)" },
+      { "<LEADER>gi", "<cmd>Octo issue list<CR>", desc = "List issues (Octo)" },
+      { "<LEADER>gI", "<cmd>Octo issue search<CR>", desc = "Search issues (Octo)" },
       { "<LEADER>gp", "<cmd>Octo pr list<CR>", desc = "List PRs (Octo)" },
       { "<LEADER>gP", "<cmd>Octo pr search<CR>", desc = "Search PRs (Octo)" },
-      { "<LEADER>gr", "<cmd>Octo repo list<CR>", desc = "List Repos (Octo)" },
+      { "<LEADER>gr", "<cmd>Octo repo list<CR>", desc = "List repos (Octo)" },
       { "<LEADER>gS", "<cmd>Octo search<CR>", desc = "Search (Octo)" },
 
       { "<LOCALLEADER>a", "", desc = "+assignee (Octo)", ft = "octo" },
@@ -52,7 +52,7 @@ return {
   {
     "topaxi/gh-actions.nvim",
     keys = {
-      { "<LEADER>ga", "<CMD>GhActions<CR>", desc = "Open Github Actions" },
+      { "<LEADER>ga", "<CMD>GhActions<CR>", desc = "Open Github actions" },
     },
     -- optional, you can also install and use `yq` instead.
     build = "make",

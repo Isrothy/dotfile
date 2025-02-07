@@ -1,6 +1,7 @@
 return {
   "linux-cultist/venv-selector.nvim",
   branch = "regexp", -- Use this branch for the new version
+  enabled = false,
   ft = "python",
   cmd = "VenvSelect",
   opts = {

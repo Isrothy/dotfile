@@ -16,7 +16,7 @@ local neotest = {
         vim.notify("Running current test file")
         require("neotest").run.run(vim.fn.expand("%"))
       end,
-      desc = "Run File",
+      desc = "Run file",
     },
     {
       "<LEADER>tT",
@@ -24,7 +24,7 @@ local neotest = {
         vim.notify("Running all test files")
         require("neotest").run.run(vim.loop.cwd())
       end,
-      desc = "Run All Test Files",
+      desc = "Run all test files",
     },
     {
       "<LEADER>tr",
@@ -32,7 +32,7 @@ local neotest = {
         vim.notify("Running nearest test")
         require("neotest").run.run()
       end,
-      desc = "Run Nearest",
+      desc = "Run nearest",
     },
     {
       "<LEADER>tl",
@@ -40,28 +40,28 @@ local neotest = {
         vim.notify("Running last test")
         require("neotest").run.run_last()
       end,
-      desc = "Run Last",
+      desc = "Run last",
     },
     {
       "<LEADER>ts",
       function()
         require("neotest").summary.toggle()
       end,
-      desc = "Toggle Summary",
+      desc = "Toggle summary",
     },
     {
       "<LEADER>to",
       function()
         require("neotest").output.open({ enter = true, auto_close = true })
       end,
-      desc = "Show Output",
+      desc = "Show output",
     },
     {
       "<LEADER>tO",
       function()
         require("neotest").output_panel.toggle()
       end,
-      desc = "Toggle Output Panel",
+      desc = "Toggle output panel",
     },
     {
       "<LEADER>tS",

@@ -22,7 +22,7 @@ return {
             vim.api.nvim_set_current_win(picked_window_id)
           end
         end,
-        desc = "Pick a Window",
+        desc = "Pick a window",
         mode = "n",
       },
       {
@@ -91,52 +91,52 @@ return {
         "<C-H>",
         "<CMD>lua require('smart-splits').move_cursor_left()<CR>",
         mode = { "n", "t" },
-        desc = "Move Cursor Left",
+        desc = "Move cursor left",
       },
       {
         "<C-J>",
         "<CMD>lua require('smart-splits').move_cursor_down()<CR>",
         mode = { "n", "t" },
-        desc = "Move Cursor Down",
+        desc = "Move cursor down",
       },
       {
         "<C-K>",
         "<CMD>lua require('smart-splits').move_cursor_up()<CR>",
         mode = { "n", "t" },
-        desc = "Move Cursor Up",
+        desc = "Move cursor up",
       },
       {
         "<C-L>",
         "<CMD>lua require('smart-splits').move_cursor_right()<CR>",
         mode = { "n", "t" },
-        desc = "Move Cursor Right",
+        desc = "Move cursor right",
       },
 
       {
         "<LEADER>bsh",
         "<CMD>lua require('smart-splits').swap_buf_left()<CR>",
-        desc = "Swap Buffers Left",
+        desc = "Swap buffers left",
       },
       {
         "<LEADER>bsj",
         "<CMD>lua require('smart-splits').swap_buf_down()<CR>",
-        desc = "Swap Buffers Down",
+        desc = "Swap buffers down",
       },
       {
         "<LEADER>bsk",
         "<CMD>lua require('smart-splits').swap_buf_up()<CR>",
-        desc = "Swap Buffers Up",
+        desc = "Swap buffers up",
       },
       {
         "<LEADER>bsl",
         "<CMD>lua require('smart-splits').swap_buf_right()<CR>",
-        desc = "Swap Buffers Right",
+        desc = "Swap buffers right",
       },
 
-      { "<M-h>", "<CMD>lua require('smart-splits').resize_left()<CR>", desc = "Resize Left" },
-      { "<M-j>", "<CMD>lua require('smart-splits').resize_down()<CR>", desc = "Resize Down" },
-      { "<M-k>", "<CMD>lua require('smart-splits').resize_up()<CR>", desc = "Resize Up" },
-      { "<M-l>", "<CMD>lua require('smart-splits').resize_right()<CR>", desc = "Resize Right" },
+      { "<M-h>", "<CMD>lua require('smart-splits').resize_left()<CR>", desc = "Resize left" },
+      { "<M-j>", "<CMD>lua require('smart-splits').resize_down()<CR>", desc = "Resize down" },
+      { "<M-k>", "<CMD>lua require('smart-splits').resize_up()<CR>", desc = "Resize up" },
+      { "<M-l>", "<CMD>lua require('smart-splits').resize_right()<CR>", desc = "Resize right" },
     },
     opts = {
       ignored_buftypes = {

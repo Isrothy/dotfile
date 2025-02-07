@@ -5,7 +5,7 @@ return {
       "GrugFar",
     },
     keys = {
-      { "<LEADER>:", "<CMD>GrugFar<CR>", desc = "Search and Replace" },
+      { "<LEADER>:", "<CMD>GrugFar<CR>", desc = "Search and replace" },
     },
     opts = { headerMaxWidth = 80 },
   },

@@ -2,12 +2,22 @@ return {
   {
     "tris203/precognition.nvim",
     keys = {
-      {
-        "\\",
-        function()
-          require("precognition").peek()
-        end,
-        desc = "Precognition",
+      { "\\", function() require("precognition").peek() end, desc = "Precognition" },
+    },
+    {
+      "icholy/lsplinks.nvim",
+      event = "LspAttach",
+      keys = {
+        {
+          "<LEADER><LEADER>l",
+          function() require("lsplinks").gx() end,
+          mode = { "n" },
+          desc = "Open link",
+        },
+      },
+      opts = {
+        highlight = true,
+        hl_group = "Underlined",
       },
     },
   },
@@ -17,27 +27,21 @@ return {
     keys = {
       {
         "<LEADER>v",
-        mode = { "n", "x", "o" },
-        function()
-          require("flash").jump()
-        end,
+        function() require("flash").jump() end,
         desc = "Flash",
+        mode = { "n", "x", "o" },
       },
       {
         "<LEADER>V",
-        mode = { "n", "o", "x" },
-        function()
-          require("flash").treesitter()
-        end,
+        function() require("flash").treesitter() end,
         desc = "Flash Treesitter",
+        mode = { "n", "o", "x" },
       },
       {
         "r",
-        mode = "o",
-        function()
-          require("flash").remote()
-        end,
+        function() require("flash").remote() end,
         desc = "Remote Flash",
+        mode = { "o" },
       },
     },
     opts = {

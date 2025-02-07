@@ -22,14 +22,14 @@ return {
       function()
         require("todo-comments").jump_next()
       end,
-      desc = "Next Todo Tomment",
+      desc = "Next todo Comment",
     },
     {
       "[t",
       function()
         require("todo-comments").jump_prev()
       end,
-      desc = "Previous Todo Tomment",
+      desc = "Previous todo Comment",
     },
   },
 

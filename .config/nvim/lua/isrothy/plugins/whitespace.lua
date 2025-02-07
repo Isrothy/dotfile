@@ -75,7 +75,7 @@ return {
         function()
           require("ibl.textobjects").around()
         end,
-        desc = "Around Indent",
+        desc = "Around indent",
         mode = { "o", "x" },
       },
       {
@@ -83,7 +83,7 @@ return {
         function()
           require("ibl.textobjects").around({ entire_line = true })
         end,
-        desc = "Around Indent",
+        desc = "Around indent",
         mode = { "o", "x" },
       },
       {
@@ -91,7 +91,7 @@ return {
         function()
           require("ibl.textobjects").inside()
         end,
-        desc = "Inside Indent",
+        desc = "Inside indent",
         mode = { "o", "x" },
       },
     },
