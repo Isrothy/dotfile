@@ -1,0 +1,160 @@
+\documentclass[11pt]{article}
+
+\usepackage{homeworkpkg}
+\usepackage{amsmath}
+\usepackage{enumerate}
+
+%% Local Macros and packages: add any of your own definitions here.
+
+\begin{document}
+
+% Homework number, your name and NetID
+\homework
+{1} %specify the number of the assignment here
+{Jiahe Jiang (jiahej2)}
+
+\section*{Q1}
+\begin{enumerate}[a.]
+	\item
+		\textit{True}
+
+		We can assume that outliers are at least one
+		standerd deviation away from the mean.
+
+		Let \(n\) be the number of data points, \(\mu\) be the sample mean
+		\(\sigma\) be the sample standard deviation, and \(x\) be the outlier,
+		where \(\|{x - \mu} \| \geq \sigma\).
+
+		If we delete a outlier, then the new standard deviation will be
+
+		\begin{align}
+			\sigma'^2 - \sigma^2 & = \frac{1}{(n - 1)^2} \Bigl( n \sigma ^2  + n \mu ^2 - x ^2\Bigr) - \left( \frac{n \mu - x}{n- 1} \right)^2 - \sigma ^2 \\
+								 & = \frac{1}{(n - 1)^2} \Bigl(n\bigl(\sigma^2 - (x - \mu)^2 - \sigma^2\bigr)\Bigr)                                        \\
+								 & < 0
+		\end{align}
+
+		Therefore, the new standard deviation will be smaller than the original one.
+	\item
+		\textit{True}
+
+		Let \(n = 2\), \(x_1 = 1\), \(x_2 = 3\), then
+		\(\mu = 2\), \(\sigma^2 = 1\)
+
+		Then \(z_1\) = \(\frac{1 - 2}{\sqrt{1}} < 0\)
+	\item
+		\textit{False}
+
+		Consider two discrete distributions defined over a binary variable \( x \in \{0, 1\} \):
+
+		\[
+			p(0)=0.9,\quad p(1)=0.1,
+		\]
+		\[
+			q(0)=0.5,\quad q(1)=0.5.
+		\]
+
+		\begin{align*}
+			D_{\mathrm{KL}}(p \parallel q) &= 0.9 \ln\left(\frac{0.9}{0.5}\right) + 0.1 \ln\left(\frac{0.1}{0.5}\right)\\[1ex]
+										   &\approx 0.3681.
+		\end{align*}
+		\begin{align*}
+			D_{\mathrm{KL}}(q \parallel p) &= 0.5 \ln\left(\frac{0.5}{0.9}\right) + 0.5 \ln\left(\frac{0.5}{0.1}\right)\\[1ex]
+										   &\approx 0.5108.
+		\end{align*}
+	\item
+		\textit{False}
+
+		\begin{align*}
+			\rho_{X,Y} &= \frac{\operatorname{cov}(X,Y)}{\sigma_X \sigma_Y}\\
+					  &= \frac{\mathbb{E}[(X - \mu_x)(Y - \mu_y)]}{\sigma_X \sigma_Y}\\
+			\rho_{2X,Y} &= \frac{\operatorname{cov}(2X,Y)}{\sigma_{2X} \sigma_Y}\\
+					  &= \frac{\mathbb{E}[(2X - 2\mu_x)(Y - \mu_y)]}{2\sigma_X \sigma_Y}\\
+					  &= \frac{2\mathbb{E}[(X - \mu_x)(Y - \mu_y)]}{2\sigma_X \sigma_Y}\\
+					  &= \rho_{X,Y}
+		\end{align*}
+	\item
+		\textit{False}
+		Outliers have greater effect on variances because squaring amplifies the impact of large differences. 
+	\item
+		\textit{False}
+		Due to the curse of dimensionality, a dataset with high dimensionality is more likely to sparsity.
+	\item
+		\textit{True}
+		Let \(\mathbf{x} = (x_1, x_2, \ldots, x_n)\) and \(\mathbf{y} = (y_1, y_2, \ldots, y_n)\) be two points in \(\mathbb{R}^n\). Define the difference vector
+		\[
+			\mathbf{z} = \mathbf{x} - \mathbf{y} = (z_1, z_2, \ldots, z_n),
+		\]
+		where \(z_i = x_i - y_i\) for \(i = 1, \ldots, n\).
+
+		The Manhattan distance between \(\mathbf{x}\) and \(\mathbf{y}\) is given by:
+		\[
+			d_1(\mathbf{x}, \mathbf{y}) = \|\mathbf{z}\|_1 = \sum_{i=1}^n |z_i|.
+		\]
+
+		The Euclidean distance between \(\mathbf{x}\) and \(\mathbf{y}\) is given by:
+		\[
+			d_2(\mathbf{x}, \mathbf{y}) = \|\mathbf{z}\|_2 = \sqrt{\sum_{i=1}^n z_i^2}.
+		\]
+
+		For any vector \(\mathbf{z}\), we have
+		\[
+			\|\mathbf{z}\|_2 \leq \|\mathbf{z}\|_1.
+		\]
+
+		Therefore, \( d_1(\mathbf{x}, \mathbf{y}) \leq d_2(\mathbf{x}, \mathbf{y}) \).
+	\item
+		\textit{False}
+
+		\[
+			Q_1 \approx -0.6745 \quad \text{and} \quad Q_3 \approx 0.6745.
+		\]
+		Thus, the IQR is approximately:
+		\[
+			\text{IQR} \approx 0.6745 - (-0.6745) \approx 1.349.
+		\]
+
+		Two interquartile ranges of the median is given by:
+		\[
+			\left[ -2 \times 1.349, \, 2 \times 1.349 \right] = \left[ -2.698, \, 2.698 \right].
+		\]
+
+		Using standard normal distribution, we find:
+		\[
+			P(Z \le 2.698) \approx 0.9965 \quad \text{and} \quad P(Z \le -2.698) \approx 0.0035.
+		\]
+		Thus, the probability is approximately:
+		\[
+			0.9965 - 0.0035 = 0.9930 
+		\]
+		Which is different from 95\%.
+	\item
+		\textit{False}
+		A nominal attribute do not have an inherent order.
+	\item
+		\textit{False}
+		They are two different concepts.
+	\item
+		\textit{True}
+		Outliers in a box plot are the data points that lie below \(Q_1 - 1.5
+		\times \text{IQR}\) or above \(Q_3 + 1.5 \times \text{IQR}\).
+	\item
+		\textit{True}
+		\[
+			z = \frac{x - \mu}{\sigma}
+		\]
+		if \(x < \mu\) then \(z < 0\)
+\end{enumerate}
+\clearpage
+
+\section{Q2}
+\begin{enumerate}[a.]
+	\item \textit{answers for Q2}
+
+	\item
+\end{enumerate}
+
+\clearpage
+%uncomment the following line if you have any citations, and put the bibtex into citations.bib
+% \bibliography{citations}
+\bibliographystyle{ims}
+\end{document}
