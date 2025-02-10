@@ -74,13 +74,15 @@ return {
   dependencies = {
     "nvim-tree/nvim-web-devicons",
     "Isrothy/lualine-diagnostic-message",
+    "nordify.nvim",
     "meuter/lualine-so-fancy.nvim",
     "folke/noice.nvim",
+    "folke/trouble.nvim",
   },
 
   opts = function()
-    -- local c = require("nordify.palette")["dark"]
-    local c = require("nord.colors").palette ---@type Nord.Palette
+    local c = require("nordify.palette")["dark"]
+    -- local c = require("nord.colors").palette ---@type Nord.Palette
     local minimap_extension = require("neominimap.statusline").lualine_default
     local trouble = require("trouble")
     local symbols = trouble.statusline({
@@ -94,6 +96,7 @@ return {
 
     return {
       options = {
+        theme = "nordify-dark",
         icons_enabled = true,
         component_separators = "",
         section_separators = "",
@@ -116,6 +119,7 @@ return {
             "trouble",
             "snacks_dashboard",
             "oil",
+            "qf",
             "grug-far",
             "dbout",
             "",

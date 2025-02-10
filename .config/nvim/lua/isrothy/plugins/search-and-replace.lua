@@ -1,11 +1,9 @@
 return {
   {
     "MagicDuck/grug-far.nvim",
-    cmd = {
-      "GrugFar",
-    },
+    cmd = { "GrugFar" },
     keys = {
-      { "<LEADER>:", "<CMD>GrugFar<CR>", desc = "Search and replace" },
+      { "<F2>", "<CMD>GrugFar<CR>", desc = "Search and replace" },
     },
     opts = { headerMaxWidth = 80 },
   },

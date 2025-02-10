@@ -6,7 +6,6 @@ return {
       "echasnovski/mini.ai",
     },
     event = "VeryLazy",
-    enable = true,
     keys = {
       {
         "<LEADER>?",
@@ -51,50 +50,55 @@ return {
       --   scroll_up = "<c-p>", -- binding to scroll up inside the popup
       -- },
       spec = {
-        { "<LEADER>b", group = "Buffer" },
+        {
+          "<LEADER>b",
+          group = "Buffer",
+          expand = function() return require("which-key.extras").expand.buf() end,
+        },
         { "<LEADER>bs", group = "Swap" },
-        { "<LEADER>e", group = "Explore" },
+        { "<LEADER>c", group = "Colorize" },
         { "<LEADER>d", group = "Dap" },
+        { "<LEADER>e", group = "Explore" },
         { "<LEADER>f", group = "Find" },
-        { "<LEADER>j", group = "TreeSJ" },
         { "<LEADER>g", group = "Git" },
         { "<LEADER>h", group = "Harpoon" },
-        { "<LEADER>k", group = "Git Conflict" },
-        -- { "<LEADER>l", group = "Neotree" },
+        { "<LEADER>j", group = "TreeSJ" },
+        { "<LEADER>k", group = "Git conflict" },
+        { "<LEADER>l", group = "LSP" },
         { "<LEADER>m", group = "Minimap" },
         { "<LEADER>mb", group = "[b]uffer" },
         { "<LEADER>mw", group = "[w]indow" },
         { "<LEADER>mt", group = "[t]ab" },
         { "<LEADER>n", group = "Noice" },
-
         { "<LEADER>o", group = "Overseer" },
 
         { "<LEADER>q", group = "Profiler" },
         { "<LEADER>r", group = "Refactors" },
 
         { "<LEADER>t", group = "Neotest" },
-        { "<LEADER>u", group = "Toggle" },
+        { "<LEADER>u", group = "Snacks toggle" },
 
-        { "<LEADER>w", proxy = "<C-W>", group = "windows" },
+        {
+          "<LEADER>w",
+          proxy = "<C-W>",
+          group = "windows",
+          expand = function() return require("which-key.extras").expand.win() end,
+        },
         { "<LEADER>W", group = "Wrokspace" },
         { "<LEADER>x", group = "Diagnostics" },
 
         { "<LEADER>/", group = "Grep" },
 
-        { "ga", group = "TextCase" },
+
+        { "ga", group = "Text case" },
         { "gao", group = "Pending Mode Operator" },
-        -- { "z", group = "Fold" },
 
         { "[", group = "Prev" },
         { "]", group = "Next" },
 
-        { "<LEADER><TAB>", group = "Tab" },
-
-        { "<LEADER><LEADER>", group = "LSP" },
-
-        { "<LOCALLEADER>v", group = "VimTeX", cond = function() return vim.bo.filetype == "tex" end },
-        { "<LOCALLEADER>vw", group = "Count", cond = function() return vim.bo.filetype == "tex" end },
-        { "<LOCALLEADER>vW", group = "Count Detailed", cond = function() return vim.bo.filetype == "tex" end },
+        { "<LEADER><TAB>", group = "Tabpage" },
+        { "<LEADER><SPACE>", group = "Whitespaces" },
+        { "<LEADER><SPACE>b", group = "Buffer" },
       },
     },
   },

@@ -216,25 +216,25 @@ return {
     },
     keys = {
       {
-        "<LEADER>ef",
+        "<LEADER>ee",
         function() require("neo-tree.command").execute({ toggle = true }) end,
-        desc = "Neotree filesystem",
+        desc = "NeoTree filesystem",
       },
       {
         "<LEADER>be",
         function() require("neo-tree.command").execute({ source = "buffers", toggle = true }) end,
-        desc = "Neotree buffers",
+        desc = "Explore buffers",
       },
       {
         "<LEADER>ge",
         function() require("neo-tree.command").execute({ source = "git_status", toggle = true }) end,
-        desc = "Neotree Git status",
+        desc = "Explore git status",
       },
-      { "<LEADER>er", "<CMD>Neotree reveal<CR>", desc = "Neotree reveal current file" },
+      { "<LEADER>er", "<CMD>Neotree reveal<CR>", desc = "Reveal in Neo-tree" },
       {
-        "<leader>ee",
+        "<leader>eE",
         function() require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() }) end,
-        desc = "NeoTree filesystem (cwd)",
+        desc = "Explorer current directory",
       },
     },
     opts = function()
@@ -563,7 +563,7 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = { "Oil" },
     keys = {
-      { "<LEADER>,", "<CMD>Oil<CR>", desc = "Oil" },
+      { "<F3>", "<CMD>Oil<CR>", desc = "Oil" },
     },
     opts = {
       columns = {

@@ -11,9 +11,11 @@ map({ "n", "x" }, "<SPACE>", "<NOP>")
 map({ "n", "x" }, "\\", "<NOP>")
 map({ "n", "x", "i", "c" }, "<C-Z>", "<NOP>")
 
+map("n", "<LEADER>;", "<CMD>w<CR>", { desc = "Save" })
 map("n", "<C-C>", "ciw", { desc = "Change word" })
 
 map("t", "<C-\\>", "<C-\\><C-N>", { desc = "Escape terminal mode" })
+
 
 map("i", ",", ",<C-G>u")
 map("i", ".", ".<C-G>u")

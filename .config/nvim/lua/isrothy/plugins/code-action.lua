@@ -1,6 +1,5 @@
 return {
   "kosayoda/nvim-lightbulb",
-  enabled = true,
   event = { "LspAttach" },
   opts = {
     priority = 10,

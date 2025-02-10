@@ -13,31 +13,11 @@ return {
       mode = "c",
       desc = "Redirect cmdline",
     },
-    {
-      "<LEADER>nl",
-      function() require("noice").cmd("last") end,
-      desc = "Noice last message",
-    },
-    {
-      "<LEADER>nh",
-      function() require("noice").cmd("history") end,
-      desc = "Noice history",
-    },
-    {
-      "<LEADER>na",
-      function() require("noice").cmd("all") end,
-      desc = "Noice all",
-    },
-    {
-      "<LEADER>nd",
-      function() require("noice").cmd("dismiss") end,
-      desc = "Dismiss all",
-    },
-    {
-      "<LEADER>nt",
-      function() require("noice").cmd("pick") end,
-      desc = "Noice picker (Telescope/FzfLua)",
-    },
+    { "<LEADER>nl", function() require("noice").cmd("last") end, desc = "Noice last message" },
+    { "<LEADER>nh", function() require("noice").cmd("history") end, desc = "Noice history" },
+    { "<LEADER>na", function() require("noice").cmd("all") end, desc = "Noice all" },
+    { "<LEADER>nd", function() require("noice").cmd("dismiss") end, desc = "Dismiss all" },
+    { "<LEADER>nt", function() require("noice").cmd("pick") end, desc = "Noice picker" },
     {
       "<C-F>",
       function()

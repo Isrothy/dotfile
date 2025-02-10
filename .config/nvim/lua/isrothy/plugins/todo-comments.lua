@@ -2,35 +2,16 @@ return {
   "folke/todo-comments.nvim",
   event = { "BufReadPost", "BufNewFile" },
   dependencies = "nvim-lua/plenary.nvim",
+  "folke/trouble.nvim",
   keys = {
+    { "<leader>ft", function() Snacks.picker.todo_comments() end, desc = "Todo" },
     {
-      "<leader>st",
-      function()
-        Snacks.picker.todo_comments()
-      end,
-      desc = "Todo",
-    },
-    {
-      "<leader>sT",
-      function()
-        Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } })
-      end,
+      "<leader>fT",
+      function() Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } }) end,
       desc = "Todo/Fix/Fixme",
     },
-    {
-      "]t",
-      function()
-        require("todo-comments").jump_next()
-      end,
-      desc = "Next todo Comment",
-    },
-    {
-      "[t",
-      function()
-        require("todo-comments").jump_prev()
-      end,
-      desc = "Previous todo Comment",
-    },
+    { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo Comment" },
+    { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo Comment" },
   },
 
   opts = {

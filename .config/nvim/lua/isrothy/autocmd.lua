@@ -45,6 +45,14 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("Force qf to bottom"),
+  pattern = "qf",
+  callback = function()
+    vim.cmd("wincmd J")
+  end,
+})
+
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = augroup("checktime"),
   callback = function()

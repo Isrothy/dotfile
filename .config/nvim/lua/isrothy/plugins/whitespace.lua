@@ -14,11 +14,71 @@ return {
   {
     "tenxsoydev/tabs-vs-spaces.nvim",
     event = { "BufReadPost", "BufNewFile" },
+    cmd = {
+      "TabsVsSpacesToggle",
+      "TabsVsSpacesStandardize",
+      "TabsVsSpacesConvert",
+    },
+    keys = {
+      { "<LEADER><SPACE>o", ":TabsVsSpacesToggle<CR>", mode = "n", desc = "TabsVsSpaces: Toggle globally" },
+      { "<LEADER><SPACE>O", ":TabsVsSpacesToggle on<CR>", mode = "n", desc = "TabsVsSpaces: Turn on globally" },
+      { "<LEADER><SPACE><C-O>", ":TabsVsSpacesToggle off<CR>", mode = "n", desc = "TabsVsSpaces: Turn off globally" },
+      { "<LEADER><SPACE>bo", ":TabsVsSpacesToggle buf<CR>", mode = "n", desc = "TabsVsSpaces: Toggle current buffer" },
+      {
+        "<LEADER><SPACE>bO",
+        ":TabsVsSpacesToggle buf_on<CR>",
+        mode = "n",
+        desc = "TabsVsSpaces: Turn on for current buffer",
+      },
+      {
+        "<LEADER><SPACE>b<C-O>",
+        ":TabsVsSpacesToggle buff_off<CR>",
+        mode = "n",
+        desc = "TabsVsSpaces: Turn off for current buffer",
+      },
+
+      {
+        "<LEADER><SPACE>s",
+        ":TabsVsSpacesStandardize<CR>",
+        mode = "n",
+        desc = "TabsVsSpaces: Standardize current buffer",
+      },
+      {
+        "<LEADER><SPACE>s",
+        ":'<,'>TabsVsSpacesStandardize<CR>",
+        mode = "v",
+        desc = "TabsVsSpaces: Standardize selected range",
+      },
+
+      {
+        "<LEADER><SPACE>c",
+        ":TabsVsSpacesConvert spaces_to_tabs<CR>",
+        mode = "n",
+        desc = "TabsVsSpaces: Convert spaces to tabs",
+      },
+      {
+        "<LEADER><SPACE>c",
+        ":'<,'>TabsVsSpacesConvert spaces_to_tabs<CR>",
+        mode = "v",
+        desc = "TabsVsSpaces: Convert spaces to tabs",
+      },
+      {
+        "<LEADER><SPACE>C",
+        ":TabsVsSpacesConvert tabs_to_spaces<CR>",
+        mode = "n",
+        desc = "TabsVsSpaces: Convert tabs to spaces",
+      },
+      {
+        "<LEADER><SPACE>C",
+        ":'<,'>TabsVsSpacesConvert tabs_to_spaces<CR>",
+        mode = "v",
+        desc = "TabsVsSpaces: Convert tabs to spaces",
+      },
+    },
     opts = {
       highlight = "DiagnosticUnderlineHint",
       ignore = {
         filetypes = {},
-        -- Works for normal buffers by default.
         buftypes = {
           "acwrite",
           "help",
@@ -30,20 +90,27 @@ return {
         },
       },
       standartize_on_save = false,
-      -- Enable or disable user commands see Readme.md/#Commands for more info.
       user_commands = true,
     },
   },
   {
     "echasnovski/mini.trailspace",
     event = { "BufReadPost", "BufNewFile" },
+    keys = {
+      {
+        "<LEADER><SPACE>t",
+        function() require("mini.trailspace").trim() end,
+        desc = "MiniTrailspace: Trim trailing whitespace",
+      },
+      {
+        "<LEADER><SPACE>T",
+        function() require("mini.trailspace").trim_last_lines() end,
+        desc = "MiniTrailspace: Trim last lines",
+      },
+    },
     init = function()
       vim.api.nvim_create_user_command("MiniTrailspace", "lua MiniTrailspace.trim()", {})
-      vim.api.nvim_create_user_command(
-        "MiniTrailspaceLastlines",
-        "lua MiniTrailspace.trim_last_lines()",
-        {}
-      )
+      vim.api.nvim_create_user_command("MiniTrailspaceLastlines", "lua MiniTrailspace.trim_last_lines()", {})
     end,
     opts = {
       only_in_normal_buffers = true,
@@ -52,9 +119,16 @@ return {
   {
     "mcauley-penney/visual-whitespace.nvim",
     event = { "BufReadPost", "BufNewFile" },
+    keys = {
+      {
+        "<LEADER><SPACE>v",
+        function() require("visual-whitespace").toggle() end,
+        desc = "Visual Whitespace: Toggle",
+      },
+    },
     opts = function()
-      -- local c = require("nordify.palette")["dark"]
-      local c = require("nord.colors").palette ---@type Nord.Palette
+      -- local c = require("nord.colors").palette ---@type Nord.Palette
+      local c = require("nordify.palette")["dark"]
       return {
         highlight = { fg = c.polar_night.light, bg = c.polar_night.brighter },
         space_char = "·",
@@ -66,31 +140,24 @@ return {
 
   {
     "Isrothy/indent-blankline.nvim",
-    -- dir = "~/indent-blankline.nvim",
     enabled = false,
     main = "ibl",
     keys = {
       {
         "ai",
-        function()
-          require("ibl.textobjects").around()
-        end,
+        function() require("ibl.textobjects").around() end,
         desc = "Around indent",
         mode = { "o", "x" },
       },
       {
         "aI",
-        function()
-          require("ibl.textobjects").around({ entire_line = true })
-        end,
+        function() require("ibl.textobjects").around({ entire_line = true }) end,
         desc = "Around indent",
         mode = { "o", "x" },
       },
       {
         "ii",
-        function()
-          require("ibl.textobjects").inside()
-        end,
+        function() require("ibl.textobjects").inside() end,
         desc = "Inside indent",
         mode = { "o", "x" },
       },
@@ -178,8 +245,6 @@ return {
       require("ibl").setup(opts)
       hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
-    init = function()
-      vim.opt.list = true
-    end,
+    init = function() vim.opt.list = true end,
   },
 }

@@ -1,3 +1,4 @@
+-- map
 local map = function(mode, lhs, rhs, opts)
   opts = vim.tbl_extend("force", { noremap = true, silent = true }, opts or {})
   vim.keymap.set(mode, lhs, rhs, opts)
@@ -17,7 +18,7 @@ end
 vim.diagnostic.config({
   virtual_text = false,
   signs = {
-    text = { "", "", "", "" },
+    text = { " ", " ", " ", " " },
   },
   underline = true,
   update_in_insert = true,
@@ -30,8 +31,10 @@ vim.diagnostic.config({
 
 local set_keymap = function(_, bufnr)
   map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
-  map("n", "<LEADER><LEADER>h", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
-  map("n", "<LEADER><LEADER>n", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename symbol" })
+  map("n", "<LEADER>lh", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
+  map("n", "<LEADER>ln", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename symbol" })
+  map("n", "<LEADER>ll", vim.lsp.codelens.run, { buffer = bufnr, desc = "Code lens" })
+  map("n", "<LEADER>la", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
 
   map("n", "<LEADER>Wa", vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Add workspace" })
   map("n", "<LEADER>Wr", vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = "Remove workspace" })
@@ -99,7 +102,7 @@ local mason = {
   },
 }
 
-local Lspconfig = {
+local lspconfig = {
   "neovim/nvim-lspconfig",
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
@@ -455,7 +458,6 @@ local haskell_tools = {
         on_attach = function(client, bufnr)
           set_keymap(client, bufnr)
           set_inlay_hint(client, bufnr)
-          map("n", "<localLEADER>cl", vim.lsp.codelens.run, { buffer = bufnr, desc = "CodeLens" })
         end,
         default_settings = {
           haskell = {
@@ -589,7 +591,7 @@ local null_ls = {
 
 return {
   mason,
-  Lspconfig,
+  lspconfig,
   clangd,
   java,
   haskell_tools,

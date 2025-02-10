@@ -2,6 +2,7 @@ return {
   {
     "kevinhwang91/nvim-bqf",
     ft = "qf",
+    enabled = true,
     init = function()
       local fn = vim.fn
 
@@ -89,8 +90,15 @@ return {
     },
   },
   {
-    "ashfinal/qfview.nvim",
+    "yorickpeterse/nvim-pqf",
     event = "UIEnter",
-    config = true,
+    opts = {
+      signs = {
+        error = { text = " ", hl = "DiagnosticSignError" },
+        warning = { text = " ", hl = "DiagnosticSignWarn" },
+        info = { text = " ", hl = "DiagnosticSignInfo" },
+        hint = { text = " ", hl = "DiagnosticSignHint" },
+      },
+    },
   },
 }

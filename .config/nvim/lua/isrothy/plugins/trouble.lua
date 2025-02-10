@@ -1,7 +1,6 @@
 return {
   "folke/trouble.nvim",
   cmd = { "Trouble" },
-  dependencies = "nvim-tree/nvim-web-devicons",
   keys = {
     { "<LEADER>xx", "<CMD>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)" },
     {
@@ -9,15 +8,15 @@ return {
       "<CMD>Trouble diagnostics toggle filter.buf=0<CR>",
       desc = "Buffer diagnostics (Trouble)",
     },
-    { "<LEADER>xL", "<CMD>Trouble loclist toggle<CR>", desc = "Location list (Trouble)" },
-    { "<LEADER>xQ", "<CMD>Trouble qflist toggle<CR>", desc = "Quickfix list (Trouble)" },
+    -- { "<LEADER>xL", "<CMD>Trouble loclist toggle<CR>", desc = "Location list (Trouble)" },
+    -- { "<LEADER>xQ", "<CMD>Trouble qflist toggle<CR>", desc = "Quickfix list (Trouble)" },
 
-    -- { "<LEADER><LEADER>s", "<CMD>Trouble symbols toggle<CR>", desc = "Symbols (Trouble)" },
-    -- {
-    --   "<LEADER><LEADER>S",
-    --   "<CMD>Trouble lsp toggle<CR>",
-    --   desc = "LSP references/definitions/... (Trouble)",
-    -- },
+    { "<LEADER>lS", "<CMD>Trouble symbols toggle<CR>", desc = "Symbols (Trouble)" },
+    {
+      "<LEADER>lx",
+      "<CMD>Trouble lsp toggle<CR>",
+      desc = "LSP references/definitions/... (Trouble)",
+    },
 
     {
       "[q",
@@ -46,6 +45,28 @@ return {
         end
       end,
       desc = "Next Trouble/quickfix item",
+    },
+  },
+  specs = {
+    {
+      "folke/snacks.nvim",
+      opts = function(_, opts)
+        return vim.tbl_deep_extend("force", opts or {}, {
+          picker = {
+            actions = require("trouble.sources.snacks").actions,
+            win = {
+              input = {
+                keys = {
+                  ["<c-t>"] = {
+                    "trouble_open",
+                    mode = { "n", "i" },
+                  },
+                },
+              },
+            },
+          },
+        })
+      end,
     },
   },
   opts = {

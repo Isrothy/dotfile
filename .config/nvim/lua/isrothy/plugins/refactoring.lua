@@ -6,22 +6,14 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     keys = {
-      {
-        "<LEADER>rs",
-        mode = "v",
-        desc = "Refactor",
-      },
+      { "<LEADER>rs", mode = "v", desc = "Refactor" },
       {
         "<LEADER>ri",
         function() require("refactoring").refactor("Inline Variable") end,
         mode = { "n", "v" },
         desc = "Inline variable",
       },
-      {
-        "<LEADER>rb",
-        function() require("refactoring").refactor("Extract Block") end,
-        desc = "Extract block",
-      },
+      { "<LEADER>rb", function() require("refactoring").refactor("Extract Block") end, desc = "Extract block" },
       {
         "<LEADER>rf",
         function() require("refactoring").refactor("Extract Block To File") end,
@@ -29,7 +21,11 @@ return {
       },
       {
         "<LEADER>rP",
-        function() require("refactoring").debug.printf({ below = false }) end,
+        function()
+          require("refactoring").debug.printf({
+            below = false,
+          })
+        end,
         desc = "Debug print",
       },
       {

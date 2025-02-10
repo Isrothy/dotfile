@@ -224,7 +224,7 @@ return {
           {
             icon = " ",
             key = "s",
-            desc = "Restore session",
+            desc = "Restore Session",
             section = "session",
           },
           {
@@ -271,74 +271,73 @@ return {
     { "<LEADER>fa", function() Snacks.picker.autocmds() end, desc = "Autocommands" },
     { "<LEADER>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
     { "<LEADER>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Config file" },
+    { "<LEADER>fC", function() Snacks.picker.commands() end, desc = "Commands" },
     { "<LEADER>ff", function() Snacks.picker.files() end, desc = "Files" },
     { "<LEADER>fg", function() Snacks.picker.git_files() end, desc = "Find git files" },
-    { "<LEADER>fh", function() Snacks.picker.help() end, desc = "Help pages" },
-    { "<LEADER>fH", function() Snacks.picker.highlights() end, desc = "Highlights" },
+    { "<LEADER>fh", function() Snacks.picker.highlights() end, desc = "Highlights" },
     { "<LEADER>fi", function() Snacks.picker.icons() end, desc = "Icons" },
     { "<LEADER>fj", function() Snacks.picker.jumps() end, desc = "Jumps" },
     { "<LEADER>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
     { "<LEADER>fl", function() Snacks.picker.loclist() end, desc = "Location list" },
     { "<LEADER>fm", function() Snacks.picker.man() end, desc = "Man pages" },
-    { "<LEADER>fn", function() Snacks.picker.notifications() end, desc = "Man pages" },
+    { "<LEADER>fn", function() Snacks.picker.notifications() end, desc = "Notifications" },
     { "<LEADER>fp", function() Snacks.picker.projects() end, desc = "Projects" },
     { "<LEADER>fq", function() Snacks.picker.qflist() end, desc = "Quickfix list" },
     { "<LEADER>fr", function() Snacks.picker.recent() end, desc = "Recent" },
     { "<LEADER>fs", function() Snacks.picker.smart() end, desc = "Smart" },
-    { "<LEADER>fS", function() Snacks.picker.spelling() end, desc = "Spelling" },
+    { "<LEADER>ft", function() Snacks.picker.treesitter() end, desc = "Treesitter" },
     { "<LEADER>fu", function() Snacks.picker.undo() end, desc = "Undo" },
     { "<LEADER>fx", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
-    { "<LEADER>fX", function() Snacks.picker.diagnostics_buffer() end, desc = "Diagnostics" },
+    { "<LEADER>fX", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer diagnostics" },
+    { "<LEADER>fy", function() Snacks.picker.cliphist() end, desc = "Clip history" },
     { "<LEADER>fz", function() Snacks.picker.zoxide() end, desc = "Zoxide" },
     { '<LEADER>f"', function() Snacks.picker.registers() end, desc = "Registers" },
     { "<LEADER>f:", function() Snacks.picker.command_history() end, desc = "Command history" },
     { "<LEADER>f'", function() Snacks.picker.marks() end, desc = "Marks" },
     { "<LEADER>f.", function() Snacks.picker.resume() end, desc = "Resume" },
     { "<LEADER>f/", function() Snacks.picker.search_history() end, desc = "Search" },
+    { "<LEADER>f<F1>", function() Snacks.picker.help() end, desc = "Help pages" },
 
     { "<LEADER>//", function() Snacks.picker.grep() end, desc = "Grep" },
-    { "<LEADER>/b", function() Snacks.picker.lines() end, desc = "Buffer lines" },
-    { "<LEADER>/B", function() Snacks.picker.grep_buffers() end, desc = "Grep open buffers" },
-    {
-      "<LEADER>/w",
-      function() Snacks.picker.grep_word() end,
-      desc = "Visual selection or word",
-      mode = { "n", "x" },
-    },
+    { "<LEADER>/l", function() Snacks.picker.lines() end, desc = "Buffer lines" },
+    { "<LEADER>/b", function() Snacks.picker.grep_buffers() end, desc = "Grep open buffers" },
+    { "<LEADER>/w", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
 
     {
-      "<LEADER><LEADER>d",
+      "<LEADER>ld",
       function() Snacks.picker.lsp_definitions({ auto_confirm = false }) end,
-      desc = "Find definition",
+      desc = "Definition",
     },
     {
-      "<LEADER><LEADER>D",
+      "<LEADER>lD",
       function() Snacks.picker.lsp_declarations({ auto_confirm = false }) end,
-      desc = "Find declaration",
+      desc = "Declaration",
     },
     {
-      "<LEADER><LEADER>t",
+      "<LEADER>lt",
       function() Snacks.picker.lsp_type_definitions({ auto_confirm = false }) end,
-      desc = "Find dype definition",
+      desc = "Type definition",
     },
     {
-      "<LEADER><LEADER>i",
+      "<LEADER>li",
       function() Snacks.picker.lsp_implementations({ auto_confirm = false }) end,
-      desc = "Find implementation",
+      desc = "Implementation",
     },
     {
-      "<LEADER><LEADER>r",
+      "<LEADER>lr",
       function() Snacks.picker.lsp_references({ auto_confirm = false }) end,
-      desc = "Find references",
+      desc = "References",
     },
     {
-      "<LEADER><LEADER>s",
-      function() Snacks.picker.lsp_workspace_symbols() end,
-      desc = "Find workspace symbols",
+      "<LEADER>ls",
+      function() Snacks.picker.lsp_symbols() end,
+      desc = "Symbols",
     },
-
-    -- { "<LEADER>ee", function() Snacks.explorer({ cwd = LazyVim.root() }) end, desc = "Explorer Snacks (root dir)" },
-    -- { "<LEADER>eE", function() Snacks.explorer() end, desc = "Explorer Snacks (cwd)" },
+    {
+      "<LEADER>lw",
+      function() Snacks.picker.lsp_workspace_symbols() end,
+      desc = "Workspace symbols",
+    },
 
     { "<LEADER>qs", function() Snacks.profiler.scratch() end, desc = "Profiler scratch bufer" },
     { "<LEADER>..", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
@@ -356,7 +355,7 @@ return {
     { "<LEADER>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit current file history" },
     { "<LEADER>gl", function() Snacks.lazygit.log() end, desc = "Lazygit log (cwd)" },
 
-    { "<LEADER><LEADER>N", function() Snacks.rename.rename_file() end, desc = "Rename file" },
+    { "<LEADER>lN", function() Snacks.rename.rename_file() end, desc = "Rename file" },
 
     { "<LEADER>z", function() Snacks.zen() end, desc = "Toggle zen mode" },
     { "<LEADER>Z", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
@@ -369,8 +368,8 @@ return {
       pattern = "VeryLazy",
       callback = function()
         -- Setup some globals for debugging (lazy-loaded)
-        _G.dd = function(...) Snacks.debug.inspect(...) end
-        _G.bt = function() Snacks.debug.backtrace() end
+        _G.dd = function(...) Snacks.debug.inspect(...) end ---@diagnostic disable-line
+        _G.bt = function() Snacks.debug.backtrace() end ---@diagnostic disable-line
         vim.print = _G.dd -- Override print to use snacks for `:=` command
 
         -- Create some toggle mappings

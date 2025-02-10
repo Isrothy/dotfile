@@ -1,9 +1,5 @@
 return {
   "krady21/compiler-explorer.nvim",
-  dependencies = {
-    "stevearc/dressing.nvim",
-  },
-
   cmd = {
     "CECompile",
     "CECompileLive",

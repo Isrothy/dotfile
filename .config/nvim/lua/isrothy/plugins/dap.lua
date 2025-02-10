@@ -1,6 +1,5 @@
 return {
   "mfussenegger/nvim-dap",
-  enabled = true,
   dependencies = {
     {
       "rcarriga/nvim-dap-ui",
@@ -8,36 +7,17 @@ return {
         { "nvim-neotest/nvim-nio" },
       },
       keys = {
-        {
-          "<LEADER>du",
-          function()
-            require("dapui").toggle({})
-          end,
-          desc = "Dap UI",
-        },
-        {
-          "<LEADER>de",
-          function()
-            require("dapui").eval()
-          end,
-          desc = "Eval",
-          mode = { "n", "v" },
-        },
+        { "<LEADER>du", function() require("dapui").toggle({}) end, desc = "Dap UI" },
+        { "<LEADER>de", function() require("dapui").eval() end, desc = "Eval", mode = { "n", "v" } },
       },
       opts = {},
       config = function(_, opts)
         local dap = require("dap")
         local dapui = require("dapui")
         dapui.setup(opts)
-        dap.listeners.after.event_initialized["dapui_config"] = function()
-          dapui.open({})
-        end
-        dap.listeners.before.event_terminated["dapui_config"] = function()
-          dapui.close({})
-        end
-        dap.listeners.before.event_exited["dapui_config"] = function()
-          dapui.close({})
-        end
+        dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open({}) end
+        dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close({}) end
+        dap.listeners.before.event_exited["dapui_config"] = function() dapui.close({}) end
         require("overseer").enable_dap()
       end,
     },
@@ -55,166 +35,25 @@ return {
   keys = {
     {
       "<LEADER>dB",
-      function()
-        require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
-      end,
+      function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
       desc = "Breakpoint condition",
     },
-    {
-      "<LEADER>db",
-      function()
-        require("dap").toggle_breakpoint()
-      end,
-      desc = "Toggle breakpoint",
-    },
-    {
-      "<LEADER>dc",
-      function()
-        require("dap").continue()
-      end,
-      desc = "Continue",
-    },
-    {
-      "<LEADER>dC",
-      function()
-        require("dap").run_to_cursor()
-      end,
-      desc = "Run to cursor",
-    },
-    {
-      "<LEADER>dg",
-      function()
-        require("dap").goto_()
-      end,
-      desc = "Go to line (no execute)",
-    },
-    {
-      "<LEADER>di",
-      function()
-        require("dap").step_into()
-      end,
-      desc = "Step into",
-    },
-    {
-      "<LEADER>dj",
-      function()
-        require("dap").down()
-      end,
-      desc = "Down",
-    },
-    {
-      "<LEADER>dk",
-      function()
-        require("dap").up()
-      end,
-      desc = "Up",
-    },
-    {
-      "<LEADER>dl",
-      function()
-        require("dap").run_last()
-      end,
-      desc = "Run last",
-    },
-    {
-      "<LEADER>do",
-      function()
-        require("dap").step_out()
-      end,
-      desc = "Step out",
-    },
-    {
-      "<LEADER>dO",
-      function()
-        require("dap").step_over()
-      end,
-      desc = "Step over",
-    },
-    {
-      "<LEADER>dp",
-      function()
-        require("dap").pause()
-      end,
-      desc = "Pause",
-    },
-    {
-      "<LEADER>dr",
-      function()
-        require("dap").repl.toggle()
-      end,
-      desc = "Toggle REPL",
-    },
-    {
-      "<LEADER>ds",
-      function()
-        require("dap").session()
-      end,
-      desc = "Session",
-    },
-    {
-      "<LEADER>dt",
-      function()
-        require("dap").terminate()
-      end,
-      desc = "Terminate",
-    },
-    {
-      "<LEADER>dw",
-      function()
-        require("dap.ui.widgets").hover()
-      end,
-      desc = "Widgets",
-    },
-    {
-      "<LEADER>td",
-      function()
-        require("neotest").run.run({ strategy = "dap" })
-      end,
-      desc = "Debug nearest",
-    },
-
-    -- {
-    -- 	"<F5>",
-    -- 	function()
-    -- 		require("dap").continue()
-    -- 	end,
-    -- 	desc = "Continue",
-    -- },
-    -- {
-    -- 	"<F29>", -- <s-F5>
-    -- 	function()
-    -- 		require("dap").pause()
-    -- 	end,
-    -- 	desc = "Pause",
-    -- },
-    -- {
-    -- 	"<F6>",
-    -- 	function()
-    -- 		require("dap").terminate()
-    -- 	end,
-    -- 	desc = "Terminate",
-    -- },
-    -- {
-    -- 	"<F7>",
-    -- 	function()
-    -- 		require("dap").step_into()
-    -- 	end,
-    -- 	desc = "Step Into",
-    -- },
-    -- {
-    -- 	"<F8>",
-    -- 	function()
-    -- 		require("dap").step_over()
-    -- 	end,
-    -- 	desc = "Step Over",
-    -- },
-    -- {
-    -- 	"<F31>", -- <s-F7>
-    -- 	function()
-    -- 		require("dap").step_out()
-    -- 	end,
-    -- 	desc = "Step Out",
-    -- },
+    { "<LEADER>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
+    { "<LEADER>dc", function() require("dap").continue() end, desc = "Continue" },
+    { "<LEADER>dC", function() require("dap").run_to_cursor() end, desc = "Run to cursor" },
+    { "<LEADER>dg", function() require("dap").goto_() end, desc = "Go to line (no execute)" },
+    { "<LEADER>di", function() require("dap").step_into() end, desc = "Step into" },
+    { "<LEADER>dj", function() require("dap").down() end, desc = "Down" },
+    { "<LEADER>dk", function() require("dap").up() end, desc = "Up" },
+    { "<LEADER>dl", function() require("dap").run_last() end, desc = "Run last" },
+    { "<LEADER>do", function() require("dap").step_out() end, desc = "Step out" },
+    { "<LEADER>dO", function() require("dap").step_over() end, desc = "Step over" },
+    { "<LEADER>dp", function() require("dap").pause() end, desc = "Pause" },
+    { "<LEADER>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
+    { "<LEADER>ds", function() require("dap").session() end, desc = "Session" },
+    { "<LEADER>dt", function() require("dap").terminate() end, desc = "Terminate" },
+    { "<LEADER>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
+    { "<LEADER>td", function() require("neotest").run.run({ strategy = "dap" }) end, desc = "Debug nearest" },
   },
 
   config = function()
@@ -256,9 +95,7 @@ return {
         name = "Launch",
         type = "lldb",
         request = "launch",
-        program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-        end,
+        program = function() return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file") end,
         cwd = "${workspaceFolder}",
         stopOnEntry = false,
         runInTerminal = true,
