@@ -9,7 +9,7 @@ return {
       { "<LOCALLEADER>mi", "<CMD>MoltenInit<CR>", desc = "Molten init" },
       { "<LOCALLEADER>me", "<CMD>MoltenEvaluateOperator<CR>", desc = "Molten evaluate operator" },
       { "<LOCALLEADER>mr", "<CMD>MoltenReevaluateCell<CR>", desc = "Molten reevaluate cell" },
-      { "<LOCALLEADER>mr", ":<C-u>MoltenEvaluateVisual<CR>gv", mode = { "v" }, desc = "Molten evaluate visual" },
+      { "<LOCALLEADER>mr", ":<C-u>MoltenEvaluateVisual<CR>gv", mode = { "x" }, desc = "Molten evaluate visual" },
       { "<lOCALLEADER>mo", ":noautocmd MoltenEnterOutput<CR>", desc = "Molten enter output" },
       { "<LOCALLEADER>mh", "<CMD>MoltenHideOutput<CR>", desc = "Molten hide output" },
       { "<LOCALLEADER>md", "<CMD>MoltenDelete<CR>", desc = "Molten delete" },

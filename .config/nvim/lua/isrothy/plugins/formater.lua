@@ -17,7 +17,7 @@ return {
         })
       end,
       desc = "Code format",
-      mode = { "v" },
+      mode = { "x" },
     },
     {
       "<LEADER>lF",
@@ -39,7 +39,7 @@ return {
         })
       end,
       desc = "Format injected langs",
-      mode = { "v" },
+      mode = { "x" },
     },
   },
   opts = {

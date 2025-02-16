@@ -46,7 +46,7 @@ return {
       {
         "<LEADER><SPACE>s",
         ":'<,'>TabsVsSpacesStandardize<CR>",
-        mode = "v",
+        mode = "x",
         desc = "TabsVsSpaces: Standardize selected range",
       },
 
@@ -59,7 +59,7 @@ return {
       {
         "<LEADER><SPACE>c",
         ":'<,'>TabsVsSpacesConvert spaces_to_tabs<CR>",
-        mode = "v",
+        mode = "x",
         desc = "TabsVsSpaces: Convert spaces to tabs",
       },
       {
@@ -71,7 +71,7 @@ return {
       {
         "<LEADER><SPACE>C",
         ":'<,'>TabsVsSpacesConvert tabs_to_spaces<CR>",
-        mode = "v",
+        mode = "x",
         desc = "TabsVsSpaces: Convert tabs to spaces",
       },
     },
@@ -134,6 +134,10 @@ return {
         space_char = "·",
         tab_char = "→",
         nl_char = "↲",
+        excluded = {
+          filetypes = { "toggleterm" },
+          buftypes = { "terminal" },
+        },
       }
     end,
   },

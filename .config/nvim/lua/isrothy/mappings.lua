@@ -7,6 +7,7 @@ end
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+
 map({ "n", "x" }, "<SPACE>", "<NOP>")
 map({ "n", "x" }, "\\", "<NOP>")
 map({ "n", "x", "i", "c" }, "<C-Z>", "<NOP>")
@@ -16,7 +17,6 @@ map("n", "<C-C>", "ciw", { desc = "Change word" })
 
 map("t", "<C-\\>", "<C-\\><C-N>", { desc = "Escape terminal mode" })
 
-
 map("i", ",", ",<C-G>u")
 map("i", ".", ".<C-G>u")
 map("i", ";", ";<C-G>u")
@@ -24,8 +24,8 @@ map("i", ";", ";<C-G>u")
 map("n", "gO", "<CMD>call append(line('.') -1, repeat([''], v:count1))<CR>", { desc = "Append line before" })
 map("n", "go", "<CMD>call append(line('.'),   repeat([''], v:count1))<CR>", { desc = "Append line after" })
 
-map({ "n", "v" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, desc = "Up" })
-map({ "n", "v" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, desc = "Down" })
+map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, desc = "Up" })
+map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, desc = "Down" })
 
 map("x", "g/", "<ESC>/\\%V", {
   silent = false,
@@ -71,6 +71,22 @@ map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Previois warning" })
 map("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
 
+map("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
+map("n", "<LEADER>lh", vim.lsp.buf.hover, { desc = "Hover" })
+map("n", "<LEADER>ln", vim.lsp.buf.rename, { desc = "Rename symbol" })
+map("n", "<LEADER>ll", vim.lsp.codelens.run, { desc = "Code lens" })
+map("n", "<LEADER>la", vim.lsp.buf.code_action, { desc = "Code action" })
+
+map("n", "<LEADER>Wa", vim.lsp.buf.add_workspace_folder, { desc = "Add workspace" })
+map("n", "<LEADER>Wr", vim.lsp.buf.remove_workspace_folder, { desc = "Remove workspace" })
+map(
+  "n",
+  "<LEADER>Wl",
+  function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+  { desc = "List workspace" }
+)
+
+map("n", "<LEADER>Ws", function() vim.lsp.buf.workspace_symbol() end, { desc = "Workspace symbols" })
 map("n", "<LEADER><TAB>o", "<CMD>tabonly<CR>", { desc = "Close other tabs" })
 map("n", "<LEADER><TAB>d", "<CMD>tabclose<CR>", { desc = "Close current tab" })
 map("n", "<LEADER><TAB>f", "<CMD>tabfirst<CR>", { desc = "First tab" })

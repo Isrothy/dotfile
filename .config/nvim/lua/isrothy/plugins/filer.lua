@@ -218,7 +218,7 @@ return {
       {
         "<LEADER>ee",
         function() require("neo-tree.command").execute({ toggle = true }) end,
-        desc = "NeoTree filesystem",
+        desc = "Filesystem",
       },
       {
         "<LEADER>be",

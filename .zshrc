@@ -45,6 +45,7 @@ export PATH="/opt/homebrew/opt/zip/bin:$PATH"
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="/opt/homebrew/opt/tcl-tk@8/bin:$PATH"
 export PATH="/opt/homebrew/lib/ruby/gems/3.3.0/bin:$PATH"
 export PATH="/Users/jiangjoshua/.rustup/toolchains/nightly-aarch64-apple-darwin/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
@@ -70,6 +71,9 @@ bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
 
 export FZF_DEFAULT_COMMAND="fd --type file --color=always"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -104,3 +108,4 @@ if [ -f "$HOME"'/.local/google-cloud-sdk/path.zsh.inc' ]; then . "$HOME"'/.local
 
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME"'/.local/google-cloud-sdk/completion.zsh.inc' ]; then . "$HOME"'/.local/google-cloud-sdk/completion.zsh.inc'; fi
+

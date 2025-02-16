@@ -1,7 +1,7 @@
 return {
   {
-    "tpope/vim-dadbod",
     cmd = "DB",
+    "tpope/vim-dadbod",
   },
   {
     "kristijanhusak/vim-dadbod-ui",
@@ -12,7 +12,7 @@ return {
         "<LOCALLEADER>s",
         "<PLUG>(DBUI_ExecuteQuery)",
         desc = "Execute query",
-        mode = { "n", "v" },
+        mode = { "n", "x" },
         ft = { "sql", "mysql", "plsql" },
       },
       { "<LOCALLEADER>w", "<PLUG>(DBUI_SaveQuery)", desc = "Save query", ft = { "sql", "mysql", "plsql" } },

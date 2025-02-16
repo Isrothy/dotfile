@@ -1,6 +1,4 @@
-local function augroup(name)
-  return vim.api.nvim_create_augroup(name, { clear = true })
-end
+local function augroup(name) return vim.api.nvim_create_augroup(name, { clear = true }) end
 
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = augroup("checktime"),
@@ -48,9 +46,7 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("Force qf to bottom"),
   pattern = "qf",
-  callback = function()
-    vim.cmd("wincmd J")
-  end,
+  callback = function() vim.cmd("wincmd J") end,
 })
 
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
@@ -72,7 +68,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
       return
     end
     vim.b[buf].last_loc = true
-    local mark = vim.api.nvim_buf_get_mark(buf, "\"")
+    local mark = vim.api.nvim_buf_get_mark(buf, '"')
     local lcount = vim.api.nvim_buf_line_count(buf)
     if mark[1] > 0 and mark[1] <= lcount then
       pcall(vim.api.nvim_win_set_cursor, 0, mark)
@@ -84,9 +80,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("man_unlisted"),
   pattern = { "man" },
-  callback = function(event)
-    vim.bo[event.buf].buflisted = false
-  end,
+  callback = function(event) vim.bo[event.buf].buflisted = false end,
 })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
@@ -118,7 +112,7 @@ local cc_filetypes = {
   markdown = "81",
 }
 vim.api.nvim_create_autocmd({ "FileType" }, {
-  group = vim.api.nvim_create_augroup("colorcolumn", { clear = true }),
+  group = augroup("colorcolumn"),
   callback = function(event)
     local filetype = event.match
     if cc_filetypes[filetype] then
@@ -136,7 +130,7 @@ local wrap_filetypes = {
   "bigfile",
 }
 vim.api.nvim_create_autocmd({ "FileType" }, {
-  group = vim.api.nvim_create_augroup("wrap", { clear = true }),
+  group = augroup("wrap"),
   callback = function(event)
     local filetype = event.match
     if vim.tbl_contains(wrap_filetypes, filetype) then
@@ -146,5 +140,53 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
       vim.wo.wrap = false
       vim.wo.linebreak = false
     end
+  end,
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = augroup("setup_lsp_defaults"),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client == nil then
+      return
+    end
+    client.capabilities = require("blink.cmp").get_lsp_capabilities(client.capabilities)
+    if client.supports_method("textDocument/inlayHint") then
+      vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+    end
+  end,
+})
+
+vim.fn.sign_define("CodeActionSign", { text = "⬥", texthl = "LspCodeAction" })
+local code_action_group = augroup("code_action_sign")
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client or not client.supports_method("textDocument/codeAction") then
+      return
+    end
+
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      buffer = bufnr,
+      group = code_action_group,
+      callback = function()
+        local params = vim.lsp.util.make_range_params()
+        params.context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }
+
+        vim.lsp.buf_request(bufnr, "textDocument/codeAction", params, function(err, result, ctx, config)
+          if err then
+            return
+          end
+
+          vim.fn.sign_unplace("lsp_code_action_sign", { buffer = bufnr })
+
+          if result and not vim.tbl_isempty(result) then
+            local row = vim.api.nvim_win_get_cursor(0)[1]
+            vim.fn.sign_place(0, "lsp_code_action_sign", "CodeActionSign", bufnr, { lnum = row, priority = 10 })
+          end
+        end)
+      end,
+    })
   end,
 })

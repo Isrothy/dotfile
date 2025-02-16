@@ -60,7 +60,7 @@ local tex = {
     { "<LOCALLEADER>tc", "", desc = "+Compile", ft = "tex" },
     { "<LOCALLEADER>tcc", "<plug>(vimtex-compile)", desc = "Compile", ft = "tex" },
     { "<LOCALLEADER>tcs", "<plug>(vimtex-compile-ss)", desc = "Single shot compile", ft = "tex" },
-    { "<LOCALLEADER>tcs", "<plug>(vimtex-compile-selected)", mode = { "v" }, desc = "Compile selected", ft = "tex" },
+    { "<LOCALLEADER>tcs", "<plug>(vimtex-compile-selected)", mode = { "x" }, desc = "Compile selected", ft = "tex" },
     { "<LOCALLEADER>tco", "<plug>(vimtex-compile-output)", desc = "Show compile output", ft = "tex" },
 
     { "<LOCALLEADER>ts", "<plug>(vimtex-stop)", desc = "Stop compilation", ft = "tex" },

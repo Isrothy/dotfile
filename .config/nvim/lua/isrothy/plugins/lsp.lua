@@ -1,63 +1,4 @@
--- map
-local map = function(mode, lhs, rhs, opts)
-  opts = vim.tbl_extend("force", { noremap = true, silent = true }, opts or {})
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
-
 local border = "rounded"
-
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
----@diagnostic disable-next-line: duplicate-set-field
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-  opts = opts or {}
-  ---@diagnostic disable-next-line: inject-field
-  opts.border = opts.border or border
-  return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
-
-vim.diagnostic.config({
-  virtual_text = false,
-  signs = {
-    text = { " ", " ", " ", " " },
-  },
-  underline = true,
-  update_in_insert = true,
-  severity_sort = true,
-  float = {
-    border = border,
-    source = true,
-  },
-})
-
-local set_keymap = function(_, bufnr)
-  map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
-  map("n", "<LEADER>lh", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
-  map("n", "<LEADER>ln", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename symbol" })
-  map("n", "<LEADER>ll", vim.lsp.codelens.run, { buffer = bufnr, desc = "Code lens" })
-  map("n", "<LEADER>la", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
-
-  map("n", "<LEADER>Wa", vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Add workspace" })
-  map("n", "<LEADER>Wr", vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = "Remove workspace" })
-  map(
-    "n",
-    "<LEADER>Wl",
-    function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-    { buffer = bufnr, desc = "List workspace" }
-  )
-  map("n", "<LEADER>Ws", function() vim.lsp.buf.workspace_symbol() end, { buffer = bufnr, desc = "Workspace symbols" })
-end
-
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
-local set_inlay_hint = function(client, bufnr)
-  if client.supports_method("textDocument/inlayHint") then
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-  end
-end
 
 local mason = {
   { "williamboman/mason-lspconfig.nvim" },
@@ -116,23 +57,13 @@ local lspconfig = {
     require("mason").setup()
     require("mason-lspconfig").setup()
 
-    require("lspconfig").bashls.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
-    })
+    require("lspconfig").bashls.setup({})
     require("lspconfig").clangd.setup({
       capabilities = vim.tbl_extend(
         "force",
         require("blink.cmp").get_lsp_capabilities(),
         { offsetEncoding = "utf-16" }
       ),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
       root_dir = function(fname)
         return require("lspconfig.util").root_pattern(
           "Makefile",
@@ -145,7 +76,7 @@ local lspconfig = {
         )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname)
       end,
       cmd = {
-        "/usr/bin/clangd",
+        "/opt/homebrew/opt/llvm/bin/clangd",
         "--background-index",
         "--clang-tidy",
         "--clang-tidy-checks=performance-*,bugprone-*",
@@ -156,69 +87,18 @@ local lspconfig = {
         "--pch-storage=memory",
       },
     })
-    require("lspconfig").neocmake.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
-    })
-    require("lspconfig").cssls.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
-    })
-    require("lspconfig").dockerls.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
-    })
-    require("lspconfig").emmet_ls.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-    })
-    require("lspconfig").eslint.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
-    })
-
-    require("lspconfig").fennel_language_server.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
-    })
-    require("lspconfig").gradle_ls.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
-    })
-    require("lspconfig").html.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-    })
+    require("lspconfig").neocmake.setup({})
+    require("lspconfig").cssls.setup({})
+    require("lspconfig").dockerls.setup({})
+    require("lspconfig").emmet_ls.setup({})
+    require("lspconfig").eslint.setup({})
+    require("lspconfig").fennel_language_server.setup({})
+    require("lspconfig").gradle_ls.setup({})
+    require("lspconfig").html.setup({})
     require("lspconfig").kotlin_language_server.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
       single_file_support = true,
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
     })
     require("lspconfig").texlab.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
       settings = {
         texlab = {
           bibtexFormatter = "texlab",
@@ -236,11 +116,6 @@ local lspconfig = {
       },
     })
     require("lspconfig").lua_ls.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
       settings = {
         Lua = {
           runtime = {
@@ -264,20 +139,7 @@ local lspconfig = {
         },
       },
     })
-    require("lspconfig").ocamllsp.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      single_file_support = true,
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
-    })
     require("lspconfig").basedpyright.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
       settings = {
         basedpyright = {
           analysis = {
@@ -288,37 +150,15 @@ local lspconfig = {
         },
       },
     })
-    require("lspconfig").r_language_server.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
-    })
+    require("lspconfig").r_language_server.setup({})
     require("lspconfig").sourcekit.setup({
       filetypes = { "swift", "objective-c" },
       single_file_support = true,
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
     })
     require("lspconfig").tinymist.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
       single_file_support = true,
     })
-    require("lspconfig").vimls.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
-    })
+    require("lspconfig").vimls.setup({})
   end,
 }
 
@@ -408,11 +248,6 @@ local java = {
       },
     })
     require("lspconfig").jdtls.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
       settings = {
         java = {
           configuration = {
@@ -434,6 +269,65 @@ local haskell_tools = {
   "MrcJkb/haskell-tools.nvim",
   version = "^4",
   ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
+  keys = {
+    { "<LOCALLEADER>h", "", desc = "+Haskell tools" },
+    {
+      "<LOCALEADER>he",
+      function() require("haskell-tools").lsp.buf_eval_all() end,
+      desc = "Evaluate all",
+      ft = { "haskell", "lhaskell" },
+    },
+    { "<LOCALLEADER>hr", "", desc = "+REPL" },
+    {
+      "<LOCALLEADER>hh",
+      function() require("haskell-tools").hoogle.hoogle_signature() end,
+      desc = "Hoogle signature",
+      ft = { "haskell", "lhaskell" },
+    },
+    {
+      "<LOCALLEADER>hrt",
+      function() require("haskell-tools").repl.toggle() end,
+      desc = "Toggle repl",
+      ft = { "haskell", "lhaskell" },
+    },
+    {
+      "<LOCALLEADER>hrb",
+      function() require("haskell-tools").repl.toggle(vim.api.nvim_buf_get_name(0)) end,
+      desc = "Toggle repl for current buffer",
+      ft = { "haskell", "lhaskell" },
+    },
+    {
+      "<LOCALLEADER>hrr",
+      function() require("haskell-tools").repl.reload() end,
+      desc = "Reload repl",
+      ft = { "haskell", "lhaskell" },
+    },
+    {
+      "<LOCALLEADER>hrq",
+      function() require("haskell-tools").repl.quit() end,
+      desc = "Quit repl",
+      ft = { "haskell", "lhaskell" },
+    },
+    { "<LOCALLEADER>hr", "", desc = "+Project" },
+    {
+      "<LOCALLEADER>hpp",
+      function() require("haskell-tools").project.open_project_file() end,
+      desc = "Open project file",
+      ft = { "haskell", "lhaskell" },
+    },
+    {
+      "<LOCALLEADER>hpy",
+      function() require("haskell-tools").project.open_package_yaml() end,
+      desc = "Open project yaml",
+      ft = { "haskell", "lhaskell" },
+    },
+    {
+      "<LOCALLEADER>hpc",
+      function() require("haskell-tools").project.open_package_cabal() end,
+      desc = "Open project cabal",
+      ft = { "haskell", "lhaskell" },
+    },
+  },
   init = function()
     vim.g.haskell_tools = {
       tools = {
@@ -455,10 +349,6 @@ local haskell_tools = {
         },
       },
       hls = {
-        on_attach = function(client, bufnr)
-          set_keymap(client, bufnr)
-          set_inlay_hint(client, bufnr)
-        end,
         default_settings = {
           haskell = {
             formattingProvider = "ormolu",
@@ -478,10 +368,6 @@ local rustaceanvim = {
     vim.g.rustaceanvim = {
       tools = {},
       server = {
-        on_attach = function(client, bufnr)
-          set_keymap(client, bufnr)
-          set_inlay_hint(client, bufnr)
-        end,
         settings = {
           ["rust-analyzer"] = {},
         },
@@ -496,17 +382,12 @@ local schemastore = {
   ft = { "json", "jsonc", "yaml" },
   config = function()
     require("lspconfig").jsonls.setup({
-      capabilities = require("blink.cmp").get_lsp_capabilities(),
       settings = {
         json = {
           schemas = require("schemastore").json.schemas(),
           validate = { enable = true },
         },
       },
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
     })
     require("lspconfig").yamlls.setup({
       settings = {
@@ -536,12 +417,7 @@ local typescript = {
     "javascriptreact",
     "javascript.jsx",
   },
-  opts = {
-    on_attach = function(client, bufnr)
-      set_keymap(client, bufnr)
-      set_inlay_hint(client, bufnr)
-    end,
-  },
+  opts = {},
 }
 
 local null_ls = {
@@ -552,10 +428,6 @@ local null_ls = {
 
     null_ls.setup({
       border = border,
-      on_attach = function(client, bufnr)
-        set_keymap(client, bufnr)
-        set_inlay_hint(client, bufnr)
-      end,
       sources = {
         null_ls.builtins.diagnostics.checkmake,
         null_ls.builtins.diagnostics.hadolint,
@@ -564,7 +436,6 @@ local null_ls = {
 
         null_ls.builtins.diagnostics.zsh,
 
-        -- null_ls.builtins.formatting.autopep8,
         null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.cmake_format,
         null_ls.builtins.formatting.markdownlint,

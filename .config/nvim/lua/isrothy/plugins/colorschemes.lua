@@ -5,15 +5,13 @@ return {
     cmd = "ExColors",
     ---@type ExColors.Config
     opts = {},
-    init = function()
-      vim.cmd.colorscheme("ex-nordify-dark")
-    end
+    init = function() vim.cmd.colorscheme("ex-nordify-dark") end,
   },
   {
     dir = "~/nordify.nvim",
     -- "Isrothy/nordify.nvim",
     -- priority = 1000,
-    lazy = false,
+    lazy = true,
     enabled = true,
     init = function()
       vim.g.nordify = {
@@ -51,7 +49,7 @@ return {
         SatelliteMark = { fg = palette.aurora.green },
         VertSplit = { fg = palette.polar_night.brighter },
         WinSeparator = { fg = palette.polar_night.brighter },
-        LightBulbSign = { fg = palette.aurora.yellow },
+        LspCodeAction = { fg = palette.aurora.yellow },
 
         SnacksStatusColumnMark = { fg = palette.aurora.green },
 
@@ -122,5 +120,4 @@ return {
     version = "*",
     optional = true,
   },
-
 }

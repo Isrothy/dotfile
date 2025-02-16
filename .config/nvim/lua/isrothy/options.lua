@@ -2,7 +2,6 @@ local opt = vim.opt
 local g = vim.g
 
 opt.mouse = ""
-
 opt.syntax = "on"
 
 opt.cmdheight = 0
@@ -95,3 +94,32 @@ opt.foldmethod = "expr"
 
 g.html_indent_autotags = "html,head,body"
 g.markdown_recommended_style = 0
+
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = {
+    text = { " ", " ", " ", " " },
+  },
+  underline = true,
+  update_in_insert = true,
+  severity_sort = true,
+  float = {
+    border = "rounded",
+    source = true,
+  },
+})
+
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+---@diagnostic disable-next-line: duplicate-set-field
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  opts = opts or {}
+  ---@diagnostic disable-next-line: inject-field
+  opts.border = opts.border or "rounded"
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end

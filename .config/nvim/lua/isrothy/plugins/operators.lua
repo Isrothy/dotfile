@@ -129,12 +129,10 @@ local substitute = {
 local dial = {
   "monaqa/dial.nvim",
   keys = {
-    { "<C-A>", mode = "n", desc = "Increment" },
-    { "<C-X>", mode = "n", desc = "Decrement" },
-    { "<C-A>", mode = "v", desc = "Increment" },
-    { "<C-X>", mode = "v", desc = "Decrement" },
-    { "g<C-A>", mode = "v", desc = "G increment" },
-    { "g<C-x>", mode = "v", desc = "G decrement" },
+    { "<C-A>", mode = { "x", "n" }, desc = "Increment" },
+    { "<C-X>", mode = { "x", "n" }, desc = "Decrement" },
+    { "g<C-A>", mode = "x", desc = "G increment" },
+    { "g<C-x>", mode = "x", desc = "G decrement" },
   },
   config = function()
     local augend = require("dial.augend")
@@ -148,11 +146,15 @@ local dial = {
         augend.constant.alias.bool,
         augend.constant.alias.alpha,
         augend.constant.alias.Alpha,
-        augend.date.alias["%Y/%m/%d"], -- date (2022/02/19, etc.)
+        augend.semver.alias.semver,
+        augend.date.alias["%Y/%m/%d"],
+        augend.date.alias["%Y-%m-%d"],
+        augend.date.alias["%m/%d"],
+        augend.date.alias["%H:%M"],
         augend.constant.new({
           elements = { "and", "or" },
           word = true, -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
-          cyclic = true, -- "or" is incremented into "and".
+          cyclic = true,
         }),
         augend.constant.new({
           elements = { "min", "max" },
@@ -199,6 +201,11 @@ local dial = {
           word = false,
           cyclic = true,
         }),
+        augend.constant.new({
+          elements = { ">=", "<=" },
+          word = false,
+          cyclic = true,
+        }),
         augend.hexcolor.new({
           case = "lower",
         }),
@@ -208,10 +215,10 @@ local dial = {
       },
     })
 
-    map({ "n", "v" }, "<C-A>", require("dial.map").inc_normal(), { noremap = true, desc = "Increment" })
-    map({ "n", "v" }, "<C-X>", require("dial.map").dec_normal(), { noremap = true, desc = "Decrement" })
-    map("v", "g<C-A>", require("dial.map").inc_gvisual(), { noremap = true, desc = "G Increment" })
-    map("v", "g<C-X>", require("dial.map").dec_gvisual(), { noremap = true, desc = "G Decrement" })
+    map({ "n", "x" }, "<C-A>", require("dial.map").inc_normal(), { noremap = true, desc = "Increment" })
+    map({ "n", "x" }, "<C-X>", require("dial.map").dec_normal(), { noremap = true, desc = "Decrement" })
+    map("x", "g<C-A>", require("dial.map").inc_gvisual(), { noremap = true, desc = "G Increment" })
+    map("x", "g<C-X>", require("dial.map").dec_gvisual(), { noremap = true, desc = "G Decrement" })
   end,
 }
 
@@ -298,34 +305,104 @@ local textcase = {
   "johmsalas/text-case.nvim",
   cmd = { "TextCaseStartReplacingCommand" },
   keys = {
-    { "gac", function() require("textcase").operator("to_camel_case") end, desc = "Convert toCamelCase" },
-    { "gad", function() require("textcase").operator("to_dashed_case") end, desc = "Convert to-dashed-case" },
-    { "gal", function() require("textcase").operator("to_lower_case") end, desc = "Convert to lower case" },
-    { "gap", function() require("textcase").operator("to_pascal_case") end, desc = "Convert ToPascalCase" },
-    { "gas", function() require("textcase").operator("to_snake_case") end, desc = "Convert to_snake_case" },
-    { "gau", function() require("textcase").operator("to_upper_case") end, desc = "Convert To UPPER CASE" },
-    { "gaC", function() require("textcase").lsp_rename("to_camel_case") end, desc = "Rename toCamelCase" },
-    { "gaD", function() require("textcase").lsp_rename("to_dashed_case") end, desc = "Rename to-dashed-case" },
-    { "gaL", function() require("textcase").lsp_rename("to_lower_case") end, desc = "Rename to lower case" },
-    { "gaP", function() require("textcase").lsp_rename("to_pascal_case") end, desc = "Rename ToPascalCase" },
-    { "gaS", function() require("textcase").lsp_rename("to_snake_case") end, desc = "Rename to_snake_case" },
-    { "gaU", function() require("textcase").lsp_rename("to_upper_case") end, desc = "Rename To UPPER CASE" },
-    { "gaoc", function() require("textcase").operator("to_camel_case") end, desc = "toCamelCase", mode = { "n", "v" } },
+    { "ga", "", desc = "+Convert text case", mode = { "n", "x" } },
     {
-      "gaod",
-      function() require("textcase").operator("to_dashed_case") end,
-      desc = "to-dashed-case",
-      mode = { "n", "v" },
+      "gac",
+      function() require("textcase").operator("to_camel_case") end,
+      desc = "toCamelCase",
+      mode = { "n", "x" },
     },
-    { "gaol", function() require("textcase").operator("to_lower_case") end, desc = "to lower case", mode = { "n", "v" } },
-    { "gaop", function() require("textcase").operator("to_pascal_case") end, desc = "ToPascalCase", mode = { "n", "v" } },
-    { "gaos", function() require("textcase").operator("to_snake_case") end, desc = "to_snake_case", mode = { "n", "v" } },
-    { "gaou", function() require("textcase").operator("to_upper_case") end, desc = "To UPPER CASE", mode = { "n", "v" } },
+    {
+      "gad",
+      function() require("textcase").operator("to_dash_case") end,
+      desc = "to-dash-case",
+      mode = { "n", "x" },
+    },
+    {
+      "gaf",
+      function() require("textcase").operator("to_phrase_case") end,
+      desc = "To phrase case",
+      mode = { "n", "x" },
+    },
+    {
+      "gal",
+      function() require("textcase").operator("to_lower_case") end,
+      desc = "to lower case",
+      mode = { "n", "x" },
+    },
+    {
+      "gan",
+      function() require("textcase").operator("to_constant_case") end,
+      desc = "Convert to CONSTANT_CASE",
+      mode = { "n", "x" },
+    },
+    {
+      "gap",
+      function() require("textcase").operator("to_pascal_case") end,
+      desc = "ToPascalCase",
+      mode = { "n", "x" },
+    },
+    {
+      "gas",
+      function() require("textcase").operator("to_snake_case") end,
+      desc = "to_snake_case",
+      mode = { "n", "x" },
+    },
+    {
+      "gat",
+      function() require("textcase").operator("to_title_case") end,
+      desc = "To Title Case",
+      mode = { "n", "x" },
+    },
+    {
+      "gau",
+      function() require("textcase").operator("to_upper_case") end,
+      desc = "TO UPPER CASE",
+      mode = { "n", "x" },
+    },
+    {
+      "gax",
+      function() require("textcase").operator("to_title_dash_case") end,
+      desc = "To-Title-Dash-Case",
+      mode = { "n", "x" },
+    },
+    {
+      "ga.",
+      function() require("textcase").operator("to_dot_case") end,
+      desc = "to.dot.case",
+      mode = { "n", "x" },
+    },
+    {
+      "ga,",
+      function() require("textcase").operator("to_comma_case") end,
+      desc = "to,comma,case",
+      mode = { "n", "x" },
+    },
+    {
+      "ga/",
+      function() require("textcase").operator("to_path_case") end,
+      desc = "to/path/case",
+      mode = { "n", "x" },
+    },
+
+    { "<LEADER>lc", "", desc = "+Rename text case" },
+    { "<LEADER>lcc", function() require("textcase").lsp_rename("to_camel_case") end, desc = "toCamelCase" },
+    { "<LEADER>lcd", function() require("textcase").lsp_rename("to_dashed_case") end, desc = "to-dashed-case" },
+    { "<LEADER>lce", function() require("textcase").lsp_rename("to_phrase_case") end, desc = "To Phrase case" },
+    { "<LEADER>lcl", function() require("textcase").lsp_rename("to_lower_case") end, desc = "to lower case" },
+    { "<LEADER>lcn", function() require("textcase").lsp_rename("to_constant_case") end, desc = "TO_CONSTANT_CASE" },
+    { "<LEADER>lcp", function() require("textcase").lsp_rename("to_pascal_case") end, desc = "ToPascalCase" },
+    { "<LEADER>lcs", function() require("textcase").lsp_rename("to_snake_case") end, desc = "to_snake_case" },
+    { "<LEADER>lct", function() require("textcase").lsp_rename("to_title_case") end, desc = "To Title Case" },
+    { "<LEADER>lcu", function() require("textcase").lsp_rename("to_upper_case") end, desc = "TO UPPER CASE" },
+    { "<LEADER>lcx", function() require("textcase").lsp_rename("to_title_dash_case") end, desc = "To-Title-Dash-Case" },
+    { "<LEADER>lc.", function() require("textcase").lsp_rename("to_dot_case") end, desc = "to.dot.case" },
+    { "<LEADER>lc,", function() require("textcase").lsp_rename("to_comma_case") end, desc = "to,comma,case" },
+    { "<LEADER>lc/", function() require("textcase").lsp_rename("to_path_case") end, desc = "to/path/case" },
   },
   config = function()
     require("textcase").setup({
       default_keymappings_enabled = false,
-      prefix = "ga",
     })
   end,
 }

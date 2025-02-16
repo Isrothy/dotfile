@@ -62,7 +62,7 @@ return {
         { "<LEADER>f", group = "Find" },
         { "<LEADER>g", group = "Git" },
         { "<LEADER>h", group = "Harpoon" },
-        { "<LEADER>j", group = "TreeSJ" },
+        { "<LEADER>j", group = "Split/Join" },
         { "<LEADER>k", group = "Git conflict" },
         { "<LEADER>l", group = "LSP" },
         { "<LEADER>m", group = "Minimap" },
@@ -75,7 +75,7 @@ return {
         { "<LEADER>q", group = "Profiler" },
         { "<LEADER>r", group = "Refactors" },
 
-        { "<LEADER>t", group = "Neotest" },
+        { "<LEADER>t", group = "Test" },
         { "<LEADER>u", group = "Snacks toggle" },
 
         {
@@ -89,9 +89,6 @@ return {
 
         { "<LEADER>/", group = "Grep" },
 
-
-        { "ga", group = "Text case" },
-        { "gao", group = "Pending Mode Operator" },
 
         { "[", group = "Prev" },
         { "]", group = "Next" },

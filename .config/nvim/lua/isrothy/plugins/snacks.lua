@@ -15,6 +15,9 @@ return {
   enabled = true,
   ---@type snacks.Config
   opts = {
+    image = {
+      enabled = true,
+    },
     picker = {
       prompt = " ",
       layout = {

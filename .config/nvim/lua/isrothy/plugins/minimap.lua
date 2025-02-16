@@ -116,15 +116,6 @@ return {
     -- vim.opt.wrap = false
     -- vim.opt.sidescrolloff = 36
 
-    -- _G.MyStatusCol = function()
-    --   local ok, statuscol = pcall(require, "statuscol")
-    --   if ok then
-    --     return statuscol.get_statuscol_string()
-    --   else
-    --     return ""
-    --   end
-    -- end
-
     ---@type Neominimap.UserConfig
     vim.g.neominimap = {
       auto_enable = true,
@@ -145,7 +136,6 @@ return {
         auto_switch_focus = true,
       },
       layout = "split",
-      -- layout = "float",
       split = {
         direction = "right",
         close_if_last_window = true,
@@ -189,9 +179,6 @@ return {
           end
         end
         return false
-      end,
-      winopt = function(wo)
-        -- wo.statuscolumn = "%!w:lua.MyStatusCol()"
       end,
       ---@type Neominimap.Map.Handler[]
       handlers = {
