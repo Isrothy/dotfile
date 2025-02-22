@@ -322,7 +322,7 @@ return {
             },
             ["<LOCALLEADER>P"] = {
               "toggle_preview",
-              config = { use_float = true, use_image_nvim = true },
+              config = { use_float = true, use_image_nvim = false },
             },
             ["<LOCALLEADER>m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
             ["<LOCALLEADER>q"] = "close_window",
@@ -380,7 +380,7 @@ return {
               ["<LOCALLEADER>gc"] = "git_commit",
               ["<LOCALLEADER>gp"] = "git_push",
               ["<LOCALLEADER>gg"] = "git_commit_and_push",
-              ["<LOCALLEADER>I"] = "image_preview",
+              -- ["<LOCALLEADER>I"] = "image_preview",
 
               ["<LOCALLEADER>H"] = "toggle_hidden",
               ["<LOCALLEADER>/"] = "fuzzy_finder",
@@ -425,12 +425,12 @@ return {
               local path = node:get_id()
               vim.api.nvim_input(": " .. path .. "<Home>")
             end,
-            image_preview = function(state)
-              local node = state.tree:get_node()
-              if node.type == "file" then
-                require("image_preview").PreviewImage(node.path)
-              end
-            end,
+            -- image_preview = function(state)
+            --   local node = state.tree:get_node()
+            --   if node.type == "file" then
+            --     require("image_preview").PreviewImage(node.path)
+            --   end
+            -- end,
           },
         },
         buffers = {

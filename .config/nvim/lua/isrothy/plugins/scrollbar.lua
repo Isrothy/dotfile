@@ -1,6 +1,6 @@
 return {
   {
-    "Isrothy/satellite.nvim",
+    "lewis6991/satellite.nvim",
     -- dir = "~/satellite.nvim",
     event = { "BufReadPost", "BufNewFile" },
     enabled = true,

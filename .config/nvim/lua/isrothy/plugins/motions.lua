@@ -56,9 +56,7 @@ return {
                 search = {
                   mode = "search",
                   exclude = {
-                    function(win)
-                      return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "snacks_picker_list"
-                    end,
+                    function(win) return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "snacks_picker_list" end,
                   },
                 },
                 action = function(match)
@@ -72,5 +70,4 @@ return {
       },
     },
   },
-
 }

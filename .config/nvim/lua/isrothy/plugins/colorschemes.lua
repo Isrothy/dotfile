@@ -8,8 +8,8 @@ return {
     init = function() vim.cmd.colorscheme("ex-nordify-dark") end,
   },
   {
-    dir = "~/nordify.nvim",
-    -- "Isrothy/nordify.nvim",
+    -- dir = "~/nordify.nvim",
+    "Isrothy/nordify.nvim",
     -- priority = 1000,
     lazy = true,
     enabled = true,

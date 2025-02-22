@@ -7,7 +7,6 @@ end
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-
 map({ "n", "x" }, "<SPACE>", "<NOP>")
 map({ "n", "x" }, "\\", "<NOP>")
 map({ "n", "x", "i", "c" }, "<C-Z>", "<NOP>")
@@ -39,7 +38,7 @@ map("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"', {
 
 map("n", "<LEADER>wd", "<C-W>c", { desc = "Close current window" })
 
-map("n", "<ESC>", ":nohlsearch<CR>", { desc = "Clear search highlight" })
+map("n", "<ESC>", "<ESC>:nohlsearch<CR>", { desc = "Clear search highlight" })
 
 map({ "i", "c", "t" }, "<M-h>", "<LEFT>", { desc = "Left" })
 map({ "i", "c", "t" }, "<M-j>", "<DOWN>", { desc = "Down" })
@@ -85,8 +84,9 @@ map(
   function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
   { desc = "List workspace" }
 )
-
 map("n", "<LEADER>Ws", function() vim.lsp.buf.workspace_symbol() end, { desc = "Workspace symbols" })
+
+
 map("n", "<LEADER><TAB>o", "<CMD>tabonly<CR>", { desc = "Close other tabs" })
 map("n", "<LEADER><TAB>d", "<CMD>tabclose<CR>", { desc = "Close current tab" })
 map("n", "<LEADER><TAB>f", "<CMD>tabfirst<CR>", { desc = "First tab" })

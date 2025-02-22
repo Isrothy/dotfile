@@ -52,7 +52,11 @@ return {
   {
     "folke/ts-comments.nvim",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      lang = {
+        cuda = "// %s",
+      },
+    },
   },
   {
     "JoosepAlviste/nvim-ts-context-commentstring",

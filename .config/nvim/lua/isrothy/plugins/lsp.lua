@@ -76,7 +76,7 @@ local lspconfig = {
         )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname)
       end,
       cmd = {
-        "/opt/homebrew/opt/llvm/bin/clangd",
+        "clangd",
         "--background-index",
         "--clang-tidy",
         "--clang-tidy-checks=performance-*,bugprone-*",
