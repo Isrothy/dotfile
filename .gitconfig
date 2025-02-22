@@ -1,0 +1,37 @@
+[user]
+	name = Jiahe Jiang
+	email = 61075605+Isrothy@users.noreply.github.com
+[pull]
+	rebase = true
+[interactive]
+    diffFilter = delta --color-only
+[core]
+	editor = nvim
+	pager = delta
+[merge]
+	tool = nvim
+	conflictstyle = diff3
+[mergetool]
+	keepBackup = false
+[mergetool "nvim"]
+	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[diff]
+    colorMoved = default
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+	side-by-side = true
+	line-numbers = true
+	syntax-theme = Nord
+
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[maintenance]
+	repo = /Users/jiangjoshua/neominimap.nvim
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
