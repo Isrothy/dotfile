@@ -8,12 +8,12 @@ return {
     },
     cmd = { "Octo" },
     keys = {
-      { "<LEADER>gi", "<cmd>Octo issue list<CR>", desc = "List issues (Octo)" },
-      { "<LEADER>gI", "<cmd>Octo issue search<CR>", desc = "Search issues (Octo)" },
-      { "<LEADER>gp", "<cmd>Octo pr list<CR>", desc = "List PRs (Octo)" },
-      { "<LEADER>gP", "<cmd>Octo pr search<CR>", desc = "Search PRs (Octo)" },
-      { "<LEADER>gr", "<cmd>Octo repo list<CR>", desc = "List repos (Octo)" },
-      { "<LEADER>gS", "<cmd>Octo search<CR>", desc = "Search (Octo)" },
+      { "<LEADER>Gi", "<cmd>Octo issue list<CR>", desc = "List issues (Octo)" },
+      { "<LEADER>GI", "<cmd>Octo issue search<CR>", desc = "Search issues (Octo)" },
+      { "<LEADER>Gp", "<cmd>Octo pr list<CR>", desc = "List PRs (Octo)" },
+      { "<LEADER>GP", "<cmd>Octo pr search<CR>", desc = "Search PRs (Octo)" },
+      { "<LEADER>Gr", "<cmd>Octo repo list<CR>", desc = "List repos (Octo)" },
+      { "<LEADER>GS", "<cmd>Octo search<CR>", desc = "Search (Octo)" },
 
       { "<LOCALLEADER>a", "", desc = "+assignee (Octo)", ft = "octo" },
       { "<LOCALLEADER>c", "", desc = "+comment/code (Octo)", ft = "octo" },

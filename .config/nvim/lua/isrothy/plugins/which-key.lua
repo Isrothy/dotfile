@@ -61,6 +61,7 @@ return {
         { "<LEADER>e", group = "Explore" },
         { "<LEADER>f", group = "Find" },
         { "<LEADER>g", group = "Git" },
+        { "<LEADER>G", group = "Github" },
         { "<LEADER>h", group = "Harpoon" },
         { "<LEADER>j", group = "Split/Join" },
         { "<LEADER>k", group = "Git conflict" },
@@ -88,7 +89,6 @@ return {
         { "<LEADER>x", group = "Diagnostics" },
 
         { "<LEADER>/", group = "Grep" },
-
 
         { "[", group = "Prev" },
         { "]", group = "Next" },

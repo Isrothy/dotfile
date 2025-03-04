@@ -8,6 +8,7 @@ local neotest = {
     "rcasia/neotest-java",
     "alfaix/neotest-gtest",
     "nvim-neotest/neotest-python",
+    "mfussenegger/nvim-dap",
   },
   keys = {
     {
@@ -64,6 +65,11 @@ local neotest = {
         require("neotest").run.stop()
       end,
       desc = "Stop",
+    },
+    {
+      "<LEADER>td",
+      function() require("neotest").run.run({ strategy = "dap" }) end,
+      desc = "Debug nearest",
     },
   },
   opts = function()

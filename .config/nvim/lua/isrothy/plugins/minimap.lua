@@ -76,7 +76,7 @@ local extmark_handler = {
 local is_float_window = function(winid) return vim.api.nvim_win_get_config(winid).relative ~= "" end
 
 return {
-  -- dir = "~/neominimap.nvim",
+  -- dir = "~/Developer/neominimap.nvim",
   "Isrothy/neominimap.nvim",
   enabled = true,
   version = "v3.x.x",

@@ -145,22 +145,15 @@ return {
     },
     dashboard = {
       enabled = true,
-      width = 60,
+      width = 70,
+      autokeys = "1234567890abcdefhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
       sections = {
         { section = "header" },
         { section = "keys", gap = 1, padding = 1 },
         { section = "startup" },
         {
           pane = 2,
-          align = "right",
-          section = "terminal",
-          cmd = "macchina -c ~/.config/nvim/minimalist.toml",
-          padding = 1,
-          ttl = 60 * 60 * 24,
-        },
-        {
-          pane = 2,
-          icon = " ",
+          icon = " ",
           title = "Recent Files",
           section = "recent_files",
           limit = 5,
@@ -169,7 +162,7 @@ return {
         },
         {
           pane = 2,
-          icon = " ",
+          icon = "󱉮 ",
           title = vim.fn.fnamemodify(".", ":~"),
           section = "recent_files",
           cwd = true,
@@ -179,7 +172,16 @@ return {
         },
         {
           pane = 2,
-          icon = " ",
+          icon = "󰸖 ",
+          title = "Projects",
+          section = "projects",
+          indent = 2,
+          limit = 5,
+          padding = 1,
+        },
+        {
+          pane = 2,
+          icon = " ",
           title = "Git Status",
           section = "terminal",
           enabled = function() return Snacks.git.get_root() ~= nil end,
@@ -194,20 +196,25 @@ return {
       preset = {
         keys = {
           {
-            icon = " ",
+            icon = "󰱽 ",
             key = "f",
             desc = "Find file",
             action = ":lua Snacks.dashboard.pick('files')",
           },
-          { icon = " ", key = "n", desc = "New file", action = ":ene | startinsert" },
           {
-            icon = " ",
+            icon = " ",
+            key = "n",
+            desc = "New file",
+            action = ":ene | startinsert",
+          },
+          {
+            icon = "󰺯 ",
             key = "/",
             desc = "Grep",
             action = ":lua Snacks.dashboard.pick('live_grep')",
           },
           {
-            icon = " ",
+            icon = "󱋢 ",
             key = "r",
             desc = "Recent files",
             action = ":lua Snacks.dashboard.pick('oldfiles')",
@@ -346,7 +353,7 @@ return {
     { "<LEADER>..", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
     { "<LEADER>.s", function() Snacks.scratch.select() end, desc = "Select scratch buffer" },
 
-    { "<LEADER>un", function() Snacks.notifier.hide() end, desc = "Dismiss all notifications" },
+    -- { "<LEADER>un", function() Snacks.notifier.hide() end, desc = "Dismiss all notifications" },
 
     { "<LEADER>bd", function() Snacks.bufdelete() end, desc = "Delete current buffer" },
 

@@ -162,9 +162,26 @@ local lspconfig = {
   end,
 }
 
+local clangdft = { "c", "cpp", "objc", "objcpp", "cuda" }
+
 local clangd = {
   "p00f/clangd_extensions.nvim",
-  ft = { "c", "cpp", "objc", "objcpp" },
+  ft = clangdft,
+  cmd = {
+    "ClangdSwitchSourceHeader",
+    "ClangdAST",
+    "ClangdSymbolInfo",
+    "ClangdTypeHierarchy",
+    "ClangdMemoryUsage",
+  },
+  keys = {
+    { "<LOCALLEADER>c", "", desc = "+Clangd", ft = clangdft },
+    { "<LOCALLEADER>ch", "<CMD>ClangdSwitchSourceHeader<CR>", desc = "Switch Source Header", ft = clangdft },
+    { "<LOCALLEADER>ca", "<CMD>ClangdAST<CR>", desc = "AST", ft = clangdft },
+    { "<LOCALLEADER>cs", "<CMD>ClangdSymbolInfo<CR>", desc = "Symbol Info", ft = clangdft },
+    { "<LOCALLEADER>ct", "<CMD>ClangdTypeHierarchy<CR>", desc = "Type Hierarchy", ft = clangdft },
+    { "<LOCALLEADER>cm", "<CMD>ClangdMemoryUsage<CR>", desc = "Memory Usage", ft = clangdft },
+  },
   config = function()
     require("clangd_extensions").setup({
       inlay_hints = {
@@ -238,6 +255,43 @@ local java = {
     "JavaRefactorExtractField",
     "JavaSettingsChangeRuntime",
   },
+  keys = {
+    { "<LOCALLEADER>j", "", desc = "+Java", ft = "java" },
+
+    { "<LOCALLEADER>jb", "", desc = "+Build", ft = "java" },
+    { "<LOCALLEADER>jbb", "<CMD>JavaBuildBuildWorkspace<CR>", desc = "Build workspace", ft = "java" },
+    { "<LOCALLEADER>jbc", "<CMD>JavaBuildCleanWorkspace<CR>", desc = "Clean workspace", ft = "java" },
+
+    { "<LOCALLEADER>je", "", desc = "+Runner", ft = "java" },
+    { "<LOCALLEADER>jer", "<CMD>JavaRunnerRunMain<CR>", desc = "Run Main", ft = "java" },
+    { "<LOCALLEADER>jes", "<CMD>JavaRunnerStopMain<CR>", desc = "Stop Main", ft = "java" },
+    { "<LOCALLEADER>jel", "<CMD>JavaRunnerToggleLogs<CR>", desc = "Toggle logs", ft = "java" },
+
+    { "<LOCALLEADER>jd", "<CMD>JavaDapConfig<CR>", desc = "Dap Config", ft = "java" },
+
+    { "<LOCALLEADER>jt", "", desc = "+Tests", ft = "java" },
+    { "<LOCALLEADER>jtc", "<CMD>JavaTestRunCurrentClass<CR>", desc = "Run current class", ft = "java" },
+    { "<LOCALLEADER>jtC", "<CMD>JavaTestDebugCurrentClass<CR>", desc = "Debug current class", ft = "java" },
+    { "<LOCALLEADER>jtm", "<CMD>JavaTestRunCurrentMethod<CR>", desc = "Run current method", ft = "java" },
+    { "<LOCALLEADER>jtM", "<CMD>JavaTestDebugCurrentMethod<CR>", desc = "Debug current method", ft = "java" },
+    { "<LOCALLEADER>jtr", "<CMD>JavaTestViewLastReport<CR>", desc = "View last report", ft = "java" },
+
+    { "<LOCALLEADER>jp", "<CMD>JavaProfile<CR>", desc = "Profile", ft = "java" },
+
+    { "<LOCALLEADER>jr", "", desc = "+Refactor", ft = "java" },
+    { "<LOCALLEADER>jrv", "<CMD>JavaRefactorExtractVariable<CR>", desc = "Extract variable", ft = "java" },
+    {
+      "<LOCALLEADER>jrV",
+      "<CMD>JavaRefactorExtractVariableAllOccurrence<CR>",
+      desc = "Extract variable all",
+      ft = "java",
+    },
+    { "<LOCALLEADER>jrc", "<CMD>JavaRefactorExtractConstant<CR>", desc = "Extract constant", ft = "java" },
+    { "<LOCALLEADER>jrm", "<CMD>JavaRefactorExtractMethod<CR>", desc = "Extract method", ft = "java" },
+    { "<LOCALLEADER>jrf", "<CMD>JavaRefactorExtractField<CR>", desc = "Extract field", ft = "java" },
+
+    { "<LOCALLEADER>jc", "<CMD>JavaSettingsChangeRuntime<CR>", desc = "Change runtime", ft = "java" },
+  },
   config = function()
     require("java").setup({
       spring_boot_tools = {
@@ -270,14 +324,14 @@ local haskell_tools = {
   version = "^4",
   ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
   keys = {
-    { "<LOCALLEADER>h", "", desc = "+Haskell tools" },
+    { "<LOCALLEADER>h", "", desc = "+Haskell tools", ft = { "haskell", "lhaskell" } },
     {
       "<LOCALEADER>he",
       function() require("haskell-tools").lsp.buf_eval_all() end,
       desc = "Evaluate all",
       ft = { "haskell", "lhaskell" },
     },
-    { "<LOCALLEADER>hr", "", desc = "+REPL" },
+    { "<LOCALLEADER>hr", "", desc = "+REPL", ft = { "haskell", "lhaskell" } },
     {
       "<LOCALLEADER>hh",
       function() require("haskell-tools").hoogle.hoogle_signature() end,
@@ -308,7 +362,8 @@ local haskell_tools = {
       desc = "Quit repl",
       ft = { "haskell", "lhaskell" },
     },
-    { "<LOCALLEADER>hr", "", desc = "+Project" },
+
+    { "<LOCALLEADER>hp", "", desc = "+Project", ft = { "haskell", "lhaskell" } },
     {
       "<LOCALLEADER>hpp",
       function() require("haskell-tools").project.open_project_file() end,
@@ -453,8 +508,6 @@ local null_ls = {
         null_ls.builtins.formatting.typstyle,
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.yamlfmt,
-
-        -- null_ls.builtins.hover.dictionary,
       },
     })
   end,

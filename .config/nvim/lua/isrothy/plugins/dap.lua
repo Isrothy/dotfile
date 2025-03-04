@@ -7,8 +7,8 @@ return {
         { "nvim-neotest/nvim-nio" },
       },
       keys = {
-        { "<LEADER>du", function() require("dapui").toggle({}) end, desc = "Dap UI" },
-        { "<LEADER>de", function() require("dapui").eval() end, desc = "Eval", mode = { "n", "x" } },
+        { "<LOCALLEADER>pdu", function() require("dapui").toggle({}) end, desc = "Dap UI" },
+        { "<LOCALLEADER>pde", function() require("dapui").eval() end, desc = "Eval", mode = { "n", "x" } },
       },
       opts = {},
       config = function(_, opts)
@@ -29,6 +29,22 @@ return {
     },
     {
       "mfussenegger/nvim-dap-python",
+      keys = {
+        { "<LOCALLEADER>p", "", desc = "+Python", ft = "python" },
+        { "<LOCALLEADER>pd", "", desc = "+Debug", ft = "python" },
+        { "<LOCALLEADER>pdt", function() require("dap-python").test_method() end, desc = "Method", ft = "python" },
+        { "<LOCALLEADER>pdc", function() require("dap-python").test_class() end, desc = "Class", ft = "python" },
+      },
+    },
+    {
+      "williamboman/mason.nvim",
+      optional = true,
+      opts = {
+        ensure_installed = {
+          "codelldb",
+          "haskell-debug-adapter",
+        },
+      },
     },
   },
 
@@ -53,65 +69,32 @@ return {
     { "<LEADER>ds", function() require("dap").session() end, desc = "Session" },
     { "<LEADER>dt", function() require("dap").terminate() end, desc = "Terminate" },
     { "<LEADER>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
-    { "<LEADER>td", function() require("neotest").run.run({ strategy = "dap" }) end, desc = "Debug nearest" },
   },
 
   config = function()
-    require("dap-python").setup("/opt/homebrew/bin/python3.11", {})
+    require("dap-python").setup("python3", {})
 
     local dap = require("dap")
 
-    dap.adapters.haskell = {
+    dap.adapters.codelldb = {
       type = "executable",
-      command = "haskell-debug-adapter",
-      args = { "--hackage-version=0.0.33.0" },
+      command = "codelldb",
     }
-    dap.configurations.haskell = {
-      {
-        type = "haskell",
-        request = "launch",
-        name = "Debug",
-        workspace = "${workspaceFolder}",
-        startup = "${file}",
-        stopOnEntry = true,
-        logFile = vim.fn.stdpath("data") .. "/haskell-dap.log",
-        logLevel = "WARNING",
-        ghciEnv = vim.empty_dict(),
-        ghciPrompt = "ghci> ",
-        -- Adjust the prompt to the prompt you see when you invoke the stack ghci command below
-        ghciInitialPrompt = "ghci> ",
-        ghciCmd = "stack ghci --test --no-load --no-build --main-is TARGET --ghci-options -fprint-evld-with-show",
-      },
-    }
-
-    dap.adapters.lldb = {
-      type = "executable",
-      command = "/opt/homebrew/opt/llvm/bin/lldb-dap", -- adjust as needed, must be absolute path
-      name = "lldb",
-    }
-
     dap.configurations.cpp = {
       {
-        name = "Launch",
-        type = "lldb",
+        name = "Launch file",
+        type = "codelldb",
         request = "launch",
         program = function() return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file") end,
         cwd = "${workspaceFolder}",
         stopOnEntry = false,
-        runInTerminal = true,
-        args = {},
-        -- 💀
-        -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
-        --
-        --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
-        --
-        -- Otherwise you might get the following error:
-        --
-        --    Error on launch: Failed to attach to the target process
-        --
-        -- But you should be aware of the implications:
-        -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-        -- runInTerminal = false,
+      },
+      {
+        type = "codelldb",
+        request = "attach",
+        name = "Attach to process",
+        pid = require("dap.utils").pick_process,
+        cwd = "${workspaceFolder}",
       },
     }
     dap.configurations.c = dap.configurations.cpp
