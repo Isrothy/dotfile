@@ -135,10 +135,8 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     local filetype = event.match
     if vim.tbl_contains(wrap_filetypes, filetype) then
       vim.wo.wrap = true
-      vim.wo.linebreak = true
     else
       vim.wo.wrap = false
-      vim.wo.linebreak = false
     end
   end,
 })

@@ -58,7 +58,7 @@
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "f17",
+                                    "key_code": "caps_lock",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [
@@ -78,9 +78,9 @@
                         "manipulators": [
                             {
                                 "from": { "key_code": "f18" },
-                                "to": [
+                                "to_if_alone": [
                                     {
-                                        "hold_down_milliseconds": 100,
+                                        "hold_down_milliseconds": 200,
                                         "key_code": "caps_lock"
                                     }
                                 ],
@@ -99,19 +99,6 @@
                         "vendor_id": 13364
                     },
                     "ignore": false
-                },
-                {
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "product_id": 641,
-                        "vendor_id": 1452
-                    },
-                    "simple_modifications": [
-                        {
-                            "from": { "key_code": "caps_lock" },
-                            "to": [{ "key_code": "f17" }]
-                        }
-                    ]
                 }
             ],
             "selected": true,

@@ -55,7 +55,7 @@ return {
           group = "Buffer",
           expand = function() return require("which-key.extras").expand.buf() end,
         },
-        { "<LEADER>bs", group = "Swap" },
+        { "<LEADER>bx", group = "Exchange" },
         { "<LEADER>c", group = "Colorize" },
         { "<LEADER>d", group = "Dap" },
         { "<LEADER>e", group = "Explore" },
@@ -64,7 +64,7 @@ return {
         { "<LEADER>G", group = "Github" },
         { "<LEADER>h", group = "Harpoon" },
         { "<LEADER>j", group = "Split/Join" },
-        { "<LEADER>k", group = "Git conflict" },
+
         { "<LEADER>l", group = "LSP" },
         { "<LEADER>m", group = "Minimap" },
         { "<LEADER>mb", group = "[b]uffer" },

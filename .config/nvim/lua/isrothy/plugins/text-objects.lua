@@ -1,12 +1,3 @@
-local custom_textobjects = {
-  o = {
-    a = { "@block.outer", "@conditional.outer", "@loop.outer" },
-    i = { "@block.inner", "@conditional.inner", "@loop.inner" },
-  },
-  f = { a = "@function.outer", i = "@function.inner" },
-  c = { a = "@class.outer", i = "@class.inner" },
-}
-
 return {
   {
     "chrisgrieser/nvim-various-textobjs",

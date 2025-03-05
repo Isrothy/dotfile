@@ -1,8 +1,8 @@
 {
-    "global": { "show_in_menu_bar": false },
     "profiles": [
         {
             "complex_modifications": {
+                "parameters": { "basic.to_if_alone_timeout_milliseconds": 500 },
                 "rules": [
                     {
                         "description": "Caps Lock behaves as Caps Lock when tapped, but it behaves as a Left Control when held.",
@@ -58,7 +58,7 @@
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "f17",
+                                    "key_code": "caps_lock",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [
@@ -74,13 +74,12 @@
                     },
                     {
                         "description": "Map F18 to Caps Lock",
-                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": { "key_code": "f18" },
-                                "to": [
+                                "to_if_alone": [
                                     {
-                                        "hold_down_milliseconds": 100,
+                                        "hold_down_milliseconds": 200,
                                         "key_code": "caps_lock"
                                     }
                                 ],
@@ -99,19 +98,6 @@
                         "vendor_id": 13364
                     },
                     "ignore": false
-                },
-                {
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "product_id": 641,
-                        "vendor_id": 1452
-                    },
-                    "simple_modifications": [
-                        {
-                            "from": { "key_code": "caps_lock" },
-                            "to": [{ "key_code": "f17" }]
-                        }
-                    ]
                 }
             ],
             "selected": true,

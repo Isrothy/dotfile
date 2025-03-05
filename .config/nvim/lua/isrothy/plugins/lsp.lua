@@ -176,11 +176,11 @@ local clangd = {
   },
   keys = {
     { "<LOCALLEADER>c", "", desc = "+Clangd", ft = clangdft },
-    { "<LOCALLEADER>ch", "<CMD>ClangdSwitchSourceHeader<CR>", desc = "Switch Source Header", ft = clangdft },
+    { "<LOCALLEADER>ch", "<CMD>ClangdSwitchSourceHeader<CR>", desc = "Switch source header", ft = clangdft },
     { "<LOCALLEADER>ca", "<CMD>ClangdAST<CR>", desc = "AST", ft = clangdft },
-    { "<LOCALLEADER>cs", "<CMD>ClangdSymbolInfo<CR>", desc = "Symbol Info", ft = clangdft },
-    { "<LOCALLEADER>ct", "<CMD>ClangdTypeHierarchy<CR>", desc = "Type Hierarchy", ft = clangdft },
-    { "<LOCALLEADER>cm", "<CMD>ClangdMemoryUsage<CR>", desc = "Memory Usage", ft = clangdft },
+    { "<LOCALLEADER>cs", "<CMD>ClangdSymbolInfo<CR>", desc = "Symbol info", ft = clangdft },
+    { "<LOCALLEADER>ct", "<CMD>ClangdTypeHierarchy<CR>", desc = "Type hierarchy", ft = clangdft },
+    { "<LOCALLEADER>cm", "<CMD>ClangdMemoryUsage<CR>", desc = "Memory usage", ft = clangdft },
   },
   config = function()
     require("clangd_extensions").setup({
@@ -263,11 +263,11 @@ local java = {
     { "<LOCALLEADER>jbc", "<CMD>JavaBuildCleanWorkspace<CR>", desc = "Clean workspace", ft = "java" },
 
     { "<LOCALLEADER>je", "", desc = "+Runner", ft = "java" },
-    { "<LOCALLEADER>jer", "<CMD>JavaRunnerRunMain<CR>", desc = "Run Main", ft = "java" },
-    { "<LOCALLEADER>jes", "<CMD>JavaRunnerStopMain<CR>", desc = "Stop Main", ft = "java" },
+    { "<LOCALLEADER>jer", "<CMD>JavaRunnerRunMain<CR>", desc = "Run main", ft = "java" },
+    { "<LOCALLEADER>jes", "<CMD>JavaRunnerStopMain<CR>", desc = "Stop main", ft = "java" },
     { "<LOCALLEADER>jel", "<CMD>JavaRunnerToggleLogs<CR>", desc = "Toggle logs", ft = "java" },
 
-    { "<LOCALLEADER>jd", "<CMD>JavaDapConfig<CR>", desc = "Dap Config", ft = "java" },
+    { "<LOCALLEADER>jd", "<CMD>JavaDapConfig<CR>", desc = "Dap config", ft = "java" },
 
     { "<LOCALLEADER>jt", "", desc = "+Tests", ft = "java" },
     { "<LOCALLEADER>jtc", "<CMD>JavaTestRunCurrentClass<CR>", desc = "Run current class", ft = "java" },

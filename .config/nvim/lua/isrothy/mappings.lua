@@ -38,7 +38,7 @@ map("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"', {
 
 map("n", "<LEADER>wd", "<C-W>c", { desc = "Close current window" })
 
-map("n", "<ESC>", "<ESC>:nohlsearch<CR>", { desc = "Clear search highlight" })
+map("n", "<ESC>", ":nohlsearch<CR><ESC>", { desc = "Clear search highlight" })
 
 map({ "i", "c", "t" }, "<M-h>", "<LEFT>", { desc = "Left" })
 map({ "i", "c", "t" }, "<M-j>", "<DOWN>", { desc = "Down" })

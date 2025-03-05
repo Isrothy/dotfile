@@ -224,6 +224,7 @@ local dial = {
 
 local mini_move = {
   "echasnovski/mini.move",
+  enabled = true,
   keys = {
     { "<M-H>", mode = { "n", "x" }, desc = "Move left" },
     { "<M-K>", mode = { "n", "x" }, desc = "Move up" },

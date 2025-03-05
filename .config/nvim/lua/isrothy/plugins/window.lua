@@ -65,7 +65,6 @@ return {
   },
   {
     "mrjones2014/smart-splits.nvim",
-    build = "./kitty/install-kittens.bash",
     keys = {
       {
         "<C-H>",
@@ -92,15 +91,17 @@ return {
         desc = "Move cursor right",
       },
 
-      { "<LEADER>bsh", function() require("smart-splits").swap_buf_left() end, desc = "Swap buffers left" },
-      { "<LEADER>bsj", function() require("smart-splits").swap_buf_down() end, desc = "Swap buffers down" },
-      { "<LEADER>bsk", function() require("smart-splits").swap_buf_up() end, desc = "Swap buffers up" },
-      { "<LEADER>bsl", function() require("smart-splits").swap_buf_right() end, desc = "Swap buffers right" },
+      { "<LEADER>bxh", function() require("smart-splits").swap_buf_left() end, desc = "Exchange buffers left" },
+      { "<LEADER>bxj", function() require("smart-splits").swap_buf_down() end, desc = "Exchange buffers down" },
+      { "<LEADER>bxk", function() require("smart-splits").swap_buf_up() end, desc = "Exchange buffers up" },
+      { "<LEADER>bxl", function() require("smart-splits").swap_buf_right() end, desc = "Exchange buffers right" },
 
       { "<M-h>", function() require("smart-splits").resize_left() end, desc = "Resize left" },
       { "<M-j>", function() require("smart-splits").resize_down() end, desc = "Resize down" },
       { "<M-k>", function() require("smart-splits").resize_up() end, desc = "Resize up" },
       { "<M-l>", function() require("smart-splits").resize_right() end, desc = "Resize right" },
+
+      { "<LEADER>wr", function() require("smart-splits").start_resize_mode() end, desc = "Start resize mode" },
     },
     opts = {
       ignored_buftypes = {
@@ -110,6 +111,7 @@ return {
       },
       default_amount = 1,
       at_edge = "stop",
+      multiplexer_integration = false,
     },
   },
 }

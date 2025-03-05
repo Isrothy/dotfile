@@ -58,7 +58,7 @@
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "f17",
+                                    "key_code": "left_control",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [
@@ -98,7 +98,16 @@
                         "product_id": 2256,
                         "vendor_id": 13364
                     },
-                    "ignore": false
+                    "ignore": false,
+                    "manipulate_caps_lock_led": false
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 2256,
+                        "vendor_id": 13364
+                    },
+                    "manipulate_caps_lock_led": false
                 },
                 {
                     "identifiers": {
@@ -106,12 +115,7 @@
                         "product_id": 641,
                         "vendor_id": 1452
                     },
-                    "simple_modifications": [
-                        {
-                            "from": { "key_code": "caps_lock" },
-                            "to": [{ "key_code": "f17" }]
-                        }
-                    ]
+                    "manipulate_caps_lock_led": false
                 }
             ],
             "selected": true,

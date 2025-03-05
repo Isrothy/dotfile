@@ -7,8 +7,8 @@ return {
         { "nvim-neotest/nvim-nio" },
       },
       keys = {
-        { "<LOCALLEADER>pdu", function() require("dapui").toggle({}) end, desc = "Dap UI" },
-        { "<LOCALLEADER>pde", function() require("dapui").eval() end, desc = "Eval", mode = { "n", "x" } },
+        { "<LEADER>du", function() require("dapui").toggle({}) end, desc = "Dap UI" },
+        { "<LEADER>de", function() require("dapui").eval() end, desc = "Eval", mode = { "n", "x" } },
       },
       opts = {},
       config = function(_, opts)
@@ -30,10 +30,10 @@ return {
     {
       "mfussenegger/nvim-dap-python",
       keys = {
-        { "<LOCALLEADER>p", "", desc = "+Python", ft = "python" },
-        { "<LOCALLEADER>pd", "", desc = "+Debug", ft = "python" },
-        { "<LOCALLEADER>pdt", function() require("dap-python").test_method() end, desc = "Method", ft = "python" },
-        { "<LOCALLEADER>pdc", function() require("dap-python").test_class() end, desc = "Class", ft = "python" },
+        { "<LOCALLEADER>p", "", desc = "+Python", ft = { "python" } },
+        { "<LOCALLEADER>pd", "", desc = "+Debug", ft = { "python" } },
+        { "<LOCALLEADER>pdt", function() require("dap-python").test_method() end, desc = "Method", ft = { "python" } },
+        { "<LOCALLEADER>pdc", function() require("dap-python").test_class() end, desc = "Class", ft = { "python" } },
       },
     },
     {

@@ -48,9 +48,7 @@ return {
           wezterm = false, -- Flatten all instance in the current Wezterm session
         },
         hooks = {
-          should_block = function(argv)
-            return vim.tbl_contains(argv, "-b")
-          end,
+          should_block = function(argv) return vim.tbl_contains(argv, "-b") end,
           pre_open = function()
             local term = require("toggleterm.terminal")
             local termid = term.get_focused_id()
@@ -67,9 +65,7 @@ return {
               vim.api.nvim_create_autocmd("BufWritePost", {
                 buffer = bufnr,
                 once = true,
-                callback = vim.schedule_wrap(function()
-                  vim.api.nvim_buf_delete(bufnr, {})
-                end),
+                callback = vim.schedule_wrap(function() vim.api.nvim_buf_delete(bufnr, {}) end),
               })
             end
           end,
@@ -87,10 +83,10 @@ return {
   },
   {
     "mikesmithgh/kitty-scrollback.nvim",
-    lazy = true,
     cmd = {
       "KittyScrollbackGenerateKittens",
       "KittyScrollbackCheckHealth",
+      "KittyScrollbackGenerateCommandLineEditing",
     },
     event = { "User KittyScrollbackLaunch" },
     -- version = '*', -- latest stable version, may have breaking changes if major version changed
