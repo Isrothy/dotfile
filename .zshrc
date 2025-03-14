@@ -13,7 +13,7 @@ antigen bundle copyfile
 antigen bundle copypath
 antigen bundle dirhistory
 antigen bundle fd
-# antigen bundle fzf
+antigen bundle fzf
 antigen bundle git
 antigen bundle gitignore
 antigen bundle history-substring-search
@@ -47,23 +47,26 @@ export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/opt/homebrew/opt/tcl-tk@8/bin:$PATH"
 export PATH="/opt/homebrew/lib/ruby/gems/3.3.0/bin:$PATH"
-export PATH="$HOME/.rustup/toolchains/nightly-aarch64-apple-darwin/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 export PATH="/opt/homebrew/anaconda3/bin":$PATH
 export PATH="/Applications/Docker.app/Contents/Resources/bin":$PATH
 export PATH="/Applications/Docker.app/Contents/Resources/cli-plugins/":$PATH
+export PATH="$HOME/.rustup/toolchains/nightly-aarch64-apple-darwin/bin:$PATH"
 export PATH="$HOME/.local/bin":$PATH
 
 
 export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
 
+export SSL_CERT_FILE="$(brew --prefix)/etc/openssl@3/cert.pem"
 export CURL_CA_BUNDLE="$(brew --prefix)/etc/openssl@3/cert.pem"
-export SSL_CERT_FILE="$(brew --prefix)/etc/openssl/cert.pem"
+export NODE_EXTRA_CA_CERTS="$(brew --prefix)/etc/openssl@3/cert.pem"
 export JAVA_HOME=$(/usr/libexec/java_home)
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export MYVIMRC=$HOME"/.config/nvim/init.lua"
 export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+export MANPAGER='nvim +Man!'
+export MANWIDTH=80
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -121,3 +124,6 @@ if [ -f "$HOME"'/.local/google-cloud-sdk/path.zsh.inc' ]; then . "$HOME"'/.local
 
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME"'/.local/google-cloud-sdk/completion.zsh.inc' ]; then . "$HOME"'/.local/google-cloud-sdk/completion.zsh.inc'; fi
+
+# API Keys
+[ -f ~/.api-keys ] && source ~/.api-keys

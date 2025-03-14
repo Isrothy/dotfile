@@ -326,7 +326,7 @@ local haskell_tools = {
   keys = {
     { "<LOCALLEADER>h", "", desc = "+Haskell tools", ft = { "haskell", "lhaskell" } },
     {
-      "<LOCALEADER>he",
+      "<LOCALLEADER>he",
       function() require("haskell-tools").lsp.buf_eval_all() end,
       desc = "Evaluate all",
       ft = { "haskell", "lhaskell" },

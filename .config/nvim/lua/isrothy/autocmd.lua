@@ -1,10 +1,5 @@
 local function augroup(name) return vim.api.nvim_create_augroup(name, { clear = true }) end
 
-vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-  group = augroup("checktime"),
-  command = "checktime",
-})
-
 vim.api.nvim_create_autocmd({ "TermOpen" }, {
   group = augroup("terminal_config"),
   callback = function()
@@ -127,7 +122,9 @@ local wrap_filetypes = {
   "markdown",
   "latex",
   "text",
+  "Avante",
   "bigfile",
+  "noice",
 }
 vim.api.nvim_create_autocmd({ "FileType" }, {
   group = augroup("wrap"),
@@ -137,6 +134,23 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
       vim.wo.wrap = true
     else
       vim.wo.wrap = false
+    end
+  end,
+})
+
+vim.api.nvim_create_augroup("ToggleLineNumbers", { clear = true })
+vim.api.nvim_create_autocmd("CmdlineEnter", {
+  group = "ToggleLineNumbers",
+  pattern = "*",
+  callback = function() vim.wo.relativenumber = false end,
+})
+
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+  group = "ToggleLineNumbers",
+  pattern = "*",
+  callback = function()
+    if vim.wo.number then
+      vim.wo.relativenumber = true
     end
   end,
 })

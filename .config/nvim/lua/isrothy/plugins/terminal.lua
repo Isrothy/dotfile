@@ -40,12 +40,10 @@ return {
       local saved_terminal
 
       return {
-        window = {
-          open = "alternate",
-        },
-        one_per = {
-          kitty = true, -- Flatten all instance in the current Kitty session
-          wezterm = false, -- Flatten all instance in the current Wezterm session
+        window = { open = "alternate" },
+        integrations = {
+          kitty = true,
+          wezterm = false,
         },
         hooks = {
           should_block = function(argv) return vim.tbl_contains(argv, "-b") end,
@@ -57,7 +55,7 @@ return {
           post_open = function(bufnr, winnr, ft, is_blocking)
             if is_blocking and saved_terminal then
               saved_terminal:close()
-            else
+            elseif winnr then --Important
               vim.api.nvim_set_current_win(winnr)
             end
 

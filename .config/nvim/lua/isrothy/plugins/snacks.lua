@@ -12,11 +12,16 @@ return {
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
-  enabled = true,
   ---@type snacks.Config
   opts = {
     image = {
       enabled = true,
+      math = {
+        enabled = false,
+        latex = {
+          font_size = "large", -- see https://www.sascha-frank.com/latex-font-size.html
+        },
+      },
     },
     picker = {
       prompt = " ",
@@ -26,12 +31,8 @@ return {
         preset = function() return vim.o.columns >= 120 and "default" or "vertical" end,
       },
     },
-    input = {
-      enabled = true,
-    },
-    scroll = {
-      enabled = false,
-    },
+    input = { enabled = true },
+    scroll = { enabled = false },
     statuscolumn = {
       left = { "mark", "sign" },
       right = { "fold", "git" },
@@ -349,7 +350,7 @@ return {
       desc = "Workspace symbols",
     },
 
-    { "<LEADER>qs", function() Snacks.profiler.scratch() end, desc = "Profiler scratch bufer" },
+    -- { "<LEADER>qs", function() Snacks.profiler.scratch() end, desc = "Profiler scratch bufer" },
     { "<LEADER>..", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
     { "<LEADER>.s", function() Snacks.scratch.select() end, desc = "Select scratch buffer" },
 
@@ -383,23 +384,21 @@ return {
         vim.print = _G.dd -- Override print to use snacks for `:=` command
 
         -- Create some toggle mappings
-        Snacks.toggle.option("spell", { name = "Spelling" }):map("<LEADER>us")
-        Snacks.toggle.option("wrap", { name = "Wrap" }):map("<LEADER>uw")
-        Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<LEADER>uL")
-        Snacks.toggle.diagnostics():map("<LEADER>ud")
-        Snacks.toggle.line_number():map("<LEADER>ul")
+        Snacks.toggle.option("spell", { name = "Spelling" }):map("<LEADER>os")
+        Snacks.toggle.option("wrap", { name = "Wrap" }):map("<LEADER>ow")
+        Snacks.toggle.option("relativenumber", { name = "Relative number" }):map("<LEADER>oL")
+        Snacks.toggle.line_number():map("<LEADER>ol")
+        Snacks.toggle.diagnostics():map("<LEADER>xu")
         Snacks.toggle
           .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
-          :map("<LEADER>uc")
+          :map("<LEADER>oc")
         Snacks.toggle
           .option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "Tabline" })
-          :map("<LEADER>uA")
-        Snacks.toggle.treesitter():map("<LEADER>uT")
-        Snacks.toggle.inlay_hints():map("<LEADER>uh")
-        Snacks.toggle.profiler():map("<LEADER>qp")
-        Snacks.toggle.profiler_highlights():map("<LEADER>qh")
-        Snacks.toggle.indent():map("<LEADER>ug")
-        Snacks.toggle.dim():map("<LEADER>uD")
+          :map("<LEADER>ot")
+        -- Snacks.toggle.treesitter():map("<LEADER>uT")
+        Snacks.toggle.inlay_hints():map("<LEADER>lh")
+        Snacks.toggle.indent():map("<LEADER><SPACE>i")
+        Snacks.toggle.dim():map("<LEADER>Z")
       end,
     })
   end,

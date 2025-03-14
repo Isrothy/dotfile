@@ -8,15 +8,6 @@ return {
     cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection", "DBUIFindBuffer" },
     dependencies = "vim-dadbod",
     keys = {
-      {
-        "<LOCALLEADER>s",
-        "<PLUG>(DBUI_ExecuteQuery)",
-        desc = "Execute query",
-        mode = { "n", "x" },
-        ft = { "sql", "mysql", "plsql" },
-      },
-      { "<LOCALLEADER>w", "<PLUG>(DBUI_SaveQuery)", desc = "Save query", ft = { "sql", "mysql", "plsql" } },
-      { "<LOCALLEADER>e", "<PLUG>(DBUI_EditBindParameters)", "Edit Bind parameters", ft = { "sql", "mysql", "plsql" } },
       { "<CR>", "<PLUG>(DBUI_SelectLine)", desc = "Select line", ft = { "dbui" } },
       { "<LOCALLEADER>o", "<PLUG>(DBUI_SelectLine)", desc = "Select line", ft = { "dbui" } },
       { "<LOCALLEADER>s", "<PLUG>(DBUI_SelectLineVsplit)", desc = "Select line", ft = { "dbui" } },
@@ -35,6 +26,7 @@ return {
       local data_path = vim.fn.stdpath("data")
 
       vim.g.db_ui_auto_execute_table_helpers = 1
+      vim.g.db_ui_show_help = 0
       vim.g.db_ui_save_location = data_path .. "/dadbod_ui"
       vim.g.db_ui_show_database_icon = true
       vim.g.db_ui_tmp_query_location = data_path .. "/dadbod_ui/tmp"
@@ -48,6 +40,22 @@ return {
       -- you save the file running those queries can crash neovim to run use the
       -- default keymap: <LEADER>S
       vim.g.db_ui_execute_on_save = false
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "sql", "mysql", "plsql", "javascript" },
+        callback = function()
+          if vim.b.dbui_db_key_name == nil then
+            return
+          end
+          local wk = require("which-key")
+          wk.add({
+            { "<LOCALLEADER>d", group = "DBUI" },
+            { "<LOCALLEADER>ds", "<PLUG>(DBUI_ExecuteQuery)", desc = "Execute query" },
+            { "<LOCALLEADER>dw", "<PLUG>(DBUI_SaveQuery)", desc = "Save query" },
+            { "<LOCALLEADER>de", "<PLUG>(DBUI_EditBindParameters)", desc = "Edit bind parameters" },
+          })
+        end,
+      })
     end,
   },
 }

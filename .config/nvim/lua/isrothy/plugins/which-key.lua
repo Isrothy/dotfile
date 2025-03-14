@@ -50,6 +50,7 @@ return {
       --   scroll_up = "<c-p>", -- binding to scroll up inside the popup
       -- },
       spec = {
+        { "<LEADER>a", group = "AI" },
         {
           "<LEADER>b",
           group = "Buffer",
@@ -71,14 +72,14 @@ return {
         { "<LEADER>mw", group = "[w]indow" },
         { "<LEADER>mt", group = "[t]ab" },
         { "<LEADER>n", group = "Noice" },
-        { "<LEADER>o", group = "Overseer" },
 
-        { "<LEADER>q", group = "Profiler" },
+        { "<LEADER>o", group = "Options" },
+        -- { "<LEADER>q", group = "Profiler" },
         { "<LEADER>r", group = "Refactors" },
 
         { "<LEADER>t", group = "Test" },
+        { "<LEADER>T", group = "Tasks" },
         { "<LEADER>u", group = "Snacks toggle" },
-
         {
           "<LEADER>w",
           proxy = "<C-W>",
@@ -90,12 +91,12 @@ return {
 
         { "<LEADER>/", group = "Grep" },
 
-        { "[", group = "Prev" },
-        { "]", group = "Next" },
-
         { "<LEADER><TAB>", group = "Tabpage" },
         { "<LEADER><SPACE>", group = "Whitespaces" },
         { "<LEADER><SPACE>b", group = "Buffer" },
+
+        { "[", group = "Prev" },
+        { "]", group = "Next" },
       },
     },
   },

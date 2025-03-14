@@ -21,8 +21,8 @@ return {
         ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
         ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
         ["<CR>"] = { "accept", "fallback" },
-        ["<C-K>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<C-e>"] = { "hide", "fallback" },
+        ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
+        ["<C-e>"] = { "hide" },
         ["<C-p>"] = { "select_prev", "fallback" },
         ["<C-n>"] = { "select_next", "fallback" },
 
@@ -30,6 +30,9 @@ return {
         ["<C-f>"] = { "scroll_documentation_down", "fallback" },
       },
       enabled = function() return not vim.tbl_contains({ "bigfile" }, vim.bo.filetype) and vim.bo.buftype ~= "prompt" end,
+      cmdline = {
+        enabled = false,
+      },
       appearance = {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = "normal",
@@ -105,6 +108,9 @@ return {
             "ripgrep",
             "dadbod",
           },
+          markdown = {
+            "markdown",
+          },
         },
         providers = {
           lsp = {},
@@ -149,6 +155,11 @@ return {
           ecolog = {
             name = "ecolog",
             module = "ecolog.integrations.cmp.blink_cmp",
+          },
+          markdown = {
+            name = "RenderMarkdown",
+            module = "render-markdown.integ.blink",
+            fallbacks = { "lsp" },
           },
         },
       },

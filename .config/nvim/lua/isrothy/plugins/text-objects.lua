@@ -106,7 +106,7 @@ return {
   {
     "echasnovski/mini.ai",
     event = "VeryLazy",
-    depenencies = {
+    dependencies = {
       "nvim-treesitter",
       "nvim-treesitter/nvim-treesitter-textobjects",
     },

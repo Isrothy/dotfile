@@ -94,7 +94,9 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
-    keys = { "<LEADER>rd", "<CMD>Neogen<CR>", desc = "Generate docstring" },
+    keys = {
+      { "<LEADER>rd", function() require("neogen").generate() end, desc = "Generate docstring" },
+    },
     cmd = "Neogen",
     opts = {
       snippet_engine = "nvim",

@@ -1,12 +1,9 @@
 return {
   "akinsho/bufferline.nvim",
-  enabled = true,
   event = { "BufReadPost", "BufNewFile" },
   dependencies = "nvim-tree/nvim-web-devicons",
 
   keys = {
-    { "<M-,>", "<CMD>BufferLineMovePrev<CR>", desc = "Move buffer left" },
-    { "<M-.>", "<CMD>BufferLineMoveNext<CR>", desc = "Move buffer right" },
     { "<LEADER>bc", "<CMD>BufferLinePickClose<CR>", desc = "Choose a buffer to close" },
     { "<LEADER>bp", "<CMD>BufferLinePick<CR>", desc = "Pick buffer" },
     { "<LEADER>bh", "<CMD>BufferLineCloseLeft<CR>", desc = "Close left buffers" },
@@ -14,8 +11,8 @@ return {
     { "<LEADER>bo", "<CMD>BufferLineCloseOthers<CR>", desc = "Close other buffers" },
     { "]b", "<CMD>BufferLineCycleNext<CR>", desc = "Next buffer" },
     { "[b", "<CMD>BufferLineCyclePrev<CR>", desc = "Previois buffer" },
-    { "]B", "<CMD>lua require('bufferline').go_to_buffer(-1, false)<CR>", desc = "Last buffer" },
-    { "[B", "<CMD>lua require('bufferline').go_to_buffer(1, false)<CR>", desc = "First buffer" },
+    { "[B", "<cmd>BufferLineMovePrev<cr>", desc = "Move buffer prev" },
+    { "]B", "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer next" },
   },
   opts = function()
     local ignored_filetypes = {

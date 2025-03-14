@@ -1,5 +1,3 @@
-local map = vim.keymap.set
-
 local yanky = {
   "gbprod/yanky.nvim",
   dependencies = {
@@ -129,18 +127,59 @@ local substitute = {
 local dial = {
   "monaqa/dial.nvim",
   keys = {
-    { "<C-A>", mode = { "x", "n" }, desc = "Increment" },
-    { "<C-X>", mode = { "x", "n" }, desc = "Decrement" },
-    { "g<C-A>", mode = "x", desc = "G increment" },
-    { "g<C-x>", mode = "x", desc = "G decrement" },
+    {
+      "<C-A>",
+      function() require("dial.map").manipulate("increment", "normal") end,
+      desc = "Increment",
+    },
+    {
+      "<C-X>",
+      function() require("dial.map").manipulate("decrement", "normal") end,
+      desc = "Decrement",
+    },
+    {
+      "g<C-A>",
+      function() require("dial.map").manipulate("increment", "gnormal") end,
+      mode = "n",
+      desc = "G increment",
+    },
+    {
+      "g<C-x>",
+      function() require("dial.map").manipulate("decrement", "gnormal") end,
+      mode = "n",
+      desc = "G decrement",
+    },
+    {
+      "<C-a>",
+      function() require("dial.map").manipulate("increment", "visual") end,
+      mode = "x",
+      desc = "Increment",
+    },
+    {
+      "<C-x>",
+      function() require("dial.map").manipulate("decrement", "visual") end,
+      mode = "x",
+      desc = "Decrement",
+    },
+    {
+      "g<C-a>",
+      function() require("dial.map").manipulate("increment", "gvisual") end,
+      mode = "x",
+      desc = "G Increment",
+    },
+    {
+      "g<C-x>",
+      function() require("dial.map").manipulate("decrement", "gvisual") end,
+      mode = "x",
+      desc = "G Decrement",
+    },
   },
   config = function()
     local augend = require("dial.augend")
     require("dial.config").augends:register_group({
-      -- default augends used when no group name is specified
       default = {
-        augend.integer.alias.decimal, -- nonnegative decimal number (0, 1, 2, 3, ...)
-        augend.integer.alias.hex, -- nonnegative hex number  (0x01, 0x1a1f, etc.)
+        augend.integer.alias.decimal,
+        augend.integer.alias.hex,
         augend.integer.alias.octal,
         augend.integer.alias.binary,
         augend.constant.alias.bool,
@@ -153,7 +192,7 @@ local dial = {
         augend.date.alias["%H:%M"],
         augend.constant.new({
           elements = { "and", "or" },
-          word = true, -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
+          word = true,
           cyclic = true,
         }),
         augend.constant.new({
@@ -214,40 +253,35 @@ local dial = {
         }),
       },
     })
-
-    map({ "n", "x" }, "<C-A>", require("dial.map").inc_normal(), { noremap = true, desc = "Increment" })
-    map({ "n", "x" }, "<C-X>", require("dial.map").dec_normal(), { noremap = true, desc = "Decrement" })
-    map("x", "g<C-A>", require("dial.map").inc_gvisual(), { noremap = true, desc = "G Increment" })
-    map("x", "g<C-X>", require("dial.map").dec_gvisual(), { noremap = true, desc = "G Decrement" })
   end,
 }
 
 local mini_move = {
   "echasnovski/mini.move",
-  enabled = true,
   keys = {
-    { "<M-H>", mode = { "n", "x" }, desc = "Move left" },
-    { "<M-K>", mode = { "n", "x" }, desc = "Move up" },
-    { "<M-L>", mode = { "n", "x" }, desc = "Move right" },
-    { "<M-J>", mode = { "n", "x" }, desc = "Move down" },
+    { "<M-h>", mode = { "n", "x" }, desc = "Move left" },
+    { "<M-k>", mode = { "n", "x" }, desc = "Move up" },
+    { "<M-l>", mode = { "n", "x" }, desc = "Move right" },
+    { "<M-j>", mode = { "n", "x" }, desc = "Move down" },
   },
   opts = {
     mappings = {
-      left = "<M-H>",
-      right = "<M-L>",
-      up = "<M-K>",
-      down = "<M-J>",
+      left = "<M-h>",
+      right = "<M-l>",
+      up = "<M-k>",
+      down = "<M-j>",
 
-      line_left = "<M-H>",
-      line_right = "<M-L>",
-      line_up = "<M-K>",
-      line_down = "<M-J>",
+      line_left = "<M-h>",
+      line_right = "<M-l>",
+      line_up = "<M-k>",
+      line_down = "<M-j>",
     },
   },
 }
 
 local surround = {
   "kylechui/nvim-surround",
+  version = "^3.0.0",
   keys = {
     { "ds", "<CMD><PLUG>(nvim-surround-delete)<CR>", desc = "Delete a surrounding pair" },
     { "cs", "<CMD><PLUG>(nvim-surround-change)<CR>", desc = "Change a surrounding pair" },

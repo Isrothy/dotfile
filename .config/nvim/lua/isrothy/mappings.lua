@@ -7,9 +7,7 @@ end
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-map({ "n", "x" }, "<SPACE>", "<NOP>")
-map({ "n", "x" }, "\\", "<NOP>")
-map({ "n", "x", "i", "c" }, "<C-Z>", "<NOP>")
+-- map({ "n", "x", "i", "c" }, "<C-Z>", "<NOP>")
 
 map("n", "<LEADER>;", "<CMD>w<CR>", { desc = "Save" })
 map("n", "<C-C>", "ciw", { desc = "Change word" })
@@ -70,6 +68,9 @@ map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Previois warning" })
 map("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
 
+map("n", "]u", "g+", { desc = "Next undo" })
+map("n", "[u", "g-", { desc = "Previous undo" })
+
 map("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
 map("n", "<LEADER>lh", vim.lsp.buf.hover, { desc = "Hover" })
 map("n", "<LEADER>ln", vim.lsp.buf.rename, { desc = "Rename symbol" })
@@ -86,7 +87,6 @@ map(
 )
 map("n", "<LEADER>Ws", function() vim.lsp.buf.workspace_symbol() end, { desc = "Workspace symbols" })
 
-
 map("n", "<LEADER><TAB>o", "<CMD>tabonly<CR>", { desc = "Close other tabs" })
 map("n", "<LEADER><TAB>d", "<CMD>tabclose<CR>", { desc = "Close current tab" })
 map("n", "<LEADER><TAB>f", "<CMD>tabfirst<CR>", { desc = "First tab" })
@@ -97,8 +97,8 @@ map("n", "<LEADER><TAB>[", "<CMD>tabprevious<CR>", { desc = "Previous tab" })
 
 map("n", "]<TAB>", "<CMD>tabnext<CR>", { desc = "Next tab" })
 map("n", "[<TAB>", "<CMD>tabprevious<CR>", { desc = "Previous tab" })
-map("n", "]<S-TAB>", "<CMD>tablast<CR>", { desc = "Next tab" })
-map("n", "[<S-TAB>", "<CMD>tabfirst<CR>", { desc = "Previous tab" })
+map("n", "]<S-TAB>", "<CMD>tablast<CR>", { desc = "Last tab" })
+map("n", "[<S-TAB>", "<CMD>tabfirst<CR>", { desc = "First tab" })
 
 map("n", "<leader><Tab>c", function()
   vim.ui.input({ prompt = "Enter tab number to close: " }, function(input)

@@ -1,7 +1,8 @@
-local ft = { "markdown", "quarto", "rmd", "tex", "typst", "html", "yaml" }
+local ft = { "markdown", "quarto", "rmd", "tex", "typst", "html", "yaml", "Avante" }
 return {
   "OXY2DEV/markview.nvim",
   ft = ft,
+  enabled = false,
   cmd = { "Markview" },
   keys = {
     { "<localleader>v", "", desc = "+Markview", ft = ft },
@@ -34,6 +35,9 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   opts = {
+    latex = {
+      enable = false,
+    },
     preview = {
       enable = false,
       filetypes = ft,

@@ -106,6 +106,9 @@ return {
             "alpha",
           },
           winbar = {
+            "Avante",
+            "AvanteSelectedFiles",
+            "AvanteInput",
             "neo-tree",
             "aerial",
             "packer",
@@ -118,7 +121,6 @@ return {
             "dapui_colsoles",
             "trouble",
             "snacks_dashboard",
-            "oil",
             "qf",
             "grug-far",
             "dbout",
