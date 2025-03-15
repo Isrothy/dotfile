@@ -281,12 +281,84 @@ return {
             enabled = true,
           },
         },
+
+        commands = {
+          run_command = function(state)
+            local node = state.tree:get_node()
+            local path = node:get_id()
+            vim.api.nvim_input(": " .. path .. "<Home>")
+          end,
+          avante_add_files = function(state)
+            local node = state.tree:get_node()
+            local filepath = node:get_id()
+            local relative_path = require("avante.utils").relative_path(filepath)
+
+            local sidebar = require("avante").get()
+
+            local open = sidebar:is_open()
+            if not open then
+              require("avante.api").ask()
+              sidebar = require("avante").get()
+            end
+
+            sidebar.file_selector:add_selected_file(relative_path)
+
+            if not open then
+              sidebar.file_selector:remove_selected_file("neo-tree filesystem [1]")
+            end
+          end,
+        },
+
         window = {
           width = 36,
           auto_expand_width = false,
           mappings = {
-            ["<ESC>"] = function() vim.cmd("nohl") end,
-            ["<SPACE>"] = "none",
+            ["<LOCALLEADER>a"] = "avante_add_files",
+            ["<LOCALLEADER>b"] = "rename_basename",
+            ["<LOCALLEADER>c"] = {
+              "copy",
+              config = {
+                show_path = "relative", -- "none", "relative", "absolute"
+              },
+            },
+            ["<LOCALLEADER>ga"] = "git_add_file",
+            ["<LOCALLEADER>gA"] = "git_add_all",
+            ["<LOCALLEADER>gc"] = "git_commit",
+            ["<LOCALLEADER>gg"] = "git_commit_and_push",
+            ["<LOCALLEADER>gp"] = "git_push",
+            ["<LOCALLEADER>gr"] = "git_revert_file",
+            ["<LOCALLEADER>gu"] = "git_unstage_file",
+
+            ["<LOCALLEADER>i"] = "show_file_details",
+            ["<LOCALLEADER>m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
+            ["<LOCALLEADER>n"] = "rename",
+            ["<LOCALLEADER>o"] = {
+              "show_help",
+              nowait = false,
+              config = { title = "Order by", prefix_key = "<LOCALLEADER>o" },
+            },
+            ["<LOCALLEADER>oc"] = { "order_by_created", nowait = false },
+            ["<LOCALLEADER>od"] = { "order_by_diagnostics", nowait = false },
+            ["<LOCALLEADER>og"] = { "order_by_git_status", nowait = false },
+            ["<LOCALLEADER>om"] = { "order_by_modified", nowait = false },
+            ["<LOCALLEADER>on"] = { "order_by_name", nowait = false },
+            ["<LOCALLEADER>os"] = { "order_by_size", nowait = false },
+            ["<LOCALLEADER>ot"] = { "order_by_type", nowait = false },
+            ["<LOCALLEADER>p"] = "paste_from_clipboard",
+            ["<LOCALLEADER>P"] = {
+              "toggle_preview",
+              config = { use_float = true, use_image_nvim = false },
+            },
+            ["<LOCALLEADER>q"] = "close_window",
+            ["<LOCALLEADER>r"] = "refresh",
+            ["<LOCALLEADER>s"] = "split_with_window_picker",
+            ["<LOCALLEADER>t"] = "open_tabnew",
+            ["<LOCALLEADER>v"] = "vsplit_with_window_picker",
+            ["<LOCALLEADER>x"] = "cut_to_clipboard",
+            ["<LOCALLEADER>y"] = "copy_to_clipboard",
+
+            ["<LOCALLEADER>!"] = "run_command",
+
             ["<TAB>"] = function(state)
               local node = state.tree:get_node()
               if require("neo-tree.utils").is_expandable(node) then
@@ -296,56 +368,11 @@ return {
                 vim.cmd("Neotree reveal")
               end
             end,
-            ["a"] = "none",
-            ["A"] = "none",
-            ["t"] = "none",
-            ["s"] = "none",
-            ["v"] = "none",
-            ["y"] = "none",
-            ["x"] = "none",
-            ["p"] = "none",
-            ["P"] = "none",
-            ["c"] = "none",
-            ["m"] = "none",
-            ["q"] = "none",
-            ["r"] = "none",
-            ["b"] = "none",
-            ["i"] = "none",
 
-            ["<LOCALLEADER>t"] = "open_tabnew",
-            ["<LOCALLEADER>s"] = "split_with_window_picker",
-            ["<LOCALLEADER>v"] = "vsplit_with_window_picker",
-            ["<LOCALLEADER>a"] = {
-              "add",
-              -- some commands may take optional config options, see `:h neo-tree-mappings` for details
-              config = {
-                show_path = "relative", -- "none", "relative", "absolute"
-              },
-            },
-            ["<LOCALLEADER>y"] = "copy_to_clipboard",
-            ["<LOCALLEADER>x"] = "cut_to_clipboard",
-            ["<LOCALLEADER>p"] = "paste_from_clipboard",
-            ["<LOCALLEADER>c"] = {
-              "copy",
-              config = {
-                show_path = "relative", -- "none", "relative", "absolute"
-              },
-            },
-            ["<LOCALLEADER>P"] = {
-              "toggle_preview",
-              config = { use_float = true, use_image_nvim = false },
-            },
-            ["<LOCALLEADER>m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
-            ["<LOCALLEADER>q"] = "close_window",
-            ["<LOCALLEADER>R"] = "refresh",
-            ["<LOCALLEADER>i"] = "show_file_details",
-            ["<LOCALLEADER>r"] = "rename",
-            ["<LOCALLEADER>b"] = "rename_basename",
-
-            ["h"] = "",
-            ["l"] = "",
-
-            ["z"] = "none",
+            ["<ESC>"] = function() vim.cmd("nohl") end,
+            ["<SPACE>"] = "none",
+            ["[s"] = "prev_source",
+            ["]s"] = "next_source",
 
             ["zo"] = neotree_zo,
             ["zO"] = neotree_zO,
@@ -359,10 +386,42 @@ return {
             ["zM"] = neotree_zM,
             ["zr"] = neotree_zr,
             ["zR"] = neotree_zR,
+
+            ["A"] = "none",
+            ["a"] = "none",
+            ["b"] = "none",
+            ["c"] = "none",
+            ["C"] = "none",
+            ["h"] = "none",
+            ["i"] = "none",
+            ["l"] = "none",
+            ["m"] = "none",
+            ["o"] = "none",
+            ["oc"] = "none",
+            ["od"] = "none",
+            ["og"] = "none",
+            ["om"] = "none",
+            ["on"] = "none",
+            ["os"] = "none",
+            ["ot"] = "none",
+            ["p"] = "none",
+            ["P"] = "none",
+            ["q"] = "none",
+            ["r"] = "none",
+            ["s"] = "none",
+            ["S"] = "none",
+            ["t"] = "none",
+            ["v"] = "none",
+            ["x"] = "none",
+            ["y"] = "none",
+            ["z"] = "none",
             ["<M-h>"] = "none",
             ["<M-j>"] = "none",
             ["<M-k>"] = "none",
             ["<M-l>"] = "none",
+            [">"] = "none",
+            ["<"] = "none",
+            ["<2-LeftMouse>"] = "none",
           },
         },
         filesystem = {
@@ -381,45 +440,28 @@ return {
           -- instead of relying on nvim autocmd events.
           window = {
             mappings = {
-              ["<LOCALLEADER>e"] = "run_command",
+              ["<LOCALLEADER>f"] = "filter_on_submit",
+              ["<LOCALLEADER>h"] = "toggle_hidden",
+              ["<LOCALLEADER>n"] = {
+                "add",
+                config = {
+                  show_path = "relative", -- "none", "relative", "absolute"
+                },
+              },
+
+              ["<LOCALLEADER>#"] = "fuzzy_sorter", -- fuzzy sorting using the fzy algorithm
+              ["<LOCALLEADER>/"] = "fuzzy_finder",
+              ["<LOCALLEADER>?"] = "fuzzy_finder_directory",
+              ["<LOCALLEADER><c-x>"] = "clear_filter",
               ["[c"] = "prev_git_modified",
               ["]c"] = "next_git_modified",
-              ["<LOCALLEADER>gA"] = "git_add_all",
-              ["<LOCALLEADER>gu"] = "git_unstage_file",
-              ["<LOCALLEADER>ga"] = "git_add_file",
-              ["<LOCALLEADER>gr"] = "git_revert_file",
-              ["<LOCALLEADER>gc"] = "git_commit",
-              ["<LOCALLEADER>gp"] = "git_push",
-              ["<LOCALLEADER>gg"] = "git_commit_and_push",
-              -- ["<LOCALLEADER>I"] = "image_preview",
 
-              ["<LOCALLEADER>H"] = "toggle_hidden",
-              ["<LOCALLEADER>/"] = "fuzzy_finder",
-              ["<LOCALLEADER>D"] = "fuzzy_finder_directory",
-              ["<LOCALLEADER>#"] = "fuzzy_sorter", -- fuzzy sorting using the fzy algorithm
-              ["<LOCALLEADER>f"] = "filter_on_submit",
-              ["<LOCALLEADER><c-x>"] = "clear_filter",
-              ["<LOCALLEADER>o"] = {
-                "show_help",
-                nowait = false,
-                config = { title = "Order by", prefix_key = "<LOCALLEADER>o" },
-              },
-              ["<LOCALLEADER>oc"] = { "order_by_created", nowait = false },
-              ["<LOCALLEADER>od"] = { "order_by_diagnostics", nowait = false },
-              ["<LOCALLEADER>og"] = { "order_by_git_status", nowait = false },
-              ["<LOCALLEADER>om"] = { "order_by_modified", nowait = false },
-              ["<LOCALLEADER>on"] = { "order_by_name", nowait = false },
-              ["<LOCALLEADER>os"] = { "order_by_size", nowait = false },
-              ["<LOCALLEADER>ot"] = { "order_by_type", nowait = false },
+              ["<BS>"] = "navigate_up",
+              ["."] = "set_root",
 
-              ["H"] = "none",
-              ["/"] = "none",
               ["D"] = "none",
-              ["#"] = "none",
+              ["H"] = "none",
               ["f"] = "none",
-              ["<c-x>"] = "none",
-              ["[g"] = "none",
-              ["]g"] = "none",
               ["o"] = "none",
               ["oc"] = "none",
               ["od"] = "none",
@@ -428,20 +470,12 @@ return {
               ["on"] = "none",
               ["os"] = "none",
               ["ot"] = "none",
+              ["[g"] = "none",
+              ["]g"] = "none",
+              ["#"] = "none",
+              ["/"] = "none",
+              ["<c-x>"] = "none",
             },
-          },
-          commands = {
-            run_command = function(state)
-              local node = state.tree:get_node()
-              local path = node:get_id()
-              vim.api.nvim_input(": " .. path .. "<Home>")
-            end,
-            -- image_preview = function(state)
-            --   local node = state.tree:get_node()
-            --   if node.type == "file" then
-            --     require("image_preview").PreviewImage(node.path)
-            --   end
-            -- end,
           },
         },
         buffers = {
@@ -455,31 +489,11 @@ return {
           show_unloaded = true,
           window = {
             mappings = {
-
               ["<LOCALLEADER>d"] = "buffer_delete",
               ["<BS>"] = "navigate_up",
               ["."] = "set_root",
-              ["<LOCALLEADER>o"] = {
-                "show_help",
-                nowait = false,
-                config = { title = "Order by", prefix_key = "<LOCALLEADER>o" },
-              },
-              ["<LOCALLEADER>oc"] = { "order_by_created", nowait = false },
-              ["<LOCALLEADER>od"] = { "order_by_diagnostics", nowait = false },
-              ["<LOCALLEADER>og"] = { "order_by_git_status", nowait = false },
-              ["<LOCALLEADER>om"] = { "order_by_modified", nowait = false },
-              ["<LOCALLEADER>on"] = { "order_by_name", nowait = false },
-              ["<LOCALLEADER>os"] = { "order_by_size", nowait = false },
-              ["<LOCALLEADER>ot"] = { "order_by_type", nowait = false },
 
-              ["<LOCALLEADER>gA"] = "git_add_all",
-              ["<LOCALLEADER>gu"] = "git_unstage_file",
-              ["<LOCALLEADER>ga"] = "git_add_file",
-              ["<LOCALLEADER>gr"] = "git_revert_file",
-              ["<LOCALLEADER>gc"] = "git_commit",
-              ["<LOCALLEADER>gp"] = "git_push",
-              ["<LOCALLEADER>gg"] = "git_commit_and_push",
-
+              ["d"] = "none",
               ["bd"] = "none",
               ["o"] = "none",
               ["oc"] = "none",
@@ -495,34 +509,13 @@ return {
         git_status = {
           window = {
             mappings = {
-              ["<LOCALLEADER>gu"] = "git_unstage_file",
-              ["<LOCALLEADER>ga"] = "git_add_file",
-              ["<LOCALLEADER>gr"] = "git_revert_file",
-              ["<LOCALLEADER>gc"] = "git_commit",
-              ["<LOCALLEADER>gp"] = "git_push",
-              ["<LOCALLEADER>gg"] = "git_commit_and_push",
-              ["<LOCALLEADER>gA"] = "git_add_all",
-
-              ["<LOCALLEADER>o"] = {
-                "show_help",
-                nowait = false,
-                config = { title = "Order by", prefix_key = "<LOCALLEADER>o" },
-              },
-              ["<LOCALLEADER>oc"] = { "order_by_created", nowait = false },
-              ["<LOCALLEADER>od"] = { "order_by_diagnostics", nowait = false },
-              ["<LOCALLEADER>og"] = { "order_by_git_status", nowait = false },
-              ["<LOCALLEADER>om"] = { "order_by_modified", nowait = false },
-              ["<LOCALLEADER>on"] = { "order_by_name", nowait = false },
-              ["<LOCALLEADER>os"] = { "order_by_size", nowait = false },
-              ["<LOCALLEADER>ot"] = { "order_by_type", nowait = false },
-
               ["A"] = "none",
-              ["gu"] = "none",
               ["ga"] = "none",
-              ["gr"] = "none",
               ["gc"] = "none",
-              ["gp"] = "none",
               ["gg"] = "none",
+              ["gp"] = "none",
+              ["gr"] = "none",
+              ["gu"] = "none",
               ["o"] = "none",
               ["oc"] = "none",
               ["od"] = "none",
@@ -587,24 +580,9 @@ return {
         -- "mtime",
       },
       keymaps = {
-        ["<LOCALLEADER>?"] = "actions.show_help",
-        ["<CR>"] = "actions.select",
-        ["<LOCALLEADER>v"] = "actions.select_vsplit",
-        ["<LOCALLEADER>s"] = "actions.select_split",
-        ["<LOCALLEADER>t"] = "actions.select_tab",
-        ["<LOCALLEADER>p"] = "actions.preview",
-        ["<LOCALLEADER>c"] = "actions.close",
-        ["<LEADLIEADER>r"] = "actions.refresh",
         ["-"] = "actions.parent",
         ["<BS>"] = "actions.parent",
-        ["<LOCALLEADER>u"] = "actions.parent",
-        ["_"] = "actions.open_cwd",
-        ["`"] = "actions.cd",
-        ["~"] = "actions.tcd",
-        ["<LOCALLEADER>o"] = "actions.change_sort",
-        ["<LOCALLEADER>x"] = "actions.open_external",
-        ["<LOCALLEADER>."] = "actions.toggle_hidden",
-        ["<LOCALLEADER>\\"] = "actions.toggle_trash",
+        ["<CR>"] = "actions.select",
         ["<TAB>"] = {
           callback = function()
             local oil = require("oil")
@@ -634,6 +612,13 @@ return {
             end
           end,
         },
+        ["_"] = "actions.open_cwd",
+        ["`"] = "actions.cd",
+        ["~"] = "actions.tcd",
+        ["<LOCALLEADER>."] = "actions.toggle_hidden",
+        ["<LOCALLEADER>?"] = "actions.show_help",
+        ["<LOCALLEADER>\\"] = "actions.toggle_trash",
+        ["<LOCALLEADER>c"] = "actions.close",
         ["<LOCALLEADER>f"] = {
           callback = function()
             local oil = require("oil")
@@ -657,6 +642,14 @@ return {
           end,
           desc = "Oil: Search in directory",
         },
+        ["<LOCALLEADER>o"] = "actions.change_sort",
+        ["<LOCALLEADER>p"] = "actions.preview",
+        ["<LOCALLEADER>r"] = "actions.refresh",
+        ["<LOCALLEADER>s"] = "actions.select_split",
+        ["<LOCALLEADER>t"] = "actions.select_tab",
+        ["<LOCALLEADER>u"] = "actions.parent",
+        ["<LOCALLEADER>v"] = "actions.select_vsplit",
+        ["<LOCALLEADER>x"] = "actions.open_external",
       },
       use_default_keymaps = false,
     },

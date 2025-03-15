@@ -2,6 +2,9 @@ return {
   {
     "CRAG666/code_runner.nvim",
     cmd = "RunCode",
+    keys = {
+      { "<LOEADER>!r", "<CMD>RunCode<CR>", desc = "Run file" },
+    },
     enabled = true,
     dependencies = "nvim-lua/plenary.nvim",
     opts = {
@@ -74,13 +77,13 @@ return {
       },
     },
     keys = {
-      { "<LEADER>Tw", "<CMD>OverseerToggle<CR>", desc = "Task list" },
-      { "<LEADER>To", "<CMD>OverseerRun<CR>", desc = "Run task" },
-      { "<LEADER>Tq", "<CMD>OverseerQuickAction<CR>", desc = "Action recent task" },
-      { "<LEADER>Ti", "<CMD>OverseerInfo<CR>", desc = "Overseer info" },
-      { "<LEADER>Tb", "<CMD>OverseerBuild<CR>", desc = "Task builder" },
-      { "<LEADER>Tt", "<CMD>OverseerTaskAction<CR>", desc = "Task action" },
-      { "<LEADER>Tc", "<CMD>OverseerClearCache<CR>", desc = "Clear cache" },
+      { "<LEADER>!w", "<CMD>OverseerToggle<CR>", desc = "Task list" },
+      { "<LEADER>!o", "<CMD>OverseerRun<CR>", desc = "Run task" },
+      { "<LEADER>!q", "<CMD>OverseerQuickAction<CR>", desc = "Action recent task" },
+      { "<LEADER>!i", "<CMD>OverseerInfo<CR>", desc = "Overseer info" },
+      { "<LEADER>!b", "<CMD>OverseerBuild<CR>", desc = "Task builder" },
+      { "<LEADER>!t", "<CMD>OverseerTaskAction<CR>", desc = "Task action" },
+      { "<LEADER>!c", "<CMD>OverseerClearCache<CR>", desc = "Clear cache" },
     },
   },
 }

@@ -142,6 +142,7 @@ local lspconfig = {
     require("lspconfig").basedpyright.setup({
       settings = {
         basedpyright = {
+          typeCheckingMode = "basic", -- or a mode that best fits your needs
           analysis = {
             autoSearchPaths = true,
             diagnosticMode = "openFilesOnly",

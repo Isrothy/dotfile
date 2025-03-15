@@ -170,6 +170,7 @@ return {
       treesitter = {
         enabled = true,
       },
+      buf_filter = function(bufnr) return vim.api.nvim_buf_line_count(bufnr) < 4096 end,
       tab_filter = function(tab_id)
         local win_list = vim.api.nvim_tabpage_list_wins(tab_id)
         local exclude_ft = { "qf", "trouble", "neo-tree", "alpha", "neominimap", "snacks_dashboard" }

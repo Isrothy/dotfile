@@ -78,7 +78,6 @@ return {
         { "<LEADER>r", group = "Refactors" },
 
         { "<LEADER>t", group = "Test" },
-        { "<LEADER>T", group = "Tasks" },
         { "<LEADER>u", group = "Snacks toggle" },
         {
           "<LEADER>w",
@@ -90,6 +89,7 @@ return {
         { "<LEADER>x", group = "Diagnostics" },
 
         { "<LEADER>/", group = "Grep" },
+        { "<LEADER>!", group = "Tasks" },
 
         { "<LEADER><TAB>", group = "Tabpage" },
         { "<LEADER><SPACE>", group = "Whitespaces" },

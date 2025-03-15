@@ -4,15 +4,15 @@ return {
     event = "VeryLazy",
     version = "*",
     keys = {
-      { "<LEADER>aq", "<CMD>AvanteAsk<CR>", desc = "Ask AI", mode = { "n", "x" } },
+      { "<LEADER>aa", "<CMD>AvanteAsk<CR>", desc = "Ask AI", mode = { "n", "x" } },
       { "<LEADER>ab", "<CMD>AvanteBuild<CR>", desc = "Build dependencies" },
       { "<LEADER>ac", "<CMD>AvanteClear<CR>", desc = "Clear" },
-      { "<LEADER>ak", "<CMD>AvanteChat<CR>", desc = "Chat" },
+      { "<LEADER>ak", "<CMD>AvanteClear<CR>", desc = "Clear" },
       { "<LEADER>ae", "<CMD>AvanteEdit<CR>", desc = "Edit", mode = { "x" } },
       { "<LEADER>af", "<CMD>AvanteFocus<CR>", desc = "Focus" },
       { "<LEADER>ar", "<CMD>AvanteRefresh<CR>", desc = "Refresh" },
       { "<LEADER>as", "<CMD>AvanteShowRepoMap<CR>", desc = "Show repo map" },
-      { "<LEADER>aa", "<CMD>AvanteToggle<CR>", desc = "Toggle" },
+      { "<LEADER>at", "<CMD>AvanteToggle<CR>", desc = "Toggle" },
     },
     opts = {
       provider = "openai",
@@ -48,7 +48,7 @@ return {
         },
         submit = {
           normal = "<CR>",
-          insert = "<C-s>",
+          insert = "",
         },
         sidebar = {
           apply_all = "A",
