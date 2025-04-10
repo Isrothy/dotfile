@@ -30,6 +30,7 @@ opt.fillchars = {
   foldsep = " ",
   foldclose = "▶",
 }
+-- opt.winborder = "rounded"
 
 opt.virtualedit = { "block", "onemore" }
 opt.whichwrap = vim.o.whichwrap .. "<,>,h,l"

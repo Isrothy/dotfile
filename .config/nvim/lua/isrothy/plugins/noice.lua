@@ -49,6 +49,7 @@ return {
       opts = {
         border = {
           -- style = vim.g.neovide and "soid" or "rounded",
+          -- style = "none",
         },
       }, -- global options for the cmdline. See section on views
       format = {
@@ -56,15 +57,15 @@ return {
         search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
         search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
         filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
-        lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" },
-        help = { pattern = "^:%s*he?l?p?%s+", icon = "󰋖" },
+        lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
+        help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
         calculator = { pattern = "^=", icon = "", lang = "vimnormal" },
         term_run = { pattern = "^:%s*TermRun%s+", icon = "", lang = "bash" },
-        input = { view = "cmdline_input", icon = "󰥻 " }, -- Used by input()
+        input = { view = "cmdline_input", icon = "󰥻 " },
       },
     },
     popupmenu = {
-      enabled = true,
+      enabled = false,
       backend = "nui",
     },
     messages = {
@@ -129,7 +130,7 @@ return {
         ["cmp.entry.get_documentation"] = true,
       },
       hover = {
-        enabled = true,
+        enabled = false,
         -- silent = false,
         opts = {
           border = {
@@ -159,7 +160,7 @@ return {
       -- you can enable a preset by setting it to true, or a table that will override the preset config
       -- you can also add custom presets that you can enable/disable with enabled=true
       bottom_search = false, -- use a classic bottom cmdline for search
-      command_palette = true, -- position the cmdline and popupmenu together
+      command_palette = false, -- position the cmdline and popupmenu together
       long_message_to_split = true, -- long messages will be sent to a split
       inc_rename = false, -- enables an input dialog for inc-rename.nvim
       lsp_doc_border = false, -- add a border to hover docs and signature help
@@ -183,5 +184,18 @@ return {
         opts = { skip = true },
       },
     }, -- @see the section on routes below
+    views = {
+      cmdline_popup = {
+        -- border = "none",
+        position = {
+          row = 3,
+          col = "50%",
+        },
+        size = {
+          width = 60,
+          height = "auto",
+        },
+      },
+    },
   },
 }

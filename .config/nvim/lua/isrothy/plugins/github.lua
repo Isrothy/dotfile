@@ -3,8 +3,6 @@ return {
     "pwntester/octo.nvim",
     requires = {
       "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-      "nvim-tree/nvim-web-devicons",
     },
     cmd = { "Octo" },
     keys = {
@@ -28,10 +26,11 @@ return {
       { "@", "@<C-X><C-O>", mode = "i", ft = "octo", silent = true },
       { "#", "#<C-X><C-O>", mode = "i", ft = "octo", silent = true },
     },
-    config = function()
+    init = function()
       local c = require("nordify.palette")["dark"]
       -- local c = require("nord.colors").palette ---@type Nord.Palette
-      require("octo").setup({
+      return {
+        picker = "snacks",
         colors = {
           white = c.snow_storm.origin,
           grey = c.polar_night.brighter,
@@ -46,7 +45,7 @@ return {
           dark_blue = c.frost.artic_ocean,
           purple = c.aurora.purple,
         },
-      })
+      }
     end,
   },
   {
@@ -54,7 +53,6 @@ return {
     keys = {
       { "<LEADER>ga", "<CMD>GhActions<CR>", desc = "Open Github actions" },
     },
-    -- optional, you can also install and use `yq` instead.
     build = "make",
     opts = {},
   },

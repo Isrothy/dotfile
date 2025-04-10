@@ -40,9 +40,7 @@ local extmark_handler = {
       return {}
     end
     local ns_id = vim.api.nvim_get_namespaces()["todo-comments"]
-    local extmarks = vim.api.nvim_buf_get_extmarks(bufnr, ns_id, 0, -1, {
-      details = true,
-    })
+    local extmarks = vim.api.nvim_buf_get_extmarks(bufnr, ns_id, 0, -1, { details = true })
     local icons = {
       FIX = " ",
       TODO = " ",
@@ -78,52 +76,87 @@ local is_float_window = function(winid) return vim.api.nvim_win_get_config(winid
 return {
   -- dir = "~/Developer/neominimap.nvim",
   "Isrothy/neominimap.nvim",
-  enabled = true,
   version = "v3.x.x",
   lazy = false,
-  dependencies = {
-    "folke/snacks.nvim",
-  },
+  dependencies = { "folke/snacks.nvim" },
   keys = {
-    -- Global Minimap Controls
-    { "<LEADER>mm", "<CMD>Neominimap toggle<CR>", desc = "Toggle global minimap" },
-    { "<LEADER>mM", "<CMD>Neominimap on<CR>", desc = "Enable global minimap" },
-    { "<LEADER>m<c-m>", "<CMD>Neominimap off<CR>", desc = "Disable global minimap" },
-    { "<LEADER>mr", "<CMD>Neominimap refresh<CR>", desc = "Refresh global minimap" },
-
-    -- Window-Specific Minimap Controls
-    { "<LEADER>mww", "<CMD>Neominimap winToggle<CR>", desc = "Toggle minimap for current window" },
-    { "<LEADER>mwW", "<CMD>Neominimap winOn<CR>", desc = "Enable minimap for current window" },
-    { "<LEADER>mw<c-w>", "<CMD>Neominimap winOff<CR>", desc = "Disable minimap for current window" },
-    { "<LEADER>mwr", "<CMD>Neominimap winRefresh<CR>", desc = "Refresh minimap for current window" },
-
-    -- Tab-Specific Minimap Controls
-    { "<LEADER>mtt", "<CMD>Neominimap tabToggle<CR>", desc = "Toggle minimap for current tab" },
-    { "<LEADER>mtT", "<CMD>Neominimap tabOn<CR>", desc = "Enable minimap for current tab" },
-    { "<LEADER>mt<c-t>", "<CMD>Neominimap tabOff<CR>", desc = "Disable minimap for current tab" },
-    { "<LEADER>mtr", "<CMD>Neominimap tabRefresh<CR>", desc = "Refresh minimap for current tab" },
-
-    -- Buffer-Specific Minimap Controls
-    { "<LEADER>mbb", "<CMD>Neominimap bufToggle<CR>", desc = "Toggle minimap for current buffer" },
-    { "<LEADER>mbB", "<CMD>Neominimap bufOn<CR>", desc = "Enable minimap for current buffer" },
-    { "<LEADER>mb<c-b>", "<CMD>Neominimap bufOff<CR>", desc = "Disable minimap for current buffer" },
-    { "<LEADER>mbr", "<CMD>Neominimap bufRefresh<CR>", desc = "Refresh minimap for current buffer" },
-
-    ---Focus Controls
-    { "<LEADER>mf", "<CMD>Neominimap toggleFocus<CR>", desc = "Switch focus on minimap" },
-    { "<LEADER>mF", "<CMD>Neominimap focus<CR>", desc = "Focus on minimap" },
-    { "<LEADER>m<c-f>", "<CMD>Neominimap unfocus<CR>", desc = "Unfocus minimap" },
+    { "<LEADER>mrr", "<CMD>Neominimap refresh<CR>", desc = "Refresh global minimap" },
+    { "<LEADER>mrw", "<CMD>Neominimap winRefresh<CR>", desc = "Refresh minimap for current window" },
+    { "<LEADER>mrt", "<CMD>Neominimap tabRefresh<CR>", desc = "Refresh minimap for current tab" },
+    { "<LEADER>mrb", "<CMD>Neominimap bufRefresh<CR>", desc = "Refresh minimap for current buffer" },
   },
 
   init = function()
     -- vim.opt.wrap = false
     -- vim.opt.sidescrolloff = 36
 
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "VeryLazy",
+      group = vim.api.nvim_create_augroup("setup_neominimap", { clear = true }),
+      callback = function()
+        Snacks.toggle({
+          name = "minimap",
+          get = function() return require("neominimap").enabled() end,
+          set = function(state)
+            if state then
+              require("neominimap").on({}, {})
+            else
+              require("neominimap").off({}, {})
+            end
+          end,
+        }):map("<LEADER>mm")
+        Snacks.toggle({
+          name = "minimap for buffer",
+          get = function() return require("neominimap").bufEnabled() end,
+          set = function(state)
+            if state then
+              require("neominimap").bufOn({}, {})
+            else
+              require("neominimap").bufOff({}, {})
+            end
+          end,
+        }):map("<LEADER>mb")
+        Snacks.toggle({
+          name = "minimap for window",
+          get = function() return require("neominimap").winEnabled() end,
+          set = function(state)
+            if state then
+              require("neominimap").winOn({}, {})
+            else
+              require("neominimap").winOff({}, {})
+            end
+          end,
+        }):map("<LEADER>mw")
+        Snacks.toggle({
+          name = "minimap for tabpage",
+          get = function() return require("neominimap").tabEnabled() end,
+          set = function(state)
+            if state then
+              require("neominimap").tabOn({}, {})
+            else
+              require("neominimap").tabOff({}, {})
+            end
+          end,
+        }):map("<LEADER>mt")
+        Snacks.toggle({
+          name = "focus",
+          get = function() return vim.bo.ft == "neominimap" end,
+          set = function(state)
+            if state then
+              require("neominimap").focus({}, {})
+            else
+              require("neominimap").unfocus({}, {})
+            end
+          end,
+        }):map("<LEADER>mf")
+      end,
+    })
+
     ---@type Neominimap.UserConfig
     vim.g.neominimap = {
       auto_enable = true,
       log_level = vim.log.levels.OFF,
-      notification_level = vim.log.levels.OFF,
+      notification_level = vim.log.levels.DEBUG,
 
       exclude_filetypes = {
         "qf",
@@ -170,7 +203,11 @@ return {
       treesitter = {
         enabled = true,
       },
-      buf_filter = function(bufnr) return vim.api.nvim_buf_line_count(bufnr) < 4096 end,
+      winopt = function(wo)
+        wo.statuscolumn = "%s"
+        wo.signcolumn = "yes:1"
+      end,
+      -- buf_filter = function(bufnr) return vim.api.nvim_buf_line_count(bufnr) < 4096 end,
       tab_filter = function(tab_id)
         local win_list = vim.api.nvim_tabpage_list_wins(tab_id)
         local exclude_ft = { "qf", "trouble", "neo-tree", "alpha", "neominimap", "snacks_dashboard" }

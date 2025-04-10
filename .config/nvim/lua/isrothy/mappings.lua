@@ -7,8 +7,6 @@ end
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
--- map({ "n", "x", "i", "c" }, "<C-Z>", "<NOP>")
-
 map("n", "<LEADER>;", "<CMD>w<CR>", { desc = "Save" })
 map("n", "<C-C>", "ciw", { desc = "Change word" })
 
@@ -17,9 +15,6 @@ map("t", "<C-\\>", "<C-\\><C-N>", { desc = "Escape terminal mode" })
 map("i", ",", ",<C-G>u")
 map("i", ".", ".<C-G>u")
 map("i", ";", ";<C-G>u")
-
-map("n", "gO", "<CMD>call append(line('.') -1, repeat([''], v:count1))<CR>", { desc = "Append line before" })
-map("n", "go", "<CMD>call append(line('.'),   repeat([''], v:count1))<CR>", { desc = "Append line after" })
 
 map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, desc = "Up" })
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, desc = "Down" })
@@ -54,9 +49,14 @@ map("n", "gco", "o<ESC>Vcx<ESC><CMD>normal gcc<CR>fxa<BS>", { desc = "Add commen
 map("n", "gcO", "O<ESC>Vcx<ESC><CMD>normal gcc<CR>fxa<BS>", { desc = "Add comment above" })
 
 local diagnostic_goto = function(next, severity)
-  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-  severity = severity and vim.diagnostic.severity[severity] or nil
-  return function() go({ severity = severity }) end
+  return function()
+    vim.diagnostic.jump({
+      count = next and 1 or -1,
+      float = true,
+      severity = severity and vim.diagnostic.severity[severity] or nil,
+      wrap = true,
+    })
+  end
 end
 map("n", "]d", diagnostic_goto(true), { desc = "Next diagnostic" })
 map("n", "[d", diagnostic_goto(false), { desc = "Previous diagnostic" })
@@ -64,9 +64,6 @@ map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next error" })
 map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Previous error" })
 map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next warning" })
 map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Previois warning" })
-
-map("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" })
-map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
 
 map("n", "]u", "g+", { desc = "Next undo" })
 map("n", "[u", "g-", { desc = "Previous undo" })
@@ -85,7 +82,6 @@ map(
   function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
   { desc = "List workspace" }
 )
-map("n", "<LEADER>Ws", function() vim.lsp.buf.workspace_symbol() end, { desc = "Workspace symbols" })
 
 map("n", "<LEADER><TAB>o", "<CMD>tabonly<CR>", { desc = "Close other tabs" })
 map("n", "<LEADER><TAB>d", "<CMD>tabclose<CR>", { desc = "Close current tab" })

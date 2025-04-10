@@ -3,7 +3,7 @@ return {
     "CRAG666/code_runner.nvim",
     cmd = "RunCode",
     keys = {
-      { "<LOEADER>!r", "<CMD>RunCode<CR>", desc = "Run file" },
+      { "<LEADER>!r", "<CMD>RunCode<CR>", desc = "Run file" },
     },
     enabled = true,
     dependencies = "nvim-lua/plenary.nvim",

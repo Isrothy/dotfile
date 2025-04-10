@@ -259,17 +259,17 @@ local dial = {
 local mini_move = {
   "echasnovski/mini.move",
   keys = {
-    { "<M-h>", mode = { "n", "x" }, desc = "Move left" },
-    { "<M-k>", mode = { "n", "x" }, desc = "Move up" },
-    { "<M-l>", mode = { "n", "x" }, desc = "Move right" },
-    { "<M-j>", mode = { "n", "x" }, desc = "Move down" },
+    { "<M-h>", mode = { "x" }, desc = "Move left" },
+    { "<M-k>", mode = { "x" }, desc = "Move up" },
+    { "<M-l>", mode = { "x" }, desc = "Move right" },
+    { "<M-j>", mode = { "x" }, desc = "Move down" },
   },
   opts = {
     mappings = {
+      down = "<M-j>",
       left = "<M-h>",
       right = "<M-l>",
       up = "<M-k>",
-      down = "<M-j>",
 
       line_left = "<M-h>",
       line_right = "<M-l>",

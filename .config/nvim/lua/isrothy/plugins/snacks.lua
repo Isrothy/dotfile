@@ -10,12 +10,12 @@ local header = ""
 
 return {
   "folke/snacks.nvim",
-  priority = 1000,
+  priority = 1001,
   lazy = false,
   ---@type snacks.Config
   opts = {
     image = {
-      enabled = true,
+      enabled = false,
       math = {
         enabled = false,
         latex = {
@@ -34,6 +34,7 @@ return {
     input = { enabled = true },
     scroll = { enabled = false },
     statuscolumn = {
+      enabled = true,
       left = { "mark", "sign" },
       right = { "fold", "git" },
       folds = {
@@ -108,15 +109,15 @@ return {
       indent = {
         char = "▎",
         blank = " ",
-        only_scope = false, -- only show indent guides of the scope
-        only_current = false, -- only show indent guides in the current window
+        only_scope = false, -- Only show indent guides of the scope
+        only_current = false, -- Only show indent guides in the current window
         hl = "SnacksIndent",
       },
       animate = { enabled = false },
       scope = {
         char = "▎",
-        underline = true, -- underline the start of the scope
-        only_current = false, -- only show scope in the current window
+        underline = true, -- Underline the start of the scope
+        only_current = false, -- Only show scope in the current window
         hl = "SnacksIndentScope",
       },
       blank = {
@@ -368,8 +369,8 @@ return {
 
     { "<LEADER>lN", function() Snacks.rename.rename_file() end, desc = "Rename file" },
 
-    { "<LEADER>z", function() Snacks.zen() end, desc = "Toggle zen mode" },
-    { "<LEADER>Z", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
+    { "<LEADER>zz", function() Snacks.zen() end, desc = "Toggle zen mode" },
+    { "<LEADER>zo", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
 
     { "]]", function() Snacks.words.jump(vim.v.count1) end, desc = "Next reference", mode = { "n", "t" } },
     { "[[", function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev reference", mode = { "n", "t" } },
@@ -384,21 +385,21 @@ return {
         vim.print = _G.dd -- Override print to use snacks for `:=` command
 
         -- Create some toggle mappings
-        Snacks.toggle.option("spell", { name = "Spelling" }):map("<LEADER>os")
-        Snacks.toggle.option("wrap", { name = "Wrap" }):map("<LEADER>ow")
-        Snacks.toggle.option("relativenumber", { name = "Relative number" }):map("<LEADER>oL")
-        Snacks.toggle.line_number():map("<LEADER>ol")
-        Snacks.toggle.diagnostics():map("<LEADER>xu")
+        Snacks.toggle.option("spell", { name = "spelling" }):map("<LEADER>os")
+        Snacks.toggle.option("wrap", { name = "wrap" }):map("<LEADER>ow")
+        Snacks.toggle.option("relativenumber", { name = "relative number" }):map("<LEADER>oL")
+        Snacks.toggle.line_number({ name = "line number" }):map("<LEADER>ol")
+        Snacks.toggle.diagnostics({ name = "diagnostics" }):map("<LEADER>xu")
         Snacks.toggle
           .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
           :map("<LEADER>oc")
         Snacks.toggle
-          .option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "Tabline" })
+          .option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "tabline" })
           :map("<LEADER>ot")
-        -- Snacks.toggle.treesitter():map("<LEADER>uT")
-        Snacks.toggle.inlay_hints():map("<LEADER>lh")
+        Snacks.toggle.treesitter({ name = "treesitter" }):map("<LEADER>T")
+        Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<LEADER>lI")
         Snacks.toggle.indent():map("<LEADER><SPACE>i")
-        Snacks.toggle.dim():map("<LEADER>Z")
+        Snacks.toggle.dim():map("<LEADER>zd")
       end,
     })
   end,

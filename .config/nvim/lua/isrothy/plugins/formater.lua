@@ -80,6 +80,9 @@ return {
           return #diag > 0
         end,
       },
+      ["sqlfluff"] = {
+        args = { "format", "--dialect=ansi", "-" },
+      },
       injected = { options = { ignore_errors = true } },
     },
   },

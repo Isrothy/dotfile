@@ -69,25 +69,21 @@ return {
       {
         "<C-H>",
         function() require("smart-splits").move_cursor_left() end,
-        mode = { "n", "t" },
         desc = "Move cursor left",
       },
       {
         "<C-J>",
         function() require("smart-splits").move_cursor_down() end,
-        mode = { "n", "t" },
         desc = "Move cursor down",
       },
       {
         "<C-K>",
         function() require("smart-splits").move_cursor_up() end,
-        mode = { "n", "t" },
         desc = "Move cursor up",
       },
       {
         "<C-L>",
         function() require("smart-splits").move_cursor_right() end,
-        mode = { "n", "t" },
         desc = "Move cursor right",
       },
 
@@ -96,10 +92,10 @@ return {
       { "<LEADER>bxk", function() require("smart-splits").swap_buf_up() end, desc = "Exchange buffers up" },
       { "<LEADER>bxl", function() require("smart-splits").swap_buf_right() end, desc = "Exchange buffers right" },
 
-      -- { "<M-H>", function() require("smart-splits").resize_left() end, desc = "Resize left" },
-      -- { "<M-J>", function() require("smart-splits").resize_down() end, desc = "Resize down" },
-      -- { "<M-K>", function() require("smart-splits").resize_up() end, desc = "Resize up" },
-      -- { "<M-L>", function() require("smart-splits").resize_right() end, desc = "Resize right" },
+      { "<M-h>", function() require("smart-splits").resize_left() end, desc = "Resize left" },
+      { "<M-j>", function() require("smart-splits").resize_down() end, desc = "Resize down" },
+      { "<M-k>", function() require("smart-splits").resize_up() end, desc = "Resize up" },
+      { "<M-l>", function() require("smart-splits").resize_right() end, desc = "Resize right" },
 
       { "<LEADER>wr", function() require("smart-splits").start_resize_mode() end, desc = "Start resize mode" },
     },

@@ -123,6 +123,8 @@ local wrap_filetypes = {
   "latex",
   "text",
   "Avante",
+  "AvanteInput",
+  "typst",
   "bigfile",
   "noice",
 }
@@ -155,36 +157,35 @@ vim.api.nvim_create_autocmd("CmdlineLeave", {
   end,
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = augroup("setup_lsp_defaults"),
+vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
+  group = augroup("inlay_hint"),
   callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client == nil then
-      return
-    end
-    client.capabilities = require("blink.cmp").get_lsp_capabilities(client.capabilities)
-    if client.supports_method("textDocument/inlayHint") then
-      vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
-    end
+    local bufnr = args.buf
+    local clients = vim.lsp.get_clients({
+      bufnr = bufnr,
+      method = "textDocument/inlayHint",
+    })
+    vim.lsp.inlay_hint.enable(#clients ~= 0, { bufnr = bufnr })
   end,
 })
 
 vim.fn.sign_define("CodeActionSign", { text = "⬥", texthl = "LspCodeAction" })
 local code_action_group = augroup("code_action_sign")
-vim.api.nvim_create_autocmd("LspAttach", {
+vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
   callback = function(args)
     local bufnr = args.buf
+    vim.api.nvim_clear_autocmds({ group = code_action_group, buffer = bufnr })
     local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if not client or not client.supports_method("textDocument/codeAction") then
+    if not client or not client:supports_method("textDocument/codeAction", bufnr) then
       return
     end
-
     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
       buffer = bufnr,
       group = code_action_group,
       callback = function()
-        local params = vim.lsp.util.make_range_params()
-        params.context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }
+        local params = vim.lsp.util.make_range_params(0, "utf-16")
+        local lnum = vim.fn.line(".") - 1
+        params.context = { diagnostics = vim.diagnostic.get(bufnr, { lnum = lnum }) }
 
         vim.lsp.buf_request(bufnr, "textDocument/codeAction", params, function(err, result, ctx, config)
           if err then

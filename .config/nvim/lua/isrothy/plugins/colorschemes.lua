@@ -2,17 +2,14 @@ return {
   {
     "aileot/ex-colors.nvim",
     lazy = true,
+    priority = 1000,
     cmd = "ExColors",
-    ---@type ExColors.Config
     opts = {},
     init = function() vim.cmd.colorscheme("ex-nordify-dark") end,
   },
   {
-    -- dir = "~/nordify.nvim",
     "Isrothy/nordify.nvim",
-    -- priority = 1000,
     lazy = true,
-    enabled = true,
     init = function()
       vim.g.nordify = {
         transparent = false,
@@ -38,8 +35,6 @@ return {
       }
     end,
     config = function()
-      -- vim.cmd.colorscheme("nordify-dark")
-
       local palette = require("nordify.palette")["dark"]
       ---@type table<string, vim.api.keyset.highlight>
       local highlights = {
@@ -69,8 +64,6 @@ return {
 
         ErrorMsg = { link = "Normal" },
         WarningMsg = { link = "Normal" },
-
-        TermCursor = { fg = palette.aurora.green, bg = palette.none, reverse = true },
 
         Folded = { fg = palette.frost.artic_water, bg = palette.polar_night.brighter },
 
@@ -113,11 +106,5 @@ return {
       require("tokyonight").setup(opts)
       vim.cmd([[colorscheme tokyonight]])
     end,
-  },
-  {
-    "saghen/blink.compat",
-    dependencies = { "micangl/cmp-vimtex" },
-    version = "*",
-    optional = true,
   },
 }

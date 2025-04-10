@@ -107,7 +107,7 @@ end
 --- Recursively close an open folder or recursively open a closed folder.
 local function neotree_zA(state) neotree_za(state, true) end
 
---- Set depthlevel, analagous to foldlevel, for the neo-tree file tree.
+--- Set depthlevel, analogous to foldlevel, for the neo-tree file tree.
 local function set_depthlevel(state, depthlevel)
   if depthlevel < MIN_DEPTH then
     depthlevel = MIN_DEPTH
@@ -330,7 +330,7 @@ return {
             ["<LOCALLEADER>gu"] = "git_unstage_file",
 
             ["<LOCALLEADER>i"] = "show_file_details",
-            ["<LOCALLEADER>m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
+            ["<LOCALLEADER>m"] = "move", -- Takes text input for destination, also accepts the optional config.show_path option like "add".
             ["<LOCALLEADER>n"] = "rename",
             ["<LOCALLEADER>o"] = {
               "show_help",
@@ -392,6 +392,7 @@ return {
             ["b"] = "none",
             ["c"] = "none",
             ["C"] = "none",
+            ["d"] = "none",
             ["h"] = "none",
             ["i"] = "none",
             ["l"] = "none",
@@ -426,20 +427,21 @@ return {
         },
         filesystem = {
           filtered_items = {
-            visible = true, -- when true, they will just be displayed differently than normal items
+            visible = true, -- When true, they will just be displayed differently than normal items
             hide_dotfiles = true,
             hide_gitignored = false,
-            hide_hidden = true, -- only works on Windows for hidden files/directories
-            never_show = { -- remains hidden even if visible is toggled to true
+            hide_hidden = true, -- Only works on Windows for hidden files/directories
+            never_show = { -- Remains hidden even if visible is toggled to true
               ".DS_Store",
               "thumbs.db",
             },
           },
-          hijack_netrw_behavior = "disabled", -- netrw disabled, opening a directory opens neo-tree
+          hijack_netrw_behavior = "disabled", -- Netrw disabled, opening a directory opens neo-tree
           use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
           -- instead of relying on nvim autocmd events.
           window = {
             mappings = {
+              ["<LOCALLEADER>d"] = "delete",
               ["<LOCALLEADER>f"] = "filter_on_submit",
               ["<LOCALLEADER>h"] = "toggle_hidden",
               ["<LOCALLEADER>n"] = {
@@ -449,7 +451,7 @@ return {
                 },
               },
 
-              ["<LOCALLEADER>#"] = "fuzzy_sorter", -- fuzzy sorting using the fzy algorithm
+              ["<LOCALLEADER>#"] = "fuzzy_sorter", -- Fuzzy sorting using the fzy algorithm
               ["<LOCALLEADER>/"] = "fuzzy_finder",
               ["<LOCALLEADER>?"] = "fuzzy_finder_directory",
               ["<LOCALLEADER><c-x>"] = "clear_filter",
@@ -484,8 +486,8 @@ return {
             --               -- the current file is changed while the tree is open.
             leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
           },
-          -- time the current file is changed while the tree is open.
-          group_empty_dirs = false, -- when true, empty folders will be grouped together
+          -- Time the current file is changed while the tree is open.
+          group_empty_dirs = false, -- When true, empty folders will be grouped together
           show_unloaded = true,
           window = {
             mappings = {
@@ -576,8 +578,6 @@ return {
       columns = {
         "icon",
         "permissions",
-        -- "size",
-        -- "mtime",
       },
       keymaps = {
         ["-"] = "actions.parent",
@@ -591,7 +591,7 @@ return {
             if entry == nil or entry.type ~= "file" then
               return
             end
-            --- pick a window by using window-picker plugin.
+            --- Pick a window by using window-picker plugin.
             local win = require("window-picker").pick_window({
               autoselect_one = true,
               -- hint = 'floating-big-letter',
@@ -636,7 +636,7 @@ return {
               })
             else
               grug_far.open_instance("explorer")
-              -- updating the prefills without clearing the search and other fields
+              -- Updating the prefills without clearing the search and other fields
               grug_far.update_instance_prefills("explorer", prefills, false)
             end
           end,

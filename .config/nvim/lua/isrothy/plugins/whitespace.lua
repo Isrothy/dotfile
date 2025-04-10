@@ -118,8 +118,10 @@ return {
   },
   {
     "mcauley-penney/visual-whitespace.nvim",
-    event = { "BufReadPost", "BufNewFile" },
     keys = {
+      "v",
+      "V",
+      "<C-v>",
       {
         "<LEADER><SPACE>v",
         function() require("visual-whitespace").toggle() end,
@@ -134,6 +136,7 @@ return {
         space_char = "·",
         tab_char = "→",
         nl_char = "↲",
+        cr_char = "←",
         excluded = {
           filetypes = { "toggleterm" },
           buftypes = { "terminal" },

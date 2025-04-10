@@ -4,6 +4,7 @@ require("lazy").setup("isrothy.plugins", {
   },
   install = {
     missing = true,
+    colorschemes = "ex-nordify-dark",
   },
   rocks = {
     hererocks = true,

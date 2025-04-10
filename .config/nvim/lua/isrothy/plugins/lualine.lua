@@ -74,12 +74,11 @@ return {
   dependencies = {
     "nvim-tree/nvim-web-devicons",
     "Isrothy/lualine-diagnostic-message",
-    "nordify.nvim",
+    "Isrothy/nordify.nvim",
     "meuter/lualine-so-fancy.nvim",
     "folke/noice.nvim",
     "folke/trouble.nvim",
   },
-
   opts = function()
     local c = require("nordify.palette")["dark"]
     -- local c = require("nord.colors").palette ---@type Nord.Palette
@@ -124,6 +123,7 @@ return {
             "qf",
             "grug-far",
             "dbout",
+            "noice",
             "",
           },
         },
@@ -284,5 +284,8 @@ return {
     })
 
     require("lualine").setup(opts)
+    local palette = require("nordify.palette")["dark"]
+    vim.api.nvim_set_hl(0, "WinBar", { bg = palette.polar_night.brighter })
+    vim.api.nvim_set_hl(0, "WinBarNC", { bg = palette.polar_night.brighter })
   end,
 }

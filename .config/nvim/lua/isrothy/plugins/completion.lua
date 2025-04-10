@@ -1,9 +1,9 @@
 return {
   {
     "saghen/blink.cmp",
-    version = "v0.*",
+    version = "v1.*",
     build = "cargo build --release",
-    event = { "InsertEnter" },
+    event = "InsertEnter",
     dependencies = {
       "rafamadriz/friendly-snippets",
       "saghen/blink.compat",
@@ -22,7 +22,8 @@ return {
         ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
         ["<CR>"] = { "accept", "fallback" },
         ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<C-e>"] = { "hide" },
+        ["<C-e>"] = { "cancel" },
+        ["<C-y>"] = { "select_and_accept" },
         ["<C-p>"] = { "select_prev", "fallback" },
         ["<C-n>"] = { "select_next", "fallback" },
 
@@ -31,7 +32,30 @@ return {
       },
       enabled = function() return not vim.tbl_contains({ "bigfile" }, vim.bo.filetype) and vim.bo.buftype ~= "prompt" end,
       cmdline = {
-        enabled = false,
+        enabled = true,
+        completion = { ghost_text = { enabled = true } },
+        keymap = {
+          ["<M-l>"] = {
+            function(cmp)
+              if cmp.is_ghost_text_visible() and not cmp.is_menu_visible() then
+                return cmp.accept()
+              end
+            end,
+            "fallback",
+          },
+          ["<CR>"] = {
+            function(cmp)
+              if not (cmp.is_ghost_text_visible() and not cmp.is_menu_visible()) then
+                return cmp.accept()
+              end
+            end,
+            "fallback",
+          },
+          ["<Tab>"] = {
+            "show_and_insert",
+            "select_next",
+          },
+        },
       },
       appearance = {
         use_nvim_cmp_as_default = true,

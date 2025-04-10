@@ -23,12 +23,12 @@ return {
           suggestions = 20,
         },
         presets = {
-          operators = true, -- adds help for operators like d, y, ...
+          operators = true, -- Adds help for operators like d, y, ...
           motions = true, -- adds help for motions
-          text_objects = true, -- help for text objects triggered after entering an operator
+          text_objects = true, -- Help for text objects triggered after entering an operator
           windows = true, -- default bindings on <c-w>
-          nav = true, -- misc bindings to work with windows
-          z = true, -- bindings for folds, spelling and others prefixed with z
+          nav = true, -- Misc bindings to work with windows
+          z = true, -- Bindings for folds, spelling, and others prefixed with z
           g = true, -- bindings for prefixed with g
         },
       },
@@ -42,7 +42,7 @@ return {
         -- Additional vim.wo and vim.bo options
         bo = {},
         wo = {
-          winblend = 10, -- value between 0-100 0 for fully opaque and 100 for fully transparent
+          winblend = 10, -- Value between 0-100 0 for fully opaque and 100 for fully transparent
         },
       },
       -- keys = {
@@ -68,17 +68,14 @@ return {
 
         { "<LEADER>l", group = "LSP" },
         { "<LEADER>m", group = "Minimap" },
-        { "<LEADER>mb", group = "[b]uffer" },
-        { "<LEADER>mw", group = "[w]indow" },
-        { "<LEADER>mt", group = "[t]ab" },
+        { "<LEADER>mr", group = "Refresh" },
         { "<LEADER>n", group = "Noice" },
-
         { "<LEADER>o", group = "Options" },
         -- { "<LEADER>q", group = "Profiler" },
         { "<LEADER>r", group = "Refactors" },
 
         { "<LEADER>t", group = "Test" },
-        { "<LEADER>u", group = "Snacks toggle" },
+
         {
           "<LEADER>w",
           proxy = "<C-W>",
@@ -87,6 +84,7 @@ return {
         },
         { "<LEADER>W", group = "Wrokspace" },
         { "<LEADER>x", group = "Diagnostics" },
+        { "<LEADER>y", group = "Zen mode" },
 
         { "<LEADER>/", group = "Grep" },
         { "<LEADER>!", group = "Tasks" },

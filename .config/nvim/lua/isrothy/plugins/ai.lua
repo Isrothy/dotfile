@@ -4,33 +4,39 @@ return {
     event = "VeryLazy",
     version = "*",
     keys = {
-      { "<LEADER>aa", "<CMD>AvanteAsk<CR>", desc = "Ask AI", mode = { "n", "x" } },
       { "<LEADER>ab", "<CMD>AvanteBuild<CR>", desc = "Build dependencies" },
-      { "<LEADER>ac", "<CMD>AvanteClear<CR>", desc = "Clear" },
-      { "<LEADER>ak", "<CMD>AvanteClear<CR>", desc = "Clear" },
+      { "<LEADER>ac", "<CMD>AvanteChat<CR>", desc = "Chat" },
       { "<LEADER>ae", "<CMD>AvanteEdit<CR>", desc = "Edit", mode = { "x" } },
       { "<LEADER>af", "<CMD>AvanteFocus<CR>", desc = "Focus" },
+      { "<LEADER>ak", "<CMD>AvanteClear<CR>", desc = "Clear" },
+      { "<LEADER>aq", "<CMD>AvanteAsk<CR>", desc = "Ask AI", mode = { "n", "x" } },
       { "<LEADER>ar", "<CMD>AvanteRefresh<CR>", desc = "Refresh" },
       { "<LEADER>as", "<CMD>AvanteShowRepoMap<CR>", desc = "Show repo map" },
       { "<LEADER>at", "<CMD>AvanteToggle<CR>", desc = "Toggle" },
     },
     opts = {
-      provider = "openai",
+      provider = "claude",
+      claude = {
+        endpoint = "https://api.anthropic.com",
+        model = "claude-3-7-sonnet-20250219",
+        timeout = 30000,
+        temperature = 0,
+        max_tokens = 64000,
+      },
       openai = {
         endpoint = "https://api.openai.com/v1",
         model = "gpt-4o",
         timeout = 30000,
         temperature = 0.25,
         max_tokens = 4096,
-        -- reasoning_effort = "high" -- only supported for reasoning models (o1, etc.)
       },
       behaviour = {
         auto_set_highlight_group = true,
         auto_set_keymaps = false,
-        auto_apply_diff_after_generation = false,
-        support_paste_from_clipboard = false,
+        auto_apply_diff_after_generation = true,
+        support_paste_from_clipboard = true,
         minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
-        enable_token_counting = true, -- Whether to enable token counting. Default to true.
+        enable_token_counting = false, -- Whether to enable token counting. Default to true.
       },
       mappings = {
         diff = {
@@ -48,7 +54,7 @@ return {
         },
         submit = {
           normal = "<CR>",
-          insert = "",
+          insert = nil,
         },
         sidebar = {
           apply_all = "A",
@@ -58,9 +64,12 @@ return {
           switch_windows = "<Tab>",
           reverse_switch_windows = "<S-Tab>",
           remove_file = "d",
-          add_file = "@",
-          close = { "<Esc>", "q" },
+          add_file = "p",
+          close = {},
           close_from_input = nil, -- e.g., { normal = "<Esc>", insert = "<C-d>" }
+        },
+        files = {
+          add_current = "<LOCALLEADER>aa", -- Add current buffer to selected files
         },
       },
       windows = {
@@ -83,15 +92,12 @@ return {
         },
       },
     },
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
-    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       {
-        -- support for image pasting
         "HakonHarnes/img-clip.nvim",
         event = "VeryLazy",
         opts = {

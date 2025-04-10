@@ -19,7 +19,7 @@ if vim.env.PROF then
   ---@diagnostic disable-next-line: missing-fields
   require("snacks.profiler").startup({
     startup = {
-      event = "VimEnter", -- stop profiler on this event. Defaults to `VimEnter`
+      event = "VimEnter", -- Stop profiler on this event. Defaults to `VimEnter`
     },
   })
 end
@@ -29,3 +29,19 @@ require("isrothy.mappings")
 require("isrothy.autocmd")
 require("isrothy.fold")
 require("isrothy.lazy_plugin")
+
+vim.lsp.enable({
+  --   "basedpyright",
+  --   "bashls",
+  --   "clangd",
+  "jsonls",
+  --   "lua_ls",
+  --   "neocmake",
+  --   "sourcekit",
+  --   "texlab",
+  "tinymist",
+  --   "vimls",
+  "yamlls",
+  --   "eslint",
+  --   "harper_ls",
+})
