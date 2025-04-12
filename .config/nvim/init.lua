@@ -31,17 +31,17 @@ require("isrothy.fold")
 require("isrothy.lazy_plugin")
 
 vim.lsp.enable({
-  --   "basedpyright",
-  --   "bashls",
-  --   "clangd",
+  "basedpyright",
+  "bashls",
+  "clangd",
   "jsonls",
-  --   "lua_ls",
-  --   "neocmake",
-  --   "sourcekit",
-  --   "texlab",
+  "lua_ls",
+  "neocmake",
+  "sourcekit",
+  "texlab",
   "tinymist",
-  --   "vimls",
+  "vimls",
   "yamlls",
-  --   "eslint",
-  --   "harper_ls",
+  "eslint",
+  -- "harper_ls",
 })
