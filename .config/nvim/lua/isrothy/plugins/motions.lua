@@ -9,7 +9,7 @@ return {
     "icholy/lsplinks.nvim",
     event = "LspAttach",
     keys = {
-      { "<LEADER>lL", function() require("lsplinks").gx() end, mode = { "n" }, desc = "Open link" },
+      { "<LEADER>lo", function() require("lsplinks").gx() end, mode = { "n" }, desc = "Open link" },
     },
     opts = {
       highlight = true,

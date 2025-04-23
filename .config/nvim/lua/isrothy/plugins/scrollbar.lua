@@ -3,7 +3,7 @@ return {
     "lewis6991/satellite.nvim",
     -- dir = "~/satellite.nvim",
     event = { "BufReadPost", "BufNewFile" },
-    enabled = false,
+    enabled = true,
     opts = {
       current_only = false,
       winblend = 40,

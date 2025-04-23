@@ -8,7 +8,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 map("n", "<LEADER>;", "<CMD>w<CR>", { desc = "Save" })
-map("n", "<C-C>", "ciw", { desc = "Change word" })
 
 map("t", "<C-\\>", "<C-\\><C-N>", { desc = "Escape terminal mode" })
 

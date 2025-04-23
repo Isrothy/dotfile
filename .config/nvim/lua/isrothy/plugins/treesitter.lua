@@ -19,7 +19,7 @@ return {
       select = { enable = false },
     },
     indent = {
-      enable = true,
+      enable = false,
     },
     highlight = {
       enable = true,

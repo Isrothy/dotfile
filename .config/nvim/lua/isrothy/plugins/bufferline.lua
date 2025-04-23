@@ -9,6 +9,15 @@ return {
     { "<LEADER>bh", "<CMD>BufferLineCloseLeft<CR>", desc = "Close left buffers" },
     { "<LEADER>bl", "<CMD>BufferLineCloseRight<CR>", desc = "Close right buffers" },
     { "<LEADER>bo", "<CMD>BufferLineCloseOthers<CR>", desc = "Close other buffers" },
+
+    { "<LEADER>bs", "", desc = "+Sort" },
+    { "<LEADER>bsd", "<CMD>BufferLineSortByDirectory<CR>", desc = "By directory" },
+    { "<LEADER>bse", "<CMD>BufferLineSortByExtension<CR>", desc = "By extension" },
+    { "<LEADER>bsr", "<CMD>BufferLineSortByRelativeDirectory<CR>", desc = "By relative directory" },
+    { "<LEADER>bss", "<CMD>BufferLineSortByTabs<CR>", desc = "By tabs" },
+
+    { "<LEADER>bt", "<CMD>BufferlineTogglePin<CR>", desc = "Toggle pin" },
+
     { "]b", "<CMD>BufferLineCycleNext<CR>", desc = "Next buffer" },
     { "[b", "<CMD>BufferLineCyclePrev<CR>", desc = "Previois buffer" },
     { "[B", "<cmd>BufferLineMovePrev<cr>", desc = "Move buffer prev" },

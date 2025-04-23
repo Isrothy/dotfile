@@ -3,12 +3,13 @@ return {
     "saghen/blink.cmp",
     version = "v1.*",
     build = "cargo build --release",
-    event = "InsertEnter",
+    event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
       "rafamadriz/friendly-snippets",
       "saghen/blink.compat",
       "mikavilpas/blink-ripgrep.nvim",
       "kristijanhusak/vim-dadbod-completion",
+      "philosofonusus/ecolog.nvim",
     },
 
     init = function()
@@ -108,7 +109,7 @@ return {
           "snippets",
           "buffer",
           "ripgrep",
-          -- "ecolog",
+          "ecolog",
         },
         per_filetype = {
           tex = {

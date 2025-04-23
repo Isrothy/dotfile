@@ -1,7 +1,6 @@
 return {
   "folke/noice.nvim",
   event = "VeryLazy",
-  enabled = true,
   dependencies = { "MunifTanjim/nui.nvim" },
 
   keys = {
@@ -121,7 +120,7 @@ return {
     },
     lsp = {
       progress = {
-        enabled = true,
+        enabled = false,
         throttle = 1000 / 60, -- frequency to update lsp progress message
       },
       override = {

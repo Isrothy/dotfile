@@ -355,8 +355,6 @@ return {
     { "<LEADER>..", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
     { "<LEADER>.s", function() Snacks.scratch.select() end, desc = "Select scratch buffer" },
 
-    -- { "<LEADER>un", function() Snacks.notifier.hide() end, desc = "Dismiss all notifications" },
-
     { "<LEADER>bd", function() Snacks.bufdelete() end, desc = "Delete current buffer" },
 
     { "<LEADER>gc", function() Snacks.picker.git_log() end, desc = "Git log" },
@@ -372,8 +370,8 @@ return {
     { "<LEADER>zz", function() Snacks.zen() end, desc = "Toggle zen mode" },
     { "<LEADER>zo", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
 
-    { "]]", function() Snacks.words.jump(vim.v.count1) end, desc = "Next reference", mode = { "n", "t" } },
-    { "[[", function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev reference", mode = { "n", "t" } },
+    { "]]", function() Snacks.words.jump(vim.v.count1, true) end, desc = "Next reference", mode = { "n", "t" } },
+    { "[[", function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Prev reference", mode = { "n", "t" } },
   },
   init = function()
     vim.api.nvim_create_autocmd("User", {
@@ -400,6 +398,22 @@ return {
         Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<LEADER>lI")
         Snacks.toggle.indent():map("<LEADER><SPACE>i")
         Snacks.toggle.dim():map("<LEADER>zd")
+
+        Snacks.toggle({
+          name = "Language server",
+          get = function()
+            local buf = vim.api.nvim_get_current_buf()
+            local clients = vim.lsp.get_clients({ bufnr = buf })
+            return not vim.tbl_isempty(clients)
+          end,
+          set = function(state)
+            if state then
+              vim.cmd("LspStart")
+            else
+              vim.cmd("LspStop")
+            end
+          end,
+        }):map("<LEADER>l;")
       end,
     })
   end,

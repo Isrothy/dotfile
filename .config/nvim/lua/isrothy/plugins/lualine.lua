@@ -1,6 +1,5 @@
 local tab_size = function() return (vim.bo.expandtab and "␠" or "␉") .. vim.bo.tabstop end
 
--- Truncating components in smaller window
 local trunc = function(trunc_width, trunc_len, hide_width, no_ellipsis)
   return function(str)
     local win_width = vim.fn.winwidth(0)
@@ -13,7 +12,6 @@ local trunc = function(trunc_width, trunc_len, hide_width, no_ellipsis)
   end
 end
 
--- Using external source for diff
 local diff_source = function()
   local gitsigns = vim.b.gitsigns_status_dict
   if gitsigns then
@@ -23,6 +21,11 @@ local diff_source = function()
       removed = gitsigns.removed,
     }
   end
+end
+
+local macro_recorder = function()
+  local macro = vim.fn.reg_recording()
+  return macro ~= "" and "REC @" .. macro or ""
 end
 
 local function neocodeium_component()
@@ -75,16 +78,13 @@ return {
     "nvim-tree/nvim-web-devicons",
     "Isrothy/lualine-diagnostic-message",
     "Isrothy/nordify.nvim",
-    "meuter/lualine-so-fancy.nvim",
     "folke/noice.nvim",
     "folke/trouble.nvim",
   },
   opts = function()
-    local c = require("nordify.palette")["dark"]
-    -- local c = require("nord.colors").palette ---@type Nord.Palette
     local minimap_extension = require("neominimap.statusline").lualine_default
     local trouble = require("trouble")
-    local symbols = trouble.statusline({
+    local lsp_symbols = trouble.statusline({
       mode = "lsp_document_symbols",
       groups = {},
       title = false,
@@ -101,30 +101,32 @@ return {
         section_separators = "",
         disabled_filetypes = {
           statusline = {
-            "dashboard",
             "alpha",
+            "dashboard",
+            "snacks_dashboard",
           },
           winbar = {
+            "",
             "Avante",
-            "AvanteSelectedFiles",
             "AvanteInput",
-            "neo-tree",
+            "AvanteSelectedFiles",
             "aerial",
-            "packer",
             "alpha",
             "dap-repl",
-            "dapui_watches",
-            "dapui_stacks",
             "dapui_breakpoints",
-            "dapui_scopes",
             "dapui_colsoles",
-            "trouble",
-            "snacks_dashboard",
-            "qf",
-            "grug-far",
+            "dapui_scopes",
+            "dapui_stacks",
+            "dapui_watches",
             "dbout",
+            "grug-far",
+            "man",
+            "neo-tree",
             "noice",
-            "",
+            "packer",
+            "qf",
+            "snacks_dashboard",
+            "trouble",
           },
         },
         always_divide_middle = true,
@@ -132,15 +134,18 @@ return {
       },
       sections = {
         lualine_a = {
-          { "mode", fmt = trunc(80, 4, nil, true) },
           {
+            "mode",
+            fmt = trunc(80, 4, nil, true),
+          },
+          {
+            ---@diagnostic disable-next-line: undefined-field
             require("noice").api.status.command.get,
+            ---@diagnostic disable-next-line: undefined-field
             cond = require("noice").api.status.command.has,
           },
-          Snacks.profiler.status(),
           {
-            "fancy_macro",
-            icon = { "⏺", color = { fg = c.polar_night.origin } },
+            macro_recorder,
           },
         },
         lualine_b = {
@@ -183,7 +188,10 @@ return {
         },
         lualine_x = {
           tab_size,
-          "encoding",
+          {
+            "encoding",
+            show_bomb = true,
+          },
           {
             "fileformat",
             icons_enabled = true,
@@ -195,14 +203,16 @@ return {
           },
         },
         lualine_y = {
-          "fancy_filetype",
-          "fancy_lsp_servers",
+          "filetype",
+          "lsp_status",
+          "codecompanion_spinner",
           neocodeium_component,
         },
         lualine_z = {
           "searchcount",
           "selectioncount",
           "location",
+          "progress",
           "filesize",
         },
       },
@@ -219,8 +229,8 @@ return {
         lualine_b = {},
         lualine_c = {
           {
-            symbols.get,
-            cond = symbols.has,
+            lsp_symbols.get,
+            cond = lsp_symbols.has,
           },
         },
         lualine_x = {
@@ -257,6 +267,7 @@ return {
       extensions = {
         "aerial",
         "lazy",
+        "man",
         "mason",
         "neo-tree",
         "nvim-dap-ui",

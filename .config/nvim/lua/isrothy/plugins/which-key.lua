@@ -50,21 +50,7 @@ return {
       --   scroll_up = "<c-p>", -- binding to scroll up inside the popup
       -- },
       spec = {
-        { "<LEADER>a", group = "AI" },
-        { "<LEADER>a?", desc = "Select model" },
-        { "<LEADER>aA", desc = "Add current file" },
-        { "<LEADER>aa", desc = "Add all buffers" },
-        { "<LEADER>ad", desc = "Toggle debug" },
-        { "<LEADER>aee", desc = "Edit", mode = { "x" } },
-        { "<LEADER>af", desc = "Focus" },
-        { "<LEADER>ah", desc = "Toggle hint" },
-        { "<LEADER>am", desc = "Repomap" },
-        { "<LEADER>aqq", desc = "Ask", mode = { "n", "x" } },
-        { "<LEADER>ar", desc = "Refresh" },
-        { "<LEADER>as", desc = "Toggle suggestion" },
-        { "<LEADER>at", desc = "Toggle" },
-        { "<LEADER>ax", desc = "Stop" },
-        { "<LEADER>ay", desc = "Select history" },
+        { "<LEADER>a", group = "AI", mode = { "n", "x" } },
         {
           "<LEADER>b",
           group = "Buffer",
@@ -72,21 +58,21 @@ return {
         },
         { "<LEADER>bx", group = "Exchange" },
         { "<LEADER>c", group = "Colorize" },
-        { "<LEADER>d", group = "Dap" },
+        { "<LEADER>d", group = "Dap", mode = { "n", "x" } },
         { "<LEADER>e", group = "Explore" },
         { "<LEADER>f", group = "Find" },
-        { "<LEADER>g", group = "Git" },
+        { "<LEADER>g", group = "Git", mode = { "n", "x" } },
         { "<LEADER>G", group = "Github" },
         { "<LEADER>h", group = "Harpoon" },
         { "<LEADER>j", group = "Split/Join" },
 
-        { "<LEADER>l", group = "LSP" },
+        { "<LEADER>l", group = "LSP", mode = { "n", "x" } },
         { "<LEADER>m", group = "Minimap" },
         { "<LEADER>mr", group = "Refresh" },
         { "<LEADER>n", group = "Noice" },
         { "<LEADER>o", group = "Options" },
         -- { "<LEADER>q", group = "Profiler" },
-        { "<LEADER>r", group = "Refactors" },
+        { "<LEADER>r", group = "Refactors", mode = { "n", "x" } },
 
         { "<LEADER>t", group = "Test" },
 
@@ -100,11 +86,11 @@ return {
         { "<LEADER>x", group = "Diagnostics" },
         { "<LEADER>y", group = "Zen mode" },
 
-        { "<LEADER>/", group = "Grep" },
+        { "<LEADER>/", group = "Grep", mode = { "n", "x" } },
         { "<LEADER>!", group = "Tasks" },
 
         { "<LEADER><TAB>", group = "Tabpage" },
-        { "<LEADER><SPACE>", group = "Whitespaces" },
+        { "<LEADER><SPACE>", group = "Whitespaces", mode = { "n", "x" } },
         { "<LEADER><SPACE>b", group = "Buffer" },
 
         { "[", group = "Prev" },

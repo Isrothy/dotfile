@@ -102,7 +102,6 @@ alias typora="open -a typora"
 
 eval "$(zoxide init zsh)"
 
-# Kitty Scrollback
 autoload -Uz edit-command-line
 zle -N edit-command-line
 

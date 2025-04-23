@@ -97,7 +97,7 @@ return {
       { "<M-k>", function() require("smart-splits").resize_up() end, desc = "Resize up" },
       { "<M-l>", function() require("smart-splits").resize_right() end, desc = "Resize right" },
 
-      { "<LEADER>wr", function() require("smart-splits").start_resize_mode() end, desc = "Start resize mode" },
+      -- { "<LEADER>wr", function() require("smart-splits").start_resize_mode() end, desc = "Start resize mode" },
     },
     opts = {
       ignored_buftypes = {

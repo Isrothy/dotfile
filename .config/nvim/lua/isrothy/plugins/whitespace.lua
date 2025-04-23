@@ -109,8 +109,12 @@ return {
       },
     },
     init = function()
-      vim.api.nvim_create_user_command("MiniTrailspace", "lua MiniTrailspace.trim()", {})
-      vim.api.nvim_create_user_command("MiniTrailspaceLastlines", "lua MiniTrailspace.trim_last_lines()", {})
+      vim.api.nvim_create_user_command("TrimTrailingWhitespace", function() require("mini.trailspace").trim() end, {})
+      vim.api.nvim_create_user_command(
+        "TrimTrailingWhitespaceLastLines",
+        function() require("mini.trailspace").trim_last_lines() end,
+        {}
+      )
     end,
     opts = {
       only_in_normal_buffers = true,
@@ -118,10 +122,8 @@ return {
   },
   {
     "mcauley-penney/visual-whitespace.nvim",
+    event = "ModeChanged *:[vV\22]",
     keys = {
-      "v",
-      "V",
-      "<C-v>",
       {
         "<LEADER><SPACE>v",
         function() require("visual-whitespace").toggle() end,
@@ -136,7 +138,9 @@ return {
         space_char = "·",
         tab_char = "→",
         nl_char = "↲",
-        cr_char = "←",
+        unix_char = "↲",
+        mac_char = "←",
+        dos_char = "↙",
         excluded = {
           filetypes = { "toggleterm" },
           buftypes = { "terminal" },

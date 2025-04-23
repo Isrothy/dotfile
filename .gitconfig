@@ -1,37 +1,40 @@
 [user]
-	name = Jiahe Jiang
-	email = 61075605+Isrothy@users.noreply.github.com
+    name = Jiahe Jiang
+    email = 61075605+Isrothy@users.noreply.github.com
 [pull]
-	rebase = true
+    rebase = true
 [interactive]
     diffFilter = delta --color-only
+[include]
+    path = ~/.config/delta/themes.gitconfig
 [core]
-	editor = nvim
-	pager = delta
+    editor = nvim
+    pager = delta
 [merge]
-	tool = nvim
-	conflictstyle = diff3
+    tool = nvim
+    conflictstyle = diff3
 [mergetool]
-	keepBackup = false
+    keepBackup = false
 [mergetool "nvim"]
-	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [diff]
     colorMoved = default
 [delta]
+    features = arctic-fox
     navigate = true    # use n and N to move between diff sections
     light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
-	side-by-side = true
-	line-numbers = true
-	syntax-theme = Nord
+    side-by-side = false
+    line-numbers = true
+    syntax-theme = Nord
 
 [column]
-	ui = auto
+    ui = auto
 [branch]
-	sort = -committerdate
+    sort = -committerdate
 [maintenance]
-	repo = /Users/jiangjoshua/neominimap.nvim
+    repo = /Users/jiangjoshua/neominimap.nvim
 [filter "lfs"]
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f

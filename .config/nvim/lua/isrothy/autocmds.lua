@@ -3,13 +3,8 @@ local function augroup(name) return vim.api.nvim_create_augroup(name, { clear = 
 vim.api.nvim_create_autocmd({ "TermOpen" }, {
   group = augroup("terminal_config"),
   callback = function()
-    vim.wo.statuscolumn = ""
-    vim.wo.colorcolumn = ""
     vim.wo.sidescrolloff = 0
     vim.wo.scrolloff = 0
-    vim.wo.number = false
-    vim.wo.relativenumber = false
-    vim.wo.foldcolumn = "0"
     vim.wo.foldmethod = "manual"
   end,
 })

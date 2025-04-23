@@ -1,61 +1,50 @@
 local opt = vim.opt
 local g = vim.g
 
-opt.mouse = ""
-opt.syntax = "on"
-
+opt.autoindent = true
+opt.autoread = true
+opt.backspace = { "indent", "eol", "start" }
+opt.belloff = "all"
+opt.cindent = true
+opt.cinoptions = "g0,(0,l1,n-2"
 opt.cmdheight = 0
-opt.laststatus = 3
-opt.showcmd = true
+opt.conceallevel = 0
+opt.confirm = true
 opt.cursorline = true
 opt.cursorlineopt = "number,screenline"
-opt.number = true
-opt.relativenumber = true
-opt.pumheight = 10
-opt.splitbelow = true
-opt.splitright = false
-
-opt.swapfile = false
-opt.undofile = true
-
-opt.nrformats = { "alpha", "bin", "octal", "hex" }
-
+opt.expandtab = true
 opt.fillchars = {
   vert = "│",
-  eob = " ", -- suppress ~ at EndOfBuffer
-  diff = "╱", -- alternatives = ⣿ ░ ─ ╱
+  eob = " ",
+  diff = "╱",
   msgsep = "‾",
   fold = "⠀",
   foldopen = "▼",
   foldsep = " ",
   foldclose = "▶",
 }
--- opt.winborder = "rounded"
-
-opt.virtualedit = { "block", "onemore" }
-opt.whichwrap = vim.o.whichwrap .. "<,>,h,l"
-opt.wrap = false
-opt.linebreak = true
--- opt.textwidth = 0
--- opt.wrapmargin =40
-opt.scrolloff = 8
-opt.smoothscroll = true
-opt.sidescrolloff = 16
-opt.signcolumn = "yes"
-
-opt.history = 2000
-opt.ttimeoutlen = 0
-opt.belloff = "all"
-opt.conceallevel = 0
-opt.updatetime = 500
-opt.wildmenu = true
-opt.scrollback = 2000
-opt.jumpoptions = "stack,view"
-
-opt.autoread = true
-opt.confirm = true
+opt.foldcolumn = "1"
+opt.foldenable = true
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldlevelstart = 99
+opt.foldmethod = "expr"
+opt.foldtext = "v:lua.get_foldtext()"
+opt.gp = "rg"
 opt.hidden = true
-
+opt.history = 2000
+opt.hlsearch = true
+opt.ignorecase = true
+opt.incsearch = true
+opt.jumpoptions = "stack,view"
+opt.laststatus = 3
+opt.linebreak = true
+opt.mouse = ""
+opt.nrformats = { "alpha", "bin", "octal", "hex" }
+opt.number = true
+opt.pumheight = 10
+opt.relativenumber = true
+opt.scrollback = 2000
+opt.scrolloff = 8
 opt.sessionoptions = {
   "buffers",
   "curdir",
@@ -68,30 +57,27 @@ opt.sessionoptions = {
   "terminal",
   "folds",
 }
-
-opt.autoindent = true
-opt.smartindent = true
-opt.cindent = true
-opt.expandtab = true
-opt.smarttab = true
-opt.tabstop = 4
-opt.softtabstop = -1
 opt.shiftwidth = 4
-opt.cinoptions = "g0,(0,l1,n-2"
-opt.backspace = { "indent", "eol", "start" }
-
-opt.hlsearch = true
-opt.incsearch = true
-opt.ignorecase = true
+opt.showcmd = true
+opt.sidescrolloff = 16
+opt.signcolumn = "yes"
 opt.smartcase = true
-opt.gp = "rg"
-
-opt.foldlevelstart = 99
-opt.foldenable = true
-opt.foldcolumn = "1"
-opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-opt.foldtext = "v:lua.get_foldtext()"
-opt.foldmethod = "expr"
+opt.smartindent = true
+opt.smarttab = true
+opt.smoothscroll = true
+opt.softtabstop = -1
+opt.splitbelow = true
+opt.splitright = false
+opt.swapfile = false
+opt.syntax = "on"
+opt.tabstop = 4
+opt.ttimeoutlen = 0
+opt.undofile = true
+opt.updatetime = 500
+opt.virtualedit = { "block", "onemore" }
+opt.whichwrap = vim.o.whichwrap .. "<,>,h,l"
+opt.wildmenu = true
+opt.wrap = false
 
 g.html_indent_autotags = "html,head,body"
 g.markdown_recommended_style = 0
@@ -114,13 +100,4 @@ local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
----@diagnostic disable-next-line: duplicate-set-field
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-  opts = opts or {}
-  ---@diagnostic disable-next-line: inject-field
-  opts.border = opts.border or "rounded"
-  return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end

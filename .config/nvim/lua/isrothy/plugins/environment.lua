@@ -3,6 +3,7 @@ return {
   keys = {
     { "<leader>Eg", "<CMD>EcologGoto<CR>", desc = "Go to env file" },
     { "<leader>Ep", "<CMD>EcologPeek<CR>", desc = "Ecolog peek variable" },
+    { "<leader>Eh", "<Cmd>EcologShellToggle<cr>", desc = "Toggle shell variables" },
     { "<leader>Es", "<CMD>EcologSelect<CR>", desc = "Switch env file" },
   },
   cmd = {
@@ -20,7 +21,7 @@ return {
   opts = {
     integrations = {
       nvim_cmp = false,
-      blink_cmp = false,
+      blink_cmp = true,
       snacks = {
         shelter = {
           mask_on_copy = false, -- Whether to mask values when copying
