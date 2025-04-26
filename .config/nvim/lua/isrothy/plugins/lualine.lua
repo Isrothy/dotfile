@@ -28,71 +28,28 @@ local macro_recorder = function()
   return macro ~= "" and "REC @" .. macro or ""
 end
 
-local function neocodeium_component()
-  local neocodeium = require("neocodeium")
-  if not neocodeium then
-    return ""
+local function persisted_status()
+  if vim.fn.exists("g:persisting") == 1 and vim.g.persisting then
+    return "󰆓"
+  else
+    return "󱙃"
   end
-
-  local symbols = {
-    status = {
-      [0] = "󰚩 ", -- Enabled
-      [1] = "󱚧 ", -- Disabled Globally
-      [2] = "󱙻 ", -- Disabled for Buffer
-      [3] = "󱙺 ", -- Disabled for Buffer filetype
-      [4] = "󱙺 ", -- Disabled for Buffer with enabled function
-      [5] = "󱚠 ", -- Disabled for Buffer encoding
-    },
-    server_status = {
-      [0] = "󰣺 ", -- Connected
-      [1] = "󰣻 ", -- Connecting
-      [2] = "󰣽 ", -- Disconnected
-    },
-  }
-  local highlights = {
-    status = {
-      [0] = "%#LualineNeoCodeiumEnabled#",
-      [1] = "%#LualineNeoCodeiumDisabled#",
-      [2] = "%#LualineNeoCodeiumBuffer#",
-      [3] = "%#LualineNeoCodeiumFiletype#",
-      [4] = "%#LualineNeoCodeiumFiletype#",
-      [5] = "%#LualineNeoCodeiumEncoding#",
-    },
-    server_status = {
-      [0] = "%#LualineNeoCodeiumConnected#",
-      [1] = "%#LualineNeoCodeiumConnecting#",
-      [2] = "%#LualineNeoCodeiumDisconnected#",
-    },
-  }
-  local plugin_status, server_status = require("neocodeium").get_status()
-  return highlights.status[plugin_status]
-    .. symbols.status[plugin_status]
-    .. highlights.server_status[server_status]
-    .. symbols.server_status[server_status]
 end
 
 return {
   "nvim-lualine/lualine.nvim",
+  enabled = true,
   event = "VeryLazy",
   dependencies = {
-    "nvim-tree/nvim-web-devicons",
     "Isrothy/lualine-diagnostic-message",
     "Isrothy/nordify.nvim",
-    "folke/noice.nvim",
+    -- "folke/noice.nvim",
     "folke/trouble.nvim",
+    "nvim-tree/nvim-web-devicons",
+    "stevearc/aerial.nvim",
   },
   opts = function()
     local minimap_extension = require("neominimap.statusline").lualine_default
-    local trouble = require("trouble")
-    local lsp_symbols = trouble.statusline({
-      mode = "lsp_document_symbols",
-      groups = {},
-      title = false,
-      filter = { range = true },
-      format = "{kind_icon}{symbol.name:Normal} ⟩",
-      hl_group = "lualine_c_normal",
-    })
-
     return {
       options = {
         theme = "nordify-dark",
@@ -111,6 +68,7 @@ return {
             "AvanteInput",
             "AvanteSelectedFiles",
             "aerial",
+            "undotree",
             "alpha",
             "dap-repl",
             "dapui_breakpoints",
@@ -119,8 +77,10 @@ return {
             "dapui_stacks",
             "dapui_watches",
             "dbout",
+            "dbui",
             "grug-far",
             "man",
+            "toggleterm",
             "neo-tree",
             "noice",
             "packer",
@@ -138,15 +98,7 @@ return {
             "mode",
             fmt = trunc(80, 4, nil, true),
           },
-          {
-            ---@diagnostic disable-next-line: undefined-field
-            require("noice").api.status.command.get,
-            ---@diagnostic disable-next-line: undefined-field
-            cond = require("noice").api.status.command.has,
-          },
-          {
-            macro_recorder,
-          },
+          -- macro_recorder,
         },
         lualine_b = {
           { "b:gitsigns_head", icon = "" },
@@ -203,14 +155,16 @@ return {
           },
         },
         lualine_y = {
+          persisted_status,
           "filetype",
           "lsp_status",
+          "codeium_spinner",
           "codecompanion_spinner",
-          neocodeium_component,
+          -- neocodeium_component,
         },
         lualine_z = {
-          "searchcount",
-          "selectioncount",
+          -- "searchcount",
+          -- "selectioncount",
           "location",
           "progress",
           "filesize",
@@ -229,8 +183,13 @@ return {
         lualine_b = {},
         lualine_c = {
           {
-            lsp_symbols.get,
-            cond = lsp_symbols.has,
+            "aerial",
+            sep = " ⟩ ",
+            depth = nil,
+            dense = false,
+            dense_sep = ".",
+            sep_highlight = "@text",
+            colored = true,
           },
         },
         lualine_x = {
@@ -279,24 +238,5 @@ return {
         minimap_extension,
       },
     }
-  end,
-
-  config = function(_, opts)
-    local group = vim.api.nvim_create_augroup("Lualine.NeoCodeium", { clear = true })
-    vim.api.nvim_create_autocmd({ "User" }, {
-      pattern = { "NeoCodeiumServer*", "NeoCodeium*{En,Dis}abled" },
-      group = group,
-      callback = function()
-        require("lualine").refresh({
-          scope = "tabpage",
-          place = { "statusline" },
-        })
-      end,
-    })
-
-    require("lualine").setup(opts)
-    local palette = require("nordify.palette")["dark"]
-    vim.api.nvim_set_hl(0, "WinBar", { bg = palette.polar_night.brighter })
-    vim.api.nvim_set_hl(0, "WinBarNC", { bg = palette.polar_night.brighter })
   end,
 }

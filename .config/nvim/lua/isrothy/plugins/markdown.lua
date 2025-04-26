@@ -39,6 +39,10 @@ return {
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
     cmd = { "RenderMarkdown" },
     keys = {
       { "<LOCALLEADER>r", "", desc = "+Render markdown", ft = render_markdown_ft },
@@ -110,6 +114,7 @@ return {
       },
       completions = {
         lsp = { enabled = true },
+        blink = { enabled = true },
       },
       checkbox = {
         enabled = false,

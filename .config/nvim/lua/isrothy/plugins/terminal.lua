@@ -1,16 +1,62 @@
 return {
   {
     "akinsho/toggleterm.nvim",
-    version = "*",
-    keys = { "<C-`>" },
+    keys = {
+      [[<C-`>]],
+      {
+        [[<LEADER>\]],
+        function() require("toggleterm").send_lines_to_terminal("visual_selection", true, { args = vim.v.count1 }) end,
+        mode = { "v" },
+        desc = "Send visual selection to terminal",
+      },
+      {
+        [[<LEADER>|]],
+        function() require("toggleterm").send_lines_to_terminal("visual_lines", true, { args = vim.v.count1 }) end,
+        mode = "v",
+        desc = "Send visual lines to terminal",
+      },
+      {
+        [[<LEADER>\]],
+        function()
+          vim.go.operatorfunc = "v:lua.send_to_term_op"
+          vim.api.nvim_feedkeys("g@", "n", false)
+        end,
+        mode = "n",
+        expr = true,
+        desc = "Operator: send motion to terminal",
+      },
+      {
+        [[<LEADER>\\]],
+        function() require("toggleterm").send_lines_to_terminal("single_line", true, { args = vim.v.count1 }) end,
+        mode = "n",
+        desc = "Send current line to terminal",
+      },
+      {
+        [[<LEADER>f$]],
+        "<CMD>TermSelect<CR>",
+        desc = "Select terminal",
+      },
+      {
+        [[<LEADER>$N]],
+        "<CMD>ToggleTermSetName<CR>",
+        desc = "Set name of terminal",
+      },
+      {
+        [[<LEADER>$n]],
+        "<CMD>TermNew<CR>",
+        desc = "Create new terminal",
+      },
+    },
     cmd = {
       "TermExec",
+      "TermNew",
+      "TermSelect",
       "ToggleTerm",
-      "ToggleTermToggleAll",
       "ToggleTermSendCurrentLine",
       "ToggleTermSendVisualLines",
       "ToggleTermSendVisualSelection",
       "ToggleTermSetName",
+      "ToggleTermToggleAll",
     },
     init = function()
       vim.api.nvim_create_user_command("TermRun", function(opts)
@@ -18,6 +64,9 @@ return {
         cmd = cmd:gsub([["]], [[\"]])
         require("toggleterm").exec(cmd)
       end, { nargs = "*", desc = "Alias for TermExec with dynamic command execution" })
+      function _G.send_to_term_op(motion_type)
+        require("toggleterm").send_lines_to_terminal(motion_type, true, { args = vim.v.count1 })
+      end
     end,
     opts = {
       open_mapping = [[<C-`>]],

@@ -1,5 +1,139 @@
 return {
   {
+    "folke/edgy.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.opt.laststatus = 3
+      vim.opt.splitkeep = "screen"
+    end,
+    keys = {
+      {
+        "<leader>wE",
+        function() require("edgy").toggle() end,
+        desc = "Edgy Toggle",
+      },
+      {
+        "<leader>we",
+        function() require("edgy").select() end,
+        desc = "Edgy Select Window",
+      },
+    },
+
+    opts = function()
+      local opts = {
+        options = {
+          left = { size = 30 },
+          bottom = { size = 10 },
+          right = { size = 20 },
+          top = { size = 10 },
+        },
+        exit_when_last = true,
+        animate = { enabled = false },
+        keys = {
+          ---@param win Edgy.Window
+          ["<M-h>"] = function(win)
+            local view = win.view
+            local edgebar = view.edgebar
+            local pos = edgebar.pos
+            if pos == "left" then
+              win:resize("width", -1)
+            elseif pos == "right" then
+              win:resize("width", 1)
+            end
+          end,
+          ---@param win Edgy.Window
+          ["<M-l>"] = function(win)
+            local view = win.view
+            local edgebar = view.edgebar
+            local pos = edgebar.pos
+            if pos == "left" then
+              win:resize("width", 1)
+            elseif pos == "right" then
+              win:resize("width", -1)
+            end
+          end,
+          ["<M-k>"] = function(win) win:resize("height", 1) end,
+          ["<M-j>"] = function(win) win:resize("height", -1) end,
+        },
+        wo = {
+          winbar = false,
+          winfixwidth = true,
+          winfixheight = false,
+          winhighlight = "WinBar:EdgyWinBar,Normal:EdgyNormal",
+          spell = false,
+          signcolumn = "no",
+        },
+        bottom = {
+          {
+            ft = "toggleterm",
+            size = { height = 0.3 },
+            filter = function(buf, win) return vim.api.nvim_win_get_config(win).relative == "" end,
+          },
+          "Trouble",
+          { ft = "qf", title = "QuickFix" },
+          {
+            ft = "help",
+            size = { height = 0.5 },
+            filter = function(buf) return vim.bo[buf].buftype == "help" end,
+          },
+          { title = "Neotest Output", ft = "neotest-output-panel", size = { height = 15 } },
+        },
+        left = {
+          { title = "Neotest Summary", ft = "neotest-summary" },
+          {
+            ft = "codecompanion",
+            size = {
+              width = 50,
+            },
+          },
+          { title = "Grug Far", ft = "grug-far", size = { width = 0.4 } },
+          {
+            ft = "undotree",
+            size = { width = 40 },
+          },
+          { ft = "dbui" },
+        },
+
+        right = {
+          {
+            title = "Neominimap",
+            ft = "neominimap",
+            size = { width = 20 },
+          },
+          {
+            ft = "aerial",
+            size = { width = 30 },
+          },
+        },
+      }
+
+      for i, v in ipairs({ "filesystem", "buffers", "git_status" }) do
+        table.insert(opts.left, i, {
+          title = "Neo-Tree " .. v:gsub("_", " "):gsub("^%l", string.upper),
+          ft = "neo-tree",
+          filter = function(buf) return vim.b[buf].neo_tree_source == v end,
+          pinned = false,
+        })
+      end
+      for _, pos in ipairs({ "top", "bottom", "left", "right" }) do
+        opts[pos] = opts[pos] or {}
+        ---@diagnostic disable-next-line: param-type-mismatch
+        table.insert(opts[pos], {
+          ft = "trouble",
+          filter = function(_buf, win)
+            return vim.w[win].trouble
+              and vim.w[win].trouble.position == pos
+              and vim.w[win].trouble.type == "split"
+              and vim.w[win].trouble.relative == "editor"
+              and not vim.w[win].trouble_preview
+          end,
+        })
+      end
+
+      return opts
+    end,
+  },
+  {
     "s1n7ax/nvim-window-picker",
     version = "2.*",
     keys = {
@@ -65,6 +199,7 @@ return {
   },
   {
     "mrjones2014/smart-splits.nvim",
+    enabled = true,
     keys = {
       {
         "<C-H>",

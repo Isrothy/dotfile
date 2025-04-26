@@ -9,7 +9,7 @@ return {
   },
   {
     "Isrothy/nordify.nvim",
-    lazy = true,
+    lazy = false,
     init = function()
       vim.g.nordify = {
         transparent = false,
@@ -35,61 +35,36 @@ return {
       }
     end,
     config = function()
+      -- vim.cmd.colorscheme("nordify-dark")
       local palette = require("nordify.palette")["dark"]
       ---@type table<string, vim.api.keyset.highlight>
       local highlights = {
         CursorLineNr = { bold = true },
+        DapStoppedLine = { bg = palette.polar_night.brightest },
+        DebugPC = { bg = palette.polar_night.brightest },
+        ErrorMsg = { link = "Normal" },
+        Folded = { fg = palette.frost.artic_water, bg = palette.polar_night.brighter },
+        LspCodeAction = { fg = palette.aurora.yellow },
+        LspInlayHint = { fg = palette.polar_night.light },
+        LspLens = { fg = palette.polar_night.light },
         MarkSignHL = { fg = palette.aurora.green },
         NeominimapMarkIcon = { fg = palette.aurora.green },
-        SatelliteMark = { fg = palette.aurora.green },
-        VertSplit = { fg = palette.polar_night.brighter },
-        WinSeparator = { fg = palette.polar_night.brighter },
-        LspCodeAction = { fg = palette.aurora.yellow },
-
-        SnacksStatusColumnMark = { fg = palette.aurora.green },
-
-        WinBar = { bg = palette.polar_night.brighter },
-        WinBarNC = { bg = palette.polar_night.brighter },
-
-        PmenuSel = { bg = palette.polar_night.brighter },
-
-        SnacksDashboardIcon = { fg = palette.frost.ice },
-        SnacksIndentScope = { fg = palette.frost.ice },
-
-        -- MatchParen = { bg = palette.polar_night.origin, reverse = true },
-
         NoiceLspProgressClient = { fg = palette.frost.ice, italic = true },
         NoiceLspProgressTitle = { fg = palette.snow_storm.origin },
         NoiceMini = { bg = palette.polar_night.bright },
-
-        ErrorMsg = { link = "Normal" },
-        WarningMsg = { link = "Normal" },
-
-        Folded = { fg = palette.frost.artic_water, bg = palette.polar_night.brighter },
-
-        TSDefinitionUsage = { bg = palette.polar_night.brightest },
-
-        LspLens = { fg = palette.polar_night.light },
-        LspInlayHint = { fg = palette.polar_night.light },
-
+        PmenuSel = { bg = palette.polar_night.brighter },
         QuickFixLine = { bg = "NONE" },
-
-        ["@error"] = {},
-
-        DapStoppedLine = { bg = palette.polar_night.brightest },
-        DebugPC = { bg = palette.polar_night.brightest },
-
+        SatelliteMark = { fg = palette.aurora.green },
+        SnacksDashboardIcon = { fg = palette.frost.ice },
+        SnacksIndentScope = { fg = palette.frost.ice },
+        SnacksStatusColumnMark = { fg = palette.aurora.green },
+        TSDefinitionUsage = { bg = palette.polar_night.brightest },
+        VertSplit = { fg = palette.polar_night.brighter },
         VirtColumn = { fg = palette.polar_night.brightest },
-
-        LualineNeoCodeiumEnabled = { fg = palette.aurora.green, bg = palette.polar_night.bright },
-        LualineNeoCodeiumDisabled = { fg = palette.aurora.red, bg = palette.polar_night.bright },
-        LualineNeoCodeiumBuffer = { fg = palette.aurora.red, bg = palette.polar_night.bright },
-        LualineNeoCodeiumFiletype = { fg = palette.aurora.red, bg = palette.polar_night.bright },
-        LualineNeoCodeiumEncoding = { fg = palette.aurora.red, bg = palette.polar_night.bright },
-
-        LualineNeoCodeiumConnected = { fg = palette.aurora.green, bg = palette.polar_night.bright },
-        LualineNeoCodeiumConnecting = { fg = palette.aurora.yellow, bg = palette.polar_night.bright },
-        LualineNeoCodeiumDisconnected = { fg = palette.aurora.red, bg = palette.polar_night.bright },
+        VisualNonText = { fg = palette.polar_night.light, bg = palette.polar_night.brighter },
+        WarningMsg = { link = "Normal" },
+        WinSeparator = { fg = palette.polar_night.brighter },
+        ["@error"] = {},
       }
       for k, v in pairs(highlights) do
         vim.api.nvim_set_hl(0, k, v)

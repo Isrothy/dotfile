@@ -10,7 +10,12 @@ return {
     },
     opts = {
       backend = "delta",
-      picker = "snacks",
+      picker = {
+        "snacks",
+        opts = {
+          layout = "vertical",
+        },
+      },
       backend_opts = {
         delta = {
           args = {

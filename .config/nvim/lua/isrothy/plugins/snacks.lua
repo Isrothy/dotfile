@@ -1,12 +1,23 @@
+-- local header = ""
+--   .. "██████   █████                   █████   █████  ███                  \n"
+--   .. "░░██████ ░░███                   ░░███   ░░███  ░░░                  \n"
+--   .. " ░███░███ ░███   ██████   ██████  ░███    ░███  ████  █████████████  \n"
+--   .. " ░███░░███░███  ███░░███ ███░░███ ░███    ░███ ░░███ ░░███░░███░░███ \n"
+--   .. " ░███ ░░██████ ░███████ ░███ ░███ ░░███   ███   ░███  ░███ ░███ ░███ \n"
+--   .. " ░███  ░░█████ ░███░░░  ░███ ░███  ░░░█████░    ░███  ░███ ░███ ░███ \n"
+--   .. " █████  ░░█████░░██████ ░░██████     ░░███      █████ █████░███ █████\n"
+--   .. "░░░░░    ░░░░░  ░░░░░░   ░░░░░░       ░░░      ░░░░░ ░░░░░ ░░░ ░░░░░ \n"
 local header = ""
-  .. "██████   █████                   █████   █████  ███                  \n"
-  .. "░░██████ ░░███                   ░░███   ░░███  ░░░                  \n"
-  .. " ░███░███ ░███   ██████   ██████  ░███    ░███  ████  █████████████  \n"
-  .. " ░███░░███░███  ███░░███ ███░░███ ░███    ░███ ░░███ ░░███░░███░░███ \n"
-  .. " ░███ ░░██████ ░███████ ░███ ░███ ░░███   ███   ░███  ░███ ░███ ░███ \n"
-  .. " ░███  ░░█████ ░███░░░  ░███ ░███  ░░░█████░    ░███  ░███ ░███ ░███ \n"
-  .. " █████  ░░█████░░██████ ░░██████     ░░███      █████ █████░███ █████\n"
-  .. "░░░░░    ░░░░░  ░░░░░░   ░░░░░░       ░░░      ░░░░░ ░░░░░ ░░░ ░░░░░ \n"
+  .. "                                                                     \n"
+  .. "                                                                   \n"
+  .. "      ████ ██████           █████      ██                    \n"
+  .. "     ███████████             █████                            \n"
+  .. "     █████████ ███████████████████ ███   ███████████  \n"
+  .. "    █████████  ███    █████████████ █████ ██████████████  \n"
+  .. "   █████████ ██████████ █████████ █████ █████ ████ █████  \n"
+  .. " ███████████ ███    ███ █████████ █████ █████ ████ █████ \n"
+  .. "██████  █████████████████████ ████ █████ █████ ████ ██████\n"
+  .. "                                                                     \n"
 
 return {
   "folke/snacks.nvim",
@@ -14,25 +25,16 @@ return {
   lazy = false,
   ---@type snacks.Config
   opts = {
-    image = {
-      enabled = false,
-      math = {
-        enabled = false,
-        latex = {
-          font_size = "large", -- see https://www.sascha-frank.com/latex-font-size.html
-        },
-      },
-    },
+    input = { enabled = false },
+    image = { enabled = false },
+    scroll = { enabled = false },
     picker = {
       prompt = " ",
       layout = {
         cycle = true,
-        --- Use the default layout or vertical if the window is too narrow
         preset = function() return vim.o.columns >= 120 and "default" or "vertical" end,
       },
     },
-    input = { enabled = true },
-    scroll = { enabled = false },
     statuscolumn = {
       enabled = true,
       left = { "mark", "sign" },
@@ -146,7 +148,6 @@ return {
       end,
     },
     dashboard = {
-      enabled = true,
       width = 70,
       autokeys = "1234567890abcdefhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
       sections = {
@@ -253,21 +254,15 @@ return {
     },
     dim = {
       enabled = true,
-      animate = {
-        enabled = false,
-      },
+      animate = { enabled = false },
     },
     notifier = {
       enabled = true,
-      timeout = 3000,
+      timeout = 5000,
     },
     quickfile = { enabled = true },
     words = { enabled = true },
-    profiler = {
-      pick = {
-        picker = "auto",
-      },
-    },
+    profiler = { pick = { picker = "auto" } },
     zen = {
       enabled = true,
       toggles = {
@@ -366,6 +361,9 @@ return {
     { "<LEADER>gl", function() Snacks.lazygit.log() end, desc = "Lazygit log (cwd)" },
 
     { "<LEADER>lN", function() Snacks.rename.rename_file() end, desc = "Rename file" },
+
+    { "<LEADER>nd", function() Snacks.notifier.hide() end, desc = "Dissmiss notifications" },
+    { "<LEADER>nh", function() Snacks.notifier.show_history() end, desc = "Notification history" },
 
     { "<LEADER>zz", function() Snacks.zen() end, desc = "Toggle zen mode" },
     { "<LEADER>zo", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },

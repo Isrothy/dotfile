@@ -64,6 +64,7 @@ return {
         { "<LEADER>g", group = "Git", mode = { "n", "x" } },
         { "<LEADER>G", group = "Github" },
         { "<LEADER>h", group = "Harpoon" },
+
         { "<LEADER>j", group = "Split/Join" },
 
         { "<LEADER>l", group = "LSP", mode = { "n", "x" } },
@@ -71,7 +72,8 @@ return {
         { "<LEADER>mr", group = "Refresh" },
         { "<LEADER>n", group = "Noice" },
         { "<LEADER>o", group = "Options" },
-        -- { "<LEADER>q", group = "Profiler" },
+
+        { "<LEADER>q", group = "Session" },
         { "<LEADER>r", group = "Refactors", mode = { "n", "x" } },
 
         { "<LEADER>t", group = "Test" },
@@ -84,10 +86,12 @@ return {
         },
         { "<LEADER>W", group = "Wrokspace" },
         { "<LEADER>x", group = "Diagnostics" },
-        { "<LEADER>y", group = "Zen mode" },
+
+        { "<LEADER>z", group = "Zen mode" },
 
         { "<LEADER>/", group = "Grep", mode = { "n", "x" } },
         { "<LEADER>!", group = "Tasks" },
+        { "<LEADER>$", group = "Terminal" },
 
         { "<LEADER><TAB>", group = "Tabpage" },
         { "<LEADER><SPACE>", group = "Whitespaces", mode = { "n", "x" } },

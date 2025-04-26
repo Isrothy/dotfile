@@ -11,7 +11,6 @@ return {
     -- { "<LEADER>xL", "<CMD>Trouble loclist toggle<CR>", desc = "Location list (Trouble)" },
     -- { "<LEADER>xQ", "<CMD>Trouble qflist toggle<CR>", desc = "Quickfix list (Trouble)" },
 
-    { "<LEADER>lS", "<CMD>Trouble symbols toggle<CR>", desc = "Symbols (Trouble)" },
     {
       "<LEADER>lx",
       "<CMD>Trouble lsp toggle<CR>",

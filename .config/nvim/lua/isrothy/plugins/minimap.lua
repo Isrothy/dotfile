@@ -156,7 +156,7 @@ return {
     vim.g.neominimap = {
       auto_enable = true,
       log_level = vim.log.levels.OFF,
-      notification_level = vim.log.levels.DEBUG,
+      notification_level = vim.log.levels.OFF,
 
       exclude_filetypes = {
         "qf",
@@ -168,19 +168,24 @@ return {
       x_multiplier = 4,
       sync_cursor = true,
       click = {
-        enabled = true,
+        enabled = false,
         auto_switch_focus = true,
+      },
+      buffer = {
+        persist = false,
       },
       layout = "split",
       split = {
         direction = "right",
         close_if_last_window = true,
-        fix_width = true,
+        fix_width = false,
         minimap_width = 20,
+        persist = false,
       },
       float = {
         minimap_width = 22,
         window_border = { "▏", "", "", "", "", "", "▏", "▏" },
+        persist = false,
       },
       diagnostic = {
         enabled = true,
@@ -207,7 +212,7 @@ return {
         wo.statuscolumn = "%s"
         wo.signcolumn = "yes:1"
       end,
-      -- buf_filter = function(bufnr) return vim.api.nvim_buf_line_count(bufnr) < 4096 end,
+      buf_filter = function(bufnr) return vim.api.nvim_buf_line_count(bufnr) < 4096 end,
       tab_filter = function(tab_id)
         local win_list = vim.api.nvim_tabpage_list_wins(tab_id)
         local exclude_ft = { "qf", "trouble", "neo-tree", "alpha", "neominimap", "snacks_dashboard" }

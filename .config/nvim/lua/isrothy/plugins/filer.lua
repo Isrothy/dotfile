@@ -253,10 +253,16 @@ return {
       return {
         close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
         popup_border_style = "rounded",
-        open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy", "neominimap" },
+        open_files_do_not_replace_types = {
+          "terminal",
+          "Trouble",
+          "qf",
+          "edgy",
+          "neominimap",
+        },
 
         source_selector = {
-          winbar = true, -- toggle to show selector on winbar
+          winbar = false, -- toggle to show selector on winbar
           statusline = true, -- toggle to show selector on statusline
           content_layout = "center", -- only with `tabs_layout` = "equal", "focus"
           separator = "", -- can be string or table, see below

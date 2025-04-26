@@ -258,15 +258,6 @@ return {
     },
   },
   {
-    "ejrichards/baredot.nvim",
-    enabled = true,
-    event = "VeryLazy",
-    opts = {
-      git_dir = "~/.cfg",
-    },
-  },
-
-  {
     "isakbm/gitgraph.nvim",
     opts = {
       symbols = {

@@ -1,15 +1,8 @@
 return {
   {
-    "Darazaki/indent-o-matic",
+    "nmac427/guess-indent.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      max_lines = -1,
-      filetype_bigfile = {
-        max_lines = 0,
-      },
-      standard_widths = { 2, 4, 8 },
-      skip_multiline = true,
-    },
+    opts = {},
   },
   {
     "tenxsoydev/tabs-vs-spaces.nvim",
@@ -131,10 +124,7 @@ return {
       },
     },
     opts = function()
-      -- local c = require("nord.colors").palette ---@type Nord.Palette
-      local c = require("nordify.palette")["dark"]
       return {
-        highlight = { fg = c.polar_night.light, bg = c.polar_night.brighter },
         space_char = "·",
         tab_char = "→",
         nl_char = "↲",

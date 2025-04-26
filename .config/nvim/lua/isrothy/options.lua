@@ -7,7 +7,7 @@ opt.backspace = { "indent", "eol", "start" }
 opt.belloff = "all"
 opt.cindent = true
 opt.cinoptions = "g0,(0,l1,n-2"
-opt.cmdheight = 0
+opt.cmdheight = 1
 opt.conceallevel = 0
 opt.confirm = true
 opt.cursorline = true
@@ -32,7 +32,6 @@ opt.foldtext = "v:lua.get_foldtext()"
 opt.gp = "rg"
 opt.hidden = true
 opt.history = 2000
-opt.hlsearch = true
 opt.ignorecase = true
 opt.incsearch = true
 opt.jumpoptions = "stack,view"
@@ -48,17 +47,17 @@ opt.scrolloff = 8
 opt.sessionoptions = {
   "buffers",
   "curdir",
-  "tabpages",
-  "winsize",
   "folds",
-  "help",
+  "folds",
   "globals",
+  "help",
+  "resize",
   "skiprtp",
-  "terminal",
-  "folds",
+  "tabpages",
+  "winpos",
 }
 opt.shiftwidth = 4
-opt.showcmd = true
+opt.showcmd = false
 opt.sidescrolloff = 16
 opt.signcolumn = "yes"
 opt.smartcase = true
