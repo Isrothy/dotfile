@@ -294,32 +294,12 @@ return {
             local path = node:get_id()
             vim.api.nvim_input(": " .. path .. "<Home>")
           end,
-          avante_add_files = function(state)
-            local node = state.tree:get_node()
-            local filepath = node:get_id()
-            local relative_path = require("avante.utils").relative_path(filepath)
-
-            local sidebar = require("avante").get()
-
-            local open = sidebar:is_open()
-            if not open then
-              require("avante.api").ask()
-              sidebar = require("avante").get()
-            end
-
-            sidebar.file_selector:add_selected_file(relative_path)
-
-            if not open then
-              sidebar.file_selector:remove_selected_file("neo-tree filesystem [1]")
-            end
-          end,
         },
 
         window = {
           width = 36,
           auto_expand_width = false,
           mappings = {
-            ["<LOCALLEADER>a"] = "avante_add_files",
             ["<LOCALLEADER>b"] = "rename_basename",
             ["<LOCALLEADER>c"] = {
               "copy",
@@ -572,7 +552,9 @@ return {
   },
   {
     "stevearc/oil.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
     cmd = { "Oil" },
     keys = {
       { "<F3>", "<CMD>Oil<CR>", desc = "Oil" },
@@ -580,6 +562,7 @@ return {
     opts = {
       win_options = {
         winbar = "%!v:lua.get_oil_winbar()",
+        signcolumn = "yes:1",
       },
       columns = {
         "icon",
@@ -628,12 +611,8 @@ return {
         ["<LOCALLEADER>f"] = {
           callback = function()
             local oil = require("oil")
-
-            -- get the current directory
             local prefills = { paths = oil.get_current_dir() }
-
             local grug_far = require("grug-far")
-            -- instance check
             if not grug_far.has_instance("explorer") then
               grug_far.open({
                 instanceName = "explorer",
@@ -641,9 +620,8 @@ return {
                 staticTitle = "Find and Replace from Explorer",
               })
             else
-              grug_far.open_instance("explorer")
-              -- Updating the prefills without clearing the search and other fields
-              grug_far.update_instance_prefills("explorer", prefills, false)
+              grug_far.get_instance("explorer"):open()
+              grug_far.get_instance("explorer"):update_input_values(prefills, false)
             end
           end,
           desc = "Oil: Search in directory",
@@ -656,6 +634,18 @@ return {
         ["<LOCALLEADER>u"] = "actions.parent",
         ["<LOCALLEADER>v"] = "actions.select_vsplit",
         ["<LOCALLEADER>x"] = "actions.open_external",
+        ["<LOCALLEADER>#"] = {
+          callback = function()
+            local oil = require("oil")
+            local filename = oil.get_cursor_entry().name
+            local dir = oil.get_current_dir()
+            oil.close()
+
+            local img_clip = require("img-clip")
+            img_clip.paste_image({}, dir .. filename)
+          end,
+          desc = "Oil: Paste image",
+        },
       },
       use_default_keymaps = false,
     },

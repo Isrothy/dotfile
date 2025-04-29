@@ -23,11 +23,6 @@ local diff_source = function()
   end
 end
 
-local macro_recorder = function()
-  local macro = vim.fn.reg_recording()
-  return macro ~= "" and "REC @" .. macro or ""
-end
-
 local function persisted_status()
   if vim.fn.exists("g:persisting") == 1 and vim.g.persisting then
     return "󰆓"
@@ -42,8 +37,6 @@ return {
   event = "VeryLazy",
   dependencies = {
     "Isrothy/lualine-diagnostic-message",
-    "Isrothy/nordify.nvim",
-    -- "folke/noice.nvim",
     "folke/trouble.nvim",
     "nvim-tree/nvim-web-devicons",
     "stevearc/aerial.nvim",
@@ -72,7 +65,7 @@ return {
             "alpha",
             "dap-repl",
             "dapui_breakpoints",
-            "dapui_colsoles",
+            "dapui_console",
             "dapui_scopes",
             "dapui_stacks",
             "dapui_watches",

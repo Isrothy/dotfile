@@ -7,6 +7,9 @@ return {
       vim.g.undotree_HelpLine = 0
     end,
     cmd = "UndotreeToggle",
+    keys = {
+      { "<leader>ut", "<cmd>UndotreeToggle<cr>", desc = "Undo Tree" },
+    },
   },
   {
     "tzachar/highlight-undo.nvim",

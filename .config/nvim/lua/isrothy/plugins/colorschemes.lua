@@ -5,7 +5,6 @@ return {
     priority = 1000,
     cmd = "ExColors",
     opts = {},
-    init = function() vim.cmd.colorscheme("ex-nordify-dark") end,
   },
   {
     "Isrothy/nordify.nvim",
@@ -33,53 +32,44 @@ return {
           all = true,
         },
       }
-    end,
-    config = function()
-      -- vim.cmd.colorscheme("nordify-dark")
-      local palette = require("nordify.palette")["dark"]
-      ---@type table<string, vim.api.keyset.highlight>
-      local highlights = {
-        CursorLineNr = { bold = true },
-        DapStoppedLine = { bg = palette.polar_night.brightest },
-        DebugPC = { bg = palette.polar_night.brightest },
-        ErrorMsg = { link = "Normal" },
-        Folded = { fg = palette.frost.artic_water, bg = palette.polar_night.brighter },
-        LspCodeAction = { fg = palette.aurora.yellow },
-        LspInlayHint = { fg = palette.polar_night.light },
-        LspLens = { fg = palette.polar_night.light },
-        MarkSignHL = { fg = palette.aurora.green },
-        NeominimapMarkIcon = { fg = palette.aurora.green },
-        NoiceLspProgressClient = { fg = palette.frost.ice, italic = true },
-        NoiceLspProgressTitle = { fg = palette.snow_storm.origin },
-        NoiceMini = { bg = palette.polar_night.bright },
-        PmenuSel = { bg = palette.polar_night.brighter },
-        QuickFixLine = { bg = "NONE" },
-        SatelliteMark = { fg = palette.aurora.green },
-        SnacksDashboardIcon = { fg = palette.frost.ice },
-        SnacksIndentScope = { fg = palette.frost.ice },
-        SnacksStatusColumnMark = { fg = palette.aurora.green },
-        TSDefinitionUsage = { bg = palette.polar_night.brightest },
-        VertSplit = { fg = palette.polar_night.brighter },
-        VirtColumn = { fg = palette.polar_night.brightest },
-        VisualNonText = { fg = palette.polar_night.light, bg = palette.polar_night.brighter },
-        WarningMsg = { link = "Normal" },
-        WinSeparator = { fg = palette.polar_night.brighter },
-        ["@error"] = {},
-      }
-      for k, v in pairs(highlights) do
-        vim.api.nvim_set_hl(0, k, v)
-      end
-    end,
-  },
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    enabled = false,
-    opts = {},
-    config = function(_, opts)
-      require("tokyonight").setup(opts)
-      vim.cmd([[colorscheme tokyonight]])
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        group = vim.api.nvim_create_augroup("nordify_color_scheme", { clear = true }),
+        pattern = "nordify*",
+        callback = function()
+          local palette = require("nordify.palette")["dark"]
+          local highlights = { ---@type table<string, vim.api.keyset.highlight>
+            CursorLineNr = { bold = true },
+            DapStoppedLine = { bg = palette.polar_night.brightest },
+            DebugPC = { bg = palette.polar_night.brightest },
+            ErrorMsg = { link = "Normal" },
+            Folded = { fg = palette.frost.artic_water, bg = palette.polar_night.brighter },
+            LspCodeAction = { fg = palette.aurora.yellow },
+            LspInlayHint = { fg = palette.polar_night.light },
+            LspLens = { fg = palette.polar_night.light },
+            MarkSignHL = { fg = palette.aurora.green },
+            NeominimapMarkIcon = { fg = palette.aurora.green },
+            NoiceLspProgressClient = { fg = palette.frost.ice, italic = true },
+            NoiceLspProgressTitle = { fg = palette.snow_storm.origin },
+            NoiceMini = { bg = palette.polar_night.bright },
+            PmenuSel = { bg = palette.polar_night.brighter },
+            QuickFixLine = { bg = "NONE" },
+            SatelliteMark = { fg = palette.aurora.green },
+            SnacksDashboardIcon = { fg = palette.frost.ice },
+            SnacksIndentScope = { fg = palette.frost.ice },
+            SnacksStatusColumnMark = { fg = palette.aurora.green },
+            TSDefinitionUsage = { bg = palette.polar_night.brightest },
+            VertSplit = { fg = palette.polar_night.brighter },
+            VirtColumn = { fg = palette.polar_night.brightest },
+            VisualNonText = { fg = palette.polar_night.light, bg = palette.polar_night.brighter },
+            WarningMsg = { link = "Normal" },
+            WinSeparator = { fg = palette.polar_night.brighter },
+            ["@error"] = {},
+          }
+          for k, v in pairs(highlights) do
+            vim.api.nvim_set_hl(0, k, v)
+          end
+        end,
+      })
     end,
   },
 }

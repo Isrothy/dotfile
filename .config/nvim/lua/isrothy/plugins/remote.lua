@@ -1,5 +1,12 @@
 return {
   {
+    "azratul/live-share.nvim",
+    cmd = { "LiveShareServer", "LiveShareJoin" },
+    dependencies = {
+      "jbyuki/instant.nvim",
+    },
+  },
+  {
     "jbyuki/instant.nvim",
     cmd = {
       "InstantStartServer",
@@ -16,8 +23,6 @@ return {
       "InstantStopServer",
       "InstantStopFollow",
     },
-    init = function()
-      vim.g.instant_username = "Isrothy"
-    end,
+    init = function() vim.g.instant_username = "Isrothy" end,
   },
 }

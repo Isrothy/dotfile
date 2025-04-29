@@ -99,6 +99,12 @@ return {
 
         { "[", group = "Prev" },
         { "]", group = "Next" },
+
+        {
+          "<LOCALLEADER>p",
+          group = "Python",
+          cond = function() return vim.bo.filetype == "python" end,
+        },
       },
     },
   },

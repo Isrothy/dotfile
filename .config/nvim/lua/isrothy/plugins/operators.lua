@@ -8,12 +8,14 @@ local yanky = {
   },
   opts = {
     highlight = { timer = 200 },
-    ring = { storage = jit.os:find("Windows") and "shada" or "sqlite" },
+    ring = {
+      storage = jit.os:find("Windows") and "shada" or "sqlite",
+    },
   },
   keys = {
     { "<LEADER>y", '"+<PLUG>(YankyYank)', mode = { "n", "x" }, desc = "Yank text to system clipboard" },
-    { "<LEADER>Y", '"+<PLUG>(YankyYank)', mode = { "x" }, desc = "Yank text to system clipboard" },
-    { "<LEADER>Y", '"+<PLUG>(YankyYank)$', mode = { "n" }, desc = "Yank text to system clipboard until end of line" },
+    { "<LEADER>Y", 'V"+<PLUG>(YankyYank)', mode = { "x" }, desc = "Yank selected lines to system clipboard" },
+    { "<LEADER>Y", '"+<PLUG>(YankyYank)$', mode = { "n" }, desc = "Yank EOL to system clipboard" },
     {
       "<LEADER>p",
       '"+<PLUG>(YankyPutAfter)',
@@ -27,6 +29,8 @@ local yanky = {
       desc = "Put text from system clipboard before cursor",
     },
     { "y", "<PLUG>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
+    { "Y", "<PLUG>(YankyYank)$", mode = { "n" }, desc = "Yank EOL" },
+    { "Y", "V<PLUG>(YankyYank)", mode = { "x" }, desc = "Yank selected lines" },
     { "p", "<PLUG>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after cursor" },
     { "P", "<PLUG>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before cursor" },
     {
@@ -67,19 +71,31 @@ local yanky = {
 local substitute = {
   "gbprod/substitute.nvim",
   keys = {
-    { "s", function() require("substitute").operator() end, desc = "Substitute" },
+    {
+      "s",
+      function() require("substitute").operator() end,
+      desc = "Substitute",
+    },
     {
       "<LEADER>s",
       function() require("substitute").operator({ register = "+" }) end,
       desc = "Substitute with system clipboard",
     },
-    { "ss", function() require("substitute").line() end, desc = "Substitute line" },
+    {
+      "ss",
+      function() require("substitute").line() end,
+      desc = "Substitute line",
+    },
     {
       "<LEADER>ss",
       function() require("substitute").line({ register = "+" }) end,
       desc = "Substitute line with system clipboard",
     },
-    { "S", function() require("substitute").eol() end, desc = "Substitute EOL" },
+    {
+      "S",
+      function() require("substitute").eol() end,
+      desc = "Substitute EOL",
+    },
     {
       "<LEADER>S",
       function() require("substitute").eol({ register = "+" }) end,
@@ -97,10 +113,37 @@ local substitute = {
       desc = "Substitute visual with system clipboard",
       mode = "x",
     },
+    {
+      "S",
+      function()
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("V", true, true, true), "n", false)
+        vim.schedule_wrap(require("substitute").visual)()
+      end,
+      desc = "Substitute selected lines",
+      mode = { "x" },
+    },
+    {
+      "<LEADER>S",
+      function()
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("V", true, true, true), "n", false)
+        vim.schedule_wrap(require("substitute").visual)({ register = "+" })
+      end,
+      desc = "Substitute selected lines with system clipboard",
+      mode = "x",
+    },
     { "x", function() require("substitute.exchange").operator() end, desc = "Exchange" },
     { "xx", function() require("substitute.exchange").line() end, desc = "Exchange line" },
-    { "X", function() require("substitute.exchange").eol() end, desc = "Exchange EOL" },
+    { "X", function() require("substitute.exchange").operator({ motion = "$" }) end, desc = "Exchange EOL" },
     { "x", function() require("substitute.exchange").visual() end, mode = "x", desc = "Exchange visual" },
+    {
+      "X",
+      function()
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("V", true, true, true), "n", false)
+        vim.schedule_wrap(require("substitute.exchange").visual)()
+      end,
+      mode = "x",
+      desc = "Exchange selected lines",
+    },
   },
   opts = {
     on_substitute = function() require("yanky.integration").substitute() end,
@@ -108,6 +151,7 @@ local substitute = {
       enabled = true,
       timer = 500,
     },
+    preserve_cursor_position = true,
     range = {
       prefix = "",
       prompt_current_text = false,
@@ -120,6 +164,7 @@ local substitute = {
     exchange = {
       motion = false,
       use_esc_to_cancel = true,
+      preserve_cursor_position = true,
     },
   },
 }

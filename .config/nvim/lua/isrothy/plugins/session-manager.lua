@@ -28,7 +28,9 @@ return {
         group = vim.api.nvim_create_augroup("delete buffer if it is snacks_dashboard", { clear = true }),
         callback = function()
           if vim.bo.filetype == "snacks_dashboard" then
-            Snacks.bufdelete()
+            vim.schedule(function()
+              Snacks.bufdelete()
+            end)
           end
         end,
       })

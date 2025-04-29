@@ -30,7 +30,6 @@ return {
     {
       "mfussenegger/nvim-dap-python",
       keys = {
-        { "<LOCALLEADER>p", "", desc = "+Python", ft = { "python" } },
         { "<LOCALLEADER>pd", "", desc = "+Debug", ft = { "python" } },
         { "<LOCALLEADER>pdt", function() require("dap-python").test_method() end, desc = "Method", ft = { "python" } },
         { "<LOCALLEADER>pdc", function() require("dap-python").test_class() end, desc = "Class", ft = { "python" } },

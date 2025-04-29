@@ -37,6 +37,7 @@ opt.incsearch = true
 opt.jumpoptions = "stack,view"
 opt.laststatus = 3
 opt.linebreak = true
+opt.list= false
 opt.mouse = ""
 opt.nrformats = { "alpha", "bin", "octal", "hex" }
 opt.number = true

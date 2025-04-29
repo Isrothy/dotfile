@@ -122,6 +122,7 @@ local wrap_filetypes = {
   "typst",
   "bigfile",
   "noice",
+  "snacks_notif_history",
 }
 vim.api.nvim_create_autocmd({ "FileType" }, {
   group = augroup("wrap"),
@@ -198,4 +199,3 @@ vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
     })
   end,
 })
-

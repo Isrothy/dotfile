@@ -23,6 +23,18 @@ return {
       "CodeCompanionChat",
       "CodeCompanionCmd",
     },
+    init = function()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "CodeCompanionRequestStarted",
+        group = vim.api.nvim_create_augroup("codecompanion_request_started", { clear = true }),
+        callback = function() vim.notify("Request sent", vim.log.levels.INFO, { title = "CodeCompanion" }) end,
+      })
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "CodeCompanionRequestFinished",
+        group = vim.api.nvim_create_augroup("codecompanion_request_finished", { clear = true }),
+        callback = function() vim.notify("Request finished", vim.log.levels.INFO, { title = "CodeCompanion" }) end,
+      })
+    end,
     opts = {
       strategies = {
         chat = {

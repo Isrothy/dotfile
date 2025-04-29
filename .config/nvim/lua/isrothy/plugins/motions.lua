@@ -1,19 +1,23 @@
 return {
   {
-    "tris203/precognition.nvim",
-    keys = {
-      { "~", function() require("precognition").peek() end, desc = "Precognition" },
+    "mawkler/demicolon.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
+    enabled = false,
+    opts = {
+      keymaps = {
+        horizontal_motions = true,
+        repeat_motions = "stateless",
+        disabled_keys = { "p", "I", "A", "f", "i" },
+      },
     },
   },
   {
-    "icholy/lsplinks.nvim",
-    event = "LspAttach",
+    "tris203/precognition.nvim",
     keys = {
-      { "<LEADER>lo", function() require("lsplinks").gx() end, mode = { "n" }, desc = "Open link" },
-    },
-    opts = {
-      highlight = true,
-      hl_group = "Underlined",
+      { "~", function() require("precognition").peek() end, desc = "Precognition" },
     },
   },
   {

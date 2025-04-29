@@ -115,6 +115,7 @@ return {
   },
   {
     "mcauley-penney/visual-whitespace.nvim",
+    enabled = true,
     event = "ModeChanged *:[vV\22]",
     keys = {
       {

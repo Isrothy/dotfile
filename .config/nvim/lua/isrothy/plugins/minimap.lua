@@ -10,26 +10,16 @@ local extmark_handler = {
     {
       event = { "TextChanged", "TextChangedI" },
       opts = {
-        callback = function(apply, args)
-          local bufnr = tonumber(args.buf) ---@cast bufnr integer
-          vim.schedule(function() apply(bufnr) end)
-        end,
+        get_buffers = function(args) return tonumber(args.buf) end,
       },
     },
     {
       event = "WinScrolled",
       opts = {
-        callback = function(apply)
+        get_buffers = function()
           local winid = vim.api.nvim_get_current_win()
-          if not winid or not vim.api.nvim_win_is_valid(winid) then
-            return
-          end
           local bufnr = vim.api.nvim_win_get_buf(winid)
-          vim.schedule(function()
-            if bufnr and vim.api.nvim_buf_is_valid(bufnr) then
-              apply(bufnr)
-            end
-          end)
+          return bufnr
         end,
       },
     },
@@ -78,12 +68,11 @@ return {
   "Isrothy/neominimap.nvim",
   version = "v3.x.x",
   lazy = false,
-  dependencies = { "folke/snacks.nvim" },
   keys = {
-    { "<LEADER>mrr", "<CMD>Neominimap refresh<CR>", desc = "Refresh global minimap" },
-    { "<LEADER>mrw", "<CMD>Neominimap winRefresh<CR>", desc = "Refresh minimap for current window" },
-    { "<LEADER>mrt", "<CMD>Neominimap tabRefresh<CR>", desc = "Refresh minimap for current tab" },
-    { "<LEADER>mrb", "<CMD>Neominimap bufRefresh<CR>", desc = "Refresh minimap for current buffer" },
+    { "<LEADER>mrr", "<CMD>Neominimap Refresh<CR>", desc = "Refresh global minimap" },
+    { "<LEADER>mrw", "<CMD>Neominimap WinRefresh<CR>", desc = "Refresh minimap for current window" },
+    { "<LEADER>mrt", "<CMD>Neominimap TabRefresh<CR>", desc = "Refresh minimap for current tab" },
+    { "<LEADER>mrb", "<CMD>Neominimap BufRefresh<CR>", desc = "Refresh minimap for current buffer" },
   },
 
   init = function()
@@ -96,45 +85,45 @@ return {
       callback = function()
         Snacks.toggle({
           name = "minimap",
-          get = function() return require("neominimap").enabled() end,
+          get = function() return require("neominimap.api").enabled() end,
           set = function(state)
             if state then
-              require("neominimap").on({}, {})
+              require("neominimap.api").enable()
             else
-              require("neominimap").off({}, {})
+              require("neominimap.api").disable()
             end
           end,
         }):map("<LEADER>mm")
         Snacks.toggle({
           name = "minimap for buffer",
-          get = function() return require("neominimap").bufEnabled() end,
+          get = function() return require("neominimap.api").buf.enabled() end,
           set = function(state)
             if state then
-              require("neominimap").bufOn({}, {})
+              require("neominimap.api").buf.enable()
             else
-              require("neominimap").bufOff({}, {})
+              require("neominimap.api").buf.disable()
             end
           end,
         }):map("<LEADER>mb")
         Snacks.toggle({
           name = "minimap for window",
-          get = function() return require("neominimap").winEnabled() end,
+          get = function() return require("neominimap.api").win.enabled() end,
           set = function(state)
             if state then
-              require("neominimap").winOn({}, {})
+              require("neominimap.api").win.enable()
             else
-              require("neominimap").winOff({}, {})
+              require("neominimap.api").win.disable()
             end
           end,
         }):map("<LEADER>mw")
         Snacks.toggle({
           name = "minimap for tabpage",
-          get = function() return require("neominimap").tabEnabled() end,
+          get = function() return require("neominimap.api").tab.enabled() end,
           set = function(state)
             if state then
-              require("neominimap").tabOn({}, {})
+              require("neominimap.api").tab.enable()
             else
-              require("neominimap").tabOff({}, {})
+              require("neominimap.api").tab.disable()
             end
           end,
         }):map("<LEADER>mt")
@@ -143,9 +132,9 @@ return {
           get = function() return vim.bo.ft == "neominimap" end,
           set = function(state)
             if state then
-              require("neominimap").focus({}, {})
+              require("neominimap.api").focus.enable()
             else
-              require("neominimap").unfocus({}, {})
+              require("neominimap.api").focus.disable()
             end
           end,
         }):map("<LEADER>mf")
@@ -189,7 +178,7 @@ return {
       },
       diagnostic = {
         enabled = true,
-        severity = vim.diagnostic.severity.HINT,
+        use_event_diagnostics = true,
         mode = "line",
       },
       git = {

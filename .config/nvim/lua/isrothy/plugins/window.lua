@@ -92,6 +92,14 @@ return {
             size = { width = 40 },
           },
           { ft = "dbui" },
+          {
+            title = "Luapad",
+            ft = "lua",
+            filter = function(buf) return vim.b[buf].is_luapad end,
+            size = {
+              width = 50,
+            },
+          },
         },
 
         right = {
