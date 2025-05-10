@@ -1,7 +1,7 @@
 return {
-  { "williamboman/mason-lspconfig.nvim" },
+  { "mason-org/mason-lspconfig.nvim" },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     cmd = "Mason",
     build = ":MasonUpdate",
     opts = {
@@ -20,9 +20,6 @@ return {
         "stylua",
         "typstyle",
         "yamlfmt",
-      },
-      ui = {
-        border = "rounded",
       },
     },
     config = function(_, opts)
@@ -58,14 +55,6 @@ return {
     "neovim/nvim-lspconfig",
     lazy = false,
     init = function()
-      local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-      ---@diagnostic disable-next-line: duplicate-set-field
-      function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-        opts = opts or {}
-        ---@diagnostic disable-next-line: inject-field
-        opts.border = opts.border or "rounded"
-        return orig_util_open_floating_preview(contents, syntax, opts, ...)
-      end
       vim.lsp.config("basedpyright", {
         filetypes = { "python" },
         single_file_support = true,

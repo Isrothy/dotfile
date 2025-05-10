@@ -51,7 +51,7 @@ return {
   {
     "topaxi/gh-actions.nvim",
     keys = {
-      { "<LEADER>ga", "<CMD>GhActions<CR>", desc = "Open Github actions" },
+      { "<LEADER>Ga", "<CMD>GhActions<CR>", desc = "Open Github actions" },
     },
     build = "make",
     opts = {},

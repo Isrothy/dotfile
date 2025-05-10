@@ -1,7 +1,7 @@
 return {
   {
-    cmd = "DB",
     "tpope/vim-dadbod",
+    cmd = "DB",
   },
   {
     "kristijanhusak/vim-dadbod-ui",
@@ -35,10 +35,6 @@ return {
 
       vim.g.db_ui_disable_mappings = 1
 
-      -- NOTE: The default behavior of auto-execution of queries on save is disabled
-      -- this is useful when you have a big query that you don't want to run every time
-      -- you save the file running those queries can crash neovim to run use the
-      -- default keymap: <LEADER>S
       vim.g.db_ui_execute_on_save = false
 
       vim.api.nvim_create_autocmd("FileType", {

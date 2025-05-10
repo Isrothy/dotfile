@@ -164,7 +164,7 @@ local substitute = {
     exchange = {
       motion = false,
       use_esc_to_cancel = true,
-      preserve_cursor_position = true,
+      preserve_cursor_position = false,
     },
   },
 }

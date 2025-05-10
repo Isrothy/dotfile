@@ -259,6 +259,7 @@ return {
           "qf",
           "edgy",
           "neominimap",
+          "codecompanion",
         },
 
         source_selector = {

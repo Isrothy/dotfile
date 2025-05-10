@@ -1,5 +1,8 @@
 local tab_size = function() return (vim.bo.expandtab and "␠" or "␉") .. vim.bo.tabstop end
 
+local bufnr = function() return vim.api.nvim_get_current_buf() end
+local winnr = function() return vim.api.nvim_get_current_win() end
+
 local trunc = function(trunc_width, trunc_len, hide_width, no_ellipsis)
   return function(str)
     local win_width = vim.fn.winwidth(0)
@@ -53,7 +56,7 @@ return {
           statusline = {
             "alpha",
             "dashboard",
-            "snacks_dashboard",
+            -- "snacks_dashboard",
           },
           winbar = {
             "",
@@ -173,7 +176,9 @@ return {
       },
       winbar = {
         lualine_a = {},
-        lualine_b = {},
+        lualine_b = {
+          winnr,
+        },
         lualine_c = {
           {
             "aerial",
@@ -200,18 +205,22 @@ return {
         lualine_y = {
           { "filetype", icon_only = true },
           { "filename", fmt = trunc(90, 30, 50), path = 1 },
+          bufnr,
         },
         lualine_z = {},
       },
 
       inactive_winbar = {
         lualine_a = {},
-        lualine_b = {},
+        lualine_b = {
+          winnr,
+        },
         lualine_c = {},
         lualine_x = {},
         lualine_y = {
           { "filetype", icon_only = true },
           { "filename", fmt = trunc(90, 30, 50), path = 1 },
+          bufnr,
         },
         lualine_z = {},
       },

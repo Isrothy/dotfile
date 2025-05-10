@@ -130,8 +130,10 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     local filetype = event.match
     if vim.tbl_contains(wrap_filetypes, filetype) then
       vim.wo.wrap = true
+      vim.wo.breakindent = true
     else
       vim.wo.wrap = false
+      vim.wo.breakindent = false
     end
   end,
 })
@@ -197,5 +199,72 @@ vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
         end)
       end,
     })
+  end,
+})
+
+local function set_diff_keymap()
+  local ok, which_key = pcall(require, "which-key")
+  if not ok then
+    return
+  end
+  which_key.add({
+    { "<LocalLeader>d", group = "Diff", mode = { "n", "x" } },
+    { "<LocalLeader>dg", "<cmd>diffget<CR>", desc = "Diff: Get from other", mode = { "n", "x" } },
+    { "<LocalLeader>dp", "<cmd>diffput<CR>", desc = "Diff: Put from other", mode = { "n", "x" } },
+
+    { "<LocalLeader>dl", "<cmd>diffget LO<cr>", desc = "Diff: Get from LOCAL", mode = { "n", "x" } },
+    { "<LocalLeader>db", "<cmd>diffget BA<cr>", desc = "Diff: Get from BASE", mode = { "n", "x" } },
+    { "<LocalLeader>dr", "<cmd>diffget RE<cr>", desc = "Diff: Get from REMOTE", mode = { "n", "x" } },
+  })
+end
+
+vim.api.nvim_create_autocmd("OptionSet", {
+  pattern = "diff",
+  group = augroup("diff"),
+  callback = function()
+    vim.notify("Diff mode enabled", vim.log.levels.ERROR, { title = "Diff" })
+    if not vim.wo.diff then
+      return
+    end
+    set_diff_keymap()
+  end,
+})
+
+local function is_standard_git_repo(dir)
+  local original_git_dir = vim.env.GIT_DIR
+  local original_work_tree = vim.env.GIT_WORK_TREE
+  vim.env.GIT_DIR = nil
+  vim.env.GIT_WORK_TREE = nil
+
+  local cmd = { "git", "-C", dir, "rev-parse", "--is-inside-work-tree" }
+  vim.fn.system(cmd)
+  local exit_code = vim.v.shell_error
+
+  vim.env.GIT_DIR = original_git_dir
+  vim.env.GIT_WORK_TREE = original_work_tree
+
+  return exit_code == 0
+end
+
+vim.api.nvim_create_autocmd({ "DirChanged", "VimEnter" }, {
+  pattern = "*",
+  group = augroup("git_dir"),
+  callback = function()
+    local home_dir = vim.fn.expand("~")
+    local bare_git_dir = home_dir .. "/.cfg"
+    local bare_work_tree = home_dir
+
+    local current_cwd = vim.fn.getcwd()
+    if not current_cwd or current_cwd == "" then
+      return
+    end
+
+    if (not is_standard_git_repo(current_cwd)) and current_cwd:find(home_dir, 1, true) then
+      vim.env.GIT_DIR = bare_git_dir
+      vim.env.GIT_WORK_TREE = bare_work_tree
+    else
+      vim.env.GIT_DIR = nil
+      vim.env.GIT_WORK_TREE = nil
+    end
   end,
 })

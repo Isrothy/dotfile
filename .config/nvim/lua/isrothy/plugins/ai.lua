@@ -38,7 +38,7 @@ return {
     opts = {
       strategies = {
         chat = {
-          adapter = "gemini-2.5-flash",
+          adapter = "gemini",
           keymaps = {
             send = {
               modes = { n = "<CR>" },
@@ -49,10 +49,10 @@ return {
           },
         },
         inline = {
-          adapter = "gemini-2.5-flash",
+          adapter = "gemini",
         },
         cmd = {
-          adapter = "gemini-2.5-flash",
+          adapter = "gemini",
         },
         display = {
           diff = {

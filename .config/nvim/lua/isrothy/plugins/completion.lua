@@ -23,13 +23,12 @@ return {
         ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
         ["<CR>"] = { "accept", "fallback" },
         ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<C-e>"] = { "cancel" },
-        ["<C-y>"] = { "select_and_accept" },
+        ["<C-x>"] = { "cancel" },
         ["<C-p>"] = { "select_prev", "fallback" },
         ["<C-n>"] = { "select_next", "fallback" },
 
-        ["<C-b>"] = { "scroll_documentation_up", "fallback" },
-        ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+        -- ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+        -- ["<C-f>"] = { "scroll_documentation_down", "fallback" },
       },
       enabled = function() return not vim.tbl_contains({ "bigfile" }, vim.bo.filetype) and vim.bo.buftype ~= "prompt" end,
       cmdline = {
@@ -64,6 +63,7 @@ return {
       },
       completion = {
         menu = {
+          border = "none",
           draw = {
             columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
           },
@@ -87,7 +87,6 @@ return {
           update_delay_ms = 50,
           treesitter_highlighting = true,
           window = {
-            border = "rounded",
             winblend = 0,
             scrollbar = true,
           },
@@ -97,7 +96,6 @@ return {
       signature = {
         enabled = true,
         window = {
-          border = "rounded",
           scrollbar = true, -- Note that the gutter will be disabled when border ~= 'none'
         },
       },
@@ -130,6 +128,16 @@ return {
           },
           mysql = {
             "snippets",
+            "ripgrep",
+            "dadbod",
+          },
+          javascript = {
+            "lsp",
+            "path",
+            "snippets",
+            "buffer",
+            "ripgrep",
+            "ecolog",
             "ripgrep",
             "dadbod",
           },

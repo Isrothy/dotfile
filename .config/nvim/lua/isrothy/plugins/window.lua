@@ -77,6 +77,9 @@ return {
             filter = function(buf) return vim.bo[buf].buftype == "help" end,
           },
           { title = "Neotest Output", ft = "neotest-output-panel", size = { height = 15 } },
+          {
+            ft = "dbout",
+          },
         },
         left = {
           { title = "Neotest Summary", ft = "neotest-summary" },

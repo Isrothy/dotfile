@@ -71,7 +71,6 @@ return {
         win_height = 12,
         win_vheight = 12,
         delay_syntax = 80,
-        border = "rounded",
         show_title = true,
         should_preview_cb = function(bufnr, _)
           local ret = true

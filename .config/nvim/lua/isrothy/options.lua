@@ -5,13 +5,14 @@ opt.autoindent = true
 opt.autoread = true
 opt.backspace = { "indent", "eol", "start" }
 opt.belloff = "all"
+opt.cdhome = true
 opt.cindent = true
 opt.cinoptions = "g0,(0,l1,n-2"
 opt.cmdheight = 1
 opt.conceallevel = 0
 opt.confirm = true
 opt.cursorline = true
-opt.cursorlineopt = "number,screenline"
+opt.cursorlineopt = "number,line"
 opt.expandtab = true
 opt.fillchars = {
   vert = "│",
@@ -37,7 +38,11 @@ opt.incsearch = true
 opt.jumpoptions = "stack,view"
 opt.laststatus = 3
 opt.linebreak = true
-opt.list= false
+opt.list = true
+opt.listchars = {
+  trail = "·",
+  tab = "→ ",
+}
 opt.mouse = ""
 opt.nrformats = { "alpha", "bin", "octal", "hex" }
 opt.number = true
@@ -52,7 +57,7 @@ opt.sessionoptions = {
   "folds",
   "globals",
   "help",
-  "resize",
+  "winsize",
   "skiprtp",
   "tabpages",
   "winpos",
@@ -77,27 +82,12 @@ opt.updatetime = 500
 opt.virtualedit = { "block", "onemore" }
 opt.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 opt.wildmenu = true
+opt.winborder = "rounded"
 opt.wrap = false
 
 g.html_indent_autotags = "html,head,body"
 g.markdown_recommended_style = 0
 
-vim.diagnostic.config({
-  virtual_text = false,
-  signs = {
-    text = { " ", " ", " ", " " },
-  },
-  underline = true,
-  update_in_insert = true,
-  severity_sort = true,
-  float = {
-    border = "rounded",
-    source = true,
-  },
-})
+g.mapleader = " "
+g.maplocalleader = "\\"
 
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end

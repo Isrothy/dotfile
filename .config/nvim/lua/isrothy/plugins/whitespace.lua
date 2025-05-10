@@ -5,117 +5,7 @@ return {
     opts = {},
   },
   {
-    "tenxsoydev/tabs-vs-spaces.nvim",
-    event = { "BufReadPost", "BufNewFile" },
-    cmd = {
-      "TabsVsSpacesToggle",
-      "TabsVsSpacesStandardize",
-      "TabsVsSpacesConvert",
-    },
-    keys = {
-      { "<LEADER><SPACE>o", ":TabsVsSpacesToggle<CR>", mode = "n", desc = "TabsVsSpaces: Toggle globally" },
-      { "<LEADER><SPACE>O", ":TabsVsSpacesToggle on<CR>", mode = "n", desc = "TabsVsSpaces: Turn on globally" },
-      { "<LEADER><SPACE><C-O>", ":TabsVsSpacesToggle off<CR>", mode = "n", desc = "TabsVsSpaces: Turn off globally" },
-      { "<LEADER><SPACE>bo", ":TabsVsSpacesToggle buf<CR>", mode = "n", desc = "TabsVsSpaces: Toggle current buffer" },
-      {
-        "<LEADER><SPACE>bO",
-        ":TabsVsSpacesToggle buf_on<CR>",
-        mode = "n",
-        desc = "TabsVsSpaces: Turn on for current buffer",
-      },
-      {
-        "<LEADER><SPACE>b<C-O>",
-        ":TabsVsSpacesToggle buff_off<CR>",
-        mode = "n",
-        desc = "TabsVsSpaces: Turn off for current buffer",
-      },
-
-      {
-        "<LEADER><SPACE>s",
-        ":TabsVsSpacesStandardize<CR>",
-        mode = "n",
-        desc = "TabsVsSpaces: Standardize current buffer",
-      },
-      {
-        "<LEADER><SPACE>s",
-        ":'<,'>TabsVsSpacesStandardize<CR>",
-        mode = "x",
-        desc = "TabsVsSpaces: Standardize selected range",
-      },
-
-      {
-        "<LEADER><SPACE>c",
-        ":TabsVsSpacesConvert spaces_to_tabs<CR>",
-        mode = "n",
-        desc = "TabsVsSpaces: Convert spaces to tabs",
-      },
-      {
-        "<LEADER><SPACE>c",
-        ":'<,'>TabsVsSpacesConvert spaces_to_tabs<CR>",
-        mode = "x",
-        desc = "TabsVsSpaces: Convert spaces to tabs",
-      },
-      {
-        "<LEADER><SPACE>C",
-        ":TabsVsSpacesConvert tabs_to_spaces<CR>",
-        mode = "n",
-        desc = "TabsVsSpaces: Convert tabs to spaces",
-      },
-      {
-        "<LEADER><SPACE>C",
-        ":'<,'>TabsVsSpacesConvert tabs_to_spaces<CR>",
-        mode = "x",
-        desc = "TabsVsSpaces: Convert tabs to spaces",
-      },
-    },
-    opts = {
-      highlight = "DiagnosticUnderlineHint",
-      ignore = {
-        filetypes = {},
-        buftypes = {
-          "acwrite",
-          "help",
-          "nofile",
-          "nowrite",
-          "quickfix",
-          "terminal",
-          "prompt",
-        },
-      },
-      standartize_on_save = false,
-      user_commands = true,
-    },
-  },
-  {
-    "echasnovski/mini.trailspace",
-    event = { "BufReadPost", "BufNewFile" },
-    keys = {
-      {
-        "<LEADER><SPACE>t",
-        function() require("mini.trailspace").trim() end,
-        desc = "MiniTrailspace: Trim trailing whitespace",
-      },
-      {
-        "<LEADER><SPACE>T",
-        function() require("mini.trailspace").trim_last_lines() end,
-        desc = "MiniTrailspace: Trim last lines",
-      },
-    },
-    init = function()
-      vim.api.nvim_create_user_command("TrimTrailingWhitespace", function() require("mini.trailspace").trim() end, {})
-      vim.api.nvim_create_user_command(
-        "TrimTrailingWhitespaceLastLines",
-        function() require("mini.trailspace").trim_last_lines() end,
-        {}
-      )
-    end,
-    opts = {
-      only_in_normal_buffers = true,
-    },
-  },
-  {
     "mcauley-penney/visual-whitespace.nvim",
-    enabled = true,
     event = "ModeChanged *:[vV\22]",
     keys = {
       {
@@ -124,8 +14,8 @@ return {
         desc = "Visual Whitespace: Toggle",
       },
     },
-    opts = function()
-      return {
+    init = function()
+      vim.g.visual_whitespace = {
         space_char = "·",
         tab_char = "→",
         nl_char = "↲",

@@ -48,6 +48,16 @@ return {
       },
       refresh = 50, -- refresh at most every 50ms
     },
+    styles = {
+      ---@diagnostic disable-next-line: missing-fields
+      notification_history = {
+        wo = {
+          winhighlight = "Normal:SnacksNotifierHistory",
+          wrap = true,
+          breakindent = true,
+        },
+      },
+    },
     scope = {
       enabled = true,
       cursor = false,
@@ -182,18 +192,18 @@ return {
           limit = 5,
           padding = 1,
         },
-        {
-          pane = 2,
-          icon = " ",
-          title = "Git Status",
-          section = "terminal",
-          enabled = function() return Snacks.git.get_root() ~= nil end,
-          cmd = "git status --short --branch --renames",
-          height = 5,
-          padding = 1,
-          ttl = 0,
-          indent = 3,
-        },
+        -- {
+        --   pane = 2,
+        --   icon = " ",
+        --   title = "Git Status",
+        --   section = "terminal",
+        --   enabled = function() return Snacks.git.get_root() ~= nil end,
+        --   cmd = "git status --short --branch --renames",
+        --   height = 5,
+        --   padding = 1,
+        --   ttl = 0,
+        --   indent = 3,
+        -- },
       },
 
       preset = {

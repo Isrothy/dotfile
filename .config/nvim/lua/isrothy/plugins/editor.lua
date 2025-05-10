@@ -34,10 +34,6 @@ return {
     end,
   },
   {
-    "RRethy/nvim-treesitter-endwise",
-    event = { "VeryLazy" },
-  },
-  {
     "windwp/nvim-ts-autotag",
     event = { "BufReadPost", "BufNewFile" },
     enabled = true,

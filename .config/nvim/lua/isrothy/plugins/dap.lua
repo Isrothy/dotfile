@@ -36,8 +36,7 @@ return {
       },
     },
     {
-      "williamboman/mason.nvim",
-      optional = true,
+      "mason-org/mason.nvim",
       opts = {
         ensure_installed = {
           "codelldb",

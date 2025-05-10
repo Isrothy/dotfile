@@ -57,8 +57,6 @@ return {
 
           highlights = { detail = "Comment" },
         },
-        memory_usage = { border = "rounded" },
-        symbol_info = { border = "rounded" },
       })
     end,
   },

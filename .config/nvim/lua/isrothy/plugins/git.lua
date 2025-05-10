@@ -2,7 +2,6 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = { "VeryLazy" },
-    enabled = true,
     opts = {
       current_line_blame = true,
       current_line_blame_opts = {
@@ -12,9 +11,6 @@ return {
         ignore_whitespace = false,
       },
       sign_priority = 7,
-      preview_config = {
-        border = "rounded",
-      },
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
 
@@ -55,188 +51,6 @@ return {
       end,
       trouble = true,
     },
-  },
-  {
-    "sindrets/diffview.nvim",
-    dependencies = "nvim-lua/plenary.nvim",
-    cmd = {
-      "DiffviewOpen",
-      "DiffviewClose",
-      "DiffviewToggleFiles",
-      "DiffviewFocusFiles",
-      "DiffviewRefresh",
-      "DiffviewFileHistory",
-    },
-    keys = {
-      { "<LEADER>gd", "", desc = "+Diff" },
-      { "<LEADER>gdd", "<CMD>DiffviewOpen<CR>", desc = "Open Diff View" },
-      { "<LEADER>gdc", "<CMD>DiffviewClose<CR>", desc = "Close Diff View" },
-      { "<LEADER>gdr", "<CMD>DiffviewRefresh<CR>", desc = "Refresh Diff View" },
-      { "<LEADER>gdf", "<CMD>DiffviewFileHistory<CR>", desc = "File History" },
-    },
-    init = function()
-      vim.api.nvim_create_autocmd("VimEnter", {
-        group = vim.api.nvim_create_augroup("setup_diffview", { clear = true }),
-        callback = function()
-          if vim.opt.diff:get() then
-            require("diffview").open({})
-          end
-        end,
-      })
-    end,
-    opts = function()
-      local actions = require("diffview.actions")
-      return {
-        view = {
-          enhanced_diff_hl = true,
-          merge_tool = {
-            layout = "diff3_mixed",
-          },
-        },
-        keymaps = {
-          disable_defaults = true,
-          view = {
-            ["<leader>e"] = false,
-            ["<leader>b"] = false,
-            { "n", "<LOCALLEADER>e", actions.focus_files, { desc = "Bring focus to the file panel" } },
-            { "n", "<LOCALLEADER>b", actions.toggle_files, { desc = "Toggle the file panel." } },
-
-            ["[x"] = false,
-            ["]x"] = false,
-            { "n", "[k", actions.prev_conflict, { desc = "In the merge-tool: jump to the previous conflict" } },
-            { "n", "]k", actions.next_conflict, { desc = "In the merge-tool: jump to the next conflict" } },
-
-            ["<leader>co"] = false,
-            ["<leader>ct"] = false,
-            ["<leader>cb"] = false,
-            ["<leader>ca"] = false,
-            ["<leader>dx"] = false,
-            ["<leader>cO"] = false,
-            ["<leader>cT"] = false,
-            ["<leader>cB"] = false,
-            ["<leader>cA"] = false,
-            ["<leader>dX"] = false,
-            {
-              "n",
-              "<LOCALLEADER>co",
-              actions.conflict_choose("ours"),
-              { desc = "Choose the OURS version of a conflict" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>ct",
-              actions.conflict_choose("theirs"),
-              { desc = "Choose the THEIRS version of a conflict" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>cb",
-              actions.conflict_choose("base"),
-              { desc = "Choose the BASE version of a conflict" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>ca",
-              actions.conflict_choose("all"),
-              { desc = "Choose all the versions of a conflict" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>cn",
-              actions.conflict_choose("none"),
-              { desc = "Delete the conflict region" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>cO",
-              actions.conflict_choose_all("ours"),
-              { desc = "Choose the OURS version of a conflict for the whole file" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>cT",
-              actions.conflict_choose_all("theirs"),
-              { desc = "Choose the THEIRS version of a conflict for the whole file" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>cB",
-              actions.conflict_choose_all("base"),
-              { desc = "Choose the BASE version of a conflict for the whole file" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>cA",
-              actions.conflict_choose_all("all"),
-              { desc = "Choose all the versions of a conflict for the whole file" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>cN",
-              actions.conflict_choose_all("none"),
-              { desc = "Delete the conflict region for the whole file" },
-            },
-          },
-
-          file_panel = {
-            ["<leader>e"] = false,
-            ["<leader>b"] = false,
-            { "n", "<LOCALLEADER>e", actions.focus_files, { desc = "Bring focus to the file panel" } },
-            { "n", "<LOCALLEADER>b", actions.toggle_files, { desc = "Toggle the file panel" } },
-            ["[x"] = false,
-            ["]x"] = false,
-            { "n", "[k", actions.prev_conflict, { desc = "Go to the previous conflict" } },
-            { "n", "]k", actions.next_conflict, { desc = "Go to the next conflict" } },
-            ["<leader>co"] = false,
-            ["<leader>ct"] = false,
-            ["<leader>cb"] = false,
-            ["<leader>ca"] = false,
-            ["<leader>dx"] = false,
-            ["<leader>cO"] = false,
-            ["<leader>cT"] = false,
-            ["<leader>cB"] = false,
-            ["<leader>cA"] = false,
-            ["<leader>dX"] = false,
-            {
-              "n",
-              "<LOCALLEADER>cO",
-              actions.conflict_choose_all("ours"),
-              { desc = "Choose the OURS version of a conflict for the whole file" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>cT",
-              actions.conflict_choose_all("theirs"),
-              { desc = "Choose the THEIRS version of a conflict for the whole file" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>cB",
-              actions.conflict_choose_all("base"),
-              { desc = "Choose the BASE version of a conflict for the whole file" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>cA",
-              actions.conflict_choose_all("all"),
-              { desc = "Choose all the versions of a conflict for the whole file" },
-            },
-            {
-              "n",
-              "<LOCALLEADER>cN",
-              actions.conflict_choose_all("none"),
-              { desc = "Delete the conflict region for the whole file" },
-            },
-          },
-          file_history_panel = {
-            ["<leader>e"] = false,
-            ["<leader>b"] = false,
-            { "n", "<LOCALLEADER>e", actions.focus_files, { desc = "Bring focus to the file panel" } },
-            { "n", "<LOCALLEADER>b", actions.toggle_files, { desc = "Toggle the file panel" } },
-          },
-        },
-      }
-    end,
   },
   {
     "moyiz/git-dev.nvim",
