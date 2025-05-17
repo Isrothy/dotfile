@@ -13,41 +13,49 @@ return {
       sign_priority = 7,
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
-
-        local function map(mode, l, r, desc)
-          vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, noremap = true })
-        end
-
         local wk = require("which-key")
-        wk.add({ { "<LEADER>gh", group = "GitSigns" } })
+        wk.add({
+          buffer = buffer,
+          {
+            "]h",
+            function()
+              if vim.wo.diff then
+                vim.cmd.normal({ "]c", bang = true })
+              else
+                gs.nav_hunk("next")
+              end
+            end,
+            desc = "Next Hunk",
+          },
+          {
+            "[h",
+            function()
+              if vim.wo.diff then
+                vim.cmd.normal({ "]c", bang = true })
+              else
+                gs.nav_hunk("next")
+              end
+            end,
+            desc = "Previous Hunk",
+          },
+          { "]H", function() gs.nav_hunk("last") end, desc = "Last hunk" },
+          { "[H", function() gs.nav_hunk("last") end, desc = "First hunk" },
+          {
+            mode = { "n", "x" },
+            { "<LEADER>hs", ":Gitsigns stage_hunk<CR>", desc = "Stage hunk" },
+            { "<LEADER>hr", ":Gitsigns reset_hunk<CR>", desc = "Reset hunk" },
+          },
 
-        map("n", "]h", function()
-          if vim.wo.diff then
-            vim.cmd.normal({ "]c", bang = true })
-          else
-            gs.nav_hunk("next")
-          end
-        end, "Next Hunk")
-        map("n", "[h", function()
-          if vim.wo.diff then
-            vim.cmd.normal({ "[c", bang = true })
-          else
-            gs.nav_hunk("prev")
-          end
-        end, "Prev Hunk")
-        map("n", "]H", function() gs.nav_hunk("last") end, "Last Hunk")
-        map("n", "[H", function() gs.nav_hunk("first") end, "First Hunk")
-        map({ "n", "x" }, "<LEADER>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-        map({ "n", "x" }, "<LEADER>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-        map("n", "<LEADER>ghS", gs.stage_buffer, "Stage Buffer")
-        map("n", "<LEADER>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
-        map("n", "<LEADER>ghR", gs.reset_buffer, "Reset Buffer")
-        map("n", "<LEADER>ghp", gs.preview_hunk_inline, "Preview Hunk Inline")
-        map("n", "<LEADER>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
-        map("n", "<LEADER>ghB", function() gs.blame() end, "Blame Buffer")
-        map("n", "<LEADER>ghd", gs.diffthis, "Diff This")
-        map("n", "<LEADER>ghD", function() gs.diffthis("~") end, "Diff This ~")
-        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+          { "<LEADER>hS", gs.stage_buffer, desc = "Stage Buffer" },
+          { "<LEADER>hu", gs.undo_stage_hunk, desc = "Undo Stage Hunk" },
+          { "<LEADER>hR", gs.reset_buffer, desc = "Reset Buffer" },
+          { "<LEADER>hp", gs.preview_hunk_inline, desc = "Preview Hunk Inline" },
+          { "<LEADER>hb", function() gs.blame_line({ full = true }) end, desc = "Blame Line" },
+          { "<LEADER>hB", function() gs.blame() end, desc = "Blame Buffer" },
+          { "<LEADER>hd", gs.diffthis, desc = "Diff This" },
+          { "<LEADER>hD", function() gs.diffthis("~") end, desc = "Diff This ~" },
+          { "ih", ":<C-U>Gitsigns select_hunk<CR>", desc = "GitSigns Select Hunk", mode = { "o", "x" } },
+        })
       end,
       trouble = true,
     },

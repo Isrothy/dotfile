@@ -6,7 +6,7 @@ return {
     keys = {
       { "<LEADER>#", "<CMD>PasteImage<CR>", desc = "Paste image" },
       {
-        "<LEADER>f#",
+        "<LEADER>#/",
         function()
           Snacks.picker.files({
             ft = { "jpg", "jpeg", "png", "webp" },

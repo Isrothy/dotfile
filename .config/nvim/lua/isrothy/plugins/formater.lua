@@ -2,9 +2,9 @@ return {
   "stevearc/conform.nvim",
   cmd = "ConformInfo",
   keys = {
-    { "<LEADER>lf", function() require("conform").format({ async = true }) end, desc = "Code format" },
+    { "<LEADER>cf", function() require("conform").format({ async = true }) end, desc = "Code format" },
     {
-      "<LEADER>lf",
+      "<LEADER>cf",
       function()
         local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
         local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))
@@ -20,12 +20,12 @@ return {
       mode = { "x" },
     },
     {
-      "<LEADER>lF",
+      "<LEADER>cF",
       function() require("conform").format({ formatters = { "injected" }, async = true }) end,
       desc = "Format injected langs",
     },
     {
-      "<LEADER>lF",
+      "<LEADER>cF",
       function()
         local start_row, _ = unpack(vim.api.nvim_buf_get_mark(0, "<"))
         local end_row, _ = unpack(vim.api.nvim_buf_get_mark(0, ">"))

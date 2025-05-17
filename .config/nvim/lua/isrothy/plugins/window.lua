@@ -67,7 +67,7 @@ return {
           {
             ft = "toggleterm",
             size = { height = 0.3 },
-            filter = function(buf, win) return vim.api.nvim_win_get_config(win).relative == "" end,
+            filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == "" end,
           },
           "Trouble",
           { ft = "qf", title = "QuickFix" },
@@ -131,7 +131,7 @@ return {
         ---@diagnostic disable-next-line: param-type-mismatch
         table.insert(opts[pos], {
           ft = "trouble",
-          filter = function(_buf, win)
+          filter = function(_, win)
             return vim.w[win].trouble
               and vim.w[win].trouble.position == pos
               and vim.w[win].trouble.type == "split"
@@ -179,7 +179,7 @@ return {
       -- hint = "floating-big-letter",
       filter_rules = {
         autoselect_one = false,
-        include_current_win = false,
+        include_current_win = true,
         bo = {
           filetype = {
             "neo-tree",

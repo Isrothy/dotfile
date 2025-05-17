@@ -285,98 +285,74 @@ return {
     },
   },
   keys = {
-    { "<LEADER>fa", function() Snacks.picker.autocmds() end, desc = "Autocommands" },
-    { "<LEADER>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
     { "<LEADER>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Config file" },
-    { "<LEADER>fC", function() Snacks.picker.commands() end, desc = "Commands" },
     { "<LEADER>ff", function() Snacks.picker.files() end, desc = "Files" },
-    { "<LEADER>fg", function() Snacks.picker.git_files() end, desc = "Find git files" },
-    { "<LEADER>fh", function() Snacks.picker.highlights() end, desc = "Highlights" },
-    { "<LEADER>fi", function() Snacks.picker.icons() end, desc = "Icons" },
-    { "<LEADER>fj", function() Snacks.picker.jumps() end, desc = "Jumps" },
-    { "<LEADER>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
-    { "<LEADER>fl", function() Snacks.picker.loclist() end, desc = "Location list" },
-    { "<LEADER>fm", function() Snacks.picker.man() end, desc = "Man pages" },
-    { "<LEADER>fn", function() Snacks.picker.notifications() end, desc = "Notifications" },
-    { "<LEADER>fp", function() Snacks.picker.projects() end, desc = "Projects" },
-    { "<LEADER>fq", function() Snacks.picker.qflist() end, desc = "Quickfix list" },
     { "<LEADER>fr", function() Snacks.picker.recent() end, desc = "Recent" },
-    { "<LEADER>fs", function() Snacks.picker.smart() end, desc = "Smart" },
-    { "<LEADER>ft", function() Snacks.picker.treesitter() end, desc = "Treesitter" },
-    { "<LEADER>fu", function() Snacks.picker.undo() end, desc = "Undo" },
-    { "<LEADER>fx", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
-    { "<LEADER>fX", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer diagnostics" },
-    { "<LEADER>fy", function() Snacks.picker.cliphist() end, desc = "Clip history" },
+    { "<LEADER>fs", function() Snacks.picker.smart() end, desc = "Smart search" },
     { "<LEADER>fz", function() Snacks.picker.zoxide() end, desc = "Zoxide" },
-    { '<LEADER>f"', function() Snacks.picker.registers() end, desc = "Registers" },
-    { "<LEADER>f:", function() Snacks.picker.command_history() end, desc = "Command history" },
-    { "<LEADER>f'", function() Snacks.picker.marks() end, desc = "Marks" },
-    { "<LEADER>f.", function() Snacks.picker.resume() end, desc = "Resume" },
-    { "<LEADER>f/", function() Snacks.picker.search_history() end, desc = "Search" },
-    { "<LEADER>f<F1>", function() Snacks.picker.help() end, desc = "Help pages" },
+    { "<LEADER>fp", function() Snacks.picker.projects() end, desc = "Projects" },
+
+    { "<LEADER>ia", function() Snacks.picker.autocmds() end, desc = "Autocommands" },
+    { "<LEADER>ic", function() Snacks.picker.commands() end, desc = "Commands" },
+    { "<LEADER>ih", function() Snacks.picker.highlights() end, desc = "Highlights" },
+    { "<LEADER>ii", function() Snacks.picker.icons() end, desc = "Icons" },
+    { "<LEADER>ij", function() Snacks.picker.jumps() end, desc = "Jumps" },
+    { "<LEADER>ik", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+    { "<LEADER>il", function() Snacks.picker.loclist() end, desc = "Location list" },
+    { "<LEADER>iq", function() Snacks.picker.qflist() end, desc = "Quickfix list" },
+    { "<LEADER>i'", function() Snacks.picker.marks() end, desc = "Marks" },
+    { "<LEADER>i/", function() Snacks.picker.search_history() end, desc = "Search history" },
+    { "<LEADER>i:", function() Snacks.picker.command_history() end, desc = "Command history" },
+    { '<LEADER>i"', function() Snacks.picker.registers() end, desc = "Registers" },
+    { "<LEADER>i<F1>", function() Snacks.picker.help() end, desc = "Help pages" },
+
+    { "<LEADER>cN", function() Snacks.rename.rename_file() end, desc = "Rename file" },
+    { "<LEADER>jd", function() Snacks.picker.lsp_definitions({ auto_confirm = false }) end, desc = "Definition" },
+    { "<LEADER>jD", function() Snacks.picker.lsp_declarations({ auto_confirm = false }) end, desc = "Declaration" },
+    {
+      "<LEADER>ji",
+      function() Snacks.picker.lsp_implementations({ auto_confirm = false }) end,
+      desc = "Implementation",
+    },
+    { "<LEADER>jr", function() Snacks.picker.lsp_references({ auto_confirm = false }) end, desc = "References" },
+    { "<LEADER>js", function() Snacks.picker.lsp_symbols() end, desc = "Symbols" },
+    {
+      "<LEADER>jt",
+      function() Snacks.picker.lsp_type_definitions({ auto_confirm = false }) end,
+      desc = "Type definition",
+    },
+    { "<LEADER>jw", function() Snacks.picker.lsp_workspace_symbols() end, desc = "Workspace symbols" },
+
+    { "<LEADER>bd", function() Snacks.bufdelete() end, desc = "Delete current buffer" },
+    { "<LEADER>b/", function() Snacks.picker.buffers() end, desc = "Picker" },
+
+    { "<LEADER>gc", function() Snacks.picker.git_log() end, desc = "Git log" },
+    { "<LEADER>gs", function() Snacks.picker.git_status() end, desc = "Git status" },
+    { "<LEADER>gf", function() Snacks.picker.git_files() end, desc = "Search git files" },
+    { "<LEADER>gb", function() Snacks.git.blame_line() end, desc = "Git blame line" },
+    { "<LEADER>gB", function() Snacks.gitbrowse() end, desc = "Git browse" },
+
+    { "<LEADER>nd", function() Snacks.notifier.hide() end, desc = "Dissmiss" },
+    { "<LEADER>nh", function() Snacks.notifier.show_history() end, desc = "History" },
+    { "<LEADER>n/", function() Snacks.picker.notifications() end, desc = "Search" },
+
+    { "<LEADER>u/", function() Snacks.picker.undo() end, desc = "Search" },
+
+    { "<LEADER>x/", function() Snacks.picker.diagnostics() end, desc = "Picker" },
+    { "<LEADER>x?", function() Snacks.picker.diagnostics_buffer() end, desc = "Search buffer picker" },
+
+    { "<LEADER>zz", function() Snacks.zen() end, desc = "Toggle zen mode" },
+    { "<LEADER>zo", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
 
     { "<LEADER>//", function() Snacks.picker.grep() end, desc = "Grep" },
     { "<LEADER>/l", function() Snacks.picker.lines() end, desc = "Buffer lines" },
     { "<LEADER>/b", function() Snacks.picker.grep_buffers() end, desc = "Grep open buffers" },
     { "<LEADER>/w", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
 
-    {
-      "<LEADER>ld",
-      function() Snacks.picker.lsp_definitions({ auto_confirm = false }) end,
-      desc = "Definition",
-    },
-    {
-      "<LEADER>lD",
-      function() Snacks.picker.lsp_declarations({ auto_confirm = false }) end,
-      desc = "Declaration",
-    },
-    {
-      "<LEADER>lt",
-      function() Snacks.picker.lsp_type_definitions({ auto_confirm = false }) end,
-      desc = "Type definition",
-    },
-    {
-      "<LEADER>li",
-      function() Snacks.picker.lsp_implementations({ auto_confirm = false }) end,
-      desc = "Implementation",
-    },
-    {
-      "<LEADER>lr",
-      function() Snacks.picker.lsp_references({ auto_confirm = false }) end,
-      desc = "References",
-    },
-    {
-      "<LEADER>ls",
-      function() Snacks.picker.lsp_symbols() end,
-      desc = "Symbols",
-    },
-    {
-      "<LEADER>lw",
-      function() Snacks.picker.lsp_workspace_symbols() end,
-      desc = "Workspace symbols",
-    },
-
-    -- { "<LEADER>qs", function() Snacks.profiler.scratch() end, desc = "Profiler scratch bufer" },
     { "<LEADER>..", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
     { "<LEADER>.s", function() Snacks.scratch.select() end, desc = "Select scratch buffer" },
 
-    { "<LEADER>bd", function() Snacks.bufdelete() end, desc = "Delete current buffer" },
-
-    { "<LEADER>gc", function() Snacks.picker.git_log() end, desc = "Git log" },
-    { "<LEADER>gs", function() Snacks.picker.git_status() end, desc = "Git status" },
-    { "<LEADER>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
-    { "<LEADER>gb", function() Snacks.git.blame_line() end, desc = "Git blame line" },
-    { "<LEADER>gB", function() Snacks.gitbrowse() end, desc = "Git browse" },
-    { "<LEADER>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit current file history" },
-    { "<LEADER>gl", function() Snacks.lazygit.log() end, desc = "Lazygit log (cwd)" },
-
-    { "<LEADER>lN", function() Snacks.rename.rename_file() end, desc = "Rename file" },
-
-    { "<LEADER>nd", function() Snacks.notifier.hide() end, desc = "Dissmiss notifications" },
-    { "<LEADER>nh", function() Snacks.notifier.show_history() end, desc = "Notification history" },
-
-    { "<LEADER>zz", function() Snacks.zen() end, desc = "Toggle zen mode" },
-    { "<LEADER>zo", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
+    { "<LEADER>;", function() Snacks.picker.resume() end, desc = "Resume" },
 
     { "]]", function() Snacks.words.jump(vim.v.count1, true) end, desc = "Next reference", mode = { "n", "t" } },
     { "[[", function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Prev reference", mode = { "n", "t" } },
@@ -402,26 +378,10 @@ return {
         Snacks.toggle
           .option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "tabline" })
           :map("<LEADER>ot")
-        Snacks.toggle.treesitter({ name = "treesitter" }):map("<LEADER>T")
-        Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<LEADER>lI")
+        Snacks.toggle.treesitter({ name = "treesitter" }):map("<LEADER>oT")
+        Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<LEADER>li")
         Snacks.toggle.indent():map("<LEADER><SPACE>i")
         Snacks.toggle.dim():map("<LEADER>zd")
-
-        Snacks.toggle({
-          name = "Language server",
-          get = function()
-            local buf = vim.api.nvim_get_current_buf()
-            local clients = vim.lsp.get_clients({ bufnr = buf })
-            return not vim.tbl_isempty(clients)
-          end,
-          set = function(state)
-            if state then
-              vim.cmd("LspStart")
-            else
-              vim.cmd("LspStop")
-            end
-          end,
-        }):map("<LEADER>l;")
       end,
     })
   end,

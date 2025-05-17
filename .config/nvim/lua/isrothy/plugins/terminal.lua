@@ -32,7 +32,7 @@ return {
         desc = "Send current line to terminal",
       },
       {
-        [[<LEADER>f$]],
+        [[<LEADER>$/]],
         "<CMD>TermSelect<CR>",
         desc = "Select terminal",
       },

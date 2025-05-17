@@ -66,27 +66,27 @@ return {
           expand = function() return require("which-key.extras").expand.buf() end,
         },
         { "<LEADER>bx", group = "Exchange" },
-        { "<LEADER>c", group = "Colorize" },
-        { "<LEADER>d", group = "Dap", mode = { "n", "x" } },
-        { "<LEADER>e", group = "Explore" },
-        { "<LEADER>f", group = "Find" },
+        { "<LEADER>c", group = "Code", mode = { "n", "x" } },
+        { "<LEADER>C", group = "Colorize" },
+        { "<LEADER>d", group = "Debug", mode = { "n", "x" } },
+        { "<LEADER>e", group = "Environment" },
+        { "<LEADER>f", group = "File" },
         { "<LEADER>g", group = "Git", mode = { "n", "x" } },
         { "<LEADER>G", group = "Github" },
-        { "<LEADER>h", group = "Harpoon" },
-
-        { "<LEADER>j", group = "Split/Join" },
-
-        { "<LEADER>l", group = "LSP", mode = { "n", "x" } },
+        { "<LEADER>h", group = "Hunk", mode = { "n", "x" } },
+        { "<LEADER>i", group = "Info" },
+        { "<LEADER>j", group = "Jump", mode = { "n", "x" } },
+        { "<LEADER>k", group = "Rename case", mode = { "n", "x" } },
+        { "<LEADER>l", group = "Lint", mode = { "n", "x" } },
         { "<LEADER>m", group = "Minimap" },
         { "<LEADER>mr", group = "Refresh" },
-        { "<LEADER>n", group = "Noice" },
+        { "<LEADER>n", group = "Notification" },
         { "<LEADER>o", group = "Options" },
-
         { "<LEADER>q", group = "Session" },
         { "<LEADER>r", group = "Refactors", mode = { "n", "x" } },
-
         { "<LEADER>t", group = "Test" },
-
+        { "<LEADER>T", group = "Todo" },
+        { "<LEADER>u", group = "Undo" },
         {
           "<LEADER>w",
           proxy = "<C-W>",
@@ -95,13 +95,11 @@ return {
         },
         { "<LEADER>W", group = "Wrokspace" },
         { "<LEADER>x", group = "Diagnostics" },
-
         { "<LEADER>z", group = "Zen mode" },
 
         { "<LEADER>/", group = "Grep", mode = { "n", "x" } },
         { "<LEADER>!", group = "Tasks" },
         { "<LEADER>$", group = "Terminal" },
-
         { "<LEADER><TAB>", group = "Tabpage" },
         { "<LEADER><SPACE>", group = "Whitespaces", mode = { "n", "x" } },
         { "<LEADER><SPACE>b", group = "Buffer" },
@@ -131,6 +129,9 @@ return {
           { "j", "v:count == 0 ? 'gj' : 'j'", desc = "Down" },
         },
 
+        -- Delete file
+        { "<LEADER>fd", "<cmd>DeleteFile<cr>", desc = "Delete file" },
+
         -- Add undo breakpoints
         {
           mode = { "i" },
@@ -157,7 +158,11 @@ return {
           expr = true,
         },
 
-        { "<LEADER>ba", "<c-^>", desc = "alternate buffer" },
+        { "U", "<cmd>@:", desc = "Repeat last command" },
+
+        --- Alternate
+        { "<LEADER>ba", "<c-^>", desc = "Alternate buffer" },
+        { "Z", "<c-^>", desc = "Alternate buffer" },
 
         { "<LEADER>wd", "<C-W>c", desc = "Close current window" },
 
@@ -195,14 +200,18 @@ return {
         { "]u", "g+", desc = "Next undo" },
         { "[u", "g-", desc = "Previous undo" },
 
+        { "]j", "<c-i>", desc = "Next jump" },
+        { "[j", "<c-o>", desc = "Previous jump" },
+        { "<s-tab>", "<c-o>", desc = "Previous jump" },
+
         { "]<tab>", "<CMD>tabnext<CR>", desc = "Next tab" },
         { "[<tab>", "<CMD>tabprevious<CR>", desc = "Previous tab" },
 
         { "K", vim.lsp.buf.hover, desc = "Hover" },
         { "<LEADER>lh", vim.lsp.buf.hover, desc = "Hover" },
-        { "<LEADER>ln", vim.lsp.buf.rename, desc = "Rename symbol" },
-        { "<LEADER>ll", vim.lsp.codelens.run, desc = "Code lens" },
-        { "<LEADER>la", vim.lsp.buf.code_action, desc = "Code action" },
+        { "<LEADER>cn", vim.lsp.buf.rename, desc = "Rename symbol" },
+        { "<LEADER>cl", vim.lsp.codelens.run, desc = "Code lens" },
+        { "<LEADER>ca", vim.lsp.buf.code_action, desc = "Code action" },
 
         { "<leader>Wa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace" },
         { "<leader>Wr", vim.lsp.buf.remove_workspace_folder, desc = "Remove workspace" },

@@ -1,6 +1,14 @@
 return {
   "Wansmer/symbol-usage.nvim",
   event = "LspAttach",
+  keys = {
+    { "<leader>ls", function() require("symbol-usage").toggle() end, desc = "Toggle symbpol usage hint" },
+    {
+      "<leader>lS",
+      function() require("symbol-usage").toggle_globally() end,
+      desc = "Toggle symbpol usage hint globally",
+    },
+  },
   opts = {
     vt_position = "end_of_line",
     text_format = function(symbol)

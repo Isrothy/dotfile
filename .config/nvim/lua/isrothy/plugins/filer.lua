@@ -227,25 +227,25 @@ return {
     },
     keys = {
       {
-        "<LEADER>ee",
+        "<LEADER>fe",
         function() require("neo-tree.command").execute({ toggle = true }) end,
-        desc = "Filesystem",
+        desc = "Filesystem explorer",
       },
       {
-        "<LEADER>be",
+        "<LEADER>fb",
         function() require("neo-tree.command").execute({ source = "buffers", toggle = true }) end,
-        desc = "Explore buffers",
+        desc = "Filesystem explorer (buffer view)",
       },
       {
-        "<LEADER>ge",
+        "<LEADER>fg",
         function() require("neo-tree.command").execute({ source = "git_status", toggle = true }) end,
-        desc = "Explore git status",
+        desc = "Filesystem explorer (git view)",
       },
-      { "<LEADER>er", "<CMD>Neotree reveal<CR>", desc = "Reveal in Neo-tree" },
+      { "<LEADER>fR", "<CMD>Neotree reveal<CR>", desc = "Reveal in filesystem explorer" },
       {
-        "<leader>eE",
+        "<leader>fE",
         function() require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() }) end,
-        desc = "Explorer current directory",
+        desc = "Filesystem explorer (cwd)",
       },
     },
     opts = function()

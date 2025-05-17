@@ -26,12 +26,6 @@ return {
         highlight_grey = "Comment",
       },
     },
-    config = function(_, opts)
-      require("nvim-autopairs").setup(opts)
-      -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-      -- local cmp = require("cmp")
-      -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-    end,
   },
   {
     "windwp/nvim-ts-autotag",
@@ -52,21 +46,6 @@ return {
       lang = {
         cuda = "// %s",
       },
-    },
-  },
-  {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    enabled = false,
-    init = function()
-      local get_option = vim.filetype.get_option
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.filetype.get_option = function(filetype, option)
-        return option == "commentstring" and require("ts_context_commentstring.internal").calculate_commentstring()
-          or get_option(filetype, option)
-      end
-    end,
-    opts = {
-      enable_autocmd = false,
     },
   },
 }

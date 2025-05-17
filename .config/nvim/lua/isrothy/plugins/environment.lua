@@ -1,10 +1,10 @@
 return {
   "philosofonusus/ecolog.nvim",
   keys = {
-    { "<leader>Eg", "<CMD>EcologGoto<CR>", desc = "Go to env file" },
-    { "<leader>Ep", "<CMD>EcologPeek<CR>", desc = "Ecolog peek variable" },
-    { "<leader>Eh", "<Cmd>EcologShellToggle<cr>", desc = "Toggle shell variables" },
-    { "<leader>Es", "<CMD>EcologSelect<CR>", desc = "Switch env file" },
+    { "<leader>eg", "<CMD>EcologGoto<CR>", desc = "Go to env file" },
+    { "<leader>ep", "<CMD>EcologPeek<CR>", desc = "Ecolog peek variable" },
+    { "<leader>eh", "<Cmd>EcologShellToggle<cr>", desc = "Toggle shell variables" },
+    { "<leader>es", "<CMD>EcologSelect<CR>", desc = "Switch env file" },
   },
   cmd = {
     "EcologPeek",

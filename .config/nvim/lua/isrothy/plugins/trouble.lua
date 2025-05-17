@@ -8,14 +8,6 @@ return {
       "<CMD>Trouble diagnostics toggle filter.buf=0<CR>",
       desc = "Buffer diagnostics (Trouble)",
     },
-    -- { "<LEADER>xL", "<CMD>Trouble loclist toggle<CR>", desc = "Location list (Trouble)" },
-    -- { "<LEADER>xQ", "<CMD>Trouble qflist toggle<CR>", desc = "Quickfix list (Trouble)" },
-
-    {
-      "<LEADER>lx",
-      "<CMD>Trouble lsp toggle<CR>",
-      desc = "LSP references/definitions/... (Trouble)",
-    },
 
     {
       "[q",

@@ -3,14 +3,14 @@ return {
   event = { "BufReadPost", "BufNewFile" },
   dependencies = "nvim-lua/plenary.nvim",
   keys = {
-    { "<leader>ft", function() Snacks.picker.todo_comments() end, desc = "Todo" },
+    { "<leader>T/", function() Snacks.picker.todo_comments() end, desc = "Todo" },
     {
-      "<leader>fT",
+      "<leader>T?",
       function() Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } }) end,
       desc = "Todo/Fix/Fixme",
     },
-    { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo Comment" },
-    { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo Comment" },
+    { "]T", function() require("todo-comments").jump_next() end, desc = "Next todo Comment" },
+    { "[T", function() require("todo-comments").jump_prev() end, desc = "Previous todo Comment" },
   },
 
   opts = {

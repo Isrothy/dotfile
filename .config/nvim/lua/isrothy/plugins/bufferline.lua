@@ -4,8 +4,8 @@ return {
   dependencies = "nvim-tree/nvim-web-devicons",
 
   keys = {
-    { "<LEADER>bc", "<CMD>BufferLinePickClose<CR>", desc = "Choose a buffer to close" },
-    { "<LEADER>bp", "<CMD>BufferLinePick<CR>", desc = "Pick buffer" },
+    { "<LEADER>bc", "<CMD>BufferLinePickClose<CR>", desc = "Choose a buffer on bufferline to close" },
+    { "<LEADER>bp", "<CMD>BufferLinePick<CR>", desc = "Pick buffer on bufferline" },
     { "<LEADER>bh", "<CMD>BufferLineCloseLeft<CR>", desc = "Close left buffers" },
     { "<LEADER>bl", "<CMD>BufferLineCloseRight<CR>", desc = "Close right buffers" },
     { "<LEADER>bo", "<CMD>BufferLineCloseOthers<CR>", desc = "Close other buffers" },
@@ -16,7 +16,7 @@ return {
     { "<LEADER>bsr", "<CMD>BufferLineSortByRelativeDirectory<CR>", desc = "By relative directory" },
     { "<LEADER>bss", "<CMD>BufferLineSortByTabs<CR>", desc = "By tabs" },
 
-    { "<LEADER>bt", "<CMD>BufferlineTogglePin<CR>", desc = "Toggle pin" },
+    { "<LEADER>bt", "<CMD>BufferLineTogglePin<CR>", desc = "Toggle pin" },
 
     { "]b", "<CMD>BufferLineCycleNext<CR>", desc = "Next buffer" },
     { "[b", "<CMD>BufferLineCyclePrev<CR>", desc = "Previois buffer" },

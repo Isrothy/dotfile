@@ -169,13 +169,23 @@ vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
 
 vim.fn.sign_define("CodeActionSign", { text = "⬥", texthl = "LspCodeAction" })
 local code_action_group = augroup("code_action_sign")
-vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
+vim.api.nvim_create_augroup("LspCodeActionSignGroup", { clear = true })
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = augroup("create_code_action_autocmd"),
   callback = function(args)
     local bufnr = args.buf
-    vim.api.nvim_clear_autocmds({ group = code_action_group, buffer = bufnr })
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if not client or not client:supports_method("textDocument/codeAction", bufnr) then
+    local clients = vim.lsp.get_clients({
+      bufnr = bufnr,
+      method = "textDocument/codeAction",
+    })
+    if #clients == 0 then
       return
+    end
+    for _, client in pairs(clients) do
+      if client.id ~= args.data.client_id then
+        return
+      end
     end
     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
       buffer = bufnr,
@@ -185,19 +195,49 @@ vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
         local lnum = vim.fn.line(".") - 1
         params.context = { diagnostics = vim.diagnostic.get(bufnr, { lnum = lnum }) }
 
+        vim.fn.sign_unplace("LspCodeActionSign", { buffer = bufnr })
         vim.lsp.buf_request(bufnr, "textDocument/codeAction", params, function(err, result, ctx, config)
-          if err then
+          if err or ctx.bufnr ~= bufnr or not vim.api.nvim_buf_is_loaded(bufnr) then
             return
           end
-
-          vim.fn.sign_unplace("lsp_code_action_sign", { buffer = bufnr })
-
           if result and not vim.tbl_isempty(result) then
-            local row = vim.api.nvim_win_get_cursor(0)[1]
-            vim.fn.sign_place(0, "lsp_code_action_sign", "CodeActionSign", bufnr, { lnum = row, priority = 10 })
+            local success, cursor_pos = pcall(vim.api.nvim_win_get_cursor, 0)
+            if success and cursor_pos then
+              vim.fn.sign_place(
+                0,
+                "LspCodeActionSign",
+                "CodeActionSign",
+                bufnr,
+                { lnum = cursor_pos[1], priority = 10 }
+              )
+            end
           end
         end)
       end,
+    })
+  end,
+})
+
+vim.api.nvim_create_autocmd("LspDetach", {
+  group = augroup("remove_code_action_autocmd"),
+  callback = function(args)
+    local bufnr = args.buf
+    local clients = vim.lsp.get_clients({
+      bufnr = bufnr,
+      method = "textDocument/codeAction",
+    })
+    if #clients == 0 then
+      return
+    end
+    for _, client in pairs(clients) do
+      if client.id ~= args.data.client_id then
+        return
+      end
+    end
+    vim.fn.sign_unplace("LspCodeActionSign", { buffer = bufnr })
+    vim.api.nvim_clear_autocmds({
+      group = code_action_group,
+      buffer = bufnr,
     })
   end,
 })
