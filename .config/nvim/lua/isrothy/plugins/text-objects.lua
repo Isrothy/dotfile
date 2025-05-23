@@ -9,24 +9,24 @@ return {
         value = "v",
         key = "k",
         subword = "S", -- lowercase taken for sentence textobj
-        notebookCell = "N",
-        closedFold = "z", -- z is the common prefix for folds
+        -- notebookCell = "N",
+        closedFold = "z",
         chainMember = ".",
         lineCharacterwise = "_",
-        greedyOuterIndentation = "g",
-        anyQuote = "q",
-        anyBracket = "o",
+        -- greedyOuterIndentation = "g",
+        -- anyQuote = "q",
+        -- anyBracket = "o",
       }
       local oneMaps = {
         nearEoL = "n", -- does override the builtin "to next search match" textobj, but nobody really uses that
         visibleInWindow = "gw",
         toNextClosingBracket = "C", -- % has a race condition with vim's builtin matchit plugin
         toNextQuotationMark = "Q",
-        restOfParagraph = "r",
-        restOfIndentation = "R",
-        restOfWindow = "gW",
-        diagnostic = "!",
-        column = "|",
+        -- restOfParagraph = "r",
+        -- restOfIndentation = "R",
+        -- restOfWindow = "gW",
+        -- diagnostic = "!",
+        -- column = "|",
         entireBuffer = "gG", -- G + gg
         url = "L", -- gu, gU, and U would conflict with gugu, gUgU, and gUU. u would conflict with gcu (undo comment)
         lastChange = "g;", -- consistent with g; movement
@@ -51,7 +51,7 @@ return {
         keymap(
           { "o", "x" },
           map,
-          "<CMD>lua require('various-textobjs')." .. objName .. "()<CR>",
+          "<cmd>lua require('various-textobjs')." .. objName .. "()<cr>",
           { desc = objName .. " textobj" }
         )
       end
@@ -61,13 +61,13 @@ return {
         keymap(
           { "o", "x" },
           "a" .. map,
-          "<CMD>lua require('various-textobjs')." .. objName .. "('outer')<CR>",
+          "<cmd>lua require('various-textobjs')." .. objName .. "('outer')<cr>",
           { desc = "outer" .. name }
         )
         keymap(
           { "o", "x" },
           "i" .. map,
-          "<CMD>lua require('various-textobjs')." .. objName .. "('inner')<CR>",
+          "<cmd>lua require('various-textobjs')." .. objName .. "('inner')<cr>",
           { desc = "inner" .. name }
         )
       end
@@ -83,13 +83,13 @@ return {
               keymap(
                 { "o", "x" },
                 "a" .. map,
-                ("<CMD>lua require('various-textobjs').%s('%s')<CR>"):format(objName, "outer"),
+                ("<cmd>lua require('various-textobjs').%s('%s')<cr>"):format(objName, "outer"),
                 { desc = "outer" .. name, buffer = true }
               )
               keymap(
                 { "o", "x" },
                 "i" .. map,
-                ("<CMD>lua require('various-textobjs').%s('%s')<CR>"):format(objName, "inner"),
+                ("<cmd>lua require('various-textobjs').%s('%s')<cr>"):format(objName, "inner"),
                 { desc = "inner" .. name, buffer = true }
               )
             end
@@ -102,33 +102,6 @@ return {
         useDefaults = false,
       },
     },
-  },
-  {
-    "echasnovski/mini.ai",
-    event = "VeryLazy",
-    dependencies = {
-      "nvim-treesitter",
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
-    opts = function()
-      local ai = require("mini.ai")
-      return {
-        n_lines = 500,
-        custom_textobjects = {
-          o = ai.gen_spec.treesitter({ -- code block
-            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
-            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
-          }),
-          f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
-          C = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
-          -- t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" }, -- tags
-          u = ai.gen_spec.function_call(), -- u for "Usage"
-          U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
-        },
-
-        search_method = "cover_or_next",
-      }
-    end,
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",

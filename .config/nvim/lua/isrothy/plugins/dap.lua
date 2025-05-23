@@ -7,8 +7,8 @@ return {
         { "nvim-neotest/nvim-nio" },
       },
       keys = {
-        { "<LEADER>du", function() require("dapui").toggle({}) end, desc = "Dap UI" },
-        { "<LEADER>de", function() require("dapui").eval() end, desc = "Eval", mode = { "n", "x" } },
+        { "<leader>du", function() require("dapui").toggle({}) end, desc = "Dap UI" },
+        { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = { "n", "x" } },
       },
       opts = {},
       config = function(_, opts)
@@ -30,9 +30,9 @@ return {
     {
       "mfussenegger/nvim-dap-python",
       keys = {
-        { "<LOCALLEADER>pd", "", desc = "+Debug", ft = { "python" } },
-        { "<LOCALLEADER>pdt", function() require("dap-python").test_method() end, desc = "Method", ft = { "python" } },
-        { "<LOCALLEADER>pdc", function() require("dap-python").test_class() end, desc = "Class", ft = { "python" } },
+        { "<localleader>pd", "", desc = "+Debug", ft = { "python" } },
+        { "<localleader>pdt", function() require("dap-python").test_method() end, desc = "Method", ft = { "python" } },
+        { "<localleader>pdc", function() require("dap-python").test_class() end, desc = "Class", ft = { "python" } },
       },
     },
     {
@@ -48,25 +48,25 @@ return {
 
   keys = {
     {
-      "<LEADER>dB",
+      "<leader>dB",
       function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
       desc = "Breakpoint condition",
     },
-    { "<LEADER>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
-    { "<LEADER>dc", function() require("dap").continue() end, desc = "Continue" },
-    { "<LEADER>dC", function() require("dap").run_to_cursor() end, desc = "Run to cursor" },
-    { "<LEADER>dg", function() require("dap").goto_() end, desc = "Go to line (no execute)" },
-    { "<LEADER>di", function() require("dap").step_into() end, desc = "Step into" },
-    { "<LEADER>dj", function() require("dap").down() end, desc = "Down" },
-    { "<LEADER>dk", function() require("dap").up() end, desc = "Up" },
-    { "<LEADER>dl", function() require("dap").run_last() end, desc = "Run last" },
-    { "<LEADER>do", function() require("dap").step_out() end, desc = "Step out" },
-    { "<LEADER>dO", function() require("dap").step_over() end, desc = "Step over" },
-    { "<LEADER>dp", function() require("dap").pause() end, desc = "Pause" },
-    { "<LEADER>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
-    { "<LEADER>ds", function() require("dap").session() end, desc = "Session" },
-    { "<LEADER>dt", function() require("dap").terminate() end, desc = "Terminate" },
-    { "<LEADER>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
+    { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
+    { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
+    { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to cursor" },
+    { "<leader>dg", function() require("dap").goto_() end, desc = "Go to line (no execute)" },
+    { "<leader>di", function() require("dap").step_into() end, desc = "Step into" },
+    { "<leader>dj", function() require("dap").down() end, desc = "Down" },
+    { "<leader>dk", function() require("dap").up() end, desc = "Up" },
+    { "<leader>dl", function() require("dap").run_last() end, desc = "Run last" },
+    { "<leader>do", function() require("dap").step_out() end, desc = "Step out" },
+    { "<leader>dO", function() require("dap").step_over() end, desc = "Step over" },
+    { "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
+    { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
+    { "<leader>ds", function() require("dap").session() end, desc = "Session" },
+    { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
+    { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
   },
 
   config = function()

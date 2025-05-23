@@ -1,10 +1,10 @@
 return {
   "philosofonusus/ecolog.nvim",
   keys = {
-    { "<leader>eg", "<CMD>EcologGoto<CR>", desc = "Go to env file" },
-    { "<leader>ep", "<CMD>EcologPeek<CR>", desc = "Ecolog peek variable" },
-    { "<leader>eh", "<Cmd>EcologShellToggle<cr>", desc = "Toggle shell variables" },
-    { "<leader>es", "<CMD>EcologSelect<CR>", desc = "Switch env file" },
+    { "<leader>eg", "<cmd>EcologGoto<cr>", desc = "Go to env file" },
+    { "<leader>ep", "<cmd>EcologPeek<cr>", desc = "Ecolog peek variable" },
+    { "<leader>eh", "<cmd>EcologShellToggle<cr>", desc = "Toggle shell variables" },
+    { "<leader>es", "<cmd>EcologSelect<cr>", desc = "Switch env file" },
   },
   cmd = {
     "EcologPeek",
@@ -27,10 +27,10 @@ return {
           mask_on_copy = false, -- Whether to mask values when copying
         },
         keys = {
-          copy_value = "<C-V>", -- Copy variable value to clipboard
-          copy_name = "<C-K>", -- Copy variable name to clipboard
-          append_value = "<C-A>", -- Append value at cursor position
-          append_name = "<CR>", -- Append name at cursor position
+          copy_value = "<c-V>", -- Copy variable value to clipboard
+          copy_name = "<c-K>", -- Copy variable name to clipboard
+          append_value = "<c-A>", -- Append value at cursor position
+          append_name = "<cr>", -- Append name at cursor position
         },
       },
       fzf = {

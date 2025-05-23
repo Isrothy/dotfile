@@ -4,9 +4,9 @@ return {
     event = "VeryLazy",
     cmd = { "PasteImage" },
     keys = {
-      { "<LEADER>#", "<CMD>PasteImage<CR>", desc = "Paste image" },
+      { "<leader>#", "<cmd>PasteImage<cr>", desc = "Paste image" },
       {
-        "<LEADER>#/",
+        "<leader>#/",
         function()
           Snacks.picker.files({
             ft = { "jpg", "jpeg", "png", "webp" },

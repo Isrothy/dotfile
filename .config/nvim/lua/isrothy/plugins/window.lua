@@ -31,7 +31,7 @@ return {
         animate = { enabled = false },
         keys = {
           ---@param win Edgy.Window
-          ["<M-h>"] = function(win)
+          ["<m-h>"] = function(win)
             local view = win.view
             local edgebar = view.edgebar
             local pos = edgebar.pos
@@ -42,7 +42,7 @@ return {
             end
           end,
           ---@param win Edgy.Window
-          ["<M-l>"] = function(win)
+          ["<m-l>"] = function(win)
             local view = win.view
             local edgebar = view.edgebar
             local pos = edgebar.pos
@@ -52,8 +52,8 @@ return {
               win:resize("width", -1)
             end
           end,
-          ["<M-k>"] = function(win) win:resize("height", 1) end,
-          ["<M-j>"] = function(win) win:resize("height", -1) end,
+          ["<m-k>"] = function(win) win:resize("height", 1) end,
+          ["<m-j>"] = function(win) win:resize("height", -1) end,
         },
         wo = {
           winbar = false,
@@ -149,7 +149,7 @@ return {
     version = "2.*",
     keys = {
       {
-        "<LEADER>wp",
+        "<leader>wp",
         function()
           local picked_window_id = require("window-picker").pick_window()
           if picked_window_id then
@@ -159,7 +159,7 @@ return {
         desc = "Pick a window",
       },
       {
-        "<LEADER>wc",
+        "<leader>wc",
         function()
           local picked_window_id = require("window-picker").pick_window({
             filter_rules = {
@@ -213,37 +213,37 @@ return {
     enabled = true,
     keys = {
       {
-        "<C-H>",
+        "<c-h>",
         function() require("smart-splits").move_cursor_left() end,
         desc = "Move cursor left",
       },
       {
-        "<C-J>",
+        "<c-j>",
         function() require("smart-splits").move_cursor_down() end,
         desc = "Move cursor down",
       },
       {
-        "<C-K>",
+        "<c-k>",
         function() require("smart-splits").move_cursor_up() end,
         desc = "Move cursor up",
       },
       {
-        "<C-L>",
+        "<c-l>",
         function() require("smart-splits").move_cursor_right() end,
         desc = "Move cursor right",
       },
 
-      { "<LEADER>bxh", function() require("smart-splits").swap_buf_left() end, desc = "Exchange buffers left" },
-      { "<LEADER>bxj", function() require("smart-splits").swap_buf_down() end, desc = "Exchange buffers down" },
-      { "<LEADER>bxk", function() require("smart-splits").swap_buf_up() end, desc = "Exchange buffers up" },
-      { "<LEADER>bxl", function() require("smart-splits").swap_buf_right() end, desc = "Exchange buffers right" },
+      { "<leader>bxh", function() require("smart-splits").swap_buf_left() end, desc = "Exchange buffers left" },
+      { "<leader>bxj", function() require("smart-splits").swap_buf_down() end, desc = "Exchange buffers down" },
+      { "<leader>bxk", function() require("smart-splits").swap_buf_up() end, desc = "Exchange buffers up" },
+      { "<leader>bxl", function() require("smart-splits").swap_buf_right() end, desc = "Exchange buffers right" },
 
-      { "<M-h>", function() require("smart-splits").resize_left() end, desc = "Resize left" },
-      { "<M-j>", function() require("smart-splits").resize_down() end, desc = "Resize down" },
-      { "<M-k>", function() require("smart-splits").resize_up() end, desc = "Resize up" },
-      { "<M-l>", function() require("smart-splits").resize_right() end, desc = "Resize right" },
+      { "<m-h>", function() require("smart-splits").resize_left() end, desc = "Resize left" },
+      { "<m-j>", function() require("smart-splits").resize_down() end, desc = "Resize down" },
+      { "<m-k>", function() require("smart-splits").resize_up() end, desc = "Resize up" },
+      { "<m-l>", function() require("smart-splits").resize_right() end, desc = "Resize right" },
 
-      -- { "<LEADER>wr", function() require("smart-splits").start_resize_mode() end, desc = "Start resize mode" },
+      -- { "<leader>wr", function() require("smart-splits").start_resize_mode() end, desc = "Start resize mode" },
     },
     opts = {
       ignored_buftypes = {

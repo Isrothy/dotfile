@@ -13,29 +13,29 @@ return {
     },
 
     init = function()
-      vim.keymap.set("i", "<C-B>", "<NOP>", { silent = true })
-      vim.keymap.set("i", "<C-F>", "<NOP>", { silent = true })
+      vim.keymap.set("i", "<c-b>", "<nop>", { silent = true })
+      vim.keymap.set("i", "<c-f>", "<nop>", { silent = true })
     end,
 
     opts = {
       keymap = {
-        ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
-        ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
-        ["<CR>"] = { "accept", "fallback" },
-        ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<C-x>"] = { "cancel" },
-        ["<C-p>"] = { "select_prev", "fallback" },
-        ["<C-n>"] = { "select_next", "fallback" },
+        ["<tab>"] = { "select_next", "snippet_forward", "fallback" },
+        ["<s-tab>"] = { "select_prev", "snippet_backward", "fallback" },
+        ["<cr>"] = { "accept", "fallback" },
+        ["<c-k>"] = { "show", "show_documentation", "hide_documentation" },
+        ["<c-x>"] = { "cancel" },
+        ["<c-p>"] = { "select_prev", "fallback" },
+        ["<c-n>"] = { "select_next", "fallback" },
 
-        -- ["<C-b>"] = { "scroll_documentation_up", "fallback" },
-        -- ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+        -- ["<c-b>"] = { "scroll_documentation_up", "fallback" },
+        -- ["<c-f>"] = { "scroll_documentation_down", "fallback" },
       },
       enabled = function() return not vim.tbl_contains({ "bigfile" }, vim.bo.filetype) and vim.bo.buftype ~= "prompt" end,
       cmdline = {
         enabled = true,
         completion = { ghost_text = { enabled = true } },
         keymap = {
-          ["<M-l>"] = {
+          ["<m-l>"] = {
             function(cmp)
               if cmp.is_ghost_text_visible() and not cmp.is_menu_visible() then
                 return cmp.accept()
@@ -43,7 +43,7 @@ return {
             end,
             "fallback",
           },
-          ["<CR>"] = {
+          ["<cr>"] = {
             function(cmp)
               if not (cmp.is_ghost_text_visible() and not cmp.is_menu_visible()) then
                 return cmp.accept()
@@ -51,7 +51,7 @@ return {
             end,
             "fallback",
           },
-          ["<Tab>"] = {
+          ["<tab>"] = {
             "show_and_insert",
             "select_next",
           },

@@ -227,21 +227,21 @@ return {
     },
     keys = {
       {
-        "<LEADER>fe",
+        "<leader>fe",
         function() require("neo-tree.command").execute({ toggle = true }) end,
         desc = "Filesystem explorer",
       },
       {
-        "<LEADER>fb",
+        "<leader>fb",
         function() require("neo-tree.command").execute({ source = "buffers", toggle = true }) end,
         desc = "Filesystem explorer (buffer view)",
       },
       {
-        "<LEADER>fg",
+        "<leader>fg",
         function() require("neo-tree.command").execute({ source = "git_status", toggle = true }) end,
         desc = "Filesystem explorer (git view)",
       },
-      { "<LEADER>fR", "<CMD>Neotree reveal<CR>", desc = "Reveal in filesystem explorer" },
+      { "<leader>fR", "<cmd>Neotree reveal<cr>", desc = "Reveal in filesystem explorer" },
       {
         "<leader>fE",
         function() require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() }) end,
@@ -301,52 +301,52 @@ return {
           width = 36,
           auto_expand_width = false,
           mappings = {
-            ["<LOCALLEADER>b"] = "rename_basename",
-            ["<LOCALLEADER>c"] = {
+            ["<localleader>b"] = "rename_basename",
+            ["<localleader>c"] = {
               "copy",
               config = {
                 show_path = "relative", -- "none", "relative", "absolute"
               },
             },
-            ["<LOCALLEADER>ga"] = "git_add_file",
-            ["<LOCALLEADER>gA"] = "git_add_all",
-            ["<LOCALLEADER>gc"] = "git_commit",
-            ["<LOCALLEADER>gg"] = "git_commit_and_push",
-            ["<LOCALLEADER>gp"] = "git_push",
-            ["<LOCALLEADER>gr"] = "git_revert_file",
-            ["<LOCALLEADER>gu"] = "git_unstage_file",
+            ["<localleader>ga"] = "git_add_file",
+            ["<localleader>gA"] = "git_add_all",
+            ["<localleader>gc"] = "git_commit",
+            ["<localleader>gg"] = "git_commit_and_push",
+            ["<localleader>gp"] = "git_push",
+            ["<localleader>gr"] = "git_revert_file",
+            ["<localleader>gu"] = "git_unstage_file",
 
-            ["<LOCALLEADER>i"] = "show_file_details",
-            ["<LOCALLEADER>m"] = "move", -- Takes text input for destination, also accepts the optional config.show_path option like "add".
-            ["<LOCALLEADER>n"] = "rename",
-            ["<LOCALLEADER>o"] = {
+            ["<localleader>i"] = "show_file_details",
+            ["<localleader>m"] = "move", -- Takes text input for destination, also accepts the optional config.show_path option like "add".
+            ["<localleader>n"] = "rename",
+            ["<localleader>o"] = {
               "show_help",
               nowait = false,
-              config = { title = "Order by", prefix_key = "<LOCALLEADER>o" },
+              config = { title = "Order by", prefix_key = "<localleader>o" },
             },
-            ["<LOCALLEADER>oc"] = { "order_by_created", nowait = false },
-            ["<LOCALLEADER>od"] = { "order_by_diagnostics", nowait = false },
-            ["<LOCALLEADER>og"] = { "order_by_git_status", nowait = false },
-            ["<LOCALLEADER>om"] = { "order_by_modified", nowait = false },
-            ["<LOCALLEADER>on"] = { "order_by_name", nowait = false },
-            ["<LOCALLEADER>os"] = { "order_by_size", nowait = false },
-            ["<LOCALLEADER>ot"] = { "order_by_type", nowait = false },
-            ["<LOCALLEADER>p"] = "paste_from_clipboard",
-            ["<LOCALLEADER>P"] = {
+            ["<localleader>oc"] = { "order_by_created", nowait = false },
+            ["<localleader>od"] = { "order_by_diagnostics", nowait = false },
+            ["<localleader>og"] = { "order_by_git_status", nowait = false },
+            ["<localleader>om"] = { "order_by_modified", nowait = false },
+            ["<localleader>on"] = { "order_by_name", nowait = false },
+            ["<localleader>os"] = { "order_by_size", nowait = false },
+            ["<localleader>ot"] = { "order_by_type", nowait = false },
+            ["<localleader>p"] = "paste_from_clipboard",
+            ["<localleader>P"] = {
               "toggle_preview",
               config = { use_float = true, use_image_nvim = false },
             },
-            ["<LOCALLEADER>q"] = "close_window",
-            ["<LOCALLEADER>r"] = "refresh",
-            ["<LOCALLEADER>s"] = "split_with_window_picker",
-            ["<LOCALLEADER>t"] = "open_tabnew",
-            ["<LOCALLEADER>v"] = "vsplit_with_window_picker",
-            ["<LOCALLEADER>x"] = "cut_to_clipboard",
-            ["<LOCALLEADER>y"] = "copy_to_clipboard",
+            ["<localleader>q"] = "close_window",
+            ["<localleader>r"] = "refresh",
+            ["<localleader>s"] = "split_with_window_picker",
+            ["<localleader>t"] = "open_tabnew",
+            ["<localleader>v"] = "vsplit_with_window_picker",
+            ["<localleader>x"] = "cut_to_clipboard",
+            ["<localleader>y"] = "copy_to_clipboard",
 
-            ["<LOCALLEADER>!"] = "run_command",
+            ["<localleader>!"] = "run_command",
 
-            ["<TAB>"] = function(state)
+            ["<tab>"] = function(state)
               local node = state.tree:get_node()
               if require("neo-tree.utils").is_expandable(node) then
                 state.commands["toggle_node"](state)
@@ -356,8 +356,8 @@ return {
               end
             end,
 
-            ["<ESC>"] = function() vim.cmd("nohl") end,
-            ["<SPACE>"] = "none",
+            ["<esc>"] = function() vim.cmd("nohl") end,
+            ["<space>"] = "none",
             ["[s"] = "prev_source",
             ["]s"] = "next_source",
 
@@ -403,13 +403,13 @@ return {
             ["x"] = "none",
             ["y"] = "none",
             ["z"] = "none",
-            ["<M-h>"] = "none",
-            ["<M-j>"] = "none",
-            ["<M-k>"] = "none",
-            ["<M-l>"] = "none",
+            ["<m-h>"] = "none",
+            ["<m-j>"] = "none",
+            ["<m-k>"] = "none",
+            ["<m-l>"] = "none",
             [">"] = "none",
             ["<"] = "none",
-            ["<2-LeftMouse>"] = "none",
+            ["<2-leftmouse>"] = "none",
           },
         },
         filesystem = {
@@ -428,20 +428,20 @@ return {
           -- instead of relying on nvim autocmd events.
           window = {
             mappings = {
-              ["<LOCALLEADER>d"] = "delete",
-              ["<LOCALLEADER>f"] = "filter_on_submit",
-              ["<LOCALLEADER>h"] = "toggle_hidden",
-              ["<LOCALLEADER>n"] = {
+              ["<localleader>d"] = "delete",
+              ["<localleader>f"] = "filter_on_submit",
+              ["<localleader>h"] = "toggle_hidden",
+              ["<localleader>n"] = {
                 "add",
                 config = {
                   show_path = "relative", -- "none", "relative", "absolute"
                 },
               },
 
-              ["<LOCALLEADER>#"] = "fuzzy_sorter", -- Fuzzy sorting using the fzy algorithm
-              ["<LOCALLEADER>/"] = "fuzzy_finder",
-              ["<LOCALLEADER>?"] = "fuzzy_finder_directory",
-              ["<LOCALLEADER><c-x>"] = "clear_filter",
+              ["<localleader>#"] = "fuzzy_sorter", -- Fuzzy sorting using the fzy algorithm
+              ["<localleader>/"] = "fuzzy_finder",
+              ["<localleader>?"] = "fuzzy_finder_directory",
+              ["<localleader><c-x>"] = "clear_filter",
               ["[c"] = "prev_git_modified",
               ["]c"] = "next_git_modified",
 
@@ -478,7 +478,7 @@ return {
           show_unloaded = true,
           window = {
             mappings = {
-              ["<LOCALLEADER>d"] = "buffer_delete",
+              ["<localleader>d"] = "buffer_delete",
               ["<BS>"] = "navigate_up",
               ["."] = "set_root",
 
@@ -526,7 +526,7 @@ return {
             event = "neo_tree_popup_input_ready",
             ---@param args { bufnr: integer, winid: integer }
             handler = function(args)
-              vim.keymap.set("i", "<ESC>", vim.cmd.stopinsert, { noremap = true, buffer = args.bufnr })
+              vim.keymap.set("i", "<esc>", vim.cmd.stopinsert, { noremap = true, buffer = args.bufnr })
             end,
           },
         },
@@ -558,7 +558,7 @@ return {
     },
     cmd = { "Oil" },
     keys = {
-      { "<F3>", "<CMD>Oil<CR>", desc = "Oil" },
+      { "<F3>", "<cmd>Oil<cr>", desc = "Oil" },
     },
     opts = {
       win_options = {
@@ -571,9 +571,9 @@ return {
       },
       keymaps = {
         ["-"] = "actions.parent",
-        ["<BS>"] = "actions.parent",
-        ["<CR>"] = "actions.select",
-        ["<TAB>"] = {
+        ["<bs>"] = "actions.parent",
+        ["<cr>"] = "actions.select",
+        ["<tab>"] = {
           callback = function()
             local oil = require("oil")
             local bufnr = vim.api.nvim_get_current_buf()
@@ -605,11 +605,11 @@ return {
         ["_"] = "actions.open_cwd",
         ["`"] = "actions.cd",
         ["~"] = "actions.tcd",
-        ["<LOCALLEADER>."] = "actions.toggle_hidden",
-        ["<LOCALLEADER>?"] = "actions.show_help",
-        ["<LOCALLEADER>\\"] = "actions.toggle_trash",
-        ["<LOCALLEADER>c"] = "actions.close",
-        ["<LOCALLEADER>f"] = {
+        ["<localleader>."] = "actions.toggle_hidden",
+        ["<localleader>?"] = "actions.show_help",
+        ["<localleader>\\"] = "actions.toggle_trash",
+        ["<localleader>c"] = "actions.close",
+        ["<localleader>f"] = {
           callback = function()
             local oil = require("oil")
             local prefills = { paths = oil.get_current_dir() }
@@ -627,15 +627,15 @@ return {
           end,
           desc = "Oil: Search in directory",
         },
-        ["<LOCALLEADER>o"] = "actions.change_sort",
-        ["<LOCALLEADER>p"] = "actions.preview",
-        ["<LOCALLEADER>r"] = "actions.refresh",
-        ["<LOCALLEADER>s"] = "actions.select_split",
-        ["<LOCALLEADER>t"] = "actions.select_tab",
-        ["<LOCALLEADER>u"] = "actions.parent",
-        ["<LOCALLEADER>v"] = "actions.select_vsplit",
-        ["<LOCALLEADER>x"] = "actions.open_external",
-        ["<LOCALLEADER>#"] = {
+        ["<localleader>o"] = "actions.change_sort",
+        ["<localleader>p"] = "actions.preview",
+        ["<localleader>r"] = "actions.refresh",
+        ["<localleader>s"] = "actions.select_split",
+        ["<localleader>t"] = "actions.select_tab",
+        ["<localleader>u"] = "actions.parent",
+        ["<localleader>v"] = "actions.select_vsplit",
+        ["<localleader>x"] = "actions.open_external",
+        ["<localleader>#"] = {
           callback = function()
             local oil = require("oil")
             local filename = oil.get_cursor_entry().name

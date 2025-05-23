@@ -17,7 +17,7 @@ return {
     event = "VeryLazy",
     keys = {
       {
-        "<LEADER>?",
+        "<leader>?",
         function() require("which-key").show({ global = false }) end,
         desc = "Buffer local keymaps (Which-Key)",
       },
@@ -28,10 +28,7 @@ return {
       plugins = {
         marks = true,
         registers = true,
-        spelling = {
-          enabled = true,
-          suggestions = 20,
-        },
+        spelling = { enabled = true, suggestions = 20 },
         presets = {
           operators = true, -- Adds help for operators like d, y, ...
           motions = true, -- adds help for motions
@@ -44,81 +41,201 @@ return {
       },
       sort = { "local", "order", "group", "alphanum", "mod", "lower", "icase" },
       win = {
-        padding = { 1, 2 }, -- extra window padding [top/bottom, right/left]
+        padding = { 1, 2 },
         title = true,
         title_pos = "center",
         zindex = 1000,
-        -- Additional vim.wo and vim.bo options
         bo = {},
-        wo = {
-          winblend = 10, -- Value between 0-100 0 for fully opaque and 100 for fully transparent
-        },
+        wo = { winblend = 10 },
       },
-      -- keys = {
-      --   scroll_down = "<c-n>", -- binding to scroll down inside the popup
-      --   scroll_up = "<c-p>", -- binding to scroll up inside the popup
-      -- },
       spec = {
-        { "<LEADER>a", group = "AI", mode = { "n", "x" } },
+        { "<leader>a", group = "AI", mode = { "n", "x" } },
         {
-          "<LEADER>b",
-          group = "Buffer",
-          expand = function() return require("which-key.extras").expand.buf() end,
+          {
+            "<leader>b",
+            group = "Buffer",
+            expand = function() return require("which-key.extras").expand.buf() end,
+          },
+          { "<leader>bx", group = "Exchange" },
+          { "<leader>ba", "<c-^>", desc = "Alternate buffer" },
         },
-        { "<LEADER>bx", group = "Exchange" },
-        { "<LEADER>c", group = "Code", mode = { "n", "x" } },
-        { "<LEADER>C", group = "Colorize" },
-        { "<LEADER>d", group = "Debug", mode = { "n", "x" } },
-        { "<LEADER>e", group = "Environment" },
-        { "<LEADER>f", group = "File" },
-        { "<LEADER>g", group = "Git", mode = { "n", "x" } },
-        { "<LEADER>G", group = "Github" },
-        { "<LEADER>h", group = "Hunk", mode = { "n", "x" } },
-        { "<LEADER>i", group = "Info" },
-        { "<LEADER>j", group = "Jump", mode = { "n", "x" } },
-        { "<LEADER>k", group = "Rename case", mode = { "n", "x" } },
-        { "<LEADER>l", group = "Lint", mode = { "n", "x" } },
-        { "<LEADER>m", group = "Minimap" },
-        { "<LEADER>mr", group = "Refresh" },
-        { "<LEADER>n", group = "Notification" },
-        { "<LEADER>o", group = "Options" },
-        { "<LEADER>q", group = "Session" },
-        { "<LEADER>r", group = "Refactors", mode = { "n", "x" } },
-        { "<LEADER>t", group = "Test" },
-        { "<LEADER>T", group = "Todo" },
-        { "<LEADER>u", group = "Undo" },
         {
-          "<LEADER>w",
-          proxy = "<C-W>",
-          group = "windows",
-          expand = function() return require("which-key.extras").expand.win() end,
+          { "<leader>c", group = "Code", mode = { "n", "x" } },
+          { "<leader>cn", vim.lsp.buf.rename, desc = "Rename symbol" },
+          { "<leader>cl", vim.lsp.codelens.run, desc = "Code lens" },
+          { "<leader>ca", vim.lsp.buf.code_action, desc = "Code action" },
         },
-        { "<LEADER>W", group = "Wrokspace" },
-        { "<LEADER>x", group = "Diagnostics" },
-        { "<LEADER>z", group = "Zen mode" },
-
-        { "<LEADER>/", group = "Grep", mode = { "n", "x" } },
-        { "<LEADER>!", group = "Tasks" },
-        { "<LEADER>$", group = "Terminal" },
-        { "<LEADER><TAB>", group = "Tabpage" },
-        { "<LEADER><SPACE>", group = "Whitespaces", mode = { "n", "x" } },
-        { "<LEADER><SPACE>b", group = "Buffer" },
-
-        { "[", group = "Prev" },
-        { "]", group = "Next" },
+        { "<leader>C", group = "Colorize" },
+        { "<leader>d", group = "Debug", mode = { "n", "x" } },
+        { "<leader>e", group = "Environment" },
+        {
+          { "<leader>f", group = "File" },
+          { "<leader>fd", "<cmd>DeleteFile<cr>", desc = "Delete file" },
+        },
+        { "<leader>g", group = "Git", mode = { "n", "x" } },
+        { "<leader>G", group = "Github" },
+        { "<leader>h", group = "Hunk", mode = { "n", "x" } },
+        { "<leader>i", group = "Info" },
+        { "<leader>j", group = "Jump", mode = { "n", "x" } },
+        { "<leader>k", group = "Rename case", mode = { "n", "x" } },
+        {
+          { "<leader>l", group = "Lint" },
+          { "<leader>lh", vim.lsp.buf.hover, desc = "Hover" },
+          { "K", vim.lsp.buf.hover, desc = "Hover" },
+        },
+        { "<leader>m", group = "Minimap" },
+        { "<leader>mr", group = "Refresh" },
+        { "<leader>n", group = "Notification" },
+        { "<leader>o", group = "Options" },
+        { "<leader>q", group = "Session" },
+        { "<leader>r", group = "Refactors", mode = { "n", "x" } },
+        { "<leader>t", group = "Test" },
+        { "<leader>T", group = "Todo" },
+        { "<leader>u", group = "Undo" },
+        {
+          {
+            "<leader>w",
+            proxy = "<c-w>",
+            group = "windows",
+            expand = function() return require("which-key.extras").expand.win() end,
+          },
+          { "<leader>wd", "<c-W>c", desc = "Close current window" },
+        },
+        {
+          { "<leader>W", group = "Wrokspace" },
+          { "<leader>Wa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace" },
+          { "<leader>Wr", vim.lsp.buf.remove_workspace_folder, desc = "Remove workspace" },
+          {
+            "<leader>Wl",
+            function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+            desc = "List workspace",
+          },
+        },
+        {
+          { "<leader>x", group = "Diagnostics" },
+          { "<leader>xq", vim.diagnostic.setqflist, desc = "Quickfix list" },
+          { "<leader>xl", vim.diagnostic.setloclist, desc = "Location list" },
+          { "<leader>xc", vim.diagnostic.open_float, desc = "Current line" },
+        },
+        { "<leader>z", group = "Zen mode" },
+        { "<leader>/", group = "Grep", mode = { "n", "x" } },
+        { "<leader>!", group = "Tasks" },
+        { "<leader>$", group = "Terminal" },
+        {
+          { "<leader><tab>", group = "Tabpage" },
+          { "<leader><tab>o", "<cmd>tabonly<cr>", desc = "Close other tabs" },
+          { "<leader><tab>d", "<cmd>tabclose<cr>", desc = "Close current tab" },
+          { "<leader><tab>f", "<cmd>tabfirst<cr>", desc = "First tab" },
+          { "<leader><tab>l", "<cmd>tablast<cr>", desc = "Last tab" },
+          { "<leader><tab><tab>", "<cmd>tabnew<cr>", desc = "New tab" },
+          {
+            "<leader><tab>c",
+            function()
+              vim.ui.input({ prompt = "Enter tab number to close: " }, function(input)
+                local tab_number = tonumber(input)
+                if tab_number then
+                  vim.cmd("tabclose " .. tab_number)
+                else
+                  print("Invalid tab number")
+                end
+              end)
+            end,
+            desc = "Close a tab",
+          },
+          {
+            "<leader><tab>p",
+            function()
+              vim.ui.input({ prompt = "Enter tab number to pick: " }, function(input)
+                local tab_number = tonumber(input)
+                if tab_number then
+                  vim.cmd("tabn " .. tab_number)
+                else
+                  print("Invalid tab number")
+                end
+              end)
+            end,
+            desc = "Pick a tab",
+          },
+        },
+        {
+          { "<leader><space>", group = "Whitespaces", mode = { "n", "x" } },
+          {
+            "<leader><space>t",
+            function()
+              local current_view = vim.fn.winsaveview()
+              local command = "%s/\\s\\+$//e"
+              vim.cmd("keeppatterns " .. command)
+              vim.fn.winrestview(current_view)
+            end,
+            desc = "Trim trailing whitespace",
+          },
+        },
 
         {
-          "<LOCALLEADER>p",
+          mode = { "n", "x" },
+          cond = is_diff,
+          { "<localleader>d", group = "Diff" },
+          { "<localleader>dg", group = "Get" },
+          { "<localleader>dp", group = "Put" },
+
+          { "<localleader>dgg", "<cmd>diffget<cr>", desc = "Get from other" },
+          { "<localleader>dpp", "<cmd>diffput<cr>", desc = "Put to other" },
+
+          { "<localleader>dgl", "<cmd>diffget LOCAL<cr>", desc = "Get from LOCAL" },
+          { "<localleader>dgb", "<cmd>diffget BASE<cr>", desc = "Get from BASE" },
+          { "<localleader>dgr", "<cmd>diffget REMOTE<cr>", desc = "Get from REMOTE" },
+
+          { "<localleader>dg0", "<cmd>diffget 0<cr>", desc = "Get from buffer 0" },
+          { "<localleader>dg1", "<cmd>diffget 1<cr>", desc = "Get from buffer 1" },
+          { "<localleader>dg2", "<cmd>diffget 2<cr>", desc = "Get from buffer 2" },
+          { "<localleader>dg3", "<cmd>diffget 3<cr>", desc = "Get from buffer 3" },
+          { "<localleader>dg4", "<cmd>diffget 4<cr>", desc = "Get from buffer 4" },
+          { "<localleader>dg5", "<cmd>diffget 5<cr>", desc = "Get from buffer 5" },
+          { "<localleader>dg6", "<cmd>diffget 6<cr>", desc = "Get from buffer 6" },
+          { "<localleader>dg7", "<cmd>diffget 7<cr>", desc = "Get from buffer 7" },
+          { "<localleader>dg8", "<cmd>diffget 8<cr>", desc = "Get from buffer 8" },
+          { "<localleader>dg9", "<cmd>diffget 9<cr>", desc = "Get from buffer 9" },
+
+          { "<localleader>dp0", "<cmd>diffput 0<cr>", desc = "Put to buffer 0" },
+          { "<localleader>dp1", "<cmd>diffput 1<cr>", desc = "Put to buffer 1" },
+          { "<localleader>dp2", "<cmd>diffput 2<cr>", desc = "Put to buffer 2" },
+          { "<localleader>dp3", "<cmd>diffput 3<cr>", desc = "Put to buffer 3" },
+          { "<localleader>dp4", "<cmd>diffput 4<cr>", desc = "Put to buffer 4" },
+          { "<localleader>dp5", "<cmd>diffput 5<cr>", desc = "Put to buffer 5" },
+          { "<localleader>dp6", "<cmd>diffput 6<cr>", desc = "Put to buffer 6" },
+          { "<localleader>dp7", "<cmd>diffput 7<cr>", desc = "Put to buffer 7" },
+          { "<localleader>dp8", "<cmd>diffput 8<cr>", desc = "Put to buffer 8" },
+          { "<localleader>dp9", "<cmd>diffput 9<cr>", desc = "Put to buffer 9" },
+        },
+        {
+          "<localleader>p",
           group = "Python",
           cond = function() return vim.bo.filetype == "python" end,
         },
+        {
+          { "[", group = "Prev" },
+          { "]", group = "Next" },
+          { "]e", diagnostic_goto(1, "ERROR"), desc = "Next error" },
+          { "[e", diagnostic_goto(-1, "ERROR"), desc = "Next error " },
+          { "]w", diagnostic_goto(1, "WARN"), desc = "Next warning" },
+          { "[w", diagnostic_goto(-1, "WARN"), desc = "Next warning" },
+          { "]u", "g+", desc = "Next undo" },
+          { "[u", "g-", desc = "Previous undo" },
+          { "]j", "<c-i>", desc = "Next jump" },
+          { "[j", "<c-o>", desc = "Previous jump" },
+          { "<s-tab>", "<c-o>", desc = "Previous jump" },
+          { "]<tab>", "<cmd>tabnext<cr>", desc = "Next tab" },
+          { "[<tab>", "<cmd>tabprevious<cr>", desc = "Previous tab" },
+        },
 
-        { "<ESC>", ":nohlsearch<CR><ESC>", desc = "Clear search highlight" },
-        { "<C-\\>", "<C-\\><C-N>", desc = "Escape terminal mode", mode = "t" },
+        { "<esc>", ":nohlsearch<cr><esc>", desc = "Clear search highlight" },
+        { "<C-\\>", "<C-\\><c-N>", desc = "Escape terminal mode", mode = "t" },
+        { "U", "<cmd>@:", desc = "Repeat last command" },
+        { "Z", "<c-^>", desc = "Alternate buffer" },
         {
           mode = "x",
-          { ".", ":norm .<CR>", desc = "Repeat last command" },
-          { "@", ":norm @q<CR>", desc = "Repeat last macro" },
+          { ".", ":norm .<cr>", desc = "Repeat last command" },
+          { "@", ":norm @q<cr>", desc = "Repeat last macro" },
         },
 
         -- move up/down in wrapped lines
@@ -129,27 +246,24 @@ return {
           { "j", "v:count == 0 ? 'gj' : 'j'", desc = "Down" },
         },
 
-        -- Delete file
-        { "<LEADER>fd", "<cmd>DeleteFile<cr>", desc = "Delete file" },
-
         -- Add undo breakpoints
         {
           mode = { "i" },
-          { ",", ",<C-G>u" },
-          { ";", ";<C-G>u" },
-          { ".", ".<C-G>u" },
+          { ",", ",<c-g>u" },
+          { ";", ";<c-g>u" },
+          { ".", ".<c-g>u" },
         },
 
         -- Move in insert/command/terminal mode
         {
           mode = { "i", "c", "t" },
-          { "<M-h>", "<LEFT>", desc = "Left" },
-          { "<M-j>", "<DOWN>", desc = "Down" },
-          { "<M-k>", "<UP>", desc = "Up" },
-          { "<M-l>", "<RIGHT>", desc = "Right" },
+          { "<m-h>", "<left>", desc = "Left" },
+          { "<m-j>", "<down>", desc = "Down" },
+          { "<m-k>", "<up>", desc = "Up" },
+          { "<m-l>", "<right>", desc = "Right" },
         },
 
-        { "g/", "<ESC>/\\%V", desc = "Search inside visual selection", mode = "x", silent = false },
+        { "g/", "<esc>/\\%V", desc = "Search inside visual selection", mode = "x", silent = false },
         {
           "gV",
           '"`[" . strpart(getregtype(), 0, 1) . "`]"',
@@ -158,139 +272,15 @@ return {
           expr = true,
         },
 
-        { "U", "<cmd>@:", desc = "Repeat last command" },
-
-        --- Alternate
-        { "<LEADER>ba", "<c-^>", desc = "Alternate buffer" },
-        { "Z", "<c-^>", desc = "Alternate buffer" },
-
-        { "<LEADER>wd", "<C-W>c", desc = "Close current window" },
-
-        {
-          "<LEADER><SPACE>t",
-          function()
-            local current_view = vim.fn.winsaveview()
-            local command = "%s/\\s\\+$//e"
-            vim.cmd("keeppatterns " .. command)
-            vim.fn.winrestview(current_view)
-          end,
-          desc = "Trim trailing whitespace",
-        },
-
-        { "<LEADER>xq", vim.diagnostic.setqflist, desc = "Quickfix list" },
-        { "<LEADER>xl", vim.diagnostic.setloclist, desc = "Location list" },
-        { "<LEADER>xc", vim.diagnostic.open_float, desc = "Current line" },
-
         {
           "gco",
-          "o<ESC>Vcx<ESC><CMD>normal gcc<CR>fxa<BS>",
+          "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>",
           desc = "Add comment below",
         },
         {
           "gcO",
-          "O<ESC>Vcx<ESC><CMD>normal gcc<CR>fxa<BS>",
+          "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>",
           desc = "Add comment above",
-        },
-
-        { "]e", diagnostic_goto(1, "ERROR"), desc = "Next error" },
-        { "[e", diagnostic_goto(-1, "ERROR"), desc = "Next error " },
-        { "]w", diagnostic_goto(1, "WARN"), desc = "Next warning" },
-        { "[w", diagnostic_goto(-1, "WARN"), desc = "Next warning" },
-
-        { "]u", "g+", desc = "Next undo" },
-        { "[u", "g-", desc = "Previous undo" },
-
-        { "]j", "<c-i>", desc = "Next jump" },
-        { "[j", "<c-o>", desc = "Previous jump" },
-        { "<s-tab>", "<c-o>", desc = "Previous jump" },
-
-        { "]<tab>", "<CMD>tabnext<CR>", desc = "Next tab" },
-        { "[<tab>", "<CMD>tabprevious<CR>", desc = "Previous tab" },
-
-        { "K", vim.lsp.buf.hover, desc = "Hover" },
-        { "<LEADER>lh", vim.lsp.buf.hover, desc = "Hover" },
-        { "<LEADER>cn", vim.lsp.buf.rename, desc = "Rename symbol" },
-        { "<LEADER>cl", vim.lsp.codelens.run, desc = "Code lens" },
-        { "<LEADER>ca", vim.lsp.buf.code_action, desc = "Code action" },
-
-        { "<leader>Wa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace" },
-        { "<leader>Wr", vim.lsp.buf.remove_workspace_folder, desc = "Remove workspace" },
-        {
-          "<leader>Wl",
-          function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-          desc = "List workspace",
-        },
-
-        { "<leader><tab>o", "<cmd>tabonly<cr>", desc = "Close other tabs" },
-        { "<leader><tab>d", "<cmd>tabclose<cr>", desc = "Close current tab" },
-        { "<leader><tab>f", "<cmd>tabfirst<cr>", desc = "First tab" },
-        { "<leader><tab>l", "<cmd>tablast<cr>", desc = "Last tab" },
-        { "<leader><tab><tab>", "<cmd>tabnew<cr>", desc = "New tab" },
-        {
-          "<leader><tab>c",
-          function()
-            vim.ui.input({ prompt = "Enter tab number to close: " }, function(input)
-              local tab_number = tonumber(input)
-              if tab_number then
-                vim.cmd("tabclose " .. tab_number)
-              else
-                print("Invalid tab number")
-              end
-            end)
-          end,
-          desc = "Close a tab",
-        },
-        {
-          "<leader><tab>p",
-          function()
-            vim.ui.input({ prompt = "Enter tab number to pick: " }, function(input)
-              local tab_number = tonumber(input)
-              if tab_number then
-                vim.cmd("tabn " .. tab_number)
-              else
-                print("Invalid tab number")
-              end
-            end)
-          end,
-          desc = "Pick a tab",
-        },
-
-        -- Diff
-        {
-          mode = { "n", "x" },
-          cond = is_diff,
-          { "<LocalLeader>d", group = "Diff" },
-          { "<LocalLeader>dg", group = "Get" },
-          { "<LocalLeader>dp", group = "Put" },
-
-          { "<LocalLeader>dgg", "<cmd>diffget<CR>", desc = "Get from other" },
-          { "<LocalLeader>dpp", "<cmd>diffput<CR>", desc = "Put to other" },
-
-          { "<LocalLeader>dgl", "<cmd>diffget LOCAL<cr>", desc = "Get from LOCAL" },
-          { "<LocalLeader>dgb", "<cmd>diffget BASE<cr>", desc = "Get from BASE" },
-          { "<LocalLeader>dgr", "<cmd>diffget REMOTE<cr>", desc = "Get from REMOTE" },
-
-          { "<LocalLeader>dg0", "<cmd>diffget 0<cr>", desc = "Get from buffer 0" },
-          { "<LocalLeader>dg1", "<cmd>diffget 1<cr>", desc = "Get from buffer 1" },
-          { "<LocalLeader>dg2", "<cmd>diffget 2<cr>", desc = "Get from buffer 2" },
-          { "<LocalLeader>dg3", "<cmd>diffget 3<cr>", desc = "Get from buffer 3" },
-          { "<LocalLeader>dg4", "<cmd>diffget 4<cr>", desc = "Get from buffer 4" },
-          { "<LocalLeader>dg5", "<cmd>diffget 5<cr>", desc = "Get from buffer 5" },
-          { "<LocalLeader>dg6", "<cmd>diffget 6<cr>", desc = "Get from buffer 6" },
-          { "<LocalLeader>dg7", "<cmd>diffget 7<cr>", desc = "Get from buffer 7" },
-          { "<LocalLeader>dg8", "<cmd>diffget 8<cr>", desc = "Get from buffer 8" },
-          { "<LocalLeader>dg9", "<cmd>diffget 9<cr>", desc = "Get from buffer 9" },
-
-          { "<LocalLeader>dp0", "<cmd>diffput 0<cr>", desc = "Put to buffer 0" },
-          { "<LocalLeader>dp1", "<cmd>diffput 1<cr>", desc = "Put to buffer 1" },
-          { "<LocalLeader>dp2", "<cmd>diffput 2<cr>", desc = "Put to buffer 2" },
-          { "<LocalLeader>dp3", "<cmd>diffput 3<cr>", desc = "Put to buffer 3" },
-          { "<LocalLeader>dp4", "<cmd>diffput 4<cr>", desc = "Put to buffer 4" },
-          { "<LocalLeader>dp5", "<cmd>diffput 5<cr>", desc = "Put to buffer 5" },
-          { "<LocalLeader>dp6", "<cmd>diffput 6<cr>", desc = "Put to buffer 6" },
-          { "<LocalLeader>dp7", "<cmd>diffput 7<cr>", desc = "Put to buffer 7" },
-          { "<LocalLeader>dp8", "<cmd>diffput 8<cr>", desc = "Put to buffer 8" },
-          { "<LocalLeader>dp9", "<cmd>diffput 9<cr>", desc = "Put to buffer 9" },
         },
       },
     },

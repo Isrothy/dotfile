@@ -69,10 +69,10 @@ return {
   version = "v3.x.x",
   lazy = false,
   keys = {
-    { "<LEADER>mrr", "<CMD>Neominimap Refresh<CR>", desc = "Refresh global minimap" },
-    { "<LEADER>mrw", "<CMD>Neominimap WinRefresh<CR>", desc = "Refresh minimap for current window" },
-    { "<LEADER>mrt", "<CMD>Neominimap TabRefresh<CR>", desc = "Refresh minimap for current tab" },
-    { "<LEADER>mrb", "<CMD>Neominimap BufRefresh<CR>", desc = "Refresh minimap for current buffer" },
+    { "<leader>mrr", "<cmd>Neominimap Refresh<cr>", desc = "Refresh global minimap" },
+    { "<leader>mrw", "<cmd>Neominimap WinRefresh<cr>", desc = "Refresh minimap for current window" },
+    { "<leader>mrt", "<cmd>Neominimap TabRefresh<cr>", desc = "Refresh minimap for current tab" },
+    { "<leader>mrb", "<cmd>Neominimap BufRefresh<cr>", desc = "Refresh minimap for current buffer" },
   },
 
   init = function()
@@ -93,7 +93,7 @@ return {
               require("neominimap.api").disable()
             end
           end,
-        }):map("<LEADER>mm")
+        }):map("<leader>mm")
         Snacks.toggle({
           name = "minimap for buffer",
           get = function() return require("neominimap.api").buf.enabled() end,
@@ -104,7 +104,7 @@ return {
               require("neominimap.api").buf.disable()
             end
           end,
-        }):map("<LEADER>mb")
+        }):map("<leader>mb")
         Snacks.toggle({
           name = "minimap for window",
           get = function() return require("neominimap.api").win.enabled() end,
@@ -115,7 +115,7 @@ return {
               require("neominimap.api").win.disable()
             end
           end,
-        }):map("<LEADER>mw")
+        }):map("<leader>mw")
         Snacks.toggle({
           name = "minimap for tabpage",
           get = function() return require("neominimap.api").tab.enabled() end,
@@ -126,7 +126,7 @@ return {
               require("neominimap.api").tab.disable()
             end
           end,
-        }):map("<LEADER>mt")
+        }):map("<leader>mt")
         Snacks.toggle({
           name = "focus",
           get = function() return vim.bo.ft == "neominimap" end,
@@ -137,7 +137,7 @@ return {
               require("neominimap.api").focus.disable()
             end
           end,
-        }):map("<LEADER>mf")
+        }):map("<leader>mf")
       end,
     })
 

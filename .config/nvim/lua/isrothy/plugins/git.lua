@@ -42,19 +42,19 @@ return {
           { "[H", function() gs.nav_hunk("last") end, desc = "First hunk" },
           {
             mode = { "n", "x" },
-            { "<LEADER>hs", ":Gitsigns stage_hunk<CR>", desc = "Stage hunk" },
-            { "<LEADER>hr", ":Gitsigns reset_hunk<CR>", desc = "Reset hunk" },
+            { "<leader>hs", ":Gitsigns stage_hunk<cr>", desc = "Stage hunk" },
+            { "<leader>hr", ":Gitsigns reset_hunk<cr>", desc = "Reset hunk" },
           },
 
-          { "<LEADER>hS", gs.stage_buffer, desc = "Stage Buffer" },
-          { "<LEADER>hu", gs.undo_stage_hunk, desc = "Undo Stage Hunk" },
-          { "<LEADER>hR", gs.reset_buffer, desc = "Reset Buffer" },
-          { "<LEADER>hp", gs.preview_hunk_inline, desc = "Preview Hunk Inline" },
-          { "<LEADER>hb", function() gs.blame_line({ full = true }) end, desc = "Blame Line" },
-          { "<LEADER>hB", function() gs.blame() end, desc = "Blame Buffer" },
-          { "<LEADER>hd", gs.diffthis, desc = "Diff This" },
-          { "<LEADER>hD", function() gs.diffthis("~") end, desc = "Diff This ~" },
-          { "ih", ":<C-U>Gitsigns select_hunk<CR>", desc = "GitSigns Select Hunk", mode = { "o", "x" } },
+          { "<leader>hS", gs.stage_buffer, desc = "Stage Buffer" },
+          { "<leader>hu", gs.undo_stage_hunk, desc = "Undo Stage Hunk" },
+          { "<leader>hR", gs.reset_buffer, desc = "Reset Buffer" },
+          { "<leader>hp", gs.preview_hunk_inline, desc = "Preview Hunk Inline" },
+          { "<leader>hb", function() gs.blame_line({ full = true }) end, desc = "Blame Line" },
+          { "<leader>hB", function() gs.blame() end, desc = "Blame Buffer" },
+          { "<leader>hd", gs.diffthis, desc = "Diff This" },
+          { "<leader>hD", function() gs.diffthis("~") end, desc = "Diff This ~" },
+          { "ih", ":<c-U>Gitsigns select_hunk<cr>", desc = "GitSigns Select Hunk", mode = { "o", "x" } },
         })
       end,
       trouble = true,
@@ -65,7 +65,7 @@ return {
     cmd = { "GitDevOpen" },
     keys = {
       {
-        "<LEADER>go",
+        "<leader>go",
         function()
           local repo = vim.fn.input("Repository name / URI: ")
           if repo ~= "" then
@@ -121,7 +121,7 @@ return {
     },
     keys = {
       {
-        "<LEADER>gl",
+        "<leader>gl",
         function() require("gitgraph").draw({}, { all = true, max_count = 5000 }) end,
         desc = "GitGraph - draw",
       },

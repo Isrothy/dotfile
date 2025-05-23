@@ -2,21 +2,21 @@ return {
   {
     "akinsho/toggleterm.nvim",
     keys = {
-      [[<C-`>]],
+      [[<c-`>]],
       {
-        [[<LEADER>\]],
+        [[<leader>\]],
         function() require("toggleterm").send_lines_to_terminal("visual_selection", true, { args = vim.v.count1 }) end,
         mode = { "v" },
         desc = "Send visual selection to terminal",
       },
       {
-        [[<LEADER>|]],
+        [[<leader>|]],
         function() require("toggleterm").send_lines_to_terminal("visual_lines", true, { args = vim.v.count1 }) end,
         mode = "v",
         desc = "Send visual lines to terminal",
       },
       {
-        [[<LEADER>\]],
+        [[<leader>\]],
         function()
           vim.go.operatorfunc = "v:lua.send_to_term_op"
           vim.api.nvim_feedkeys("g@", "n", false)
@@ -26,24 +26,24 @@ return {
         desc = "Operator: send motion to terminal",
       },
       {
-        [[<LEADER>\\]],
+        [[<leader>\\]],
         function() require("toggleterm").send_lines_to_terminal("single_line", true, { args = vim.v.count1 }) end,
         mode = "n",
         desc = "Send current line to terminal",
       },
       {
-        [[<LEADER>$/]],
-        "<CMD>TermSelect<CR>",
+        [[<leader>$/]],
+        "<cmd>TermSelect<cr>",
         desc = "Select terminal",
       },
       {
-        [[<LEADER>$N]],
-        "<CMD>ToggleTermSetName<CR>",
+        [[<leader>$N]],
+        "<cmd>ToggleTermSetName<cr>",
         desc = "Set name of terminal",
       },
       {
-        [[<LEADER>$n]],
-        "<CMD>TermNew<CR>",
+        [[<leader>$n]],
+        "<cmd>TermNew<cr>",
         desc = "Create new terminal",
       },
     },
@@ -69,7 +69,7 @@ return {
       end
     end,
     opts = {
-      open_mapping = [[<C-`>]],
+      open_mapping = [[<c-`>]],
       hide_numbers = true,
       autochdir = true,
       insert_mappings = true,

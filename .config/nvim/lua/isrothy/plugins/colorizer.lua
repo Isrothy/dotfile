@@ -9,10 +9,10 @@ return {
       "ColorizerToggle",
     },
     keys = {
-      { "<LEADER>Cc", "<CMD>ColorizerToggle<CR>", desc = "Toggle" },
-      { "<LEADER>Cr", "<CMD>ColorizerReloadAllBuffers<CR>", desc = "Reload" },
-      { "<LEADER>Ca", "<CMD>ColorizerAttachToBuffer<CR>", desc = "Attach" },
-      { "<LEADER>Cd", "<CMD>ColorizerDetachFromBuffer<CR>", desc = "Detach" },
+      { "<leader>Cc", "<cmd>ColorizerToggle<cr>", desc = "Toggle" },
+      { "<leader>Cr", "<cmd>ColorizerReloadAllBuffers<cr>", desc = "Reload" },
+      { "<leader>Ca", "<cmd>ColorizerAttachToBuffer<cr>", desc = "Attach" },
+      { "<leader>Cd", "<cmd>ColorizerDetachFromBuffer<cr>", desc = "Detach" },
     },
     init = function() vim.opt.termguicolors = true end,
     opts = {

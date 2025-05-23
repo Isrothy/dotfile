@@ -21,10 +21,10 @@ return {
       strategy = "toggleterm",
       task_list = {
         bindings = {
-          ["<C-H>"] = false,
-          ["<C-J>"] = false,
-          ["<C-K>"] = false,
-          ["<C-L>"] = false,
+          ["<c-h>"] = false,
+          ["<c-j>"] = false,
+          ["<c-k>"] = false,
+          ["<c-l>"] = false,
         },
       },
       form = {
@@ -44,13 +44,13 @@ return {
       },
     },
     keys = {
-      { "<LEADER>!w", "<CMD>OverseerToggle<CR>", desc = "Task list" },
-      { "<LEADER>!o", "<CMD>OverseerRun<CR>", desc = "Run task" },
-      { "<LEADER>!q", "<CMD>OverseerQuickAction<CR>", desc = "Action recent task" },
-      { "<LEADER>!i", "<CMD>OverseerInfo<CR>", desc = "Overseer info" },
-      { "<LEADER>!b", "<CMD>OverseerBuild<CR>", desc = "Task builder" },
-      { "<LEADER>!t", "<CMD>OverseerTaskAction<CR>", desc = "Task action" },
-      { "<LEADER>!c", "<CMD>OverseerClearCache<CR>", desc = "Clear cache" },
+      { "<leader>!w", "<cmd>OverseerToggle<cr>", desc = "Task list" },
+      { "<leader>!o", "<cmd>OverseerRun<cr>", desc = "Run task" },
+      { "<leader>!q", "<cmd>OverseerQuickAction<cr>", desc = "Action recent task" },
+      { "<leader>!i", "<cmd>OverseerInfo<cr>", desc = "Overseer info" },
+      { "<leader>!b", "<cmd>OverseerBuild<cr>", desc = "Task builder" },
+      { "<leader>!t", "<cmd>OverseerTaskAction<cr>", desc = "Task action" },
+      { "<leader>!c", "<cmd>OverseerClearCache<cr>", desc = "Clear cache" },
     },
   },
 }

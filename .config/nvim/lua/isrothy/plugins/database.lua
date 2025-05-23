@@ -8,19 +8,19 @@ return {
     cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection", "DBUIFindBuffer" },
     dependencies = "vim-dadbod",
     keys = {
-      { "<CR>", "<PLUG>(DBUI_SelectLine)", desc = "Select line", ft = { "dbui" } },
-      { "<LOCALLEADER>o", "<PLUG>(DBUI_SelectLine)", desc = "Select line", ft = { "dbui" } },
-      { "<LOCALLEADER>s", "<PLUG>(DBUI_SelectLineVsplit)", desc = "Select line", ft = { "dbui" } },
-      { "<LOCALLEADER>d", "<PLUG>(DBUI_DeleteLine)", desc = "Delete line", ft = { "dbui" } },
-      { "<LOCALLEADER>R", "<PLUG>(DBUI_Redraw)", desc = "Refresh", ft = { "dbui" } },
-      { "<LOCALLEADER>r", "<PLUG>(DBUI_RenameLine)", desc = "Rename", ft = { "dbui" } },
-      { "<LOCALLEADER>a", "<PLUG>(DBUI_AddConnection)", desc = "Add connection", ft = { "dbui" } },
-      { "<LOCALLEADER>h", "<PLUG>(DBUI_ToggleDetails)", desc = "Toggle details", ft = { "dbui" } },
-      { "<LOCALLEADER>q", "<PLUG>(DBUI_Quit)", desc = "Quit", ft = { "dbui" } },
-      { "<LOCALLEADER>f", "<PLUG>(DBUI_JumpToForeignKey)", desc = "Jump to foreignkey", ft = { "dbout" } },
-      { "<LOCALLEADER>c", "<PLUG>(DBUI_YankCellValue)", desc = "Select cell value", ft = { "dbout" } },
-      { "<LOCALLEADER>h", "<PLUG>(DBUI_YankHeader)", desc = "Yank header", ft = { "dbout" } },
-      { "<LOCALLEADER>u", "<PLUG>(DBUI_ToggleResultLayout)", desc = "Toggle result layout", ft = { "dbout" } },
+      { "<cr>", "<plug>(DBUI_SelectLine)", desc = "Select line", ft = { "dbui" } },
+      { "<localleader>o", "<plug>(DBUI_SelectLine)", desc = "Select line", ft = { "dbui" } },
+      { "<localleader>s", "<plug>(DBUI_SelectLineVsplit)", desc = "Select line", ft = { "dbui" } },
+      { "<localleader>d", "<plug>(DBUI_DeleteLine)", desc = "Delete line", ft = { "dbui" } },
+      { "<localleader>R", "<plug>(DBUI_Redraw)", desc = "Refresh", ft = { "dbui" } },
+      { "<localleader>r", "<plug>(DBUI_RenameLine)", desc = "Rename", ft = { "dbui" } },
+      { "<localleader>a", "<plug>(DBUI_AddConnection)", desc = "Add connection", ft = { "dbui" } },
+      { "<localleader>h", "<plug>(DBUI_ToggleDetails)", desc = "Toggle details", ft = { "dbui" } },
+      { "<localleader>q", "<plug>(DBUI_Quit)", desc = "Quit", ft = { "dbui" } },
+      { "<localleader>f", "<plug>(DBUI_JumpToForeignKey)", desc = "Jump to foreignkey", ft = { "dbout" } },
+      { "<localleader>c", "<plug>(DBUI_YankCellValue)", desc = "Select cell value", ft = { "dbout" } },
+      { "<localleader>h", "<plug>(DBUI_YankHeader)", desc = "Yank header", ft = { "dbout" } },
+      { "<localleader>u", "<plug>(DBUI_ToggleResultLayout)", desc = "Toggle result layout", ft = { "dbout" } },
     },
     init = function()
       local data_path = vim.fn.stdpath("data")
@@ -45,10 +45,10 @@ return {
           end
           local wk = require("which-key")
           wk.add({
-            { "<LOCALLEADER>d", group = "DBUI" },
-            { "<LOCALLEADER>ds", "<PLUG>(DBUI_ExecuteQuery)", desc = "Execute query" },
-            { "<LOCALLEADER>dw", "<PLUG>(DBUI_SaveQuery)", desc = "Save query" },
-            { "<LOCALLEADER>de", "<PLUG>(DBUI_EditBindParameters)", desc = "Edit bind parameters" },
+            { "<localleader>d", group = "DBUI" },
+            { "<localleader>ds", "<plug>(DBUI_ExecuteQuery)", desc = "Execute query" },
+            { "<localleader>dw", "<plug>(DBUI_SaveQuery)", desc = "Save query" },
+            { "<localleader>de", "<plug>(DBUI_EditBindParameters)", desc = "Edit bind parameters" },
           })
         end,
       })

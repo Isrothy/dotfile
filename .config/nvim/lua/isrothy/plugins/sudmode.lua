@@ -12,7 +12,7 @@ return {
     submode.create("WinResize", {
       mode = "n",
       enter = "<leader>wr",
-      leave = { "<Esc>", "q", "<C-c>" },
+      leave = { "<esc>", "q", "<c-c>" },
       hook = {
         on_enter = function()
           vim.notify("Use { h, j, k, l } or { <Left>, <Down>, <Up>, <Right> } to resize the window")
@@ -40,7 +40,7 @@ return {
     submode.create("Debug", {
       mode = "n",
       enter = "<leader>dd",
-      leave = { "<Esc>", "q", "<c-c>" },
+      leave = { "<esc>", "q", "<c-c>" },
       hook = {
         on_enter = function() vim.notify("Enter debug mode") end,
         on_leave = function() vim.notify("Exit debug mode") end,

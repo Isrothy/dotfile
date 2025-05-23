@@ -2,10 +2,10 @@ return {
   "folke/trouble.nvim",
   cmd = { "Trouble" },
   keys = {
-    { "<LEADER>xx", "<CMD>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)" },
+    { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
     {
-      "<LEADER>xX",
-      "<CMD>Trouble diagnostics toggle filter.buf=0<CR>",
+      "<leader>xX",
+      "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
       desc = "Buffer diagnostics (Trouble)",
     },
 

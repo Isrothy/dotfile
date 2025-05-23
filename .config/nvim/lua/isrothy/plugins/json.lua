@@ -4,8 +4,8 @@ return {
     ft = { "json", "yaml" },
     cmd = { "JqxList", "JqxQuery" },
     keys = {
-      { "<LOCALLEADER>j", "", desc = "+Jqx", ft = { "json", "yaml" } },
-      { "<LOCALLEADER>jl", "<CMD>JqxList<CR>", desc = "Jqx list", ft = { "json", "yaml" } },
+      { "<localleader>j", "", desc = "+Jqx", ft = { "json", "yaml" } },
+      { "<localleader>jl", "<cmd>JqxList<cr>", desc = "Jqx list", ft = { "json", "yaml" } },
     },
   },
   {

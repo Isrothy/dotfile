@@ -285,74 +285,74 @@ return {
     },
   },
   keys = {
-    { "<LEADER>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Config file" },
-    { "<LEADER>ff", function() Snacks.picker.files() end, desc = "Files" },
-    { "<LEADER>fr", function() Snacks.picker.recent() end, desc = "Recent" },
-    { "<LEADER>fs", function() Snacks.picker.smart() end, desc = "Smart search" },
-    { "<LEADER>fz", function() Snacks.picker.zoxide() end, desc = "Zoxide" },
-    { "<LEADER>fp", function() Snacks.picker.projects() end, desc = "Projects" },
+    { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Config file" },
+    { "<leader>ff", function() Snacks.picker.files() end, desc = "Files" },
+    { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
+    { "<leader>fs", function() Snacks.picker.smart() end, desc = "Smart search" },
+    { "<leader>fz", function() Snacks.picker.zoxide() end, desc = "Zoxide" },
+    { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
 
-    { "<LEADER>ia", function() Snacks.picker.autocmds() end, desc = "Autocommands" },
-    { "<LEADER>ic", function() Snacks.picker.commands() end, desc = "Commands" },
-    { "<LEADER>ih", function() Snacks.picker.highlights() end, desc = "Highlights" },
-    { "<LEADER>ii", function() Snacks.picker.icons() end, desc = "Icons" },
-    { "<LEADER>ij", function() Snacks.picker.jumps() end, desc = "Jumps" },
-    { "<LEADER>ik", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
-    { "<LEADER>il", function() Snacks.picker.loclist() end, desc = "Location list" },
-    { "<LEADER>iq", function() Snacks.picker.qflist() end, desc = "Quickfix list" },
-    { "<LEADER>i'", function() Snacks.picker.marks() end, desc = "Marks" },
-    { "<LEADER>i/", function() Snacks.picker.search_history() end, desc = "Search history" },
-    { "<LEADER>i:", function() Snacks.picker.command_history() end, desc = "Command history" },
-    { '<LEADER>i"', function() Snacks.picker.registers() end, desc = "Registers" },
-    { "<LEADER>i<F1>", function() Snacks.picker.help() end, desc = "Help pages" },
+    { "<leader>ia", function() Snacks.picker.autocmds() end, desc = "Autocommands" },
+    { "<leader>ic", function() Snacks.picker.commands() end, desc = "Commands" },
+    { "<leader>ih", function() Snacks.picker.highlights() end, desc = "Highlights" },
+    { "<leader>ii", function() Snacks.picker.icons() end, desc = "Icons" },
+    { "<leader>ij", function() Snacks.picker.jumps() end, desc = "Jumps" },
+    { "<leader>ik", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+    { "<leader>il", function() Snacks.picker.loclist() end, desc = "Location list" },
+    { "<leader>iq", function() Snacks.picker.qflist() end, desc = "Quickfix list" },
+    { "<leader>i'", function() Snacks.picker.marks() end, desc = "Marks" },
+    { "<leader>i/", function() Snacks.picker.search_history() end, desc = "Search history" },
+    { "<leader>i:", function() Snacks.picker.command_history() end, desc = "Command history" },
+    { '<leader>i"', function() Snacks.picker.registers() end, desc = "Registers" },
+    { "<leader>i<F1>", function() Snacks.picker.help() end, desc = "Help pages" },
 
-    { "<LEADER>cN", function() Snacks.rename.rename_file() end, desc = "Rename file" },
-    { "<LEADER>jd", function() Snacks.picker.lsp_definitions({ auto_confirm = false }) end, desc = "Definition" },
-    { "<LEADER>jD", function() Snacks.picker.lsp_declarations({ auto_confirm = false }) end, desc = "Declaration" },
+    { "<leader>cN", function() Snacks.rename.rename_file() end, desc = "Rename file" },
+    { "<leader>jd", function() Snacks.picker.lsp_definitions({ auto_confirm = false }) end, desc = "Definition" },
+    { "<leader>jD", function() Snacks.picker.lsp_declarations({ auto_confirm = false }) end, desc = "Declaration" },
     {
-      "<LEADER>ji",
+      "<leader>ji",
       function() Snacks.picker.lsp_implementations({ auto_confirm = false }) end,
       desc = "Implementation",
     },
-    { "<LEADER>jr", function() Snacks.picker.lsp_references({ auto_confirm = false }) end, desc = "References" },
-    { "<LEADER>js", function() Snacks.picker.lsp_symbols() end, desc = "Symbols" },
+    { "<leader>jr", function() Snacks.picker.lsp_references({ auto_confirm = false }) end, desc = "References" },
+    { "<leader>js", function() Snacks.picker.lsp_symbols() end, desc = "Symbols" },
     {
-      "<LEADER>jt",
+      "<leader>jt",
       function() Snacks.picker.lsp_type_definitions({ auto_confirm = false }) end,
       desc = "Type definition",
     },
-    { "<LEADER>jw", function() Snacks.picker.lsp_workspace_symbols() end, desc = "Workspace symbols" },
+    { "<leader>jw", function() Snacks.picker.lsp_workspace_symbols() end, desc = "Workspace symbols" },
 
-    { "<LEADER>bd", function() Snacks.bufdelete() end, desc = "Delete current buffer" },
-    { "<LEADER>b/", function() Snacks.picker.buffers() end, desc = "Picker" },
+    { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete current buffer" },
+    { "<leader>b/", function() Snacks.picker.buffers() end, desc = "Picker" },
 
-    { "<LEADER>gc", function() Snacks.picker.git_log() end, desc = "Git log" },
-    { "<LEADER>gs", function() Snacks.picker.git_status() end, desc = "Git status" },
-    { "<LEADER>gf", function() Snacks.picker.git_files() end, desc = "Search git files" },
-    { "<LEADER>gb", function() Snacks.git.blame_line() end, desc = "Git blame line" },
-    { "<LEADER>gB", function() Snacks.gitbrowse() end, desc = "Git browse" },
+    { "<leader>gc", function() Snacks.picker.git_log() end, desc = "Git log" },
+    { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git status" },
+    { "<leader>gf", function() Snacks.picker.git_files() end, desc = "Search git files" },
+    { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git blame line" },
+    { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git browse" },
 
-    { "<LEADER>nd", function() Snacks.notifier.hide() end, desc = "Dissmiss" },
-    { "<LEADER>nh", function() Snacks.notifier.show_history() end, desc = "History" },
-    { "<LEADER>n/", function() Snacks.picker.notifications() end, desc = "Search" },
+    { "<leader>nd", function() Snacks.notifier.hide() end, desc = "Dissmiss" },
+    { "<leader>nh", function() Snacks.notifier.show_history() end, desc = "History" },
+    { "<leader>n/", function() Snacks.picker.notifications() end, desc = "Search" },
 
-    { "<LEADER>u/", function() Snacks.picker.undo() end, desc = "Search" },
+    { "<leader>u/", function() Snacks.picker.undo() end, desc = "Search" },
 
-    { "<LEADER>x/", function() Snacks.picker.diagnostics() end, desc = "Picker" },
-    { "<LEADER>x?", function() Snacks.picker.diagnostics_buffer() end, desc = "Search buffer picker" },
+    { "<leader>x/", function() Snacks.picker.diagnostics() end, desc = "Picker" },
+    { "<leader>x?", function() Snacks.picker.diagnostics_buffer() end, desc = "Search buffer picker" },
 
-    { "<LEADER>zz", function() Snacks.zen() end, desc = "Toggle zen mode" },
-    { "<LEADER>zo", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
+    { "<leader>zz", function() Snacks.zen() end, desc = "Toggle zen mode" },
+    { "<leader>zo", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
 
-    { "<LEADER>//", function() Snacks.picker.grep() end, desc = "Grep" },
-    { "<LEADER>/l", function() Snacks.picker.lines() end, desc = "Buffer lines" },
-    { "<LEADER>/b", function() Snacks.picker.grep_buffers() end, desc = "Grep open buffers" },
-    { "<LEADER>/w", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
+    { "<leader>//", function() Snacks.picker.grep() end, desc = "Grep" },
+    { "<leader>/l", function() Snacks.picker.lines() end, desc = "Buffer lines" },
+    { "<leader>/b", function() Snacks.picker.grep_buffers() end, desc = "Grep open buffers" },
+    { "<leader>/w", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
 
-    { "<LEADER>..", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
-    { "<LEADER>.s", function() Snacks.scratch.select() end, desc = "Select scratch buffer" },
+    { "<leader>..", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+    { "<leader>.s", function() Snacks.scratch.select() end, desc = "Select scratch buffer" },
 
-    { "<LEADER>;", function() Snacks.picker.resume() end, desc = "Resume" },
+    { "<leader>;", function() Snacks.picker.resume() end, desc = "Resume" },
 
     { "]]", function() Snacks.words.jump(vim.v.count1, true) end, desc = "Next reference", mode = { "n", "t" } },
     { "[[", function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Prev reference", mode = { "n", "t" } },
@@ -367,21 +367,21 @@ return {
         vim.print = _G.dd -- Override print to use snacks for `:=` command
 
         -- Create some toggle mappings
-        Snacks.toggle.option("spell", { name = "spelling" }):map("<LEADER>os")
-        Snacks.toggle.option("wrap", { name = "wrap" }):map("<LEADER>ow")
-        Snacks.toggle.option("relativenumber", { name = "relative number" }):map("<LEADER>oL")
-        Snacks.toggle.line_number({ name = "line number" }):map("<LEADER>ol")
-        Snacks.toggle.diagnostics({ name = "diagnostics" }):map("<LEADER>xu")
+        Snacks.toggle.option("spell", { name = "spelling" }):map("<leader>os")
+        Snacks.toggle.option("wrap", { name = "wrap" }):map("<leader>ow")
+        Snacks.toggle.option("relativenumber", { name = "relative number" }):map("<leader>or")
+        Snacks.toggle.line_number({ name = "line number" }):map("<leader>ol")
         Snacks.toggle
           .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
-          :map("<LEADER>oc")
+          :map("<leader>oc")
         Snacks.toggle
           .option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "tabline" })
-          :map("<LEADER>ot")
-        Snacks.toggle.treesitter({ name = "treesitter" }):map("<LEADER>oT")
-        Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<LEADER>li")
-        Snacks.toggle.indent():map("<LEADER><SPACE>i")
-        Snacks.toggle.dim():map("<LEADER>zd")
+          :map("<leader>ot")
+        Snacks.toggle.treesitter({ name = "treesitter" }):map("<leader>oT")
+        Snacks.toggle.diagnostics({ name = "diagnostics" }):map("<leader>xu")
+        Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<leader>li")
+        Snacks.toggle.indent():map("<leader><space>i")
+        Snacks.toggle.dim():map("<leader>zd")
       end,
     })
   end,

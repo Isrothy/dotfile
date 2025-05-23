@@ -9,7 +9,7 @@ return {
     event = "ModeChanged *:[vV\22]",
     keys = {
       {
-        "<LEADER><SPACE>v",
+        "<leader><space>v",
         function() require("visual-whitespace").toggle() end,
         desc = "Visual Whitespace: Toggle",
       },

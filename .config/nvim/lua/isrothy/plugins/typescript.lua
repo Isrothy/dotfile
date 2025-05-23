@@ -12,6 +12,13 @@ return {
       "TSToolsGoToSourceDefinition",
       "TSToolsFileReferences",
     },
+    keys = {
+      { "<localleader>t", "", desc = "+ Typescriptreact tool" },
+      { "<localleader>ti", "<cmd>TSToolsOrganizeImports<cr>", desc = "Organize imports" },
+      { "<localleader>tf", "<cmd>TSToolsFixAll<cr>", desc = "Fix all" },
+      { "<localleader>ts", "<cmd>TSToolsGoToSourceDefinition<cr>", desc = "Go to source" },
+      { "<localleader>tr", "<cmd>TSToolsFileReferences<cr>", desc = "File reference" },
+    },
     ft = {
       "typescript",
       "typescriptreact",

@@ -12,12 +12,12 @@ return {
       "ClangdMemoryUsage",
     },
     keys = {
-      { "<LOCALLEADER>c", "", desc = "+Clangd", ft = clangdft },
-      { "<LOCALLEADER>ch", "<CMD>ClangdSwitchSourceHeader<CR>", desc = "Switch source header", ft = clangdft },
-      { "<LOCALLEADER>ca", "<CMD>ClangdAST<CR>", desc = "AST", ft = clangdft },
-      { "<LOCALLEADER>cs", "<CMD>ClangdSymbolInfo<CR>", desc = "Symbol info", ft = clangdft },
-      { "<LOCALLEADER>ct", "<CMD>ClangdTypeHierarchy<CR>", desc = "Type hierarchy", ft = clangdft },
-      { "<LOCALLEADER>cm", "<CMD>ClangdMemoryUsage<CR>", desc = "Memory usage", ft = clangdft },
+      { "<localleader>c", "", desc = "+Clangd", ft = clangdft },
+      { "<localleader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch source header", ft = clangdft },
+      { "<localleader>ca", "<cmd>ClangdAST<cr>", desc = "AST", ft = clangdft },
+      { "<localleader>ci", "<cmd>ClangdSymbolInfo<cr>", desc = "Symbol info", ft = clangdft },
+      { "<localleader>ct", "<cmd>ClangdTypeHierarchy<cr>", desc = "Type hierarchy", ft = clangdft },
+      { "<localleader>cm", "<cmd>ClangdMemoryUsage<cr>", desc = "Memory usage", ft = clangdft },
     },
     config = function()
       require("clangd_extensions").setup({

@@ -29,7 +29,7 @@ vim.api.nvim_create_autocmd("FileType", {
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<CMD>close<CR>", { buffer = event.buf, silent = true })
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
 
@@ -144,7 +144,6 @@ vim.api.nvim_create_autocmd("CmdlineEnter", {
   pattern = "*",
   callback = function() vim.wo.relativenumber = false end,
 })
-
 vim.api.nvim_create_autocmd("CmdlineLeave", {
   group = "ToggleLineNumbers",
   pattern = "*",
@@ -248,13 +247,13 @@ local function set_diff_keymap()
     return
   end
   which_key.add({
-    { "<LocalLeader>d", group = "Diff", mode = { "n", "x" } },
-    { "<LocalLeader>dg", "<cmd>diffget<CR>", desc = "Diff: Get from other", mode = { "n", "x" } },
-    { "<LocalLeader>dp", "<cmd>diffput<CR>", desc = "Diff: Put from other", mode = { "n", "x" } },
+    { "<localleader>d", group = "Diff", mode = { "n", "x" } },
+    { "<localleader>dg", "<cmd>diffget<cr>", desc = "Diff: Get from other", mode = { "n", "x" } },
+    { "<localleader>dp", "<cmd>diffput<cr>", desc = "Diff: Put from other", mode = { "n", "x" } },
 
-    { "<LocalLeader>dl", "<cmd>diffget LO<cr>", desc = "Diff: Get from LOCAL", mode = { "n", "x" } },
-    { "<LocalLeader>db", "<cmd>diffget BA<cr>", desc = "Diff: Get from BASE", mode = { "n", "x" } },
-    { "<LocalLeader>dr", "<cmd>diffget RE<cr>", desc = "Diff: Get from REMOTE", mode = { "n", "x" } },
+    { "<localleader>dl", "<cmd>diffget LO<cr>", desc = "Diff: Get from LOCAL", mode = { "n", "x" } },
+    { "<localleader>db", "<cmd>diffget BA<cr>", desc = "Diff: Get from BASE", mode = { "n", "x" } },
+    { "<localleader>dr", "<cmd>diffget RE<cr>", desc = "Diff: Get from REMOTE", mode = { "n", "x" } },
   })
 end
 

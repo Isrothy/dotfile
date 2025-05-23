@@ -15,7 +15,7 @@ return {
         "spectre_panel",
       },
       fast_wrap = {
-        map = "<M-e>",
+        map = "<m-e>",
         chars = { "{", "[", "(", '"', "'" },
         pattern = [=[[%'%"%>%]%)%}%,]]=],
         end_key = "$",
@@ -30,7 +30,6 @@ return {
   {
     "windwp/nvim-ts-autotag",
     event = { "BufReadPost", "BufNewFile" },
-    enabled = true,
     opts = {
       opts = {
         enable_rename = true,

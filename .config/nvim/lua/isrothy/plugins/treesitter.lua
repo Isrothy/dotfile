@@ -16,7 +16,18 @@ return {
       include_match_words = false,
     },
     textobjects = {
-      select = { enable = false },
+      select = {
+        enable = true,
+        lookahead = true,
+        keymaps = {
+          ["af"] = { query = "@function.outer", desc = "Around a function" },
+          ["if"] = { query = "@function.inner", desc = "Inside a function" },
+          ["ac"] = { query = "@class.outer", desc = "Around a class" },
+          ["ic"] = { query = "@class.inner", desc = "Inside a class" },
+          ["al"] = { query = "@loop.outer", desc = "Around a loop" },
+          ["il"] = { query = "@loop.inner", desc = "Inside a loop" },
+        },
+      },
     },
     indent = {
       enable = false,
@@ -34,9 +45,6 @@ return {
         scope_incremental = false,
         -- scope_incremental = "<c-s>",
       },
-    },
-    endwise = {
-      enable = true,
     },
   },
   config = function(_, opts)

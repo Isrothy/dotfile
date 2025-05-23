@@ -3,12 +3,12 @@ return {
     "olimorris/persisted.nvim",
     event = { "BufReadPre" },
     keys = {
-      { "<LEADER>qd", "<CMD>SessionDelete<CR>", desc = "Delete session" },
-      { "<LEADER>ql", "<CMD>SessionLoad<CR>", desc = "Load session" },
-      { "<LEADER>qf", "<CMD>SessionLoadFromFile<CR>", desc = "Load session" },
-      { "<LEADER>qr", "<CMD>SessionLoadLast<CR>", desc = "Load last session" },
-      { "<LEADER>qs", "<CMD>SessionSave<CR>", desc = "Save session" },
-      { "<LEADER>qp", "<CMD>SessionSelect<CR>", desc = "Pick a session" },
+      { "<leader>qd", "<cmd>SessionDelete<cr>", desc = "Delete session" },
+      { "<leader>ql", "<cmd>SessionLoad<cr>", desc = "Load session" },
+      { "<leader>qf", "<cmd>SessionLoadFromFile<cr>", desc = "Load session" },
+      { "<leader>qr", "<cmd>SessionLoadLast<cr>", desc = "Load last session" },
+      { "<leader>qs", "<cmd>SessionSave<cr>", desc = "Save session" },
+      { "<leader>qp", "<cmd>SessionSelect<cr>", desc = "Pick a session" },
     },
     cmd = {
       "SessionDelete",
@@ -48,7 +48,7 @@ return {
                 vim.cmd("SessionStop")
               end
             end,
-          }):map("<LEADER>qq")
+          }):map("<leader>qq")
         end,
       })
     end,

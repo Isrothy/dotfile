@@ -6,21 +6,21 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     keys = {
-      { "<LEADER>rs", mode = "x", desc = "Refactor" },
+      { "<leader>rs", mode = "x", desc = "Refactor" },
       {
-        "<LEADER>ri",
+        "<leader>ri",
         function() require("refactoring").refactor("Inline Variable") end,
         mode = { "n", "x" },
         desc = "Inline variable",
       },
-      { "<LEADER>rb", function() require("refactoring").refactor("Extract Block") end, desc = "Extract block" },
+      { "<leader>rb", function() require("refactoring").refactor("Extract Block") end, desc = "Extract block" },
       {
-        "<LEADER>rf",
+        "<leader>rf",
         function() require("refactoring").refactor("Extract Block To File") end,
         desc = "Extract block to file",
       },
       {
-        "<LEADER>rP",
+        "<leader>rP",
         function()
           require("refactoring").debug.printf({
             below = false,
@@ -29,35 +29,35 @@ return {
         desc = "Debug print",
       },
       {
-        "<LEADER>rp",
+        "<leader>rp",
         function() require("refactoring").debug.print_var({ normal = true }) end,
         desc = "Debug print variable",
       },
       {
-        "<LEADER>rc",
+        "<leader>rc",
         function() require("refactoring").debug.cleanup({}) end,
         desc = "Debug cleanup",
       },
       {
-        "<LEADER>rf",
+        "<leader>rf",
         function() require("refactoring").refactor("Extract Function") end,
         mode = "x",
         desc = "Extract function",
       },
       {
-        "<LEADER>rF",
+        "<leader>rF",
         function() require("refactoring").refactor("Extract Function To File") end,
         mode = "x",
         desc = "Extract function to file",
       },
       {
-        "<LEADER>rx",
+        "<leader>rx",
         function() require("refactoring").refactor("Extract Variable") end,
         mode = "x",
         desc = "Extract variable",
       },
       {
-        "<LEADER>rp",
+        "<leader>rp",
         function() require("refactoring").debug.print_var() end,
         mode = "x",
         desc = "Debug print variable",
@@ -95,7 +95,7 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     keys = {
-      { "<LEADER>rd", function() require("neogen").generate() end, desc = "Generate docstring" },
+      { "<leader>rd", function() require("neogen").generate() end, desc = "Generate docstring" },
     },
     cmd = "Neogen",
     opts = {
@@ -106,10 +106,10 @@ return {
     "Wansmer/treesj",
     cmd = { "TSJSplit", "TSJSplit", "TSJToggle" },
     keys = {
-      { "<LEADER>rs", function() require("treesj").split() end, desc = "Split" },
-      { "<LEADER>rj", function() require("treesj").join() end, desc = "Join" },
+      { "<leader>rs", function() require("treesj").split() end, desc = "Split" },
+      { "<leader>rj", function() require("treesj").join() end, desc = "Join" },
       {
-        "<LEADER>rS",
+        "<leader>rS",
         function() require("treesj").split({ split = { recursive = true } }) end,
         desc = "Split recursively",
       },
