@@ -10,10 +10,7 @@ end
 return {
   {
     "folke/which-key.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "echasnovski/mini.ai",
-    },
+    dependencies = { "nvim-lua/plenary.nvim" },
     event = "VeryLazy",
     keys = {
       {
