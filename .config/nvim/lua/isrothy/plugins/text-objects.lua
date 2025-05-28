@@ -7,7 +7,6 @@ return {
       local innerOuterMaps = {
         number = "n",
         value = "v",
-        key = "k",
         subword = "S", -- lowercase taken for sentence textobj
         -- notebookCell = "N",
         closedFold = "z",
@@ -105,6 +104,53 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    event = { "BufReadPost", "BufNewFile" },
+    branch = "main",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    keys = {
+      {
+        "af",
+        function() require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects") end,
+        mode = { "x", "o" },
+        desc = "Around function",
+      },
+      {
+        "if",
+        function() require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects") end,
+        mode = { "x", "o" },
+        desc = "Inside function",
+      },
+      {
+        "ac",
+        function() require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects") end,
+        mode = { "x", "o" },
+        desc = "Around class",
+      },
+      {
+        "ic",
+        function() require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects") end,
+        mode = { "x", "o" },
+        desc = "Inside class",
+      },
+      {
+        "al",
+        function() require("nvim-treesitter-textobjects.select").select_textobject("@loop.outer", "textobjects") end,
+        mode = { "x", "o" },
+        desc = "Around loop",
+      },
+      {
+        "il",
+        function() require("nvim-treesitter-textobjects.select").select_textobject("@loop.inner", "textobjects") end,
+        mode = { "x", "o" },
+        desc = "Inside loop",
+      },
+    },
+    opts = {
+      move = {
+        set_jumps = true,
+      },
+      select = {
+        lookahead = true,
+      },
+    },
   },
 }

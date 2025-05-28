@@ -1,8 +1,7 @@
 return {
   "nvim-treesitter/nvim-treesitter",
-  event = { "VeryLazy" },
-  cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-  lazy = vim.fn.argc(-1) == 0,
+  branch = "main",
+  lazy = false,
   build = ":TSUpdate",
   opts = {
     ensure_installed = {},
@@ -47,8 +46,53 @@ return {
       },
     },
   },
+  init = function()
+    vim.api.nvim_create_autocmd("FileType", {
+      group = vim.api.nvim_create_augroup("start_treesitter", { clear = true }),
+      pattern = {
+        "bash",
+        "c",
+        "cmake",
+        "css",
+        "cpp",
+        "diff",
+        "haskell",
+        "html",
+        "java",
+        "javascript",
+        "jsdoc",
+        "json",
+        "jsonc",
+        "lua",
+        "lua",
+        "luadoc",
+        "luap",
+        "makefile",
+        "markdown",
+        "markdown_inline",
+        "mysql",
+        "ocaml",
+        "printf",
+        "python",
+        "query",
+        "regex",
+        "rust",
+        "sh",
+        "sql",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "xml",
+        "yaml",
+        "zsh",
+      },
+      callback = function() vim.treesitter.start() end,
+    })
+  end,
   config = function(_, opts)
-    require("nvim-treesitter.configs").setup(opts)
+    require("nvim-treesitter").setup(opts)
     vim.treesitter.language.register("bash", "zsh")
   end,
 }
