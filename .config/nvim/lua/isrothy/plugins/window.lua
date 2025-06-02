@@ -215,35 +215,49 @@ return {
       {
         "<c-h>",
         function() require("smart-splits").move_cursor_left() end,
-        desc = "Move cursor left",
+        desc = "Move cursor to the window to the left",
       },
       {
         "<c-j>",
         function() require("smart-splits").move_cursor_down() end,
-        desc = "Move cursor down",
+        desc = "Move cursor to the window below",
       },
       {
         "<c-k>",
         function() require("smart-splits").move_cursor_up() end,
-        desc = "Move cursor up",
+        desc = "Move cursor to the window above",
       },
       {
         "<c-l>",
         function() require("smart-splits").move_cursor_right() end,
-        desc = "Move cursor right",
+        desc = "Move cursor to the window to the right",
       },
 
-      { "<leader>bxh", function() require("smart-splits").swap_buf_left() end, desc = "Exchange buffers left" },
-      { "<leader>bxj", function() require("smart-splits").swap_buf_down() end, desc = "Exchange buffers down" },
-      { "<leader>bxk", function() require("smart-splits").swap_buf_up() end, desc = "Exchange buffers up" },
-      { "<leader>bxl", function() require("smart-splits").swap_buf_right() end, desc = "Exchange buffers right" },
+      {
+        "<leader>bxh",
+        function() require("smart-splits").swap_buf_left() end,
+        desc = "Exchange with the buffer to the left",
+      },
+      {
+        "<leader>bxj",
+        function() require("smart-splits").swap_buf_down() end,
+        desc = "Exchange with the buffer below",
+      },
+      {
+        "<leader>bxk",
+        function() require("smart-splits").swap_buf_up() end,
+        desc = "Exchange with the buffer above",
+      },
+      {
+        "<leader>bxl",
+        function() require("smart-splits").swap_buf_right() end,
+        desc = "Exchange with the buffer to the right",
+      },
 
       { "<m-h>", function() require("smart-splits").resize_left() end, desc = "Resize left" },
       { "<m-j>", function() require("smart-splits").resize_down() end, desc = "Resize down" },
       { "<m-k>", function() require("smart-splits").resize_up() end, desc = "Resize up" },
       { "<m-l>", function() require("smart-splits").resize_right() end, desc = "Resize right" },
-
-      -- { "<leader>wr", function() require("smart-splits").start_resize_mode() end, desc = "Start resize mode" },
     },
     opts = {
       ignored_buftypes = {

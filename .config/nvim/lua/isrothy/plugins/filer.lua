@@ -318,7 +318,7 @@ return {
 
             ["<localleader>i"] = "show_file_details",
             ["<localleader>m"] = "move", -- Takes text input for destination, also accepts the optional config.show_path option like "add".
-            ["<localleader>n"] = "rename",
+            ["<localleader>n"] = "new",
             ["<localleader>o"] = {
               "show_help",
               nowait = false,
@@ -337,7 +337,8 @@ return {
               config = { use_float = true, use_image_nvim = false },
             },
             ["<localleader>q"] = "close_window",
-            ["<localleader>r"] = "refresh",
+            ["<localleader>r"] = "rename",
+            ["<localleader>R"] = "refresh",
             ["<localleader>s"] = "split_with_window_picker",
             ["<localleader>t"] = "open_tabnew",
             ["<localleader>v"] = "vsplit_with_window_picker",

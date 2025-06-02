@@ -159,7 +159,7 @@ return {
     },
     dashboard = {
       width = 70,
-      autokeys = "1234567890abcdefhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      autokeys = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
       sections = {
         { section = "header" },
         { section = "keys", gap = 1, padding = 1 },
@@ -306,7 +306,7 @@ return {
     { '<leader>i"', function() Snacks.picker.registers() end, desc = "Registers" },
     { "<leader>i<F1>", function() Snacks.picker.help() end, desc = "Help pages" },
 
-    { "<leader>cN", function() Snacks.rename.rename_file() end, desc = "Rename file" },
+    { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename file" },
     { "<leader>jd", function() Snacks.picker.lsp_definitions({ auto_confirm = false }) end, desc = "Definition" },
     { "<leader>jD", function() Snacks.picker.lsp_declarations({ auto_confirm = false }) end, desc = "Declaration" },
     {
@@ -354,8 +354,8 @@ return {
 
     { "<leader>;", function() Snacks.picker.resume() end, desc = "Resume" },
 
-    { "]]", function() Snacks.words.jump(vim.v.count1, true) end, desc = "Next reference", mode = { "n", "t" } },
-    { "[[", function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Prev reference", mode = { "n", "t" } },
+    { "]]", function() Snacks.words.jump(vim.v.count1, true) end, desc = "Next reference", mode = { "n" } },
+    { "[[", function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Prev reference", mode = { "n" } },
   },
   init = function()
     vim.api.nvim_create_autocmd("User", {

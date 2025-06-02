@@ -47,7 +47,6 @@ export PATH="$(brew --prefix)/opt/postgresql@16/bin:$PATH"
 export PATH="$(brew --prefix)/opt/ruby/bin:$PATH"
 export PATH="$(brew --prefix)/opt/tcl-tk@8/bin:$PATH"
 export PATH="$(brew --prefix)/opt/zip/bin:$PATH"
-export PATH="$(brew --prefix)/anaconda3/bin":$PATH
 export PATH="$HOME/.rustup/toolchains/nightly-aarch64-apple-darwin/bin:$PATH"
 export PATH="$HOME/.local/bin":$PATH
 export PATH="/Applications/Docker.app/Contents/Resources/bin":$PATH
@@ -63,6 +62,7 @@ export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export MYVIMRC=$HOME"/.config/nvim/init.lua"
 export MANPAGER='nvim +Man!'
 export MANWIDTH=80
+export EDITOR=nvim
 
 # history-substring-search
 bindkey '^[[A' history-substring-search-up
@@ -101,6 +101,28 @@ alias pipupall="pip3 list -o | cut -f1 -d' ' | tr ' ' '\n' | awk '{if(NR>=3)prin
 alias icat="kitty +kitten icat"
 alias d="kitten diff"
 
+# Check if the terminal likely supports OSC 133 (XT is a terminfo capability)
+# and ensure Kitty's full integration (which is more comprehensive) isn't already active.
+if (( ${+terminfo[XT]} )) && [[ -z "$KITTY_SHELL_INTEGRATION" ]]; then
+  _zsh_nvim_term_osc_precmd() {
+    print -Pn "\e]133;A\a"  # Mark: Start of prompt
+  }
+  _zsh_nvim_term_osc_preexec() {
+    print -Pn "\e]133;C\a"  # Mark: Start of command output/execution
+  }
+
+  # More robust precmd that includes D (end of last command) then A (start of new prompt)
+  _zsh_nvim_term_osc_precmd_fuller() {
+    local ret=$?
+    print -Pn "\e]133;D;${ret}\a" # Mark: End of last command output, with exit status
+    print -Pn "\e]133;A\a"         # Mark: Start of prompt
+  }
+
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd _zsh_nvim_term_osc_precmd_fuller
+  add-zsh-hook preexec _zsh_nvim_term_osc_preexec
+fi
+
 # open
 alias preview="open -a preview"
 alias typora="open -a typora"
@@ -112,22 +134,6 @@ eval "$(zoxide init zsh)"
 autoload -Uz edit-command-line
 zle -N edit-command-line
 
-# kitty-scrollback
-function kitty_scrollback_edit_command_line() {
-  local VISUAL=$HOME'/.local/share/nvim/lazy/kitty-scrollback.nvim/scripts/edit_command_line.sh'
-  zle edit-command-line
-  zle kill-whole-line
-}
-zle -N kitty_scrollback_edit_command_line
-
-bindkey '^x^e' kitty_scrollback_edit_command_line
-
 # api-keys
 [ -f ~/.api-keys ] && source ~/.api-keys
 
-
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/jiangjoshua/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions

@@ -30,7 +30,7 @@ opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldlevelstart = 99
 opt.foldmethod = "expr"
 opt.foldtext = "v:lua.get_foldtext()"
-opt.gp = "rg"
+opt.grepprg = "rg"
 opt.hidden = true
 opt.history = 2000
 opt.ignorecase = true
@@ -90,4 +90,3 @@ g.markdown_recommended_style = 0
 
 g.mapleader = " "
 g.maplocalleader = "\\"
-

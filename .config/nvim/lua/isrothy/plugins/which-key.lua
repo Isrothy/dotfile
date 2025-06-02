@@ -58,7 +58,7 @@ return {
         },
         {
           { "<leader>c", group = "Code", mode = { "n", "x" } },
-          { "<leader>cn", vim.lsp.buf.rename, desc = "Rename symbol" },
+          { "<leader>cr", vim.lsp.buf.rename, desc = "Rename symbol" },
           { "<leader>cl", vim.lsp.codelens.run, desc = "Code lens" },
           { "<leader>ca", vim.lsp.buf.code_action, desc = "Code action" },
         },
