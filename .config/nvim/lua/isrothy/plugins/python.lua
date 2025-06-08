@@ -12,6 +12,7 @@ return {
     },
     branch = "regexp",
     keys = {
+      { "<localleader>p", "", desc = "+Python", ft = "python" },
       { "<localleader>pv", "", desc = "+Venv", ft = "python" },
       { "<localleader>pvs", "<cmd>VenvSelect<cr>", desc = "Select venv", ft = "python" },
       { "<localleader>pvc", "<cmd>VenvSelectCached<cr>", desc = "Select cached venv", ft = "python" },

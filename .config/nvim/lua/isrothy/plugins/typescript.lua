@@ -1,3 +1,12 @@
+local ft = {
+  "typescript",
+  "typescriptreact",
+  "typescript.tsx",
+  "javascript",
+  "javascriptreact",
+  "javascript.jsx",
+}
+
 return {
   {
     "pmizio/typescript-tools.nvim",
@@ -13,11 +22,11 @@ return {
       "TSToolsFileReferences",
     },
     keys = {
-      { "<localleader>t", "", desc = "+ Typescriptreact tool" },
-      { "<localleader>ti", "<cmd>TSToolsOrganizeImports<cr>", desc = "Organize imports" },
-      { "<localleader>tf", "<cmd>TSToolsFixAll<cr>", desc = "Fix all" },
-      { "<localleader>ts", "<cmd>TSToolsGoToSourceDefinition<cr>", desc = "Go to source" },
-      { "<localleader>tr", "<cmd>TSToolsFileReferences<cr>", desc = "File reference" },
+      { "<localleader>t", "", desc = "+ Typescriptreact tool", ft = ft },
+      { "<localleader>ti", "<cmd>TSToolsOrganizeImports<cr>", desc = "Organize imports", ft = ft },
+      { "<localleader>tf", "<cmd>TSToolsFixAll<cr>", desc = "Fix all", ft = ft },
+      { "<localleader>ts", "<cmd>TSToolsGoToSourceDefinition<cr>", desc = "Go to source", ft = ft },
+      { "<localleader>tr", "<cmd>TSToolsFileReferences<cr>", desc = "File reference", ft = ft },
     },
     ft = {
       "typescript",

@@ -38,7 +38,7 @@ return {
     opts = {
       strategies = {
         chat = {
-          adapter = "gemini",
+          adapter = "gemma",
           keymaps = {
             send = {
               modes = { n = "<cr>" },
@@ -49,10 +49,10 @@ return {
           },
         },
         inline = {
-          adapter = "gemini",
+          adapter = "gemma",
         },
         cmd = {
-          adapter = "gemini",
+          adapter = "gemma",
         },
         display = {
           diff = {
@@ -72,22 +72,18 @@ return {
         },
       },
       adapters = {
-        ["gemini-2.5-pro"] = function()
-          return require("codecompanion.adapters").extend("gemini", {
-            name = "gemini-2.5-pro",
+        ["gemma"] = function()
+          return require("codecompanion.adapters").extend("ollama", {
+            name = "gemma",
             schema = {
               model = {
-                default = "gemini-2.5-pro-exp-03-25",
+                default = "gemma3:27b-it-qat",
               },
-            },
-          })
-        end,
-        ["gemini-2.5-flash"] = function()
-          return require("codecompanion.adapters").extend("gemini", {
-            name = "gemini-2.5-flash",
-            schema = {
-              model = {
-                default = "gemini-2.5-flash-preview-04-17",
+              num_ctx = {
+                default = 16384,
+              },
+              num_predict = {
+                default = -1,
               },
             },
           })

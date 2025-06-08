@@ -382,6 +382,17 @@ return {
         Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<leader>li")
         Snacks.toggle.indent():map("<leader><space>i")
         Snacks.toggle.dim():map("<leader>zd")
+        Snacks.toggle({
+          name = "LSP",
+          get = function() return #vim.lsp.get_clients() ~= 0 end,
+          set = function(state)
+            if state then
+              vim.cmd("LspStart")
+            else
+              vim.cmd("LspStop")
+            end
+          end,
+        }):map("<leader>ll")
       end,
     })
   end,

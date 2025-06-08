@@ -50,7 +50,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 
 -- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
-  group = augroup("last_loc"),
+  group = augroup("last_location"),
   callback = function(event)
     local exclude = { "gitcommit" }
     local buf = event.buf

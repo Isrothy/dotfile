@@ -151,7 +151,7 @@ local substitute = {
       enabled = true,
       timer = 500,
     },
-    preserve_cursor_position = true,
+    preserve_cursor_position = false,
     range = {
       prefix = "",
       prompt_current_text = false,
