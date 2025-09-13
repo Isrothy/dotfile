@@ -1,7 +1,6 @@
 return {
   {
     "nvim-java/nvim-java",
-    ft = "java",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "neovim/nvim-lspconfig",

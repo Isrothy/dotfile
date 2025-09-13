@@ -1,7 +1,7 @@
 local tab_size = function() return (vim.bo.expandtab and "␠" or "␉") .. vim.bo.tabstop end
 
-local bufnr = function() return vim.api.nvim_get_current_buf() end
-local winnr = function() return vim.api.nvim_get_current_win() end
+local bufnr = function() return "B:" .. vim.api.nvim_get_current_buf() end
+local winnr = function() return "W:" .. vim.api.nvim_get_current_win() end
 
 local trunc = function(trunc_width, trunc_len, hide_width, no_ellipsis)
   return function(str)
@@ -94,7 +94,6 @@ return {
             "mode",
             fmt = trunc(80, 4, nil, true),
           },
-          -- macro_recorder,
         },
         lualine_b = {
           { "b:gitsigns_head", icon = "" },
@@ -159,8 +158,6 @@ return {
           -- neocodeium_component,
         },
         lualine_z = {
-          -- "searchcount",
-          -- "selectioncount",
           "location",
           "progress",
           "filesize",

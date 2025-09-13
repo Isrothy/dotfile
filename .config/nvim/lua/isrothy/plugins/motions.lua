@@ -6,6 +6,7 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
     enabled = false,
+    lazy = false,
     opts = {
       keymaps = {
         horizontal_motions = true,

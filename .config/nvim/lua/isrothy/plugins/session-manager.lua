@@ -28,15 +28,13 @@ return {
         group = vim.api.nvim_create_augroup("delete buffer if it is snacks_dashboard", { clear = true }),
         callback = function()
           if vim.bo.filetype == "snacks_dashboard" then
-            vim.schedule(function()
-              Snacks.bufdelete()
-            end)
+            vim.schedule(function() Snacks.bufdelete() end)
           end
         end,
       })
       vim.api.nvim_create_autocmd("User", {
         pattern = "VeryLazy",
-        group = vim.api.nvim_create_augroup("", { clear = true }),
+        group = vim.api.nvim_create_augroup("toggle session", { clear = true }),
         callback = function()
           Snacks.toggle({
             name = "session",

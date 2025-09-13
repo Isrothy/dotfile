@@ -302,7 +302,7 @@ local dial = {
 }
 
 local mini_move = {
-  "echasnovski/mini.move",
+  "nvim-mini/mini.move",
   keys = {
     { "<m-h>", mode = { "x" }, desc = "Move left" },
     { "<m-k>", mode = { "x" }, desc = "Move up" },

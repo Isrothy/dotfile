@@ -155,6 +155,7 @@ return {
         "dbout",
       },
       x_multiplier = 4,
+      current_line_position = "percent",
       sync_cursor = true,
       click = {
         enabled = false,
@@ -178,7 +179,6 @@ return {
       },
       diagnostic = {
         enabled = true,
-        use_event_diagnostics = true,
         mode = "line",
       },
       git = {

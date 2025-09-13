@@ -104,9 +104,7 @@ return {
         sign = false,
         width = "block",
         border = "none",
-        below = "▔",
-        above = "▁",
-        right_pad = 1,
+        language_border = "",
       },
       heading = {
         sign = false,

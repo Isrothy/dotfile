@@ -79,6 +79,7 @@ opt.tabstop = 4
 opt.ttimeoutlen = 0
 opt.undofile = true
 opt.updatetime = 500
+opt.virtualedit = "block"
 opt.virtualedit = { "block", "onemore" }
 opt.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 opt.wildmenu = true

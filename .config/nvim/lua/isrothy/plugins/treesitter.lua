@@ -9,11 +9,6 @@ return {
     modules = {},
     auto_install = true,
     sync_install = false,
-    matchup = {
-      enable = false,
-      disable_virtual_text = true,
-      include_match_words = false,
-    },
     textobjects = {
       select = {
         enable = true,

@@ -68,6 +68,10 @@ return {
             columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
           },
         },
+        triggers = {
+          show_on_backspace = true,
+          show_on_backspace_in_keyword = true,
+        },
         list = {
           selection = {
             preselect = false,
@@ -146,7 +150,10 @@ return {
           },
         },
         providers = {
-          lsp = {},
+          lsp = {
+            name = "LSP",
+            module = "blink.cmp.sources.lsp",
+          },
           vimtex = {
             name = "vimtex",
             module = "blink.compat.source",
@@ -154,16 +161,6 @@ return {
           ripgrep = {
             module = "blink-ripgrep",
             name = "Ripgrep",
-            -- the options below are optional, some default values are shown
-            ---@module "blink-ripgrep"
-            ---@type blink-ripgrep.Options
-            opts = {
-              -- the minimum length of the current word to start searching
-              -- (if the word is shorter than this, the search will not start)
-              prefix_min_len = 3,
-              -- The number of lines to show around each match in the preview window
-              context_size = 5,
-            },
             score_offset = -3,
           },
           snippets = {

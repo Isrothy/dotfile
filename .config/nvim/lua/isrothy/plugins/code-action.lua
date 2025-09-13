@@ -6,7 +6,11 @@ return {
       { "folke/snacks.nvim" },
     },
     keys = {
-      { "<leader>ca", function() require("tiny-code-action").code_action({}) end, desc = "Code action" },
+      {
+        "<leader>ca",
+        function() require("tiny-code-action").code_action({}) end,
+        desc = "Code action",
+      },
     },
     opts = {
       backend = "delta",

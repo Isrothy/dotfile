@@ -2,7 +2,7 @@ return {
   {
     "HakonHarnes/img-clip.nvim",
     event = "VeryLazy",
-    cmd = { "PasteImage" },
+    cmd = { "PasteImage", "ImgClipDebug", "ImgClipConfig" },
     keys = {
       { "<leader>#", "<cmd>PasteImage<cr>", desc = "Paste image" },
       {
@@ -19,6 +19,13 @@ return {
         desc = "Image",
       },
     },
-    opts = {},
+    opts = {
+      default = {
+        drag_and_drop = {
+          enabled = false,
+          insert_mode = false,
+        },
+      },
+    },
   },
 }

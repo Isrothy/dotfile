@@ -1,9 +1,7 @@
 return {
   {
     "pwntester/octo.nvim",
-    requires = {
-      "nvim-lua/plenary.nvim",
-    },
+    dependencies = { "nvim-lua/plenary.nvim" },
     cmd = { "Octo" },
     keys = {
       { "<leader>Gi", "<cmd>Octo issue list<cr>", desc = "List issues (Octo)" },
@@ -26,7 +24,7 @@ return {
       { "@", "@<c-x><c-o>", mode = "i", ft = "octo", silent = true },
       { "#", "#<c-x><c-o>", mode = "i", ft = "octo", silent = true },
     },
-    init = function()
+    opts = function()
       local c = require("nordify.palette")["dark"]
       -- local c = require("nord.colors").palette ---@type Nord.Palette
       return {
@@ -47,13 +45,5 @@ return {
         },
       }
     end,
-  },
-  {
-    "topaxi/gh-actions.nvim",
-    keys = {
-      { "<leader>Ga", "<cmd>GhActions<cr>", desc = "Open Github actions" },
-    },
-    build = "make",
-    opts = {},
   },
 }

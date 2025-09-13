@@ -286,8 +286,8 @@ return {
   },
   keys = {
     { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Config file" },
-    { "<leader>ff", function() Snacks.picker.files() end, desc = "Files" },
-    { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
+    { "<leader>ff", function() Snacks.picker.files() end, desc = "Search files" },
+    { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent file" },
     { "<leader>fs", function() Snacks.picker.smart() end, desc = "Smart search" },
     { "<leader>fz", function() Snacks.picker.zoxide() end, desc = "Zoxide" },
     { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
@@ -392,7 +392,7 @@ return {
               vim.cmd("LspStop")
             end
           end,
-        }):map("<leader>ll")
+        }):map("<leader>L")
       end,
     })
   end,
