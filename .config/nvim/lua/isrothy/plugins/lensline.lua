@@ -28,7 +28,7 @@ return {
                 require("lensline").hide()
               end
             end,
-          }):map("<leader>ll")
+          }):map("<leader>cL")
         end,
       })
     end,
@@ -44,7 +44,7 @@ return {
           enabled = true,
           min_level = "WARN",
         },
-        { name = "last_author", enabled = true },
+        -- { name = "last_author", enabled = true },
       },
     },
   },

@@ -3,7 +3,6 @@ source $(brew --prefix)/share/antigen/antigen.zsh
 antigen use oh-my-zsh
 
 antigen bundle aliases
-antigen bundle brew
 antigen bundle cabal
 antigen bundle colored-man-pages
 antigen bundle colorize
@@ -52,8 +51,10 @@ export PATH="$HOME/.local/bin":$PATH
 export PATH="/Applications/Docker.app/Contents/Resources/bin":$PATH
 export PATH="/Applications/Docker.app/Contents/Resources/cli-plugins/":$PATH
 
+# export PDD_TEST_OUTPUT_PATH=tests
+# export PDD_EXAMPLE_OUTPUT_PATH=examples
 
-export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
+# export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
 export SSL_CERT_FILE="$(brew --prefix)/etc/openssl@3/cert.pem"
 export CURL_CA_BUNDLE="$(brew --prefix)/etc/openssl@3/cert.pem"
 export NODE_EXTRA_CA_CERTS="$(brew --prefix)/etc/openssl@3/cert.pem"
@@ -134,6 +135,22 @@ eval "$(zoxide init zsh)"
 autoload -Uz edit-command-line
 zle -N edit-command-line
 
+# ghcup
+
 # api-keys
 [ -f ~/.api-keys ] && source ~/.api-keys
 
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/jiangjoshua/.lmstudio/bin"
+# End of LM Studio CLI section
+
+
+fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
+zstyle ':completion:*' menu select
+
+[ -f "/Users/jiangjoshua/.ghcup/env" ] && . "/Users/jiangjoshua/.ghcup/env" # ghcup-env
+
+# PDD CLI completion
+# source /Users/jiangjoshua/Developer/PDD-example/.venv/lib/python3.12/site-packages/pdd/pdd_completion.zsh

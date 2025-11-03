@@ -102,21 +102,4 @@ return {
       snippet_engine = "nvim",
     },
   },
-  {
-    "Wansmer/treesj",
-    cmd = { "TSJSplit", "TSJSplit", "TSJToggle" },
-    keys = {
-      { "<leader>rs", function() require("treesj").split() end, desc = "Split" },
-      { "<leader>rj", function() require("treesj").join() end, desc = "Join" },
-      {
-        "<leader>rS",
-        function() require("treesj").split({ split = { recursive = true } }) end,
-        desc = "Split recursively",
-      },
-    },
-    opts = {
-      use_default_keymaps = false,
-      max_join_length = 0xffffffff,
-    },
-  },
 }

@@ -1,7 +1,7 @@
 return {
   {
     "MrcJkb/haskell-tools.nvim",
-    version = "^4",
+    version = "^6",
     ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
     keys = {
       { "<localleader>h", "", desc = "+Haskell tools", ft = { "haskell", "lhaskell" } },

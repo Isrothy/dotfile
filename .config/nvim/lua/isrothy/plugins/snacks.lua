@@ -34,6 +34,54 @@ return {
         cycle = true,
         preset = function() return vim.o.columns >= 120 and "default" or "vertical" end,
       },
+      icons = {
+        diagnostics = {
+          Error = " ",
+          Warn = " ",
+          Hint = " ",
+          Info = " ",
+        },
+        kinds = {
+          Array = " ",
+          Boolean = "󰨙 ",
+          Class = " ",
+          Color = " ",
+          Control = " ",
+          Collapsed = " ",
+          Constant = "󰏿 ",
+          Constructor = " ",
+          Copilot = " ",
+          Enum = " ",
+          EnumMember = " ",
+          Event = " ",
+          Field = " ",
+          File = "󰈙 ",
+          Folder = " ",
+          Function = "󰊕 ",
+          Interface = " ",
+          Key = "󰌋 ",
+          Keyword = " ",
+          Method = "󰊕 ",
+          Module = " ",
+          Namespace = "󰦮 ",
+          Null = " ",
+          Number = "󰎠 ",
+          Object = " ",
+          Operator = " ",
+          Package = " ",
+          Property = " ",
+          Reference = " ",
+          Snippet = "󱄽 ",
+          String = " ",
+          Struct = "󰆼 ",
+          Text = " ",
+          TypeParameter = " ",
+          Unit = " ",
+          Unknown = " ",
+          Value = " ",
+          Variable = "󰀫 ",
+        },
+      },
     },
     statuscolumn = {
       enabled = true,
@@ -159,7 +207,7 @@ return {
     },
     dashboard = {
       width = 70,
-      autokeys = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      autokeys = "1234567890abcdefimnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
       sections = {
         { section = "header" },
         { section = "keys", gap = 1, padding = 1 },
@@ -208,29 +256,30 @@ return {
 
       preset = {
         keys = {
+          { icon = "󰱽 ", key = "f", desc = "Find file", action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = " ", key = "n", desc = "New file", action = ":ene | startinsert" },
+          { icon = "󱋢 ", key = "r", desc = "Recent files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = "󰺯 ", key = "/", desc = "Grep", action = ":lua Snacks.dashboard.pick('live_grep')" },
           {
-            icon = "󰱽 ",
-            key = "f",
-            desc = "Find file",
-            action = ":lua Snacks.dashboard.pick('files')",
-          },
-          {
-            icon = " ",
-            key = "n",
-            desc = "New file",
-            action = ":ene | startinsert",
-          },
-          {
-            icon = "󰺯 ",
-            key = "/",
-            desc = "Grep",
-            action = ":lua Snacks.dashboard.pick('live_grep')",
-          },
-          {
-            icon = "󱋢 ",
-            key = "r",
-            desc = "Recent files",
-            action = ":lua Snacks.dashboard.pick('oldfiles')",
+            icon = " ",
+            key = "o",
+            desc = "Open repo",
+            action = function()
+              local repo = vim.fn.input("Repository name / URI: ")
+              if repo ~= "" then
+                vim.env.GIT_DIR = nil
+                vim.env.GIT_WORK_TREE = nil
+                require("git-dev").open(repo, {}, {
+                  cd_type = "global",
+                  opener = function(dir, _, selected_path)
+                    vim.cmd("Neotree " .. dir)
+                    if selected_path then
+                      vim.cmd("edit " .. selected_path)
+                    end
+                  end,
+                })
+              end
+            end,
           },
           {
             icon = " ",
@@ -244,19 +293,8 @@ return {
           --   desc = "Projects",
           --   action = ":Telescope projects",
           -- },
-          {
-            icon = " ",
-            key = "s",
-            desc = "Restore Session",
-            section = "session",
-          },
-          {
-            icon = "󰒲 ",
-            key = "l",
-            desc = "Lazy",
-            action = ":Lazy",
-            enabled = package.loaded.lazy ~= nil,
-          },
+          { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+          { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
           { icon = " ", key = "q", desc = "Quit", action = ":qa" },
         },
         header = header,
@@ -268,6 +306,13 @@ return {
     },
     notifier = {
       enabled = true,
+      icons = {
+        error = " ",
+        warn = " ",
+        info = " ",
+        debug = " ",
+        trace = " ",
+      },
       timeout = 5000,
     },
     quickfile = { enabled = true },
@@ -301,12 +346,33 @@ return {
     { "<leader>il", function() Snacks.picker.loclist() end, desc = "Location list" },
     { "<leader>iq", function() Snacks.picker.qflist() end, desc = "Quickfix list" },
     { "<leader>i'", function() Snacks.picker.marks() end, desc = "Marks" },
-    { "<leader>i/", function() Snacks.picker.search_history() end, desc = "Search history" },
-    { "<leader>i:", function() Snacks.picker.command_history() end, desc = "Command history" },
     { '<leader>i"', function() Snacks.picker.registers() end, desc = "Registers" },
+    {
+      "<leader>i/",
+      function()
+        Snacks.picker.search_history({
+          layout = {
+            preset = "select",
+          },
+        })
+      end,
+      desc = "Search history",
+    },
+    {
+      "<leader>i:",
+      function()
+        Snacks.picker.command_history({
+          layout = {
+            preset = "select",
+          },
+        })
+      end,
+      desc = "Command history",
+    },
     { "<leader>i<F1>", function() Snacks.picker.help() end, desc = "Help pages" },
 
     { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename file" },
+
     { "<leader>jd", function() Snacks.picker.lsp_definitions({ auto_confirm = false }) end, desc = "Definition" },
     { "<leader>jD", function() Snacks.picker.lsp_declarations({ auto_confirm = false }) end, desc = "Declaration" },
     {
@@ -315,6 +381,16 @@ return {
       desc = "Implementation",
     },
     { "<leader>jr", function() Snacks.picker.lsp_references({ auto_confirm = false }) end, desc = "References" },
+    {
+      "<leader>jc",
+      function() Snacks.picker.lsp_incoming_calls({ auto_confirm = false }) end,
+      desc = "Incoming calls",
+    },
+    {
+      "<leader>jo",
+      function() Snacks.picker.lsp_outgoing_calls({ auto_confirm = false }) end,
+      desc = "Outgoing calls",
+    },
     { "<leader>js", function() Snacks.picker.lsp_symbols() end, desc = "Symbols" },
     {
       "<leader>jt",
@@ -324,13 +400,24 @@ return {
     { "<leader>jw", function() Snacks.picker.lsp_workspace_symbols() end, desc = "Workspace symbols" },
 
     { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete current buffer" },
+    { "<leader>bD", function() Snacks.bufdelete.all() end, desc = "Delete all buffers" },
     { "<leader>b/", function() Snacks.picker.buffers() end, desc = "Picker" },
 
-    { "<leader>gc", function() Snacks.picker.git_log() end, desc = "Git log" },
-    { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git status" },
+    { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git blame current line" },
+    { "<leader>gB", function() Snacks.picker.git_branches() end, desc = "Git branches" },
+    { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Search git diff" },
     { "<leader>gf", function() Snacks.picker.git_files() end, desc = "Search git files" },
-    { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git blame line" },
-    { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git browse" },
+    { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git log" },
+    { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git log current line" },
+    { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git status" },
+    { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
+
+    { "<leader>Go", function() Snacks.gitbrowse.open() end, desc = "Open git repo" },
+    { "<leader>GO", function() Snacks.gitbrowse() end, desc = "Git browse" },
+    { "<leader>Gi", function() Snacks.picker.gh_issue() end, desc = "GitHub Issues (open)" },
+    { "<leader>GI", function() Snacks.picker.gh_issue({ state = "all" }) end, desc = "GitHub Issues (all)" },
+    { "<leader>Gp", function() Snacks.picker.gh_pr() end, desc = "GitHub Pull Requests (open)" },
+    { "<leader>GP", function() Snacks.picker.gh_pr({ state = "all" }) end, desc = "GitHub Pull Requests (all)" },
 
     { "<leader>nd", function() Snacks.notifier.hide() end, desc = "Dissmiss" },
     { "<leader>nh", function() Snacks.notifier.show_history() end, desc = "History" },
@@ -349,10 +436,10 @@ return {
     { "<leader>/b", function() Snacks.picker.grep_buffers() end, desc = "Grep open buffers" },
     { "<leader>/w", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
 
-    { "<leader>..", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+    { "<leader>..", function() Snacks.scratch() end, desc = "Toggle scratch buffer" },
     { "<leader>.s", function() Snacks.scratch.select() end, desc = "Select scratch buffer" },
 
-    { "<leader>;", function() Snacks.picker.resume() end, desc = "Resume" },
+    { "<leader>;", function() Snacks.picker.resume() end, desc = "Resume picker" },
 
     { "]]", function() Snacks.words.jump(vim.v.count1, true) end, desc = "Next reference", mode = { "n" } },
     { "[[", function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Prev reference", mode = { "n" } },
@@ -379,20 +466,9 @@ return {
           :map("<leader>ot")
         Snacks.toggle.treesitter({ name = "treesitter" }):map("<leader>oT")
         Snacks.toggle.diagnostics({ name = "diagnostics" }):map("<leader>xu")
-        Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<leader>li")
+        Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<leader>ci")
         Snacks.toggle.indent():map("<leader><space>i")
         Snacks.toggle.dim():map("<leader>zd")
-        Snacks.toggle({
-          name = "LSP",
-          get = function() return #vim.lsp.get_clients() ~= 0 end,
-          set = function(state)
-            if state then
-              vim.cmd("LspStart")
-            else
-              vim.cmd("LspStop")
-            end
-          end,
-        }):map("<leader>L")
       end,
     })
   end,

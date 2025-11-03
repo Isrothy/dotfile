@@ -61,25 +61,6 @@ return {
     },
   },
   {
-    "moyiz/git-dev.nvim",
-    cmd = { "GitDevOpen" },
-    keys = {
-      {
-        "<leader>go",
-        function()
-          local repo = vim.fn.input("Repository name / URI: ")
-          if repo ~= "" then
-            require("git-dev").open(repo)
-          end
-        end,
-        desc = "Open a remote git repository",
-      },
-    },
-    opts = {
-      cd_type = "tab",
-    },
-  },
-  {
     "isakbm/gitgraph.nvim",
     opts = {
       symbols = {
@@ -121,7 +102,7 @@ return {
     },
     keys = {
       {
-        "<leader>gl",
+        "<leader>gg",
         function() require("gitgraph").draw({}, { all = true, max_count = 5000 }) end,
         desc = "GitGraph - draw",
       },

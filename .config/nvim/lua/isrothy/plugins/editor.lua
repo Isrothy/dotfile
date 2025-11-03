@@ -47,4 +47,21 @@ return {
       },
     },
   },
+  {
+    "Wansmer/treesj",
+    cmd = { "TSJSplit", "TSJSplit", "TSJToggle" },
+    keys = {
+      { "g[", function() require("treesj").split() end, desc = "Split" },
+      { "g]", function() require("treesj").join() end, desc = "Join" },
+      {
+        "g{",
+        function() require("treesj").split({ split = { recursive = true } }) end,
+        desc = "Split recursively",
+      },
+    },
+    opts = {
+      use_default_keymaps = false,
+      max_join_length = 0xffffffff,
+    },
+  },
 }

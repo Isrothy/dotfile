@@ -182,20 +182,9 @@ return {
         include_current_win = true,
         bo = {
           filetype = {
-            "neo-tree",
             "neo-tree-popup",
             "notify",
-            "neominimap",
-            "quickfix",
-            "qf",
-            "aerial",
-            "edgy",
             "satellite",
-          },
-          buftype = {
-            "terminal",
-            "aerial",
-            "nofile",
           },
         },
       },
@@ -206,68 +195,6 @@ return {
         },
       },
       show_prompt = false,
-    },
-  },
-  {
-    "mrjones2014/smart-splits.nvim",
-    enabled = true,
-    keys = {
-      {
-        "<c-h>",
-        function() require("smart-splits").move_cursor_left() end,
-        desc = "Move cursor to the window to the left",
-      },
-      {
-        "<c-j>",
-        function() require("smart-splits").move_cursor_down() end,
-        desc = "Move cursor to the window below",
-      },
-      {
-        "<c-k>",
-        function() require("smart-splits").move_cursor_up() end,
-        desc = "Move cursor to the window above",
-      },
-      {
-        "<c-l>",
-        function() require("smart-splits").move_cursor_right() end,
-        desc = "Move cursor to the window to the right",
-      },
-
-      {
-        "<leader>bxh",
-        function() require("smart-splits").swap_buf_left() end,
-        desc = "Exchange with the buffer to the left",
-      },
-      {
-        "<leader>bxj",
-        function() require("smart-splits").swap_buf_down() end,
-        desc = "Exchange with the buffer below",
-      },
-      {
-        "<leader>bxk",
-        function() require("smart-splits").swap_buf_up() end,
-        desc = "Exchange with the buffer above",
-      },
-      {
-        "<leader>bxl",
-        function() require("smart-splits").swap_buf_right() end,
-        desc = "Exchange with the buffer to the right",
-      },
-
-      { "<m-h>", function() require("smart-splits").resize_left() end, desc = "Resize left" },
-      { "<m-j>", function() require("smart-splits").resize_down() end, desc = "Resize down" },
-      { "<m-k>", function() require("smart-splits").resize_up() end, desc = "Resize up" },
-      { "<m-l>", function() require("smart-splits").resize_right() end, desc = "Resize right" },
-    },
-    opts = {
-      ignored_buftypes = {
-        "nofile",
-        "quickfix",
-        "prompt",
-      },
-      default_amount = 1,
-      at_edge = "stop",
-      multiplexer_integration = false,
     },
   },
 }

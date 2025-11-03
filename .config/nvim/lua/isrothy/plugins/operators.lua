@@ -304,10 +304,10 @@ local dial = {
 local mini_move = {
   "nvim-mini/mini.move",
   keys = {
-    { "<m-h>", mode = { "x" }, desc = "Move left" },
-    { "<m-k>", mode = { "x" }, desc = "Move up" },
-    { "<m-l>", mode = { "x" }, desc = "Move right" },
-    { "<m-j>", mode = { "x" }, desc = "Move down" },
+    { "<m-h>", mode = { "n", "x" }, desc = "Move left" },
+    { "<m-k>", mode = { "n", "x" }, desc = "Move up" },
+    { "<m-l>", mode = { "n", "x" }, desc = "Move right" },
+    { "<m-j>", mode = { "n", "x" }, desc = "Move down" },
   },
   opts = {
     mappings = {

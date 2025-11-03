@@ -318,7 +318,7 @@ return {
 
             ["<localleader>i"] = "show_file_details",
             ["<localleader>m"] = "move", -- Takes text input for destination, also accepts the optional config.show_path option like "add".
-            ["<localleader>n"] = "new",
+            ["<localleader>n"] = "add",
             ["<localleader>o"] = {
               "show_help",
               nowait = false,

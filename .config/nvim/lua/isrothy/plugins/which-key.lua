@@ -1,10 +1,45 @@
-local function is_diff() return vim.opt.diff:get() end
 local diagnostic_goto = function(count, severity)
   return function()
     vim.diagnostic.jump({
       count = count,
       severity = severity and vim.diagnostic.severity[severity] or nil,
     })
+  end
+end
+local function swap_with_window(direction)
+  local current_win = vim.fn.winnr()
+  local current_buf = vim.fn.bufnr("%")
+
+  vim.cmd("wincmd " .. direction)
+
+  if current_win ~= vim.fn.winnr() then
+    local target_buf = vim.fn.bufnr("%")
+    local target_ft = vim.bo[target_buf].filetype
+
+    local block_ft = {
+      "aerial",
+      "codecompanion",
+      "edgy",
+      "help",
+      "neo-tree",
+      "neominimap",
+      "qf",
+      "quickfix",
+      "toggleterm",
+      "undotree",
+    }
+
+    if vim.tbl_contains(block_ft, target_ft) then
+      vim.notify("Cannot swap with file type: " .. target_ft, vim.log.levels.WARN)
+      vim.cmd("wincmd p")
+      return
+    end
+
+    vim.api.nvim_win_set_buf(0, current_buf)
+    vim.cmd("wincmd p")
+    vim.api.nvim_win_set_buf(0, target_buf)
+  else
+    vim.notify("No window to swap with in that direction.", vim.log.levels.WARN)
   end
 end
 return {
@@ -54,6 +89,10 @@ return {
             expand = function() return require("which-key.extras").expand.buf() end,
           },
           { "<leader>bx", group = "Exchange" },
+          { "<leader>bxh", function() swap_with_window("h") end, desc = "Swap with left window" },
+          { "<leader>bxl", function() swap_with_window("l") end, desc = "Swap with right window" },
+          { "<leader>bxj", function() swap_with_window("j") end, desc = "Swap with below window" },
+          { "<leader>bxk", function() swap_with_window("k") end, desc = "Swap with above window" },
           { "<leader>ba", "<c-^>", desc = "Alternate buffer" },
         },
         {
@@ -61,6 +100,8 @@ return {
           { "<leader>cr", vim.lsp.buf.rename, desc = "Rename symbol" },
           { "<leader>cl", vim.lsp.codelens.run, desc = "Code lens" },
           { "<leader>ca", vim.lsp.buf.code_action, desc = "Code action" },
+          { "<leader>ch", vim.lsp.buf.hover, desc = "Hover" },
+          { "K", vim.lsp.buf.hover, desc = "Hover" },
         },
         { "<leader>C", group = "Colorize" },
         { "<leader>d", group = "Debug", mode = { "n", "x" } },
@@ -110,11 +151,6 @@ return {
         { "<leader>i", group = "Info" },
         { "<leader>j", group = "Jump", mode = { "n", "x" } },
         { "<leader>k", group = "Rename case", mode = { "n", "x" } },
-        {
-          { "<leader>l", group = "Lint" },
-          { "<leader>lh", vim.lsp.buf.hover, desc = "Hover" },
-          { "K", vim.lsp.buf.hover, desc = "Hover" },
-        },
         { "<leader>m", group = "Minimap" },
         { "<leader>mr", group = "Refresh" },
         { "<leader>n", group = "Notification" },
@@ -132,6 +168,8 @@ return {
             expand = function() return require("which-key.extras").expand.win() end,
           },
           { "<leader>wd", "<c-W>c", desc = "Close current window" },
+          { "<leader>wa", "<c-W>^", desc = "Alternate window" },
+          { "<leader>wx", "<c-W>p", desc = "Previous window" },
         },
         {
           { "<leader>W", group = "Wrokspace" },
@@ -252,6 +290,18 @@ return {
           { "<m-j>", "<down>", desc = "Down" },
           { "<m-k>", "<up>", desc = "Up" },
           { "<m-l>", "<right>", desc = "Right" },
+        },
+
+        {
+          mode = { "n" },
+          { "<c-h>", "<c-w>h", desc = "Move to window left" },
+          { "<c-j>", "<c-w>j", desc = "Move to window below" },
+          { "<c-k>", "<c-w>k", desc = "Move to window above" },
+          { "<c-l>", "<c-w>l", desc = "Move to window right" },
+          { "<c-=>", "<c-w>+", desc = "Increase window height" },
+          { "<c-->", "<c-w>-", desc = "Decrease window height" },
+          { "<c-,>", "<c-w><", desc = "Decrease window width" },
+          { "<c-.>", "<c-w>>", desc = "Increase window width" },
         },
 
         { "g/", "<esc>/\\%V", desc = "Search inside visual selection", mode = "x", silent = false },

@@ -1,21 +1,5 @@
 return {
   {
-    "mawkler/demicolon.nvim",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
-    enabled = false,
-    lazy = false,
-    opts = {
-      keymaps = {
-        horizontal_motions = true,
-        repeat_motions = "stateless",
-        disabled_keys = { "p", "I", "A", "f", "i" },
-      },
-    },
-  },
-  {
     "tris203/precognition.nvim",
     keys = {
       { "~", function() require("precognition").peek() end, desc = "Precognition" },

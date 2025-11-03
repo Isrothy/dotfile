@@ -1,4 +1,3 @@
-local c = require("nordify.palette")["dark"]
 return {
   "p00f/godbolt.nvim",
   cmd = {
