@@ -1,7 +1,7 @@
 return {
   {
     "aileot/ex-colors.nvim",
-    lazy = true,
+    lazy = false,
     priority = 1000,
     cmd = "ExColors",
     opts = {},
@@ -39,6 +39,11 @@ return {
           local palette = require("nordify.palette")["dark"]
           local highlights = { ---@type table<string, vim.api.keyset.highlight>
             CursorLineNr = { bold = true },
+            DapBreakpoint = { fg = palette.aurora.green },
+            DapBreakpointCondition = { fg = palette.aurora.green },
+            DapLogPoint = { fg = palette.aurora.green },
+            DapBreakpointStopped = { fg = palette.aurora.yellow },
+            DapBreakpointRejected = { fg = palette.aurora.red },
             DapStoppedLine = { bg = palette.polar_night.brightest },
             DebugPC = { bg = palette.polar_night.brightest },
             ErrorMsg = { link = "Normal" },

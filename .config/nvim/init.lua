@@ -46,4 +46,4 @@ require("isrothy.commands")
 require("isrothy.fold")
 require("isrothy.lazy_plugin")
 
-vim.cmd.colorscheme("ex-nordify-dark")
+vim.cmd.colorscheme("nordify-dark")

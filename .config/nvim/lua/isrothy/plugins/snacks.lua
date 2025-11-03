@@ -411,9 +411,9 @@ return {
     { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git log current line" },
     { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git status" },
     { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
+    { "<leader>go", function() Snacks.gitbrowse() end, desc = "Git browse" },
+    { "<leader>gO", function() Snacks.gitbrowse.open() end, desc = "Open git repo" },
 
-    { "<leader>Go", function() Snacks.gitbrowse.open() end, desc = "Open git repo" },
-    { "<leader>GO", function() Snacks.gitbrowse() end, desc = "Git browse" },
     { "<leader>Gi", function() Snacks.picker.gh_issue() end, desc = "GitHub Issues (open)" },
     { "<leader>GI", function() Snacks.picker.gh_issue({ state = "all" }) end, desc = "GitHub Issues (all)" },
     { "<leader>Gp", function() Snacks.picker.gh_pr() end, desc = "GitHub Pull Requests (open)" },
@@ -422,6 +422,8 @@ return {
     { "<leader>nd", function() Snacks.notifier.hide() end, desc = "Dissmiss" },
     { "<leader>nh", function() Snacks.notifier.show_history() end, desc = "History" },
     { "<leader>n/", function() Snacks.picker.notifications() end, desc = "Search" },
+
+    { "<leader>l", function() Snacks.picker.lsp_config() end, desc = "Lsp configs" },
 
     { "<leader>u/", function() Snacks.picker.undo() end, desc = "Search" },
 

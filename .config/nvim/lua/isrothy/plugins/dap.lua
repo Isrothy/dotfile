@@ -1,25 +1,50 @@
 return {
   "mfussenegger/nvim-dap",
+  init = function()
+    vim.fn.sign_define("DapBreakpoint", {
+      text = " ",
+      texthl = "DapBreakpoint",
+      linehl = "",
+      numhl = "",
+    })
+
+    vim.fn.sign_define("DapBreakpointCondition", {
+      text = " ",
+      texthl = "DapBreakpoint",
+      linehl = "",
+      numhl = "",
+    })
+
+    vim.fn.sign_define("DapLogPoint", {
+      text = " ",
+      texthl = "DapLogPoint",
+      linehl = "",
+      numhl = "",
+    })
+
+    vim.fn.sign_define("DapStopped", {
+      text = " ",
+      texthl = "DapBreakpointStopped",
+      linehl = "",
+      numhl = "",
+    })
+
+    vim.fn.sign_define("DapBreakpointRejected", {
+      text = " ",
+      texthl = "DapBreakpointRejected",
+      linehl = "",
+      numhl = "",
+    })
+  end,
   dependencies = {
     {
-      "rcarriga/nvim-dap-ui",
-      dependencies = {
-        { "nvim-neotest/nvim-nio" },
-      },
-      keys = {
-        { "<leader>du", function() require("dapui").toggle({}) end, desc = "Dap UI" },
-        { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = { "n", "x" } },
-      },
+      "igorlfs/nvim-dap-view",
+      ---@module 'dap-view'
+      ---@type dapview.Config
       opts = {},
-      config = function(_, opts)
-        local dap = require("dap")
-        local dapui = require("dapui")
-        dapui.setup(opts)
-        dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open({}) end
-        dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close({}) end
-        dap.listeners.before.event_exited["dapui_config"] = function() dapui.close({}) end
-        require("overseer").enable_dap()
-      end,
+      keys = {
+        { "<leader>du", function() require("dap-view").toggle() end, desc = "Toggle Dap View" },
+      },
     },
 
     -- virtual text for the debugger
@@ -74,6 +99,11 @@ return {
 
     local dap = require("dap")
 
+    dap.adapters.haskell = {
+      type = "executable",
+      command = "haskell-debug-adapter",
+      args = { "--hackage-version=0.0.33.0" },
+    }
     dap.adapters.codelldb = {
       type = "executable",
       command = "codelldb",
@@ -97,5 +127,22 @@ return {
     }
     dap.configurations.c = dap.configurations.cpp
     dap.configurations.rust = dap.configurations.cpp
+    dap.configurations.haskell = {
+      {
+        type = "haskell",
+        request = "launch",
+        name = "Debug",
+        workspace = "${workspaceFolder}",
+        startup = "${file}",
+        stopOnEntry = true,
+        logFile = vim.fn.stdpath("data") .. "/haskell-dap.log",
+        logLevel = "WARNING",
+        ghciEnv = vim.empty_dict(),
+        ghciPrompt = "λ: ",
+        -- Adjust the prompt to the prompt you see when you invoke the stack ghci command below
+        ghciInitialPrompt = "λ: ",
+        ghciCmd = "stack ghci --test --no-load --no-build --main-is TARGET --ghci-options -fprint-evld-with-show",
+      },
+    }
   end,
 }

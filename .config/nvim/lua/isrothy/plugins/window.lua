@@ -70,6 +70,7 @@ return {
             filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == "" end,
           },
           "Trouble",
+          { ft = "dap-view" },
           { ft = "qf", title = "QuickFix" },
           {
             ft = "help",
