@@ -114,15 +114,16 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 local wrap_filetypes = {
-  "markdown",
-  "latex",
-  "text",
   "Avante",
   "AvanteInput",
-  "typst",
   "bigfile",
+  "codecompanion",
+  "latex",
+  "markdown",
   "noice",
   "snacks_notif_history",
+  "text",
+  "typst",
 }
 vim.api.nvim_create_autocmd({ "FileType" }, {
   group = augroup("wrap"),

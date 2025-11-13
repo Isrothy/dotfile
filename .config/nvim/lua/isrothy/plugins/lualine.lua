@@ -153,7 +153,7 @@ return {
           persisted_status,
           "filetype",
           "lsp_status",
-          "codeium_spinner",
+          -- "codeium_spinner",
           "codecompanion_spinner",
           -- neocodeium_component,
         },

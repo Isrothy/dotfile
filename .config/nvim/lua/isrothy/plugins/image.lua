@@ -4,7 +4,7 @@ return {
     event = "VeryLazy",
     cmd = { "PasteImage", "ImgClipDebug", "ImgClipConfig" },
     keys = {
-      { "<leader>#", "<cmd>PasteImage<cr>", desc = "Paste image" },
+      { "<leader>##", "<cmd>PasteImage<cr>", desc = "Paste image" },
       {
         "<leader>#/",
         function()

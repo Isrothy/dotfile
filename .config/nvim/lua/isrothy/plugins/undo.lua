@@ -25,7 +25,6 @@ return {
         opts = {},
       },
       redo = {
-        hlgroup = "HighlighTUNDO",
         MODE = "N",
         LHS = "<c-r>",
         map = "redo",

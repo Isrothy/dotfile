@@ -38,7 +38,7 @@ return {
     opts = {
       strategies = {
         chat = {
-          adapter = "gemma",
+          adapter = "gemini_cli",
           keymaps = {
             send = {
               modes = { n = "<cr>" },
@@ -49,10 +49,27 @@ return {
           },
         },
         inline = {
-          adapter = "gemma",
+          adapter = "gemini",
+          keymaps = {
+            always_accept = {
+              modes = { n = "y" },
+              opts = { nowait = true },
+              description = "Always Accept",
+            },
+            accept_change = {
+              modes = { n = "a" },
+              opts = { nowait = true },
+              description = "Accept",
+            },
+            reject_change = {
+              modes = { n = "r" },
+              opts = { nowait = true },
+              description = "Reject",
+            },
+          },
         },
         cmd = {
-          adapter = "gemma",
+          adapter = "gemini",
         },
         display = {
           diff = {
@@ -60,6 +77,9 @@ return {
             layout = "vertical",
             opts = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
             provider = "default",
+          },
+          action_palette = {
+            provider = "snacks",
           },
           chat = {
             intro_message = "Welcome to CodeCompanion ✨! Press ? for options",
@@ -72,28 +92,59 @@ return {
         },
       },
       adapters = {
-        ["gemma"] = function()
-          return require("codecompanion.adapters").extend("ollama", {
-            name = "gemma",
-            schema = {
-              model = {
-                default = "gemma3:27b-it-qat",
+
+        acp = {
+          gemini_cli = function()
+            return require("codecompanion.adapters").extend("gemini_cli", {
+              env = {
+                api_key = "GEMINI_API_KEY",
               },
-              num_ctx = {
-                default = 16384,
+              defaults = {
+                auth_method = "gemini-api-key",
               },
-              num_predict = {
-                default = -1,
+            })
+          end,
+        },
+        http = {
+          gemini = function()
+            return require("codecompanion.adapters").extend("gemini", {
+              env = {
+                api_key = "GEMINI_API_KEY",
               },
-            },
-          })
-        end,
+            })
+          end,
+          ["gemma"] = function()
+            return require("codecompanion.adapters").extend("ollama", {
+              name = "gemma",
+              schema = {
+                model = {
+                  default = "gemma3:27b-it-qat",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
+              },
+            })
+          end,
+        },
+      },
+      memory = {
+        opts = {
+          chat = {
+            enabled = true,
+          },
+        },
       },
     },
   },
   {
     "Exafunction/windsurf.nvim",
+    enabled = true,
     event = "VeryLazy",
+    cmds = { "Codeium" },
     dependencies = {
       "nvim-lua/plenary.nvim",
     },

@@ -1,7 +1,7 @@
 return {
   {
     "oribarilan/lensline.nvim",
-    branch = "release/1.x",
+    branch = "release/2.x",
     cmd = {
       "LenslineEnable",
       "LenslineDisable",
@@ -33,18 +33,22 @@ return {
       })
     end,
     opts = {
-      style = {
-        placement = "inline",
-        use_nerdfont = false,
-      },
-      providers = {
-        { name = "references", enabled = true },
+      profiles = {
         {
-          name = "diagnostics",
-          enabled = true,
-          min_level = "WARN",
+          name = "default",
+          style = {
+            placement = "inline",
+            use_nerdfont = true,
+          },
+          providers = {
+            { name = "references", enabled = true },
+            {
+              name = "diagnostics",
+              enabled = true,
+              min_level = "WARN",
+            },
+          },
         },
-        -- { name = "last_author", enabled = true },
       },
     },
   },

@@ -1,7 +1,7 @@
 return {
   {
     "aileot/ex-colors.nvim",
-    lazy = false,
+    enabled = true,
     priority = 1000,
     cmd = "ExColors",
     opts = {},

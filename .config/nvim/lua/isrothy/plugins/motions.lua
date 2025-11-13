@@ -1,11 +1,5 @@
 return {
   {
-    "tris203/precognition.nvim",
-    keys = {
-      { "~", function() require("precognition").peek() end, desc = "Precognition" },
-    },
-  },
-  {
     "folke/flash.nvim",
     event = "VeryLazy",
     keys = {

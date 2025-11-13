@@ -471,6 +471,17 @@ return {
         Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<leader>ci")
         Snacks.toggle.indent():map("<leader><space>i")
         Snacks.toggle.dim():map("<leader>zd")
+        Snacks.toggle({
+          name = "words",
+          get = function() return Snacks.words.is_enabled() end,
+          set = function(state)
+            if state then
+              Snacks.words.enable()
+            else
+              Snacks.words.disable()
+            end
+          end,
+        }):map("<leader>cw")
       end,
     })
   end,

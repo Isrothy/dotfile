@@ -11,7 +11,7 @@ return {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
     keys = {
-      { "<localleader>m", "", desc = "+Markdown Preview", ft = "markdown" },
+      { "<localleader>m", "", desc = "+Markdown", ft = "markdown" },
       { "<localleader>mP", ":MarkdownPreview<cr>", desc = "Markdown Preview", ft = "markdown" },
       { "<localleader>m<c-p>", ":MarkdownPreviewStop<cr>", desc = "Markdown Preview Stop", ft = "markdown" },
       { "<localleader>mp", ":MarkdownPreviewToggle<cr>", desc = "Markdown Preview Toggle", ft = "markdown" },
@@ -32,7 +32,6 @@ return {
     ft = { "markdown" },
     cmd = { "Mtm" },
     keys = {
-      { "<localleader>m", "", desc = "+Markdown Preview", ft = "markdown" },
       { "<localleader>mt", ":Mtm<cr>", desc = "Markdown Table Mode", ft = "markdown" },
     },
     config = function() require("markdown-table-mode").setup() end,
@@ -48,40 +47,20 @@ return {
       { "<localleader>r", "", desc = "+Render markdown", ft = render_markdown_ft },
       {
         "<localleader>rr",
-        function() require("render-markdown").toggle() end,
-        desc = "Toggle",
+        function() require("render-markdown").buf_toggle() end,
+        desc = "Toggle buffer",
         ft = render_markdown_ft,
       },
       {
         "<localleader>rR",
-        function() require("render-markdown").enable() end,
-        desc = "Enable",
+        function() require("render-markdown").buf_enable() end,
+        desc = "Enable buffer",
         ft = render_markdown_ft,
       },
       {
         "<localleader>r<c-r>",
-        function() require("render-markdown").disable() end,
-        desc = "Disable",
-        ft = render_markdown_ft,
-      },
-
-      { "<localleader>rb", "", desc = "+Buffer", ft = render_markdown_ft },
-      {
-        "<localleader>rbr",
-        function() require("render-markdown").buf_toggle() end,
-        desc = "Toggle",
-        ft = render_markdown_ft,
-      },
-      {
-        "<localleader>rbR",
-        function() require("render-markdown").buf_enable() end,
-        desc = "Enable",
-        ft = render_markdown_ft,
-      },
-      {
-        "<localleader>rb<c-r>",
         function() require("render-markdown").buf_disable() end,
-        desc = "Disable",
+        desc = "Disable buffer",
         ft = render_markdown_ft,
       },
 
@@ -98,6 +77,25 @@ return {
         ft = render_markdown_ft,
       },
     },
+    init = function()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "VeryLazy",
+        group = vim.api.nvim_create_augroup("render_markdown", { clear = true }),
+        callback = function()
+          Snacks.toggle({
+            name = "render markdown",
+            get = function() return require("render-markdown").get() end,
+            set = function(state)
+              if state then
+                require("render-markdown").enable()
+              else
+                require("render-markdown").disable()
+              end
+            end,
+          }):map("<leader>om")
+        end,
+      })
+    end,
     ft = render_markdown_ft,
     opts = {
       code = {
@@ -105,6 +103,7 @@ return {
         width = "block",
         border = "none",
         language_border = "",
+        disable_background = true,
       },
       heading = {
         sign = false,

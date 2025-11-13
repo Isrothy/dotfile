@@ -1,7 +1,6 @@
 return {
   "mistricky/codesnap.nvim",
   build = "make",
-  enabled = true,
   cmd = {
     "CodeSnap",
     "CodeSnapSave",
