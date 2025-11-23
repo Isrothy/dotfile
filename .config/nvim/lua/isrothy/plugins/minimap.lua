@@ -78,7 +78,11 @@ return {
   init = function()
     -- vim.opt.wrap = false
     -- vim.opt.sidescrolloff = 36
-
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "KittyScrollbackLaunch",
+      group = vim.api.nvim_create_augroup("disable_minimap_for_kitty_scrolllback", { clear = true }),
+      callback = function() require("neominimap.api").tab.disable() end,
+    })
     vim.api.nvim_create_autocmd("User", {
       pattern = "VeryLazy",
       group = vim.api.nvim_create_augroup("setup_neominimap", { clear = true }),
@@ -204,7 +208,15 @@ return {
       buf_filter = function(bufnr) return vim.api.nvim_buf_line_count(bufnr) < 4096 end,
       tab_filter = function(tab_id)
         local win_list = vim.api.nvim_tabpage_list_wins(tab_id)
-        local exclude_ft = { "qf", "trouble", "neo-tree", "alpha", "neominimap", "snacks_dashboard" }
+        local exclude_ft = {
+          "alpha",
+          "kitty-scrollback",
+          "neo-tree",
+          "neominimap",
+          "qf",
+          "snacks_dashboard",
+          "trouble",
+        }
         for _, win_id in ipairs(win_list) do
           if not is_float_window(win_id) then
             local bufnr = vim.api.nvim_win_get_buf(win_id)

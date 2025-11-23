@@ -105,7 +105,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   group = augroup("colorcolumn"),
   callback = function(event)
     local filetype = event.match
-    if cc_filetypes[filetype] then
+    if cc_filetypes[filetype] and vim.bo.buftype ~= "nofile" then
       vim.wo.colorcolumn = cc_filetypes[filetype]
     else
       vim.wo.colorcolumn = ""

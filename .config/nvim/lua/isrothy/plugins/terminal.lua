@@ -2,7 +2,7 @@ return {
   {
     "akinsho/toggleterm.nvim",
     keys = {
-      [[<c-`>]],
+      [[<c-/>]],
       {
         [[<leader>\]],
         function() require("toggleterm").send_lines_to_terminal("visual_selection", true, { args = vim.v.count1 }) end,
@@ -37,7 +37,7 @@ return {
         desc = "Select terminal",
       },
       {
-        [[<leader>$N]],
+        [[<leader>$r]],
         "<cmd>ToggleTermSetName<cr>",
         desc = "Set name of terminal",
       },
@@ -69,7 +69,7 @@ return {
       end
     end,
     opts = {
-      open_mapping = [[<c-`>]],
+      open_mapping = [[<c-/>]],
       hide_numbers = true,
       autochdir = true,
       insert_mappings = true,
@@ -126,20 +126,6 @@ return {
           end,
         },
       }
-    end,
-  },
-  {
-    "mikesmithgh/kitty-scrollback.nvim",
-    cmd = {
-      "KittyScrollbackGenerateKittens",
-      "KittyScrollbackCheckHealth",
-      "KittyScrollbackGenerateCommandLineEditing",
-    },
-    event = { "User KittyScrollbackLaunch" },
-    config = function()
-      require("kitty-scrollback").setup({
-        keymaps_enabled = false,
-      })
     end,
   },
 }

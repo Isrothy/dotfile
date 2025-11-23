@@ -1,9 +1,37 @@
 return {
   {
+    "dstein64/nvim-scrollview",
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = {
+      "ScrollViewDisable",
+      "ScrollViewEnable",
+      "ScrollViewToggle",
+      "ScrollViewRefresh",
+      "ScrollViewLegend",
+    },
+    opts = {
+      excluded_filetypes = {
+        "",
+        "prompt",
+        "TelescopePrompt",
+        "noice",
+        "neominimap",
+        "neo-tree",
+        "oil",
+        "grug-far",
+        "bigfile",
+        "dbout",
+      },
+      current_only = false,
+      signs_on_startup = {''},
+
+    },
+  },
+  {
     "lewis6991/satellite.nvim",
     -- dir = "~/satellite.nvim",
     event = { "BufReadPost", "BufNewFile" },
-    enabled = true,
+    enabled = false,
     opts = {
       current_only = false,
       winblend = 40,

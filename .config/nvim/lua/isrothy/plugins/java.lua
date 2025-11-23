@@ -65,7 +65,7 @@ return {
     opts = {
       spring_boot_tools = { enable = false },
       jdk = {
-        auto_install = true,
+        auto_install = false,
       },
     },
   },

@@ -74,6 +74,7 @@ return {
             "dbout",
             "dbui",
             "grug-far",
+            "kitty-scrollback",
             "man",
             "neo-tree",
             "noice",

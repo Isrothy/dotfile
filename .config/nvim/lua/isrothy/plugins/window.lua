@@ -30,30 +30,10 @@ return {
         exit_when_last = true,
         animate = { enabled = false },
         keys = {
-          ---@param win Edgy.Window
-          ["<m-h>"] = function(win)
-            local view = win.view
-            local edgebar = view.edgebar
-            local pos = edgebar.pos
-            if pos == "left" then
-              win:resize("width", -1)
-            elseif pos == "right" then
-              win:resize("width", 1)
-            end
-          end,
-          ---@param win Edgy.Window
-          ["<m-l>"] = function(win)
-            local view = win.view
-            local edgebar = view.edgebar
-            local pos = edgebar.pos
-            if pos == "left" then
-              win:resize("width", 1)
-            elseif pos == "right" then
-              win:resize("width", -1)
-            end
-          end,
-          ["<m-k>"] = function(win) win:resize("height", 1) end,
-          ["<m-j>"] = function(win) win:resize("height", -1) end,
+          ["<c-.>"] = function(win) win:resize("width", 1) end,
+          ["<c-,>"] = function(win) win:resize("width", -1) end,
+          ["<c-=>"] = function(win) win:resize("height", 1) end,
+          ["<c-->"] = function(win) win:resize("height", -1) end,
         },
         wo = {
           winbar = false,
