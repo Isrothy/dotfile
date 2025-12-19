@@ -67,6 +67,7 @@ return {
   dir = "~/Developer/neominimap.nvim",
   -- "Isrothy/neominimap.nvim",
   version = "v3.x.x",
+  enabled = false,
   lazy = false,
   keys = {
     { "<leader>mrr", "<cmd>Neominimap Refresh<cr>", desc = "Refresh global minimap" },
@@ -149,7 +150,7 @@ return {
     vim.g.neominimap = {
       auto_enable = true,
       log_level = vim.log.levels.OFF,
-      notification_level = vim.log.levels.OFF,
+      notification_level = vim.log.levels.ERROR,
 
       exclude_filetypes = {
         "qf",
@@ -169,6 +170,11 @@ return {
         persist = false,
       },
       layout = "split",
+
+      -- layout = "manual",
+      manual = {
+        minimap_width = 20,
+      },
       split = {
         direction = "right",
         close_if_last_window = true,

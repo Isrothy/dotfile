@@ -6,42 +6,7 @@ local diagnostic_goto = function(count, severity)
     })
   end
 end
-local function swap_with_window(direction)
-  local current_win = vim.fn.winnr()
-  local current_buf = vim.fn.bufnr("%")
 
-  vim.cmd("wincmd " .. direction)
-
-  if current_win ~= vim.fn.winnr() then
-    local target_buf = vim.fn.bufnr("%")
-    local target_ft = vim.bo[target_buf].filetype
-
-    local block_ft = {
-      "aerial",
-      "codecompanion",
-      "edgy",
-      "help",
-      "neo-tree",
-      "neominimap",
-      "qf",
-      "quickfix",
-      "toggleterm",
-      "undotree",
-    }
-
-    if vim.tbl_contains(block_ft, target_ft) then
-      vim.notify("Cannot swap with file type: " .. target_ft, vim.log.levels.WARN)
-      vim.cmd("wincmd p")
-      return
-    end
-
-    vim.api.nvim_win_set_buf(0, current_buf)
-    vim.cmd("wincmd p")
-    vim.api.nvim_win_set_buf(0, target_buf)
-  else
-    vim.notify("No window to swap with in that direction.", vim.log.levels.WARN)
-  end
-end
 return {
   {
     "folke/which-key.nvim",
@@ -50,6 +15,11 @@ return {
     keys = {
       {
         "<leader>?",
+        function() require("which-key").show() end,
+        desc = "Global keymaps (Which-Key)",
+      },
+      {
+        "<localleader>?",
         function() require("which-key").show({ global = false }) end,
         desc = "Buffer local keymaps (Which-Key)",
       },
@@ -86,13 +56,12 @@ return {
           {
             "<leader>b",
             group = "Buffer",
-            expand = function() return require("which-key.extras").expand.buf() end,
           },
-          { "<leader>bx", group = "Exchange" },
-          { "<leader>bxh", function() swap_with_window("h") end, desc = "Swap with left window" },
-          { "<leader>bxl", function() swap_with_window("l") end, desc = "Swap with right window" },
-          { "<leader>bxj", function() swap_with_window("j") end, desc = "Swap with below window" },
-          { "<leader>bxk", function() swap_with_window("k") end, desc = "Swap with above window" },
+          -- { "<leader>bx", group = "Exchange" },
+          -- { "<leader>bxh", function() swap_with_window("h") end, desc = "Swap with left window" },
+          -- { "<leader>bxl", function() swap_with_window("l") end, desc = "Swap with right window" },
+          -- { "<leader>bxj", function() swap_with_window("j") end, desc = "Swap with below window" },
+          -- { "<leader>bxk", function() swap_with_window("k") end, desc = "Swap with above window" },
           { "<leader>ba", "<c-^>", desc = "Alternate buffer" },
         },
         {
@@ -155,10 +124,26 @@ return {
         { "<leader>mr", group = "Refresh" },
         { "<leader>n", group = "Notification" },
         { "<leader>o", group = "Options" },
-        { "<leader>q", group = "Session" },
+        {
+          { "<leader>q", group = "Session" },
+          {
+            "<leader>qs",
+            function() require("isrothy.utils.session").save() end,
+            desc = "Save session",
+          },
+          {
+            "<leader>ql",
+            function() require("isrothy.utils.session").load_current() end,
+            desc = "Load session",
+          },
+          {
+            "<leader>q/",
+            function() require("isrothy.utils.session").select() end,
+            desc = "Load session",
+          },
+        },
         { "<leader>r", group = "Refactors", mode = { "n", "x" } },
         { "<leader>t", group = "Test" },
-        { "<leader>T", group = "Todo" },
         { "<leader>u", group = "Undo" },
         {
           {
@@ -187,7 +172,6 @@ return {
           { "<leader>xl", vim.diagnostic.setloclist, desc = "Location list" },
           { "<leader>xc", vim.diagnostic.open_float, desc = "Current line" },
         },
-        { "<leader>z", group = "Zen mode" },
         { "<leader>/", group = "Grep", mode = { "n", "x" } },
         { "<leader>!", group = "Tasks" },
         { "<leader>$", group = "Terminal" },
@@ -260,7 +244,7 @@ return {
         { "<esc>", ":nohlsearch<cr><esc>", desc = "Clear search highlight" },
         { "<C-\\>", "<C-\\><c-N>", desc = "Escape terminal mode", mode = "t" },
         { "U", "<cmd>@:", desc = "Repeat last command" },
-        { "Z", "<c-^>", desc = "Alternate buffer" },
+        { "<tab>", "<c-^>", desc = "Alternate buffer" },
         {
           mode = "x",
           { ".", ":norm .<cr>", desc = "Repeat last command" },
@@ -293,15 +277,9 @@ return {
         },
 
         {
-          mode = { "n" },
-          { "<c-h>", "<c-w>h", desc = "Move to window left" },
-          { "<c-j>", "<c-w>j", desc = "Move to window below" },
-          { "<c-k>", "<c-w>k", desc = "Move to window above" },
-          { "<c-l>", "<c-w>l", desc = "Move to window right" },
-          { "<c-=>", "<c-w>+", desc = "Increase window height" },
-          { "<c-->", "<c-w>-", desc = "Decrease window height" },
-          { "<c-,>", "<c-w><", desc = "Decrease window width" },
-          { "<c-.>", "<c-w>>", desc = "Increase window width" },
+          mode = { "i", "c", "t" },
+          { "<c-d>", "<BS>", desc = "Backspace" },
+          { "<c-t>", "<DEL>", desc = "Delete" },
         },
 
         { "g/", "<esc>/\\%V", desc = "Search inside visual selection", mode = "x", silent = false },
@@ -323,6 +301,29 @@ return {
           "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>",
           desc = "Add comment above",
         },
+
+        { "<leader>l", function() require("isrothy.utils.context").show() end, mode = { "n" } },
+
+        {
+          "gG",
+          function() require("isrothy.utils.text-obj").entire_buffer() end,
+          mode = { "o", "x" },
+          desc = "Entire buffer",
+        },
+        {
+          "iS",
+          function() require("isrothy.utils.text-obj").subword_inner() end,
+          mode = { "o", "x" },
+          desc = "Inside subword",
+        },
+        {
+          "aS",
+          function() require("isrothy.utils.text-obj").subword_outer() end,
+          mode = { "o", "x" },
+          desc = "Around subword",
+        },
+        { "L", function() require("isrothy.utils.text-obj").url() end, mode = { "o", "x" }, desc = "URL" },
+        { "F", function() require("isrothy.utils.text-obj").filepath() end, mode = { "o", "x" }, desc = "Filepath" },
       },
     },
   },

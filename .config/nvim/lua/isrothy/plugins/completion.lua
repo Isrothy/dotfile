@@ -6,9 +6,7 @@ return {
     event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
       "rafamadriz/friendly-snippets",
-      "saghen/blink.compat",
       "mikavilpas/blink-ripgrep.nvim",
-      "kristijanhusak/vim-dadbod-completion",
       "philosofonusus/ecolog.nvim",
     },
 
@@ -22,13 +20,15 @@ return {
         ["<tab>"] = { "select_next", "snippet_forward", "fallback" },
         ["<s-tab>"] = { "select_prev", "snippet_backward", "fallback" },
         ["<cr>"] = { "accept", "fallback" },
-        ["<c-k>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<c-x>"] = { "cancel" },
+        -- ["<c-y>"] = { "accept", "fallback" },
+        ["<c-q>"] = { "show", "show_documentation", "hide_documentation" },
+        ["<c-e>"] = { "cancel" },
         ["<c-p>"] = { "select_prev", "fallback" },
         ["<c-n>"] = { "select_next", "fallback" },
+        ["<c-k>"] = false,
 
-        -- ["<c-b>"] = { "scroll_documentation_up", "fallback" },
-        -- ["<c-f>"] = { "scroll_documentation_down", "fallback" },
+        ["<c-b>"] = { "scroll_documentation_up", "fallback" },
+        ["<c-f>"] = { "scroll_documentation_down", "fallback" },
       },
       enabled = function() return not vim.tbl_contains({ "bigfile" }, vim.bo.filetype) and vim.bo.buftype ~= "prompt" end,
       cmdline = {
@@ -154,10 +154,6 @@ return {
             name = "LSP",
             module = "blink.cmp.sources.lsp",
           },
-          vimtex = {
-            name = "vimtex",
-            module = "blink.compat.source",
-          },
           ripgrep = {
             module = "blink-ripgrep",
             name = "Ripgrep",
@@ -177,10 +173,6 @@ return {
             name = "Buffer",
             module = "blink.cmp.sources.buffer",
             -- fallbacks = { "lsp" },
-          },
-          dadbod = {
-            name = "Dadbod",
-            module = "vim_dadbod_completion.blink",
           },
           ecolog = {
             name = "ecolog",

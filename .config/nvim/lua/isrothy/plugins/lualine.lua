@@ -26,29 +26,28 @@ local diff_source = function()
   end
 end
 
-local function persisted_status()
-  if vim.fn.exists("g:persisting") == 1 and vim.g.persisting then
-    return "󰆓"
-  else
-    return "󱙃"
-  end
-end
+-- local function persisted_status()
+--   if vim.fn.exists("g:persisting") == 1 and vim.g.persisting then
+--     return "󰆓"
+--   else
+--     return "󱙃"
+--   end
+-- end
 
 return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
   dependencies = {
     "Isrothy/lualine-diagnostic-message",
-    -- "folke/trouble.nvim",
     "nvim-tree/nvim-web-devicons",
-    "stevearc/aerial.nvim",
+    -- "stevearc/aerial.nvim",
   },
   opts = function()
-    local minimap_extension = require("neominimap.statusline").lualine_default
+    -- local minimap_extension = require("neominimap.statusline").lualine_default
     return {
       options = {
         theme = "nordify-dark",
-        icons_enabled = true,
+        icons_enabled = false,
         component_separators = "",
         section_separators = "",
         disabled_filetypes = {
@@ -97,15 +96,15 @@ return {
           },
         },
         lualine_b = {
-          { "b:gitsigns_head", icon = "" },
+          { "b:gitsigns_head", icon = "git:" },
           {
             "diff",
             source = diff_source,
             colored = true,
             symbols = {
-              added = " ",
-              modified = " ",
-              removed = " ",
+              added = "+",
+              modified = "~",
+              removed = "-",
             },
           },
         },
@@ -126,10 +125,10 @@ return {
           {
             "diagnostic-message",
             icons = {
-              error = " ",
-              warn = " ",
-              hint = " ",
-              info = " ",
+              error = "E",
+              warn = "W",
+              hint = "H",
+              info = "I",
             },
             first_line_only = true,
           },
@@ -144,14 +143,17 @@ return {
             "fileformat",
             icons_enabled = true,
             symbols = {
-              unix = " ",
-              dos = " ",
-              mac = " ",
+              unix = "LF",
+              dos = "CRLF",
+              mac = "CR",
+              -- unix = " ",
+              -- dos = " ",
+              -- mac = " ",
             },
           },
         },
         lualine_y = {
-          persisted_status,
+          -- persisted_status,
           "filetype",
           "lsp_status",
           -- "codeium_spinner",
@@ -173,52 +175,53 @@ return {
         lualine_z = {},
       },
       winbar = {
-        lualine_a = {},
-        lualine_b = {
+        lualine_a = {
           winnr,
         },
-        lualine_c = {
-          {
-            "aerial",
-            sep = " ⟩ ",
-            depth = nil,
-            dense = false,
-            dense_sep = ".",
-            sep_highlight = "@text",
-            colored = true,
-          },
+        lualine_b = {
+          { "filename", fmt = trunc(90, 30, 50), path = 1 },
         },
-        lualine_x = {
+        lualine_c = {
           {
             "diagnostics",
             update_in_insert = true,
             symbols = {
-              error = " ",
-              warn = " ",
-              hint = " ",
-              info = " ",
+              error = "E",
+              warn = "W",
+              hint = "H",
+              info = "I",
             },
           },
+          -- {
+          --   "aerial",
+          --   sep = " ⟩ ",
+          --   depth = nil,
+          --   dense = false,
+          --   dense_sep = ".",
+          --   sep_highlight = "@text",
+          --   colored = true,
+          -- },
         },
+        lualine_x = {},
         lualine_y = {
-          { "filetype", icon_only = true },
-          { "filename", fmt = trunc(90, 30, 50), path = 1 },
-          bufnr,
+          -- { "filetype", icon_only = false },
+          -- bufnr,
         },
         lualine_z = {},
       },
 
       inactive_winbar = {
-        lualine_a = {},
-        lualine_b = {
+        lualine_a = {
           winnr,
+        },
+        lualine_b = {
+          { "filename", fmt = trunc(90, 30, 50), path = 1 },
         },
         lualine_c = {},
         lualine_x = {},
         lualine_y = {
-          { "filetype", icon_only = true },
-          { "filename", fmt = trunc(90, 30, 50), path = 1 },
-          bufnr,
+          -- { "filetype", icon_only = false },
+          -- bufnr,
         },
         lualine_z = {},
       },
@@ -235,7 +238,7 @@ return {
         "quickfix",
         "toggleterm",
         "trouble",
-        minimap_extension,
+        -- minimap_extension,
       },
     }
   end,

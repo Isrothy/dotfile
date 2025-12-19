@@ -31,3 +31,6 @@ vim.api.nvim_create_user_command("SetTabLength", function(opts)
   vim.opt.shiftwidth = len
   print("Tab length set to: " .. len)
 end, { nargs = 1 })
+
+vim.api.nvim_create_user_command("DetectIndent", function() require("indent_detect").detect() end, {})
+

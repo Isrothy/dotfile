@@ -1,6 +1,7 @@
 return {
   {
     "akinsho/toggleterm.nvim",
+    enabled = false,
     keys = {
       [[<c-/>]],
       {
@@ -82,7 +83,7 @@ return {
   },
   {
     "willothy/flatten.nvim",
-    enabled = true,
+    enabled = false,
     lazy = false,
     priority = 1001,
     opts = function()

@@ -29,57 +29,26 @@ return {
     image = { enabled = false },
     scroll = { enabled = false },
     picker = {
-      prompt = " ",
+      prompt = "> ",
       layout = {
         cycle = true,
         preset = function() return vim.o.columns >= 120 and "default" or "vertical" end,
       },
+      win = {
+        input = {
+          keys = {
+            ["<c-d>"] = { "list_scroll_down", mode = { "n" } },
+            ["<c-u>"] = { "list_scroll_up", mode = { "n" } },
+            ["<c-t>"] = { "tab", mode = { "n" } },
+          },
+        },
+      },
       icons = {
         diagnostics = {
-          Error = " ",
-          Warn = " ",
-          Hint = " ",
-          Info = " ",
-        },
-        kinds = {
-          Array = " ",
-          Boolean = "󰨙 ",
-          Class = " ",
-          Color = " ",
-          Control = " ",
-          Collapsed = " ",
-          Constant = "󰏿 ",
-          Constructor = " ",
-          Copilot = " ",
-          Enum = " ",
-          EnumMember = " ",
-          Event = " ",
-          Field = " ",
-          File = "󰈙 ",
-          Folder = " ",
-          Function = "󰊕 ",
-          Interface = " ",
-          Key = "󰌋 ",
-          Keyword = " ",
-          Method = "󰊕 ",
-          Module = " ",
-          Namespace = "󰦮 ",
-          Null = " ",
-          Number = "󰎠 ",
-          Object = " ",
-          Operator = " ",
-          Package = " ",
-          Property = " ",
-          Reference = " ",
-          Snippet = "󱄽 ",
-          String = " ",
-          Struct = "󰆼 ",
-          Text = " ",
-          TypeParameter = " ",
-          Unit = " ",
-          Unknown = " ",
-          Value = " ",
-          Variable = "󰀫 ",
+          Error = "E",
+          Warn = "W",
+          Hint = "H",
+          Info = "I",
         },
       },
     },
@@ -206,19 +175,20 @@ return {
       end,
     },
     dashboard = {
+      enabled = false,
       width = 70,
       autokeys = "1234567890abcdefimnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
       sections = {
         { section = "header" },
         { section = "keys", gap = 1, padding = 1 },
-        { section = "startup" },
+        -- { section = "startup" },
         {
           pane = 2,
           icon = " ",
           title = "Recent Files",
           section = "recent_files",
-          limit = 5,
           indent = 2,
+          limit = 5,
           padding = 1,
         },
         {
@@ -267,8 +237,6 @@ return {
             action = function()
               local repo = vim.fn.input("Repository name / URI: ")
               if repo ~= "" then
-                vim.env.GIT_DIR = nil
-                vim.env.GIT_WORK_TREE = nil
                 require("git-dev").open(repo, {}, {
                   cd_type = "global",
                   opener = function(dir, _, selected_path)
@@ -293,48 +261,35 @@ return {
           --   desc = "Projects",
           --   action = ":Telescope projects",
           -- },
-          { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+          -- { icon = " ", key = "s", desc = "Restore Session", section = "session" },
           { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
           { icon = " ", key = "q", desc = "Quit", action = ":qa" },
         },
         header = header,
       },
     },
-    dim = {
-      enabled = true,
-      animate = { enabled = false },
-    },
+    dim = { enabled = false },
     notifier = {
       enabled = true,
       icons = {
-        error = " ",
-        warn = " ",
-        info = " ",
-        debug = " ",
-        trace = " ",
+        error = "E",
+        warn = "W",
+        info = "I",
+        debug = "D",
+        trace = "T",
       },
       timeout = 5000,
     },
     quickfile = { enabled = true },
     words = { enabled = true },
     profiler = { pick = { picker = "auto" } },
-    zen = {
-      enabled = true,
-      toggles = {
-        dim = true,
-        git_signs = false,
-        mini_diff_signs = false,
-        diagnostics = false,
-        inlay_hints = false,
-      },
-    },
+    zen = { enabled = false },
   },
   keys = {
     { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Config file" },
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Search files" },
     { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent file" },
     { "<leader>fs", function() Snacks.picker.smart() end, desc = "Smart search" },
-    { "<leader>fz", function() Snacks.picker.zoxide() end, desc = "Zoxide" },
     { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
 
     { "<leader>ia", function() Snacks.picker.autocmds() end, desc = "Autocommands" },
@@ -344,6 +299,7 @@ return {
     { "<leader>ij", function() Snacks.picker.jumps() end, desc = "Jumps" },
     { "<leader>ik", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
     { "<leader>il", function() Snacks.picker.loclist() end, desc = "Location list" },
+    { "<leader>iL", function() Snacks.picker.lsp_config() end, desc = "Lsp configs" },
     { "<leader>iq", function() Snacks.picker.qflist() end, desc = "Quickfix list" },
     { "<leader>i'", function() Snacks.picker.marks() end, desc = "Marks" },
     { '<leader>i"', function() Snacks.picker.registers() end, desc = "Registers" },
@@ -402,6 +358,7 @@ return {
     { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete current buffer" },
     { "<leader>bD", function() Snacks.bufdelete.all() end, desc = "Delete all buffers" },
     { "<leader>b/", function() Snacks.picker.buffers() end, desc = "Picker" },
+    { "<leader>bb", function() Snacks.picker.buffers() end, desc = "Picker" },
 
     { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git blame current line" },
     { "<leader>gB", function() Snacks.picker.git_branches() end, desc = "Git branches" },
@@ -423,15 +380,10 @@ return {
     { "<leader>nh", function() Snacks.notifier.show_history() end, desc = "History" },
     { "<leader>n/", function() Snacks.picker.notifications() end, desc = "Search" },
 
-    { "<leader>l", function() Snacks.picker.lsp_config() end, desc = "Lsp configs" },
-
     { "<leader>u/", function() Snacks.picker.undo() end, desc = "Search" },
 
     { "<leader>x/", function() Snacks.picker.diagnostics() end, desc = "Picker" },
     { "<leader>x?", function() Snacks.picker.diagnostics_buffer() end, desc = "Search buffer picker" },
-
-    { "<leader>zz", function() Snacks.zen() end, desc = "Toggle zen mode" },
-    { "<leader>zo", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
 
     { "<leader>//", function() Snacks.picker.grep() end, desc = "Grep" },
     { "<leader>/l", function() Snacks.picker.lines() end, desc = "Buffer lines" },
@@ -440,6 +392,8 @@ return {
 
     { "<leader>..", function() Snacks.scratch() end, desc = "Toggle scratch buffer" },
     { "<leader>.s", function() Snacks.scratch.select() end, desc = "Select scratch buffer" },
+
+    { "<leader>z", function() Snacks.picker.zoxide() end, desc = "Zoxide" },
 
     { "<leader>;", function() Snacks.picker.resume() end, desc = "Resume picker" },
 
@@ -470,7 +424,17 @@ return {
         Snacks.toggle.diagnostics({ name = "diagnostics" }):map("<leader>xu")
         Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<leader>ci")
         Snacks.toggle.indent():map("<leader><space>i")
-        Snacks.toggle.dim():map("<leader>zd")
+        Snacks.toggle({
+          name = "autosave session",
+          get = function()
+            local session = require("isrothy.utils.session")
+            return session.auto_save_enabled
+          end,
+          set = function(state)
+            local session = require("isrothy.utils.session")
+            session.auto_save_enabled = state
+          end,
+        }):map("<leader>qq")
         Snacks.toggle({
           name = "words",
           get = function() return Snacks.words.is_enabled() end,

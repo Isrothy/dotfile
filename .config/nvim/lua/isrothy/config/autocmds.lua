@@ -270,41 +270,58 @@ vim.api.nvim_create_autocmd("OptionSet", {
   end,
 })
 
-local function is_standard_git_repo(dir)
-  local original_git_dir = vim.env.GIT_DIR
-  local original_work_tree = vim.env.GIT_WORK_TREE
-  vim.env.GIT_DIR = nil
-  vim.env.GIT_WORK_TREE = nil
+local function should_detect_indentation(bufnr)
+  bufnr = bufnr or 0
+  local bt = vim.bo[bufnr].buftype
+  local ft = vim.bo[bufnr].filetype
 
-  local cmd = { "git", "-C", dir, "rev-parse", "--is-inside-work-tree" }
-  vim.fn.system(cmd)
-  local exit_code = vim.v.shell_error
+  if bt ~= "" and bt ~= "acwrite" then
+    return false
+  end
 
-  vim.env.GIT_DIR = original_git_dir
-  vim.env.GIT_WORK_TREE = original_work_tree
+  local ft_blocklist = {
+    "neo-tree",
+    "aerial",
+    "lazy",
+    "mason",
+    "snacks_dashboard",
+    "qf",
+    "help",
+  }
+  if vim.tbl_contains(ft_blocklist, ft) then
+    return false
+  end
 
-  return exit_code == 0
+  return true
 end
 
-vim.api.nvim_create_autocmd({ "DirChanged", "VimEnter" }, {
-  pattern = "*",
-  group = augroup("git_dir"),
-  callback = function()
-    local home_dir = vim.fn.expand("~")
-    local bare_git_dir = home_dir .. "/.cfg"
-    local bare_work_tree = home_dir
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+  group = augroup("detect_indentation"),
+  callback = function(args)
+    if should_detect_indentation(args.buf) then
+      require("isrothy.utils.indent-detector").detect(args.buf)
+    end
+  end,
+})
 
-    local current_cwd = vim.fn.getcwd()
-    if not current_cwd or current_cwd == "" then
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  group = augroup("auto_save"),
+  callback = function()
+    local session = require("isrothy.utils.session")
+    if not session.auto_save_enabled then
       return
     end
 
-    if (not is_standard_git_repo(current_cwd)) and current_cwd:find(home_dir, 1, true) then
-      vim.env.GIT_DIR = bare_git_dir
-      vim.env.GIT_WORK_TREE = bare_work_tree
-    else
-      vim.env.GIT_DIR = nil
-      vim.env.GIT_WORK_TREE = nil
+    local has_real_buffer = false
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted and vim.bo[buf].filetype ~= "" then
+        has_real_buffer = true
+        break
+      end
+    end
+
+    if has_real_buffer then
+      session.save()
     end
   end,
 })

@@ -40,8 +40,11 @@ opt.laststatus = 3
 opt.linebreak = true
 opt.list = true
 opt.listchars = {
-  trail = "·",
-  tab = "→ ",
+  tab = "▸ ",
+  trail = "•",
+  extends = "›",
+  precedes = "‹",
+  nbsp = "␣",
 }
 opt.mouse = ""
 opt.nrformats = { "alpha", "bin", "octal", "hex" }

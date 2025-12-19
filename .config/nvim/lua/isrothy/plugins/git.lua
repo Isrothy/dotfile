@@ -10,6 +10,20 @@ return {
         delay = 0,
         ignore_whitespace = false,
       },
+      signs = {
+        add = { text = "│" },
+        change = { text = "│" },
+      },
+      signs_staged = {
+        add = { text = "│" },
+        change = { text = "│" },
+      },
+      worktrees = {
+        {
+          toplevel = vim.env.HOME,
+          gitdir = vim.env.HOME .. "/.cfg",
+        },
+      },
       sign_priority = 7,
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
@@ -58,58 +72,6 @@ return {
         })
       end,
       trouble = false,
-    },
-  },
-  {
-    "moyiz/git-dev.nvim",
-    cmd = {
-      "GitDevClean",
-      "GitDevCleanAll",
-      "GitDevCloseBuffers",
-      "GitDevOpen",
-      "GitDevPersist",
-      "GitDevRecents",
-      "GitDevToggleUI",
-      "GitDevXDGHandle",
-    },
-    keys = {
-      { "<leader>gr", "", desc = "+Git-dev" },
-      {
-        "<leader>gro",
-        function()
-          local repo = vim.fn.input("Repository name / URI: ")
-          if repo ~= "" then
-            vim.env.GIT_DIR = nil
-            vim.env.GIT_WORK_TREE = nil
-            require("git-dev").open(repo)
-          end
-        end,
-        desc = "Open a remote git repository",
-      },
-      {
-        "<leader>grd",
-        function() require("git-dev").close_buffers() end,
-        desc = "Close buffers of current repository",
-      },
-      {
-        "<leader>grc",
-        function() require("git-dev").clean() end,
-        desc = "Clean current repository",
-      },
-    },
-    opts = {
-      cd_type = "tab",
-      verbose = false,
-      ui = {
-        enabled = false,
-      },
-      opener = function(dir, _, selected_path)
-        vim.cmd("tabnew")
-        vim.cmd("Neotree " .. dir)
-        if selected_path then
-          vim.cmd("edit " .. selected_path)
-        end
-      end,
     },
   },
 }

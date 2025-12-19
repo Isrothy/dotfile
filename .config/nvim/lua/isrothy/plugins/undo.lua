@@ -12,28 +12,6 @@ return {
     },
   },
   {
-    "tzachar/highlight-undo.nvim",
-    keys = { { "u" }, { "<c-r>" } },
-    enabled = true,
-    opts = {
-      duration = 300,
-      undo = {
-        hlgroup = "HighlightUndo",
-        mode = "n",
-        lhs = "u",
-        map = "undo",
-        opts = {},
-      },
-      redo = {
-        MODE = "N",
-        LHS = "<c-r>",
-        map = "redo",
-        opts = {},
-      },
-      highlight_for_count = true,
-    },
-  },
-  {
     "kevinhwang91/nvim-fundo",
     dependencies = "kevinhwang91/promise-async",
     build = function() require("fundo").install() end,

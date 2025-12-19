@@ -17,7 +17,7 @@ return {
     "EcologEnvGet",
     "EcologSnacks",
   },
-  lazy = true,
+  lazy = false,
   opts = {
     integrations = {
       nvim_cmp = false,

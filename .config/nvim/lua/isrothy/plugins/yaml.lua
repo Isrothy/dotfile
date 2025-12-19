@@ -1,7 +1,6 @@
 return {
   {
     "cuducos/yaml.nvim",
-    enabled = true,
     ft = { "yaml" },
     dependencies = {
       "folke/snacks.nvim",

@@ -2,6 +2,7 @@ return {
   {
     "olimorris/persisted.nvim",
     event = { "BufReadPre" },
+    enabled = false,
     keys = {
       { "<leader>qd", "<cmd>SessionDelete<cr>", desc = "Delete session" },
       { "<leader>ql", "<cmd>SessionLoad<cr>", desc = "Load session" },

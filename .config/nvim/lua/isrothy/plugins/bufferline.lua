@@ -1,5 +1,6 @@
 return {
   "akinsho/bufferline.nvim",
+  enabled = false,
   event = { "BufReadPost", "BufNewFile" },
   dependencies = "nvim-tree/nvim-web-devicons",
 
@@ -38,9 +39,10 @@ return {
       options = {
         mode = "buffers",
         indicator = { icon = "▎", style = "icon" },
+        numbers = "buffer_id",
         modified_icon = "●",
-        left_trunc_marker = "",
-        right_trunc_marker = "",
+        left_trunc_marker = "«",
+        right_trunc_marker = "»",
         max_name_length = 18,
         max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
         truncate_names = true,
@@ -66,7 +68,7 @@ return {
         diagnostics_indicator = function(_, _, diagnostics_dict, _)
           local s = ""
           for e, n in pairs(diagnostics_dict) do
-            local sym = e == "error" and " " or (e == "warning" and " " or (e == "hint" and "󰌶 " or " "))
+            local sym = e == "error" and "E" or (e == "warning" and "W" or (e == "hint" and "H" or "I"))
             s = s .. sym .. n
           end
           return s

@@ -1,3 +1,5 @@
+local M = {}
+
 local parse_line = function(linenr)
   local bufnr = vim.api.nvim_get_current_buf()
 
@@ -48,11 +50,7 @@ local parse_line = function(linenr)
   while i <= #result do
     -- find first capture that is not in current range and apply highlights on the way
     local j = i + 1
-    while
-      j <= #result
-      and result[j].range[1] >= result[i].range[1]
-      and result[j].range[2] <= result[i].range[2]
-    do
+    while j <= #result and result[j].range[1] >= result[i].range[1] and result[j].range[2] <= result[i].range[2] do
       for k, v in ipairs(result[i][2]) do
         if not vim.tbl_contains(result[j][2], v) then
           table.insert(result[j][2], k, v)
@@ -68,14 +66,10 @@ local parse_line = function(linenr)
       -- highlights need to be sorted by priority, on equal prio, the deeper nested capture (earlier
       -- in list) should be considered higher prio
       if #result[i][2] > 1 then
-        table.sort(result[i][2], function(a, b)
-          return a[2] < b[2]
-        end)
+        table.sort(result[i][2], function(a, b) return a[2] < b[2] end)
       end
 
-      result[i][2] = vim.tbl_map(function(tbl)
-        return tbl[1]
-      end, result[i][2])
+      result[i][2] = vim.tbl_map(function(tbl) return tbl[1] end, result[i][2])
       result[i] = { result[i][1], result[i][2] }
 
       i = i + 1
@@ -99,10 +93,11 @@ local function get_custom_foldtext(foldtxt_suffix, foldstart)
   }
 end
 
-_G.get_foldtext = function()
+function M.foldtext()
   local foldstart = vim.v.foldstart
   local foldtext = parse_line(foldstart)
   local foldtxt_suffix = get_custom_foldtxt_suffix(foldstart)
+  
   if type(foldtext) == "string" then
     return get_custom_foldtext(foldtxt_suffix, foldstart)
   else
@@ -113,3 +108,5 @@ _G.get_foldtext = function()
     return foldtext
   end
 end
+
+return M

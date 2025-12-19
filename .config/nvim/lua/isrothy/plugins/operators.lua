@@ -303,6 +303,7 @@ return {
 
   {
     "nvim-mini/mini.move",
+    enabled = false,
     keys = {
       { "<m-h>", mode = { "n", "x" }, desc = "Move left" },
       { "<m-k>", mode = { "n", "x" }, desc = "Move up" },

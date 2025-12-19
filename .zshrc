@@ -1,156 +1,102 @@
-source $(brew --prefix)/share/antigen/antigen.zsh
+if [[ -d /opt/homebrew ]]; then
+    export HOMEBREW_PREFIX="/opt/homebrew"
+else
+    export HOMEBREW_PREFIX="/usr/local"
+fi
 
-antigen use oh-my-zsh
+typeset -U path PATH
+path=(
+    "$HOMEBREW_PREFIX/bin"
+    "$HOMEBREW_PREFIX/sbin"
+    "$HOMEBREW_PREFIX/opt/curl/bin"
+    "$HOMEBREW_PREFIX/opt/llvm/bin"
+    "$HOMEBREW_PREFIX/opt/openjdk/bin"
+    "$HOMEBREW_PREFIX/opt/postgresql@16/bin"
+    "$HOMEBREW_PREFIX/opt/ruby/bin"
+    "$HOMEBREW_PREFIX/opt/tcl-tk@8/bin"
+    "$HOMEBREW_PREFIX/opt/zip/bin"
+    "$HOME/.rustup/toolchains/nightly-aarch64-apple-darwin/bin"
+    "$HOME/.local/bin"
+    "/Applications/Docker.app/Contents/Resources/bin"
+    "/Applications/Docker.app/Contents/Resources/cli-plugins/"
+    "$HOME/.lmstudio/bin"
+    "$path[@]"
+)
+export PATH
 
-antigen bundle aliases
-antigen bundle cabal
-antigen bundle colored-man-pages
-antigen bundle colorize
-antigen bundle command-not-found
-antigen bundle copybuffer
-antigen bundle copyfile
-antigen bundle copypath
-antigen bundle dirhistory
-antigen bundle fd
-antigen bundle fzf
-antigen bundle git
-antigen bundle gitignore
-antigen bundle history-substring-search
-antigen bundle jsontools
-antigen bundle macos
-antigen bundle ripgrep
-antigen bundle stack
-antigen bundle sudo
-antigen bundle web-search
-antigen bundle zoxide
+export JAVA_HOME=$(/usr/libexec/java_home)
+export MYVIMRC="$HOME/.config/nvim/init.lua"
+export EDITOR="nvim"
+export MANPAGER="nvim +Man!"
+export MANWIDTH=80
 
-antigen bundle hlissner/zsh-autopair
-antigen bundle Aloxaf/fzf-tab
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+
+source "$HOMEBREW_PREFIX/share/antigen/antigen.zsh"
+
 antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle colored-man-pages
 antigen bundle jeffreytse/zsh-vi-mode
+antigen bundle Aloxaf/fzf-tab
+antigen bundle hlissner/zsh-autopair
+antigen bundle zsh-users/zsh-history-substring-search
+antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen apply
 
-ZSH_COLORIZE_TOOL=chroma
-ENABLE_CORRECTION=true
+alias ls='eza --icons'
+alias la='eza -a --icons'
+alias ll='eza -l --icons --git -a'
+alias lt='eza --tree'
+alias neofetch='macchina'
+alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 
-eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/zen.toml)"
+alias preview="open -a preview"
+alias typora="open -a typora"
 
-export PATH="$(brew --prefix)/bin:$PATH"
-export PATH="$(brew --prefix)/opt/curl/bin:$PATH"
-export PATH="$(brew --prefix)/opt/llvm/bin:$PATH"
-export PATH="$(brew --prefix)/opt/openjdk/bin:$PATH"
-export PATH="$(brew --prefix)/opt/postgresql@16/bin:$PATH"
-export PATH="$(brew --prefix)/opt/ruby/bin:$PATH"
-export PATH="$(brew --prefix)/opt/tcl-tk@8/bin:$PATH"
-export PATH="$(brew --prefix)/opt/zip/bin:$PATH"
-export PATH="$HOME/.rustup/toolchains/nightly-aarch64-apple-darwin/bin:$PATH"
-export PATH="$HOME/.local/bin":$PATH
-export PATH="/Applications/Docker.app/Contents/Resources/bin":$PATH
-export PATH="/Applications/Docker.app/Contents/Resources/cli-plugins/":$PATH
+eval "$(starship init zsh)"
+eval "$(pyenv init - zsh)"
+eval "$(zoxide init zsh)"
 
-# export PDD_TEST_OUTPUT_PATH=tests
-# export PDD_EXAMPLE_OUTPUT_PATH=examples
+export FZF_DEFAULT_COMMAND="fd --type file --color=always"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS="--ansi --color bg+:#D8DEE9"
 
-# export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
-export SSL_CERT_FILE="$(brew --prefix)/etc/openssl@3/cert.pem"
-export CURL_CA_BUNDLE="$(brew --prefix)/etc/openssl@3/cert.pem"
-export NODE_EXTRA_CA_CERTS="$(brew --prefix)/etc/openssl@3/cert.pem"
-export JAVA_HOME=$(/usr/libexec/java_home)
-export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
-export MYVIMRC=$HOME"/.config/nvim/init.lua"
-export MANPAGER='nvim +Man!'
-export MANWIDTH=80
-export EDITOR=nvim
+bindkey -v
+stty -ixon
 
-# history-substring-search
+
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd 'v' edit-command-line
+
+
+function zvm_after_init() {
+    if zle -l autosuggest-accept; then
+        zvm_bindkey viins '^y' autosuggest-accept
+        zvm_bindkey viins '^d' backward-delete-char  # Ctrl+d = Backspace
+        zvm_bindkey viins '^t' delete-char           # Ctrl+t = Delete
+    fi
+}
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-# git baredot
-alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
-
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
-
-# fzf
-export FZF_DEFAULT_COMMAND="fd --type file --color=always"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS="--ansi  --color bg+:#D8DEE9"
-
-# macchina
-alias neofetch='macchina'
-
-# lsd
-alias ls='lsd'
-alias l='lsd'
-alias ll='l -l'
-alias la='ls -a'
-alias lla='ls -la'
-alias lt='ls --tree'
-
-# pip
-alias pipupall="pip3 list -o | cut -f1 -d' ' | tr ' ' '\n' | awk '{if(NR>=3)print}' | cut -d' ' -f1 | xargs -n1 pip3 install -U"
-
-# kitty
-alias icat="kitty +kitten icat"
-alias d="kitten diff"
-
-# Check if the terminal likely supports OSC 133 (XT is a terminfo capability)
-# and ensure Kitty's full integration (which is more comprehensive) isn't already active.
-if (( ${+terminfo[XT]} )) && [[ -z "$KITTY_SHELL_INTEGRATION" ]]; then
-  _zsh_nvim_term_osc_precmd() {
-    print -Pn "\e]133;A\a"  # Mark: Start of prompt
-  }
-  _zsh_nvim_term_osc_preexec() {
-    print -Pn "\e]133;C\a"  # Mark: Start of command output/execution
-  }
-
-  # More robust precmd that includes D (end of last command) then A (start of new prompt)
-  _zsh_nvim_term_osc_precmd_fuller() {
-    local ret=$?
-    print -Pn "\e]133;D;${ret}\a" # Mark: End of last command output, with exit status
-    print -Pn "\e]133;A\a"         # Mark: Start of prompt
-  }
-
-  autoload -Uz add-zsh-hook
-  add-zsh-hook precmd _zsh_nvim_term_osc_precmd_fuller
-  add-zsh-hook preexec _zsh_nvim_term_osc_preexec
-fi
-
-# open
-alias preview="open -a preview"
-alias typora="open -a typora"
-
-# zoxide
-eval "$(zoxide init zsh)"
-
-# zle
-autoload -Uz edit-command-line
-zle -N edit-command-line
-
-# ghcup
-
-# api-keys
-[ -f ~/.api-keys ] && source ~/.api-keys
-
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/jiangjoshua/.lmstudio/bin"
-# End of LM Studio CLI section
-
-
-fpath+=~/.zfunc; autoload -Uz compinit; compinit
 
 zstyle ':completion:*' menu select
 
-[ -f "/Users/jiangjoshua/.ghcup/env" ] && . "/Users/jiangjoshua/.ghcup/env" # ghcup-env
+fpath+=~/.zfunc
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
+[ -f "$HOME/.api-keys" ] && source "$HOME/.api-keys"
 
-# PDD CLI completion
-# source /Users/jiangjoshua/Developer/PDD-example/.venv/lib/python3.12/site-packages/pdd/pdd_completion.zsh
+if [[ -d "$HOME/Library/Application Support/pipx" ]]; then
+    PDD_COMP="$HOME/Library/Application Support/pipx/venvs/pdd-cli/lib/python3.13/site-packages/pdd/pdd_completion.zsh"
+    [ -f "$PDD_COMP" ] && source "$PDD_COMP"
+fi
+[ -f "$HOME/.pdd/api-env.zsh" ] && source "$HOME/.pdd/api-env.zsh"

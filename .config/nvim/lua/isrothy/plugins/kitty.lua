@@ -1,5 +1,9 @@
 return {
-  { "fladson/vim-kitty", ft = { "kitty" } },
+  {
+    "fladson/vim-kitty",
+    enabled = false,
+    ft = { "kitty" },
+  },
   {
     "mikesmithgh/kitty-scrollback.nvim",
     cmd = {
@@ -7,7 +11,7 @@ return {
       "KittyScrollbackCheckHealth",
       "KittyScrollbackGenerateCommandLineEditing",
     },
-    enabled = true,
+    enabled = false,
     event = { "User KittyScrollbackLaunch" },
     config = function()
       local autocmds = require("kitty-scrollback.autocommands")

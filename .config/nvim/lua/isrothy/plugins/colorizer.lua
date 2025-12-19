@@ -1,6 +1,7 @@
 return {
   {
     "catgoose/nvim-colorizer.lua",
+    enabled = false,
     event = "VeryLazy",
     cmd = {
       "ColorizerAttachToBuffer",

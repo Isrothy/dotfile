@@ -28,15 +28,6 @@ return {
     end,
   },
   {
-    "Kicamon/markdown-table-mode.nvim",
-    ft = { "markdown" },
-    cmd = { "Mtm" },
-    keys = {
-      { "<localleader>mt", ":Mtm<cr>", desc = "Markdown Table Mode", ft = "markdown" },
-    },
-    config = function() require("markdown-table-mode").setup() end,
-  },
-  {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",

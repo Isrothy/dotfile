@@ -3,9 +3,7 @@ return {
     "nvim-neotest/neotest",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "mrcjkb/neotest-haskell",
       "rcasia/neotest-java",
       "alfaix/neotest-gtest",
       "nvim-neotest/neotest-python",
@@ -96,10 +94,6 @@ return {
           require("neotest-gtest").setup({}),
           require("neotest-java")({
             ignore_wrapper = false, -- whether to ignore maven/gradle wrapper
-          }),
-          require("neotest-haskell")({
-            build_tools = { "stack", "cabal" },
-            frameworks = { "hspec" },
           }),
         },
       }

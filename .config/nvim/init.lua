@@ -27,23 +27,12 @@ if vim.env.PROF then
   })
 end
 
-vim.diagnostic.config({
-  virtual_text = false,
-  signs = {
-    text = { " ", " ", " ", " " },
-  },
-  underline = true,
-  update_in_insert = true,
-  severity_sort = true,
-  float = {
-    source = true,
-  },
-})
+require("isrothy.config.options")
+require("isrothy.config.autocmds")
+require("isrothy.config.commands")
+require("isrothy.config.diagnostics")
 
-require("isrothy.options")
-require("isrothy.autocmds")
-require("isrothy.commands")
-require("isrothy.fold")
+require("isrothy.utils.fold")
 require("isrothy.lazy_plugin")
 
 vim.cmd.colorscheme("nordify-dark")

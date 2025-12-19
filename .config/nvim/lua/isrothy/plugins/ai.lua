@@ -36,9 +36,30 @@ return {
       })
     end,
     opts = {
+      display = {
+        diff = {
+          enabled = true,
+          opts = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
+          provider = "default",
+        },
+        action_palette = {
+          provider = "snacks",
+        },
+        chat = {
+          window = {
+            layout = "buffer", -- float|vertical|horizontal|buffer
+          },
+          intro_message = "Welcome to CodeCompanion ✨! Press ? for options",
+          show_header_separator = false,
+          show_references = true,
+          show_settings = true,
+          show_token_count = true,
+          start_in_insert_mode = false,
+        },
+      },
       strategies = {
         chat = {
-          adapter = "gemini_cli",
+          adapter = "gemini",
           keymaps = {
             send = {
               modes = { n = "<cr>" },
@@ -71,28 +92,8 @@ return {
         cmd = {
           adapter = "gemini",
         },
-        display = {
-          diff = {
-            enabled = true,
-            layout = "vertical",
-            opts = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
-            provider = "default",
-          },
-          action_palette = {
-            provider = "snacks",
-          },
-          chat = {
-            intro_message = "Welcome to CodeCompanion ✨! Press ? for options",
-            show_header_separator = false,
-            show_references = true,
-            show_settings = true,
-            show_token_count = true,
-            start_in_insert_mode = false,
-          },
-        },
       },
       adapters = {
-
         acp = {
           gemini_cli = function()
             return require("codecompanion.adapters").extend("gemini_cli", {
@@ -110,6 +111,11 @@ return {
             return require("codecompanion.adapters").extend("gemini", {
               env = {
                 api_key = "GEMINI_API_KEY",
+              },
+              schema = {
+                model = {
+                  default = "gemini-3-flash-preview",
+                },
               },
             })
           end,
@@ -166,12 +172,12 @@ return {
         default_filetype_enabled = true,
         map_keys = true,
         key_bindings = {
-          accept = "<c-;>",
-          accept_word = "<c-o>",
-          accept_line = "<c-l>",
-          clear = "<c-'>",
-          next = "<c-.>",
-          prev = "<c-,>",
+          accept = "<c-y>",
+          -- accept_word = "<m-o>",
+          -- accept_line = "<m-l>",
+          clear = "<c-]>",
+          next = "<c-a>",
+          prev = "<c-x>",
         },
       },
     },

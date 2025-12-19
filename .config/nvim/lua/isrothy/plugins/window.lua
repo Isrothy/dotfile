@@ -1,133 +1,97 @@
 return {
   {
-    "folke/edgy.nvim",
-    event = "VeryLazy",
-    init = function()
-      vim.opt.laststatus = 3
-      vim.opt.splitkeep = "screen"
-    end,
+    "mrjones2014/smart-splits.nvim",
+    -- lazy = false,
     keys = {
       {
-        "<leader>wE",
-        function() require("edgy").toggle() end,
-        desc = "Edgy Toggle",
+        "<c-h>",
+        function() require("smart-splits").move_cursor_left() end,
+        desc = "Move to window left",
+        mode = { "n", "t" },
       },
       {
-        "<leader>we",
-        function() require("edgy").select() end,
-        desc = "Edgy Select Window",
+        "<c-j>",
+        function() require("smart-splits").move_cursor_down() end,
+        desc = "Move to window below",
+        mode = { "n", "t" },
+      },
+      {
+        "<c-k>",
+        function() require("smart-splits").move_cursor_up() end,
+        desc = "Move to window above",
+        mode = { "n", "t" },
+      },
+      {
+        "<c-l>",
+        function() require("smart-splits").move_cursor_right() end,
+        desc = "Move to window right",
+        mode = { "n", "t" },
+      },
+      {
+        "<c-\\>",
+        function() require("smart-splits").move_cursor_previous() end,
+        desc = "Move to previous window",
+      },
+
+      {
+        "<leader>bh",
+        function() require("smart-splits").swap_buf_left() end,
+        desc = "Swap buffer right",
+      },
+      {
+        "<leader>bl",
+        function() require("smart-splits").swap_buf_right() end,
+        desc = "Swap buffer left",
+      },
+      {
+        "<leader>bj",
+        function() require("smart-splits").swap_buf_down() end,
+        desc = "Swap buffer down",
+      },
+      {
+        "<leader>bk",
+        function() require("smart-splits").swap_buf_up() end,
+        desc = "Swap buffer up",
+      },
+
+      {
+        "<m-h>",
+        function() require("smart-splits").resize_left() end,
+        desc = "Resize window left",
+        mode = { "n", "t" },
+      },
+      {
+        "<m-j>",
+        function() require("smart-splits").resize_down() end,
+        desc = "Resize window down",
+        mode = { "n", "t" },
+      },
+      {
+        "<m-k>",
+        function() require("smart-splits").resize_up() end,
+        desc = "Resize window up",
+        mode = { "n", "t" },
+      },
+      {
+        "<m-l>",
+        function() require("smart-splits").resize_right() end,
+        desc = "Resize window right",
+        mode = { "n", "t" },
       },
     },
-
-    opts = function()
-      local opts = {
-        options = {
-          left = { size = 30 },
-          bottom = { size = 10 },
-          right = { size = 20 },
-          top = { size = 10 },
-        },
-        exit_when_last = true,
-        animate = { enabled = false },
-        keys = {
-          ["<c-.>"] = function(win) win:resize("width", 1) end,
-          ["<c-,>"] = function(win) win:resize("width", -1) end,
-          ["<c-=>"] = function(win) win:resize("height", 1) end,
-          ["<c-->"] = function(win) win:resize("height", -1) end,
-        },
-        wo = {
-          winbar = false,
-          winfixwidth = true,
-          winfixheight = false,
-          winhighlight = "WinBar:EdgyWinBar,Normal:EdgyNormal",
-          spell = false,
-          signcolumn = "no",
-        },
-        bottom = {
-          {
-            ft = "toggleterm",
-            size = { height = 0.3 },
-            filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == "" end,
-          },
-          "Trouble",
-          { ft = "dap-view" },
-          { ft = "qf", title = "QuickFix" },
-          {
-            ft = "help",
-            size = { height = 0.5 },
-            filter = function(buf) return vim.bo[buf].buftype == "help" end,
-          },
-          { title = "Neotest Output", ft = "neotest-output-panel", size = { height = 15 } },
-          {
-            ft = "dbout",
-          },
-        },
-        left = {
-          { title = "Neotest Summary", ft = "neotest-summary" },
-          {
-            ft = "codecompanion",
-            size = {
-              width = 50,
-            },
-          },
-          { title = "Grug Far", ft = "grug-far", size = { width = 0.4 } },
-          {
-            ft = "undotree",
-            size = { width = 40 },
-          },
-          { ft = "dbui" },
-          {
-            title = "Luapad",
-            ft = "lua",
-            filter = function(buf) return vim.b[buf].is_luapad end,
-            size = {
-              width = 50,
-            },
-          },
-        },
-
-        right = {
-          {
-            title = "Neominimap",
-            ft = "neominimap",
-            size = { width = 20 },
-          },
-          {
-            ft = "aerial",
-            size = { width = 30 },
-          },
-        },
-      }
-
-      for i, v in ipairs({ "filesystem", "buffers", "git_status" }) do
-        table.insert(opts.left, i, {
-          title = "Neo-Tree " .. v:gsub("_", " "):gsub("^%l", string.upper),
-          ft = "neo-tree",
-          filter = function(buf) return vim.b[buf].neo_tree_source == v end,
-          pinned = false,
-        })
-      end
-      for _, pos in ipairs({ "top", "bottom", "left", "right" }) do
-        opts[pos] = opts[pos] or {}
-        ---@diagnostic disable-next-line: param-type-mismatch
-        table.insert(opts[pos], {
-          ft = "trouble",
-          filter = function(_, win)
-            return vim.w[win].trouble
-              and vim.w[win].trouble.position == pos
-              and vim.w[win].trouble.type == "split"
-              and vim.w[win].trouble.relative == "editor"
-              and not vim.w[win].trouble_preview
-          end,
-        })
-      end
-
-      return opts
-    end,
+    opts = {
+      ignored_buftypes = {
+        "nofile",
+        "quickfix",
+        "prompt",
+      },
+      at_edge = "stop",
+    },
   },
   {
     "s1n7ax/nvim-window-picker",
     version = "2.*",
+    enabled = false,
     keys = {
       {
         "<leader>wp",
