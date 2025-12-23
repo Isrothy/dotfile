@@ -8,20 +8,39 @@ local state = {
 ---@type table<string, string[]>
 local targets = {
   default = {
-    "class",
-    "function",
-    "method",
-    "if",
-    "for",
-    "while",
-  },
-  lua = {
+    "class_definition",
+    "class_specifier",
+    "class_declaration",
     "function_declaration",
+    "function_definition",
+    "method_definition",
+    "method_declaration",
+    "if_statement",
+    "for_statement",
+    "for_range_loop",
+    "while_statement",
+    "while_expression",
+  },
+
+  sh = {
+    "function_definition",
     "if_statement",
     "for_statement",
     "while_statement",
+    "case_command",
+    "elif_clause",
+  },
+
+  lua = {
+    "function_declaration",
+    "function_definition",
+    "if_statement",
+    "for_statement",
+    "while_statement",
+    "repeat_statement",
     "table_constructor",
   },
+
   c = {
     "function_definition",
     "struct_specifier",
@@ -29,44 +48,86 @@ local targets = {
     "if_statement",
     "for_statement",
     "while_statement",
+    "do_statement",
     "switch_statement",
     "case_statement",
+    "preproc_if",
+    "preproc_ifdef",
+    "preproc_elif",
+    "preproc_else",
   },
+
   cpp = {
     "namespace_definition",
     "class_specifier",
     "struct_specifier",
+    "enum_specifier",
     "function_definition",
     "template_declaration",
     "if_statement",
     "for_statement",
+    "for_range_loop",
     "while_statement",
+    "do_statement",
+    "switch_statement",
+    "case_statement",
     "try_statement",
     "catch_clause",
+    "preproc_if",
+    "preproc_ifdef",
+    "preproc_elif",
+    "preproc_else",
   },
+
+  java = {
+    "class_declaration",
+    "interface_declaration",
+    "enum_declaration",
+    "record_declaration",
+    "method_declaration",
+    "constructor_declaration",
+    "if_statement",
+    "for_statement",
+    "while_statement",
+    "do_statement",
+    "try_statement",
+    "try_with_resources_statement",
+    "catch_clause",
+    "switch_expression",
+    "switch_statement",
+  },
+
   python = {
     "class_definition",
     "function_definition",
+    "async_function_definition",
+    "decorated_definition",
     "if_statement",
     "for_statement",
     "while_statement",
     "try_statement",
     "with_statement",
+    "match_statement",
   },
+
   rust = {
     "impl_item",
     "trait_item",
     "function_item",
     "mod_item",
+    "enum_variant",
+    "macro_definition",
     "if_expression",
     "loop_expression",
     "for_expression",
     "while_expression",
     "match_expression",
-    "macro_definition",
+    "match_arm",
   },
 }
 targets.cuda = targets.cpp
+targets.zsh = targets.sh
+targets.bash = targets.sh
 
 local function render_window(context_nodes)
   local current_buf = vim.api.nvim_get_current_buf()
@@ -128,7 +189,6 @@ local function open_window(content, filetype)
     buffer = vim.api.nvim_get_current_buf(),
     once = true,
     callback = function()
-      -- If window exists AND we are not currently focused inside it
       if vim.api.nvim_win_is_valid(win) and vim.api.nvim_get_current_win() ~= win then
         vim.api.nvim_win_close(win, true)
         state.win = nil
@@ -160,11 +220,15 @@ function M.show()
   local node = vim.treesitter.get_node()
   local context_nodes = {}
 
+  local last_line = nil
   while node do
     local type = node:type()
     if vim.tbl_contains(allow_list, type) then
       local row = node:range()
-      table.insert(context_nodes, 1, { node = node, row = row, type = type })
+      if last_line == nil or row ~= last_line then
+        last_line = row
+        table.insert(context_nodes, 1, { node = node, row = row, type = type })
+      end
     end
     node = node:parent()
   end

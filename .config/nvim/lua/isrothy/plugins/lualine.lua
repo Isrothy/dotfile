@@ -47,7 +47,7 @@ return {
     return {
       options = {
         theme = "nordify-dark",
-        icons_enabled = false,
+        icons_enabled = true,
         component_separators = "",
         section_separators = "",
         disabled_filetypes = {
@@ -96,15 +96,15 @@ return {
           },
         },
         lualine_b = {
-          { "b:gitsigns_head", icon = "git:" },
+          { "b:gitsigns_head", icon = "" },
           {
             "diff",
             source = diff_source,
             colored = true,
             symbols = {
-              added = "+",
-              modified = "~",
-              removed = "-",
+              added = " ",
+              modified = " ",
+              removed = " ",
             },
           },
         },
@@ -114,10 +114,10 @@ return {
             file_status = true,
             newfile_status = true,
             symbols = {
-              modified = "[+]", -- Text to show when the file is modified.
-              readonly = "[-]", -- Text to show when the file is non-modifiable or readonly.
-              unnamed = "[UNNAMED]", -- Text to show for unnamed buffers.
-              newfile = "[New]",
+              modified = "●",
+              readonly = "",
+              unnamed = "[No Name]",
+              newfile = "✚",
             },
             fmt = trunc(90, 30, 50),
             path = 0,
@@ -125,10 +125,10 @@ return {
           {
             "diagnostic-message",
             icons = {
-              error = "E",
-              warn = "W",
-              hint = "H",
-              info = "I",
+              error = " ",
+              warn = " ",
+              hint = " ",
+              info = " ",
             },
             first_line_only = true,
           },
@@ -146,9 +146,6 @@ return {
               unix = "LF",
               dos = "CRLF",
               mac = "CR",
-              -- unix = " ",
-              -- dos = " ",
-              -- mac = " ",
             },
           },
         },
@@ -186,21 +183,12 @@ return {
             "diagnostics",
             update_in_insert = true,
             symbols = {
-              error = "E",
-              warn = "W",
-              hint = "H",
-              info = "I",
+              error = " ",
+              warn = " ",
+              hint = " ",
+              info = " ",
             },
           },
-          -- {
-          --   "aerial",
-          --   sep = " ⟩ ",
-          --   depth = nil,
-          --   dense = false,
-          --   dense_sep = ".",
-          --   sep_highlight = "@text",
-          --   colored = true,
-          -- },
         },
         lualine_x = {},
         lualine_y = {

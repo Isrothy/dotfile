@@ -1,7 +1,7 @@
 vim.diagnostic.config({
   virtual_text = false,
   signs = {
-    text = { "E", "W", "I", "H" },
+    text = { " ", " ", " ", " " },
   },
   underline = true,
   update_in_insert = true,

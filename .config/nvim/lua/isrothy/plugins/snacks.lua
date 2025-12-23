@@ -45,10 +45,10 @@ return {
       },
       icons = {
         diagnostics = {
-          Error = "E",
-          Warn = "W",
-          Hint = "H",
-          Info = "I",
+          Error = " ",
+          Warn = " ",
+          Hint = " ",
+          Info = " ",
         },
       },
     },
@@ -272,11 +272,12 @@ return {
     notifier = {
       enabled = true,
       icons = {
-        error = "E",
-        warn = "W",
-        info = "I",
-        debug = "D",
-        trace = "T",
+        error = " ",
+        warn = " ",
+        hint = " ",
+        info = " ",
+        debug = " ",
+        trace = " ",
       },
       timeout = 5000,
     },
@@ -368,8 +369,12 @@ return {
     { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git log current line" },
     { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git status" },
     { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
-    { "<leader>go", function() Snacks.gitbrowse() end, desc = "Git browse" },
-    { "<leader>gO", function() Snacks.gitbrowse.open() end, desc = "Open git repo" },
+
+    { "<leader>gg", function() Snacks.lazygit.open() end, desc = "Open lazygit" },
+    { "<leader>gt", function() Snacks.lazygit.log() end, desc = "Open lazygit with log" },
+    { "<leader>gh", function() Snacks.lazygit.log_file() end, desc = "Open git with log of current file" },
+
+    { "<leader>go", function() Snacks.gitbrowse.open() end, desc = "Browse current file" },
 
     { "<leader>Gi", function() Snacks.picker.gh_issue() end, desc = "GitHub Issues (open)" },
     { "<leader>GI", function() Snacks.picker.gh_issue({ state = "all" }) end, desc = "GitHub Issues (all)" },

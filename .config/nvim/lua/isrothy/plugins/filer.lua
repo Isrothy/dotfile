@@ -206,6 +206,7 @@ local function on_move(data) Snacks.rename.on_rename_file(data.source, data.dest
 return {
   {
     "refractalize/oil-git-status.nvim",
+    enabled = false,
     lazy = false,
     dependencies = { "stevearc/oil.nvim" },
     opts = {},

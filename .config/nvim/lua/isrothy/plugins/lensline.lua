@@ -38,10 +38,10 @@ return {
           name = "default",
           style = {
             placement = "inline",
-            use_nerdfont = true,
+            use_nerdfont = false,
           },
           providers = {
-            { name = "references", enabled = true },
+            { name = "usages", enabled = true },
             {
               name = "diagnostics",
               enabled = true,
