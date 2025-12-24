@@ -147,8 +147,105 @@ return {
     },
   },
   {
+    "monkoose/neocodeium",
+    event = "VeryLazy",
+    keys = {
+      { "<c-l>", function() require("neocodeium").accept() end, desc = "Accept", mode = "i" },
+      { "<c-]>", function() require("neocodeium").cancel() end, desc = "Cancel", mode = "i" },
+      { "<c-j>", function() require("neocodeium").cycle(1) end, desc = "Next", mode = "i" },
+      { "<c-k>", function() require("neocodeium").cycle(-1) end, desc = "Prev", mode = "i" },
+      { "<leader>as", function() end },
+    },
+    opts = {
+      show_label = true,
+      debounce = true,
+    },
+    init = function()
+      vim.api.nvim_create_user_command("NeoCodeiumStatus", function()
+        local ok, neocodeium = pcall(require, "neocodeium")
+        if not ok then
+          vim.notify("NeoCodeium plugin not found!", vim.log.levels.ERROR)
+          return
+        end
+
+        local status, server_status = neocodeium.get_status()
+
+        local plugin_states = {
+          [0] = { text = "Enabled", icon = " ", hl = "DiagnosticOk" },
+          [1] = { text = "Globally Disabled", icon = " ", hl = "Comment" },
+          [2] = { text = "Buffer Disabled (Command)", icon = "󰅙 ", hl = "DiagnosticWarn" },
+          [3] = { text = "Buffer Disabled (Filetype)", icon = " ", hl = "DiagnosticWarn" },
+          [4] = { text = "Buffer Disabled (Filter)", icon = " ", hl = "DiagnosticWarn" },
+          [5] = { text = "Encoding Error", icon = "𝓐 ", hl = "DiagnosticError" },
+          [6] = { text = "Special Buftype", icon = " ", hl = "Comment" },
+        }
+
+        local server_states = {
+          [0] = { text = "Running", icon = " ", hl = "DiagnosticOk" },
+          [1] = { text = "Connecting...", icon = " ", hl = "DiagnosticWarn" },
+          [2] = { text = "Stopped", icon = " ", hl = "Comment" },
+        }
+
+        local p_info = plugin_states[status] or { text = "Unknown", icon = "?", hl = "DiagnosticError" }
+        local s_info = server_states[server_status] or { text = "Unknown", icon = "?", hl = "DiagnosticError" }
+
+        local lines = {
+          "",
+          "  Plugin Status: " .. p_info.icon .. " " .. p_info.text,
+          "  Server Status: " .. s_info.icon .. " " .. s_info.text,
+          "",
+          "  [q] to close",
+        }
+
+        local buf = vim.api.nvim_create_buf(false, true)
+        vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+        local width = 40
+        local height = #lines
+        local ui = vim.api.nvim_list_uis()[1]
+        local row = math.floor((ui.height - height) / 2)
+        local col = math.floor((ui.width - width) / 2)
+
+        vim.api.nvim_open_win(buf, true, {
+          relative = "editor",
+          width = width,
+          height = height,
+          row = row,
+          col = col,
+          style = "minimal",
+          border = "rounded",
+          title = " NeoCodeium ",
+          title_pos = "center",
+        })
+
+        local ns_id = vim.api.nvim_create_namespace("NeoCodeiumStatus")
+        vim.api.nvim_buf_set_extmark(buf, ns_id, 1, 17, {
+          end_col = #lines[2],
+          hl_group = p_info.hl,
+        })
+
+        vim.api.nvim_buf_set_extmark(buf, ns_id, 2, 17, {
+          end_col = #lines[3],
+          hl_group = s_info.hl,
+        })
+
+        vim.api.nvim_buf_set_extmark(buf, ns_id, 4, 2, {
+          end_col = #lines[5],
+          hl_group = "Comment",
+        })
+
+        local opts = { buffer = buf, nowait = true, silent = true }
+        vim.keymap.set("n", "q", "<cmd>close<cr>", opts)
+        vim.keymap.set("n", "<Esc>", "<cmd>close<cr>", opts)
+
+        vim.bo[buf].modifiable = false
+        vim.bo[buf].bufhidden = "wipe"
+      end, {})
+    end,
+  },
+  {
     "Exafunction/windsurf.nvim",
-    enabled = true,
+    enabled = false,
     event = "VeryLazy",
     cmds = { "Codeium" },
     dependencies = {
@@ -172,12 +269,12 @@ return {
         default_filetype_enabled = true,
         map_keys = true,
         key_bindings = {
-          accept = "<c-y>",
+          accept = "<c-l>",
           -- accept_word = "<m-o>",
           -- accept_line = "<m-l>",
           clear = "<c-]>",
-          next = "<c-a>",
-          prev = "<c-x>",
+          next = "<c-j>",
+          prev = "<c-k>",
         },
       },
     },

@@ -21,7 +21,7 @@ return {
       worktrees = {
         {
           toplevel = vim.env.HOME,
-          gitdir = vim.env.HOME .. "/.cfg",
+          gitdir = vim.env.HOME .. "/.local/share/yadm/repo.git",
         },
       },
       sign_priority = 7,

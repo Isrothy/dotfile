@@ -20,7 +20,7 @@ return {
         ["<tab>"] = { "select_next", "snippet_forward", "fallback" },
         ["<s-tab>"] = { "select_prev", "snippet_backward", "fallback" },
         ["<cr>"] = { "accept", "fallback" },
-        -- ["<c-y>"] = { "accept", "fallback" },
+        ["<c-y>"] = { "accept", "fallback" },
         ["<c-q>"] = { "show", "show_documentation", "hide_documentation" },
         ["<c-e>"] = { "cancel" },
         ["<c-p>"] = { "select_prev", "fallback" },

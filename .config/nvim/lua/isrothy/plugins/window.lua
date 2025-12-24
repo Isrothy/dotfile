@@ -2,6 +2,8 @@ return {
   {
     "mrjones2014/smart-splits.nvim",
     -- lazy = false,
+    enabled = false,
+    event = "VeryLazy",
     keys = {
       {
         "<c-h>",

@@ -26,13 +26,55 @@ local diff_source = function()
   end
 end
 
--- local function persisted_status()
---   if vim.fn.exists("g:persisting") == 1 and vim.g.persisting then
---     return "󰆓"
---   else
---     return "󱙃"
---   end
--- end
+local session = {
+  function()
+    local ok, session = pcall(require, "isrothy.utils.session")
+    if not ok then
+      return ""
+    end
+
+    if session.auto_save_enabled then
+      return " Auto"
+    else
+      return "󰆔 Man"
+    end
+  end,
+
+  color = function()
+    local ok, session = pcall(require, "isrothy.utils.session")
+    if ok and session.auto_save_enabled then
+      return { fg = "#2E3440", gui = "bold" }
+    else
+      return { fg = "#4C566A" }
+    end
+  end,
+  separator = { left = "", right = "" },
+}
+
+local ts_status = {
+  function()
+    local buf = vim.api.nvim_get_current_buf()
+    local ok, parser = pcall(vim.treesitter.get_parser, buf)
+
+    if ok and parser then
+      return " ON"
+    end
+    return " Off"
+  end,
+
+  color = function()
+    local buf = vim.api.nvim_get_current_buf()
+    local ok, parser = pcall(vim.treesitter.get_parser, buf)
+
+    if ok and parser then
+      return { fg = "#A3BE8C", gui = "bold" }
+    else
+      return { fg = "#616E88" }
+    end
+  end,
+
+  separator = { left = "", right = "" },
+}
 
 return {
   "nvim-lualine/lualine.nvim",
@@ -90,6 +132,7 @@ return {
       },
       sections = {
         lualine_a = {
+          session,
           {
             "mode",
             fmt = trunc(80, 4, nil, true),
@@ -150,11 +193,11 @@ return {
           },
         },
         lualine_y = {
-          -- persisted_status,
-          "filetype",
-          "lsp_status",
           -- "codeium_spinner",
-          "codecompanion_spinner",
+          "filetype",
+          ts_status,
+          "lsp_status",
+          -- "codecompanion_spinner",
           -- neocodeium_component,
         },
         lualine_z = {

@@ -29,7 +29,7 @@ return {
     image = { enabled = false },
     scroll = { enabled = false },
     picker = {
-      prompt = "> ",
+      prompt = " ",
       layout = {
         cycle = true,
         preset = function() return vim.o.columns >= 120 and "default" or "vertical" end,
@@ -39,7 +39,8 @@ return {
           keys = {
             ["<c-d>"] = { "list_scroll_down", mode = { "n" } },
             ["<c-u>"] = { "list_scroll_up", mode = { "n" } },
-            ["<c-t>"] = { "tab", mode = { "n" } },
+            ["<c-j>"] = {},
+            ["<c-k>"] = {},
           },
         },
       },

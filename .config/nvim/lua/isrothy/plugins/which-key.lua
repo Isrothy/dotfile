@@ -57,11 +57,26 @@ return {
             "<leader>b",
             group = "Buffer",
           },
-          -- { "<leader>bx", group = "Exchange" },
-          -- { "<leader>bxh", function() swap_with_window("h") end, desc = "Swap with left window" },
-          -- { "<leader>bxl", function() swap_with_window("l") end, desc = "Swap with right window" },
-          -- { "<leader>bxj", function() swap_with_window("j") end, desc = "Swap with below window" },
-          -- { "<leader>bxk", function() swap_with_window("k") end, desc = "Swap with above window" },
+          {
+            "<leader>bh",
+            function() require("isrothy.utils.window").swap_with_window("h") end,
+            desc = "Swap with left window",
+          },
+          {
+            "<leader>bl",
+            function() require("isrothy.utils.window").swap_with_window("l") end,
+            desc = "Swap with right window",
+          },
+          {
+            "<leader>bj",
+            function() require("isrothy.utils.window").swap_with_window("j") end,
+            desc = "Swap with below window",
+          },
+          {
+            "<leader>bk",
+            function() require("isrothy.utils.window").swap_with_window("k") end,
+            desc = "Swap with above window",
+          },
           { "<leader>ba", "<c-^>", desc = "Alternate buffer" },
         },
         {
@@ -267,9 +282,9 @@ return {
           { ".", ".<c-g>u" },
         },
 
-        -- Move in insert/command/terminal mode
+        -- Move in insert/command mode
         {
-          mode = { "i", "c", "t" },
+          mode = { "i", "c" },
           { "<m-h>", "<left>", desc = "Left" },
           { "<m-j>", "<down>", desc = "Down" },
           { "<m-k>", "<up>", desc = "Up" },
@@ -278,8 +293,47 @@ return {
 
         {
           mode = { "i", "c", "t" },
-          { "<c-d>", "<BS>", desc = "Backspace" },
-          { "<c-t>", "<DEL>", desc = "Delete" },
+          { "<c-d>", "<DEL>", desc = "Delete" },
+        },
+
+        {
+          mode = { "n" },
+          { "<c-h>", "<c-w>h", desc = "Move to window left" },
+          { "<c-j>", "<c-w>j", desc = "Move to window below" },
+          { "<c-k>", "<c-w>k", desc = "Move to window above" },
+          { "<c-l>", "<c-w>l", desc = "Move to window right" },
+          {
+            "<c-w>>",
+            function()
+              vim.cmd("vertical resize +2")
+              require("isrothy.utils.window").trigger()
+            end,
+            desc = "Increase window width",
+          },
+          {
+            "<c-w><",
+            function()
+              vim.cmd("vertical resize -2")
+              require("isrothy.utils.window").trigger()
+            end,
+            desc = "Decrease window width",
+          },
+          {
+            "<c-w>+",
+            function()
+              vim.cmd("resize +2")
+              require("isrothy.utils.window").trigger()
+            end,
+            desc = "Increase window height",
+          },
+          {
+            "<c-w>-",
+            function()
+              vim.cmd("resize -2")
+              require("isrothy.utils.window").trigger()
+            end,
+            desc = "Decrease window height",
+          },
         },
 
         { "g/", "<esc>/\\%V", desc = "Search inside visual selection", mode = "x", silent = false },

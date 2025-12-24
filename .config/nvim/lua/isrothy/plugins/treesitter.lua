@@ -3,6 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
     lazy = false,
+    enabled = true,
     build = ":TSUpdate",
     opts = {
       ensure_installed = {},
@@ -87,15 +88,16 @@ return {
         callback = function() vim.treesitter.start() end,
       })
     end,
-    config = function(_, opts)
-      require("nvim-treesitter").setup(opts)
-      vim.treesitter.language.register("bash", "zsh")
-    end,
+    -- config = function(_, opts)
+    -- require("nvim-treesitter").setup(opts)
+    -- vim.treesitter.language.register("bash", "zsh")
+    -- end,
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
+    enabled = true,
     keys = {
       {
         "af",

@@ -56,14 +56,34 @@ alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias preview="open -a preview"
 alias typora="open -a typora"
 
+alias vq='nvim +":lua require(\"isrothy.utils.session\").load_current()"'
+alias vs='nvim -c "autocmd User VeryLazy lua require(\"isrothy.utils.session\").select()"'
+alias vo='nvim +":lua Snacks.picker.recent()"'
+alias vo='nvim +":lua Snacks.picker.recent()"'
+alias vc='nvim +":lua Snacks.picker.files({ cwd = vim.fn.stdpath(\"config\") })"'
+alias vf='nvim +":lua Snacks.picker.files()"'
+alias vg='nvim +":lua Snacks.picker.grep()"'
+alias vl='nvim -c "autocmd User VeryLazy Lazy"'
+
 eval "$(starship init zsh)"
 eval "$(pyenv init - zsh)"
 eval "$(zoxide init zsh)"
 
 export FZF_DEFAULT_COMMAND="fd --type file --color=always"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS="--ansi --color bg+:#D8DEE9"
+# export FZF_DEFAULT_OPTS="--ansi --color bg+:#D8DEE9"
+export FZF_DEFAULT_OPTS="
+  --ansi
+  --height 80%
+  --layout reverse
+  --border rounded
+  --info inline
 
+  # Nord Color Scheme
+  --color=bg+:#3B4252,bg:#2E3440,spinner:#81A1C1,hl:#616E88
+  --color=fg:#D8DEE9,header:#616E88,info:#81A1C1,pointer:#81A1C1
+  --color=marker:#81A1C1,fg+:#ECEFF4,prompt:#81A1C1,hl+:#81A1C1
+"
 bindkey -v
 stty -ixon
 
@@ -72,14 +92,8 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd 'v' edit-command-line
 
+bindkey '^l' autosuggest-accept
 
-function zvm_after_init() {
-    if zle -l autosuggest-accept; then
-        zvm_bindkey viins '^y' autosuggest-accept
-        zvm_bindkey viins '^d' backward-delete-char  # Ctrl+d = Backspace
-        zvm_bindkey viins '^t' delete-char           # Ctrl+t = Delete
-    fi
-}
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 

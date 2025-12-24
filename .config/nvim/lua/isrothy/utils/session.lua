@@ -72,12 +72,12 @@ end
 
 function M.enable_autosave()
   M.auto_save_enabled = true
-  vim.notify("Auto-Save Session: Disabled", vim.log.levels.INFO, { title = "Session" })
+  vim.notify("Auto-Save Session: Enabled", vim.log.levels.INFO, { title = "Session" })
 end
 
 function M.disable_autosave()
   M.auto_save_enabled = false
-  vim.notify("Auto-Save Session: Enabled", vim.log.levels.INFO, { title = "Session" })
+  vim.notify("Auto-Save Session: Disabled", vim.log.levels.INFO, { title = "Session" })
 end
 
 return M
