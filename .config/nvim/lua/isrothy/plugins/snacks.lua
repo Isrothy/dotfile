@@ -418,6 +418,7 @@ return {
         -- Create some toggle mappings
         Snacks.toggle.option("spell", { name = "spelling" }):map("<leader>os")
         Snacks.toggle.option("wrap", { name = "wrap" }):map("<leader>ow")
+        Snacks.toggle.option("diff", { name = "diff" }):map("<leader>od")
         Snacks.toggle.option("relativenumber", { name = "relative number" }):map("<leader>or")
         Snacks.toggle.line_number({ name = "line number" }):map("<leader>ol")
         Snacks.toggle

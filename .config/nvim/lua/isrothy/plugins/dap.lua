@@ -42,6 +42,7 @@ return {
       ---@module 'dap-view'
       ---@type dapview.Config
       opts = {},
+      lazy = false,
       keys = {
         { "<leader>du", function() require("dap-view").toggle() end, desc = "Toggle Dap View" },
       },
@@ -56,8 +57,18 @@ return {
       "mfussenegger/nvim-dap-python",
       keys = {
         { "<localleader>pd", "", desc = "+Debug", ft = { "python" } },
-        { "<localleader>pdt", function() require("dap-python").test_method() end, desc = "Method", ft = { "python" } },
-        { "<localleader>pdc", function() require("dap-python").test_class() end, desc = "Class", ft = { "python" } },
+        {
+          "<localleader>pdt",
+          function() require("dap-python").test_method() end,
+          desc = "Method",
+          ft = { "python" },
+        },
+        {
+          "<localleader>pdc",
+          function() require("dap-python").test_class() end,
+          desc = "Class",
+          ft = { "python" },
+        },
       },
     },
     {

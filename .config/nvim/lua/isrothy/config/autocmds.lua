@@ -155,17 +155,17 @@ vim.api.nvim_create_autocmd("CmdlineLeave", {
   end,
 })
 
-vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
-  group = augroup("inlay_hint"),
-  callback = function(args)
-    local bufnr = args.buf
-    local clients = vim.lsp.get_clients({
-      bufnr = bufnr,
-      method = "textDocument/inlayHint",
-    })
-    vim.lsp.inlay_hint.enable(#clients ~= 0, { bufnr = bufnr })
-  end,
-})
+-- vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
+--   group = augroup("inlay_hint"),
+--   callback = function(args)
+--     local bufnr = args.buf
+--     local clients = vim.lsp.get_clients({
+--       bufnr = bufnr,
+--       method = "textDocument/inlayHint",
+--     })
+--     vim.lsp.inlay_hint.enable(#clients ~= 0, { bufnr = bufnr })
+--   end,
+-- })
 
 vim.fn.sign_define("CodeActionSign", { text = "⬥", texthl = "LspCodeAction" })
 local code_action_group = augroup("code_action_sign")
@@ -300,6 +300,63 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
   callback = function(args)
     if should_detect_indentation(args.buf) then
       require("isrothy.utils.indent-detector").detect(args.buf)
+    end
+  end,
+})
+
+local diff_status_group = augroup("diff_status")
+vim.api.nvim_create_autocmd("OptionSet", {
+  pattern = "diff",
+  group = diff_status_group,
+  callback = function(ctx)
+    local buf = ctx.buf
+    local is_diff_mode = vim.v.option_new
+    if is_diff_mode then
+      local diag_enabled = vim.diagnostic.is_enabled({ bufnr = buf })
+      vim.b[buf].saved_diag_status = diag_enabled
+      vim.b[buf].saved_ts_status = vim.b.ts_highlight
+
+      if diag_enabled then
+        vim.diagnostic.enable(false, { bufnr = buf })
+      end
+      if vim.b.ts_highlight then
+        vim.treesitter.stop(buf)
+      end
+    else
+      if vim.b[buf].saved_diag_status == true then
+        vim.diagnostic.enable(true, { bufnr = buf })
+      end
+      if vim.b[buf].saved_ts_status == true then
+        vim.treesitter.start(buf)
+      end
+
+      vim.b[buf].saved_diag_status = nil
+      vim.b[buf].saved_ts_status = nil
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = diff_status_group,
+  callback = function()
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.wo[win].diff then
+        local buf = vim.api.nvim_win_get_buf(win)
+        if vim.b[buf].saved_diag_status == nil then
+          local diag_enabled = vim.b[buf].ts_highlight
+          vim.b[buf].saved_diag_status = diag_enabled
+          if diag_enabled then
+            vim.diagnostic.enable(false, { bufnr = buf })
+          end
+        end
+        if vim.b[buf].saved_ts_status == nil then
+          local ts_enabled = vim.b[buf].ts_highlight
+          vim.b[buf].saved_ts_status = ts_enabled
+          if ts_enabled then
+            vim.treesitter.stop(buf)
+          end
+        end
+      end
     end
   end,
 })

@@ -54,9 +54,9 @@ local session = {
 local ts_status = {
   function()
     local buf = vim.api.nvim_get_current_buf()
-    local ok, parser = pcall(vim.treesitter.get_parser, buf)
+    local ok = vim.b[buf].ts_highlight
 
-    if ok and parser then
+    if ok then
       return " ON"
     end
     return " Off"
@@ -64,9 +64,9 @@ local ts_status = {
 
   color = function()
     local buf = vim.api.nvim_get_current_buf()
-    local ok, parser = pcall(vim.treesitter.get_parser, buf)
+    local ok = vim.b[buf].ts_highlight
 
-    if ok and parser then
+    if ok then
       return { fg = "#A3BE8C", gui = "bold" }
     else
       return { fg = "#616E88" }
@@ -217,6 +217,7 @@ return {
       winbar = {
         lualine_a = {
           winnr,
+          bufnr,
         },
         lualine_b = {
           { "filename", fmt = trunc(90, 30, 50), path = 1 },
@@ -244,6 +245,7 @@ return {
       inactive_winbar = {
         lualine_a = {
           winnr,
+          bufnr,
         },
         lualine_b = {
           { "filename", fmt = trunc(90, 30, 50), path = 1 },

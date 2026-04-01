@@ -51,7 +51,6 @@ alias la='eza -a --icons'
 alias ll='eza -l --icons --git -a'
 alias lt='eza --tree'
 alias neofetch='macchina'
-alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 
 alias preview="open -a preview"
 alias typora="open -a typora"
@@ -108,9 +107,3 @@ zstyle ':completion:*' menu select
 fpath+=~/.zfunc
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
 [ -f "$HOME/.api-keys" ] && source "$HOME/.api-keys"
-
-if [[ -d "$HOME/Library/Application Support/pipx" ]]; then
-    PDD_COMP="$HOME/Library/Application Support/pipx/venvs/pdd-cli/lib/python3.13/site-packages/pdd/pdd_completion.zsh"
-    [ -f "$PDD_COMP" ] && source "$PDD_COMP"
-fi
-[ -f "$HOME/.pdd/api-env.zsh" ] && source "$HOME/.pdd/api-env.zsh"

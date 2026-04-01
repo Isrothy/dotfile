@@ -169,6 +169,7 @@ return {
       buffer = {
         persist = false,
       },
+      -- layout = "float",
       layout = "split",
 
       -- layout = "manual",
@@ -184,7 +185,7 @@ return {
       },
       float = {
         minimap_width = 22,
-        window_border = { "▏", "", "", "", "", "", "▏", "▏" },
+        -- window_border = { "▏", "", "", "", "", "", "▏", "▏" },
         persist = false,
       },
       diagnostic = {

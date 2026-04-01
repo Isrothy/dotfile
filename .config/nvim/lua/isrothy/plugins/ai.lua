@@ -1,6 +1,7 @@
 return {
   {
     "olimorris/codecompanion.nvim",
+    enabled = false,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
@@ -149,6 +150,7 @@ return {
   {
     "monkoose/neocodeium",
     event = "VeryLazy",
+    enabled = false,
     keys = {
       { "<c-l>", function() require("neocodeium").accept() end, desc = "Accept", mode = "i" },
       { "<c-]>", function() require("neocodeium").cancel() end, desc = "Cancel", mode = "i" },

@@ -1,5 +1,6 @@
 return {
   "philosofonusus/ecolog.nvim",
+  enabled = false,
   keys = {
     { "<leader>eg", "<cmd>EcologGoto<cr>", desc = "Go to env file" },
     { "<leader>ep", "<cmd>EcologPeek<cr>", desc = "Ecolog peek variable" },

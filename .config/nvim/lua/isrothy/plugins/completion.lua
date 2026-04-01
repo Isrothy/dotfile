@@ -7,7 +7,7 @@ return {
     dependencies = {
       "rafamadriz/friendly-snippets",
       "mikavilpas/blink-ripgrep.nvim",
-      "philosofonusus/ecolog.nvim",
+      -- "philosofonusus/ecolog.nvim",
     },
 
     init = function()
@@ -111,7 +111,7 @@ return {
           "snippets",
           "buffer",
           "ripgrep",
-          "ecolog",
+          -- "ecolog",
         },
         per_filetype = {
           tex = {
@@ -141,7 +141,7 @@ return {
             "snippets",
             "buffer",
             "ripgrep",
-            "ecolog",
+            -- "ecolog",
             "ripgrep",
             "dadbod",
           },
@@ -174,10 +174,10 @@ return {
             module = "blink.cmp.sources.buffer",
             -- fallbacks = { "lsp" },
           },
-          ecolog = {
-            name = "ecolog",
-            module = "ecolog.integrations.cmp.blink_cmp",
-          },
+          -- ecolog = {
+          --   name = "ecolog",
+          --   module = "ecolog.integrations.cmp.blink_cmp",
+          -- },
           markdown = {
             name = "RenderMarkdown",
             module = "render-markdown.integ.blink",

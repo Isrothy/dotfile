@@ -37,7 +37,7 @@ opt.foldenable = true
 opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldlevelstart = 99
 opt.foldmethod = "expr"
-vim.opt.foldtext = "v:lua.require('isrothy.utils.fold').foldtext()"
+opt.foldtext = "v:lua.require('isrothy.utils.fold').foldtext()"
 opt.grepprg = "rg"
 opt.hidden = true
 opt.history = 2000
@@ -98,7 +98,6 @@ opt.winborder = "rounded"
 opt.wrap = false
 
 g.html_indent_autotags = "html,head,body"
-g.markdown_recommended_style = 0
 
 g.mapleader = " "
 g.maplocalleader = "\\"
