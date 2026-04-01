@@ -1,6 +1,9 @@
 local opt = vim.opt
 local g = vim.g
 
+opt.autocomplete = true
+opt.completeopt = "fuzzy,menuone,noselect,popup"
+opt.complete = ".,w,b,u"
 opt.autoindent = true
 opt.autoread = true
 opt.backspace = { "indent", "eol", "start" }

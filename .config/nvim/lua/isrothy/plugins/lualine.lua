@@ -32,14 +32,12 @@ local session = {
     if not ok then
       return ""
     end
-
     if session.auto_save_enabled then
       return " Auto"
     else
       return "󰆔 Man"
     end
   end,
-
   color = function()
     local ok, session = pcall(require, "isrothy.utils.session")
     if ok and session.auto_save_enabled then
@@ -55,224 +53,189 @@ local ts_status = {
   function()
     local buf = vim.api.nvim_get_current_buf()
     local ok = vim.b[buf].ts_highlight
-
     if ok then
       return " ON"
     end
     return " Off"
   end,
-
   color = function()
     local buf = vim.api.nvim_get_current_buf()
     local ok = vim.b[buf].ts_highlight
-
     if ok then
       return { fg = "#A3BE8C", gui = "bold" }
     else
       return { fg = "#616E88" }
     end
   end,
-
   separator = { left = "", right = "" },
 }
 
-return {
-  "nvim-lualine/lualine.nvim",
-  event = "VeryLazy",
-  dependencies = {
-    "Isrothy/lualine-diagnostic-message",
-    "nvim-tree/nvim-web-devicons",
-    -- "stevearc/aerial.nvim",
-  },
-  opts = function()
-    -- local minimap_extension = require("neominimap.statusline").lualine_default
-    return {
-      options = {
-        theme = "nordify-dark",
-        icons_enabled = true,
-        component_separators = "",
-        section_separators = "",
-        disabled_filetypes = {
-          statusline = {
-            "alpha",
-            "dashboard",
-            -- "snacks_dashboard",
-          },
-          winbar = {
-            "",
-            "Avante",
-            "AvanteInput",
-            "AvanteSelectedFiles",
-            "aerial",
-            "alpha",
-            "dap-repl",
-            "dap-view",
-            "dapui_breakpoints",
-            "dapui_console",
-            "dapui_scopes",
-            "dapui_stacks",
-            "dapui_watches",
-            "dbout",
-            "dbui",
-            "grug-far",
-            "kitty-scrollback",
-            "man",
-            "neo-tree",
-            "noice",
-            "packer",
-            "qf",
-            "snacks_dashboard",
-            "toggleterm",
-            "trouble",
-            "undotree",
-          },
-        },
-        always_divide_middle = true,
-        globalstatus = true,
-      },
-      sections = {
-        lualine_a = {
-          session,
-          {
-            "mode",
-            fmt = trunc(80, 4, nil, true),
-          },
-        },
-        lualine_b = {
-          { "b:gitsigns_head", icon = "" },
-          {
-            "diff",
-            source = diff_source,
-            colored = true,
-            symbols = {
-              added = " ",
-              modified = " ",
-              removed = " ",
-            },
-          },
-        },
-        lualine_c = {
-          {
-            "filename",
-            file_status = true,
-            newfile_status = true,
-            symbols = {
-              modified = "●",
-              readonly = "",
-              unnamed = "[No Name]",
-              newfile = "✚",
-            },
-            fmt = trunc(90, 30, 50),
-            path = 0,
-          },
-          {
-            "diagnostic-message",
-            icons = {
-              error = " ",
-              warn = " ",
-              hint = " ",
-              info = " ",
-            },
-            first_line_only = true,
-          },
-        },
-        lualine_x = {
-          tab_size,
-          {
-            "encoding",
-            show_bomb = true,
-          },
-          {
-            "fileformat",
-            icons_enabled = true,
-            symbols = {
-              unix = "LF",
-              dos = "CRLF",
-              mac = "CR",
-            },
-          },
-        },
-        lualine_y = {
-          -- "codeium_spinner",
-          "filetype",
-          ts_status,
-          "lsp_status",
-          -- "codecompanion_spinner",
-          -- neocodeium_component,
-        },
-        lualine_z = {
-          "location",
-          "progress",
-          "filesize",
-        },
-      },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {},
+require("lualine").setup({
+  options = {
+    theme = "nord",
+    icons_enabled = true,
+    component_separators = "",
+    section_separators = "",
+    disabled_filetypes = {
+      statusline = {
+        "alpha",
+        "dashboard",
       },
       winbar = {
-        lualine_a = {
-          winnr,
-          bufnr,
-        },
-        lualine_b = {
-          { "filename", fmt = trunc(90, 30, 50), path = 1 },
-        },
-        lualine_c = {
-          {
-            "diagnostics",
-            update_in_insert = true,
-            symbols = {
-              error = " ",
-              warn = " ",
-              hint = " ",
-              info = " ",
-            },
-          },
-        },
-        lualine_x = {},
-        lualine_y = {
-          -- { "filetype", icon_only = false },
-          -- bufnr,
-        },
-        lualine_z = {},
-      },
-
-      inactive_winbar = {
-        lualine_a = {
-          winnr,
-          bufnr,
-        },
-        lualine_b = {
-          { "filename", fmt = trunc(90, 30, 50), path = 1 },
-        },
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {
-          -- { "filetype", icon_only = false },
-          -- bufnr,
-        },
-        lualine_z = {},
-      },
-      tabline = {},
-      extensions = {
+        "",
+        "Avante",
+        "AvanteInput",
+        "AvanteSelectedFiles",
         "aerial",
-        "lazy",
+        "alpha",
+        "dap-repl",
+        "dap-view",
+        "dapui_breakpoints",
+        "dapui_console",
+        "dapui_scopes",
+        "dapui_stacks",
+        "dapui_watches",
+        "dbout",
+        "dbui",
+        "grug-far",
+        "kitty-scrollback",
         "man",
-        "mason",
         "neo-tree",
-        "nvim-dap-ui",
-        "oil",
-        "overseer",
-        "quickfix",
+        "noice",
+        "packer",
+        "qf",
+        "snacks_dashboard",
         "toggleterm",
         "trouble",
-        -- minimap_extension,
+        "undotree",
       },
-    }
-  end,
-}
+    },
+    always_divide_middle = true,
+    globalstatus = true,
+  },
+  sections = {
+    lualine_a = {
+      session,
+      {
+        "mode",
+        fmt = trunc(80, 4, nil, true),
+      },
+    },
+    lualine_b = {
+      { "b:gitsigns_head", icon = "" },
+      {
+        "diff",
+        source = diff_source,
+        colored = true,
+        symbols = {
+          added = " ",
+          modified = " ",
+          removed = " ",
+        },
+      },
+    },
+    lualine_c = {
+      {
+        "filename",
+        file_status = true,
+        newfile_status = true,
+        symbols = {
+          modified = "●",
+          readonly = "",
+          unnamed = "[No Name]",
+          newfile = "✚",
+        },
+        fmt = trunc(90, 30, 50),
+        path = 0,
+      },
+      {
+        "diagnostic-message",
+        icons = {
+          error = " ",
+          warn = " ",
+          hint = " ",
+          info = " ",
+        },
+        first_line_only = true,
+      },
+    },
+    lualine_x = {
+      tab_size,
+      {
+        "encoding",
+        show_bomb = true,
+      },
+      {
+        "fileformat",
+        icons_enabled = true,
+        symbols = {
+          unix = "LF",
+          dos = "CRLF",
+          mac = "CR",
+        },
+      },
+    },
+    lualine_y = {
+      "filetype",
+      ts_status,
+      "lsp_status",
+    },
+    lualine_z = {
+      "location",
+      "progress",
+      "filesize",
+    },
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
+  },
+  winbar = {
+    lualine_a = { winnr, bufnr },
+    lualine_b = {
+      { "filename", fmt = trunc(90, 30, 50), path = 1 },
+    },
+    lualine_c = {
+      {
+        "diagnostics",
+        update_in_insert = true,
+        symbols = {
+          error = " ",
+          warn = " ",
+          hint = " ",
+          info = " ",
+        },
+      },
+    },
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
+  },
+  inactive_winbar = {
+    lualine_a = { winnr, bufnr },
+    lualine_b = {
+      { "filename", fmt = trunc(90, 30, 50), path = 1 },
+    },
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
+  },
+  tabline = {},
+  extensions = {
+    "aerial",
+    "man",
+    "mason",
+    "neo-tree",
+    "nvim-dap-ui",
+    "oil",
+    "overseer",
+    "quickfix",
+    "toggleterm",
+    "trouble",
+  },
+})

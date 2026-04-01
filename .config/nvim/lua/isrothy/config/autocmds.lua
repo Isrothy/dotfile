@@ -155,18 +155,6 @@ vim.api.nvim_create_autocmd("CmdlineLeave", {
   end,
 })
 
--- vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
---   group = augroup("inlay_hint"),
---   callback = function(args)
---     local bufnr = args.buf
---     local clients = vim.lsp.get_clients({
---       bufnr = bufnr,
---       method = "textDocument/inlayHint",
---     })
---     vim.lsp.inlay_hint.enable(#clients ~= 0, { bufnr = bufnr })
---   end,
--- })
-
 vim.fn.sign_define("CodeActionSign", { text = "⬥", texthl = "LspCodeAction" })
 local code_action_group = augroup("code_action_sign")
 vim.api.nvim_create_augroup("LspCodeActionSignGroup", { clear = true })
@@ -239,6 +227,16 @@ vim.api.nvim_create_autocmd("LspDetach", {
       group = code_action_group,
       buffer = bufnr,
     })
+  end,
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspCompletion", { clear = true }),
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if client and client:supports_method("textDocument/completion") then
+      vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
+    end
   end,
 })
 
@@ -381,4 +379,10 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
       session.save()
     end
   end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("DisableAutocompleteInPicker", { clear = true }),
+  pattern = "snacks_picker_input",
+  callback = function() vim.opt_local.autocomplete = false end,
 })

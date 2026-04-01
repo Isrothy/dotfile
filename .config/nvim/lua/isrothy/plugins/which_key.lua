@@ -7,24 +7,22 @@ local diagnostic_goto = function(count, severity)
   end
 end
 
-return {
-  {
-    "folke/which-key.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    event = "VeryLazy",
-    keys = {
-      {
-        "<leader>?",
-        function() require("which-key").show() end,
-        desc = "Global keymaps (Which-Key)",
-      },
-      {
-        "<localleader>?",
-        function() require("which-key").show({ global = false }) end,
-        desc = "Buffer local keymaps (Which-Key)",
-      },
-    },
-    opts = {
+vim.keymap.set(
+  "n",
+  "<leader>?",
+  function() require("lua.isrothy.plugins.which_key").show() end,
+  { desc = "Global keymaps (Which-Key)" }
+)
+vim.keymap.set(
+  "n",
+  "<localleader>?",
+  function() require("lua.isrothy.plugins.which_key").show({ global = false }) end,
+  { desc = "Buffer local keymaps (Which-Key)" }
+)
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    require("which-key").setup({
       preset = "modern",
       show_help = false,
       plugins = {
@@ -51,7 +49,6 @@ return {
         wo = { winblend = 10 },
       },
       spec = {
-        -- { "<leader>a", group = "AI", mode = { "n", "x" } },
         {
           {
             "<leader>b",
@@ -377,7 +374,44 @@ return {
         },
         { "L", function() require("isrothy.utils.text-obj").url() end, mode = { "o", "x" }, desc = "URL" },
         { "F", function() require("isrothy.utils.text-obj").filepath() end, mode = { "o", "x" }, desc = "Filepath" },
+        {
+          mode = "i",
+          expr = true,
+          {
+            "<Tab>",
+            function()
+              if vim.fn.pumvisible() == 1 then
+                return "<C-n>"
+              else
+                return "<Tab>"
+              end
+            end,
+            desc = "Next Autocomplete Item",
+          },
+          {
+            "<S-Tab>",
+            function()
+              if vim.fn.pumvisible() == 1 then
+                return "<C-p>"
+              else
+                return "<S-Tab>"
+              end
+            end,
+            desc = "Prev Autocomplete Item",
+          },
+          {
+            "<CR>",
+            function()
+              if vim.fn.pumvisible() == 1 then
+                return "<C-y>"
+              else
+                return "<CR>"
+              end
+            end,
+            desc = "Confirm Autocomplete",
+          },
+        },
       },
-    },
-  },
-}
+    })
+  end,
+})

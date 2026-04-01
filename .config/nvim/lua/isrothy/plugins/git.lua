@@ -1,8 +1,6 @@
-return {
-  {
-    "lewis6991/gitsigns.nvim",
-    event = { "VeryLazy" },
-    opts = {
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    require("gitsigns").setup({
       current_line_blame = true,
       current_line_blame_opts = {
         virt_text = true,
@@ -25,9 +23,12 @@ return {
         },
       },
       sign_priority = 7,
+      trouble = false,
+
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
         local wk = require("which-key")
+
         wk.add({
           buffer = buffer,
           {
@@ -47,19 +48,18 @@ return {
               if vim.wo.diff then
                 vim.cmd.normal({ "]c", bang = true })
               else
-                gs.nav_hunk("next")
+                gs.nav_hunk("prev")
               end
             end,
             desc = "Previous Hunk",
           },
           { "]H", function() gs.nav_hunk("last") end, desc = "Last hunk" },
-          { "[H", function() gs.nav_hunk("last") end, desc = "First hunk" },
+          { "[H", function() gs.nav_hunk("first") end, desc = "First hunk" },
           {
             mode = { "n", "x" },
             { "<leader>hs", ":Gitsigns stage_hunk<cr>", desc = "Stage hunk" },
             { "<leader>hr", ":Gitsigns reset_hunk<cr>", desc = "Reset hunk" },
           },
-
           { "<leader>hS", gs.stage_buffer, desc = "Stage Buffer" },
           { "<leader>hu", gs.undo_stage_hunk, desc = "Undo Stage Hunk" },
           { "<leader>hR", gs.reset_buffer, desc = "Reset Buffer" },
@@ -71,7 +71,6 @@ return {
           { "ih", ":<c-U>Gitsigns select_hunk<cr>", desc = "GitSigns Select Hunk", mode = { "o", "x" } },
         })
       end,
-      trouble = false,
-    },
-  },
-}
+    })
+  end,
+})
