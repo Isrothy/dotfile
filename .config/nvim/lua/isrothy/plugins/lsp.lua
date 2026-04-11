@@ -1,5 +1,3 @@
-require("mason").setup()
-
 vim.lsp.config("basedpyright", {
   filetypes = { "python" },
   single_file_support = true,
@@ -101,3 +99,4 @@ vim.lsp.enable({
   "vimls",
   "yamlls",
 })
+

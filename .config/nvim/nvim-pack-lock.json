@@ -28,6 +28,22 @@
       "rev": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65",
       "src": "https://github.com/williamboman/mason.nvim"
     },
+    "mini.ai": {
+      "rev": "43eb2074843950a3a25aae56a5f41362ec043bfa",
+      "src": "https://github.com/nvim-mini/mini.ai"
+    },
+    "mini.extra": {
+      "rev": "bc4e872500fd6d2ce252604e0ffa100f64f02280",
+      "src": "https://github.com/nvim-mini/mini.extra"
+    },
+    "mini.operators": {
+      "rev": "fccb5e3ef0cc319b217ed9c7db1a4672dd6b766c",
+      "src": "https://github.com/nvim-mini/mini.operators"
+    },
+    "mini.surround": {
+      "rev": "2715e04bea3ec9244f15b421dc5b18c0fe326210",
+      "src": "https://github.com/nvim-mini/mini.surround"
+    },
     "nord.nvim": {
       "rev": "07647ad23e5b7fc1599a841dcd8f173b9aeb0419",
       "src": "https://github.com/gbprod/nord.nvim"

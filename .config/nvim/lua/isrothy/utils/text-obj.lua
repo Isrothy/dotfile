@@ -9,13 +9,6 @@ end
 
 M.select_range = select_range
 
-function M.entire_buffer()
-  local start_line, start_col = 1, 1
-  local end_line = vim.fn.line("$")
-  local end_col = vim.fn.col({ end_line, "$" }) -- end of line
-  select_range({ start_line, start_col }, { end_line, end_col })
-end
-
 -- Only letters and digits are part of the subword token
 local function is_subword_char(ch) return ch:match("[A-Za-z0-9]") ~= nil end
 
