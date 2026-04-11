@@ -1,6 +1,7 @@
--- ==========================================
--- Helper functions {{{
--- ==========================================
+local g = vim.g
+local map = vim.keymap.set
+local opt = vim.opt
+
 local function debounce(ms, fn)
   local timer = vim.uv.new_timer()
   if timer == nil then
@@ -16,13 +17,427 @@ local function debounce(ms, fn)
   end
 end
 
-local diagnostic_goto = function(count, severity)
-  return function()
-    vim.diagnostic.jump({
-      count = count,
-      severity = severity and vim.diagnostic.severity[severity] or nil,
+-- ==========================================
+-- Session Manager {{{
+-- ==========================================
+local session_manager = {}
+
+local session_dir = vim.fn.stdpath("state") .. "/sessions/"
+if vim.fn.isdirectory(session_dir) == 0 then
+  vim.fn.mkdir(session_dir, "p")
+end
+
+session_manager.auto_save_enabled = true
+vim.o.sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,skiprtp"
+
+local function path_to_name(path) return path:gsub(":", ""):gsub("/", "%%") .. ".vim" end
+local function name_to_path(name) return name:gsub("%%", "/"):gsub("%.vim$", "") end
+local function get_current_session_path() return session_dir .. path_to_name(vim.fn.getcwd()) end
+
+function session_manager.save()
+  if vim.bo.filetype == "alpha" or vim.bo.filetype == "snacks_dashboard" then
+    return
+  end
+
+  local name = get_current_session_path()
+  vim.cmd("mksession! " .. vim.fn.fnameescape(name))
+  vim.notify("Session saved for: " .. vim.fn.getcwd(), vim.log.levels.INFO, { title = "Session" })
+end
+
+function session_manager.load_current()
+  local name = get_current_session_path()
+  if vim.fn.filereadable(name) == 1 then
+    vim.cmd("silent! source " .. vim.fn.fnameescape(name))
+    vim.notify("Session loaded.", vim.log.levels.INFO, { title = "Session" })
+  else
+    vim.notify("No session found for this directory.", vim.log.levels.WARN, { title = "Session" })
+  end
+end
+
+function session_manager.select()
+  local files = vim.fn.glob(session_dir .. "*.vim", false, true)
+  if #files == 0 then
+    vim.notify("No saved sessions found.", vim.log.levels.WARN)
+    return
+  end
+
+  local items = {}
+  for _, file in ipairs(files) do
+    local filename = vim.fn.fnamemodify(file, ":t")
+    local path = name_to_path(filename)
+    table.insert(items, {
+      label = path,
+      file = file,
     })
   end
+
+  vim.ui.select(items, {
+    prompt = "Select Session to Load:",
+    format_item = function(item)
+      if item.label == vim.fn.getcwd() then
+        return item.label .. " (Current)"
+      end
+      return item.label
+    end,
+  }, function(choice)
+    if choice then
+      if session_manager.auto_save_enabled then
+        session_manager.save()
+      end
+
+      vim.cmd("silent! %bd!")
+      vim.cmd("silent! source " .. vim.fn.fnameescape(choice.file))
+      vim.notify("Loaded session: " .. choice.label, vim.log.levels.INFO)
+    end
+  end)
+end
+
+function session_manager.enable_autosave()
+  session_manager.auto_save_enabled = true
+  vim.notify("Auto-Save Session: Enabled", vim.log.levels.INFO, { title = "Session" })
+end
+
+function session_manager.disable_autosave()
+  session_manager.auto_save_enabled = false
+  vim.notify("Auto-Save Session: Disabled", vim.log.levels.INFO, { title = "Session" })
+end
+
+--- }}}
+
+-- ==========================================
+-- Indentation {{{
+-- ==========================================
+
+local MAX_LINES = 2048
+
+-- Return the most common value in list
+local function most_common(tbl)
+  local freq = {}
+  local best_val, best_count = nil, 0
+  for _, v in ipairs(tbl) do
+    freq[v] = (freq[v] or 0) + 1
+    if freq[v] > best_count then
+      best_val = v
+      best_count = freq[v]
+    end
+  end
+  return best_val
+end
+
+local function detect_indentation(bufnr)
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+  local line_count = vim.api.nvim_buf_line_count(bufnr)
+  if line_count == 0 then
+    return
+  end
+
+  local max_lines = math.min(line_count, MAX_LINES)
+
+  local tab_lines = 0
+  local indents = {}
+
+  for i = 1, max_lines do
+    local line = vim.api.nvim_buf_get_lines(bufnr, i - 1, i, false)[1]
+
+    -- Skip empty or whitespace-only lines
+    if not line or line:match("^%s*$") then
+      goto continue
+    end
+
+    local leading = line:match("^(%s+)")
+    if leading then
+      if leading:find("\t") then
+        tab_lines = tab_lines + 1
+      else
+        table.insert(indents, #leading)
+      end
+    end
+
+    ::continue::
+  end
+
+  if tab_lines == 0 and #indents == 0 then
+    return
+  end
+
+  local bo = vim.bo[bufnr]
+
+  if tab_lines > #indents then
+    bo.expandtab = false
+    return
+  end
+
+  local deltas = {}
+  for i = 2, #indents do
+    local d = indents[i] - indents[i - 1]
+    if d > 0 then
+      table.insert(deltas, d)
+    end
+  end
+
+  if #deltas == 0 then
+    return
+  end
+
+  local width = most_common(deltas)
+  if width and width > 0 and width <= 8 then
+    bo.expandtab = true
+    bo.shiftwidth = width
+    bo.tabstop = width
+    bo.softtabstop = width
+  end
+end
+---}}}
+
+-- ==========================================
+-- context {{{
+-- ==========================================
+
+local context = {}
+
+context.state = {
+  win = nil,
+  au = nil,
+}
+
+---@type table<string, string[]>
+context.targets = {
+  default = {
+    "class_definition",
+    "class_specifier",
+    "class_declaration",
+    "function_declaration",
+    "function_definition",
+    "method_definition",
+    "method_declaration",
+    "if_statement",
+    "for_statement",
+    "for_range_loop",
+    "while_statement",
+    "while_expression",
+  },
+
+  sh = {
+    "function_definition",
+    "if_statement",
+    "for_statement",
+    "while_statement",
+    "case_command",
+    "elif_clause",
+  },
+
+  lua = {
+    "function_declaration",
+    "function_definition",
+    "if_statement",
+    "for_statement",
+    "while_statement",
+    "repeat_statement",
+    "table_constructor",
+  },
+
+  c = {
+    "function_definition",
+    "struct_specifier",
+    "enum_specifier",
+    "if_statement",
+    "for_statement",
+    "while_statement",
+    "do_statement",
+    "switch_statement",
+    "case_statement",
+    "preproc_if",
+    "preproc_ifdef",
+    "preproc_elif",
+    "preproc_else",
+  },
+
+  cpp = {
+    "namespace_definition",
+    "class_specifier",
+    "struct_specifier",
+    "enum_specifier",
+    "function_definition",
+    "template_declaration",
+    "if_statement",
+    "for_statement",
+    "for_range_loop",
+    "while_statement",
+    "do_statement",
+    "switch_statement",
+    "case_statement",
+    "try_statement",
+    "catch_clause",
+    "preproc_if",
+    "preproc_ifdef",
+    "preproc_elif",
+    "preproc_else",
+  },
+
+  java = {
+    "class_declaration",
+    "interface_declaration",
+    "enum_declaration",
+    "record_declaration",
+    "method_declaration",
+    "constructor_declaration",
+    "if_statement",
+    "for_statement",
+    "while_statement",
+    "do_statement",
+    "try_statement",
+    "try_with_resources_statement",
+    "catch_clause",
+    "switch_expression",
+    "switch_statement",
+  },
+
+  python = {
+    "class_definition",
+    "function_definition",
+    "async_function_definition",
+    "decorated_definition",
+    "if_statement",
+    "for_statement",
+    "while_statement",
+    "try_statement",
+    "with_statement",
+    "match_statement",
+  },
+
+  rust = {
+    "impl_item",
+    "trait_item",
+    "function_item",
+    "mod_item",
+    "enum_variant",
+    "macro_definition",
+    "if_expression",
+    "loop_expression",
+    "for_expression",
+    "while_expression",
+    "match_expression",
+    "match_arm",
+  },
+}
+context.targets.cuda = context.targets.cpp
+context.targets.zsh = context.targets.sh
+context.targets.bash = context.targets.sh
+
+local function render_window(context_nodes)
+  local current_buf = vim.api.nvim_get_current_buf()
+  local content = {}
+  local max_lnum = context_nodes[#context_nodes].row + 1
+  local lnum_width = tostring(max_lnum):len()
+
+  for _, item in ipairs(context_nodes) do
+    local row = item.row
+    local line_text = vim.api.nvim_buf_get_lines(current_buf, row, row + 1, false)[1] or ""
+    line_text = vim.trim(line_text)
+    local indent = string.rep("  ", #content)
+    local lnum_str = string.format("%" .. lnum_width .. "d", row + 1)
+    table.insert(content, string.format("%s │ %s%s", lnum_str, indent, line_text))
+  end
+  return content
+end
+
+local function open_window(content, filetype)
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, content)
+
+  local width = 0
+  for _, line in ipairs(content) do
+    width = math.max(width, #line)
+  end
+  width = math.min(width, vim.o.columns - 4)
+  local height = #content
+
+  local win_opts = {
+    relative = "cursor",
+    row = 1,
+    col = 0,
+    width = width + 2,
+    height = height,
+    style = "minimal",
+    border = "rounded",
+    title = " Context ",
+    title_pos = "center",
+    focusable = true,
+  }
+
+  local win = vim.api.nvim_open_win(buf, false, win_opts)
+  if not win then
+    return
+  end
+
+  context.state.win = win
+
+  vim.bo[buf].filetype = filetype
+
+  vim.api.nvim_win_call(win, function() vim.fn.matchadd("Comment", "^\\s*\\d\\+ │") end)
+
+  local close_cmd = "<cmd>close<cr>"
+  vim.keymap.set("n", "q", close_cmd, { buffer = buf, nowait = true })
+  vim.keymap.set("n", "<Esc>", close_cmd, { buffer = buf, nowait = true })
+
+  context.state.au = vim.api.nvim_create_autocmd(
+    { "CursorMoved", "CursorMovedI", "InsertEnter", "BufLeave", "WinScrolled" },
+    {
+      buffer = vim.api.nvim_get_current_buf(),
+      once = true,
+      callback = function()
+        if vim.api.nvim_win_is_valid(win) and vim.api.nvim_get_current_win() ~= win then
+          vim.api.nvim_win_close(win, true)
+          context.state.win = nil
+          context.state.au = nil
+        end
+      end,
+    }
+  )
+end
+
+function context.show()
+  if context.state.win and vim.api.nvim_win_is_valid(context.state.win) then
+    if context.state.au then
+      pcall(vim.api.nvim_del_autocmd, context.state.au)
+      context.state.au = nil
+    end
+    vim.api.nvim_set_current_win(context.state.win)
+    return
+  end
+
+  local has_parser, parser = pcall(vim.treesitter.get_parser, 0)
+  if not has_parser or not parser then
+    vim.notify("No treesitter parser found.", vim.log.levels.WARN)
+    return
+  end
+
+  local ft = vim.bo.filetype
+  local allow_list = context.targets[ft] or context.targets.default
+
+  local node = vim.treesitter.get_node()
+  local context_nodes = {}
+
+  local last_line = nil
+  while node do
+    local type = node:type()
+    if vim.tbl_contains(allow_list, type) then
+      local row = node:range()
+      if last_line == nil or row ~= last_line then
+        last_line = row
+        table.insert(context_nodes, 1, { node = node, row = row, type = type })
+      end
+    end
+    node = node:parent()
+  end
+
+  if #context_nodes == 0 then
+    vim.notify("No context found.", vim.log.levels.INFO)
+    return
+  end
+
+  local content = render_window(context_nodes)
+  open_window(content, ft)
 end
 
 --- }}}
@@ -33,14 +448,9 @@ end
 vim.pack.add({
   { src = "https://github.com/nvim-tree/nvim-web-devicons" },
   { src = "https://github.com/nvim-lua/plenary.nvim" },
-
-  --- LSP
   { src = "https://github.com/neovim/nvim-lspconfig" },
-
   { src = "https://github.com/stevearc/conform.nvim" },
   { src = "https://github.com/mfussenegger/nvim-lint" },
-
-  -- Treesitter
   {
     src = "https://github.com/nvim-treesitter/nvim-treesitter",
     branch = "main",
@@ -50,22 +460,17 @@ vim.pack.add({
     src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
   },
-
   { src = "https://github.com/folke/snacks.nvim" },
   { src = "https://github.com/stevearc/oil.nvim" },
-
   { src = "https://github.com/lewis6991/gitsigns.nvim" },
-
   { src = "https://github.com/nvim-mini/mini.operators" },
   { src = "https://github.com/nvim-mini/mini.surround" },
   { src = "https://github.com/nvim-mini/mini.ai" },
   { src = "https://github.com/nvim-mini/mini.extra" },
-
   { src = "https://github.com/windwp/nvim-autopairs" },
   { src = "https://github.com/windwp/nvim-ts-autotag" },
   { src = "https://github.com/folke/ts-comments.nvim" },
   { src = "https://github.com/Wansmer/treesj" },
-
   { src = "https://github.com/gbprod/nord.nvim" },
   { src = "https://github.com/aileot/ex-colors.nvim" },
 })
@@ -262,7 +667,6 @@ require("gitsigns").setup({
 
   on_attach = function(bufnr)
     local gs = package.loaded.gitsigns
-    local map = vim.keymap.set
 
     -- Git Blame
     map("n", "<leader>gb", function() gs.blame_line({ full = true }) end, { buffer = bufnr, desc = "Blame line" })
@@ -393,6 +797,8 @@ require("mini.ai").setup({
     i = extra.gen_ai_spec.indent(),
     B = extra.gen_ai_spec.buffer(),
     L = extra.gen_ai_spec.line(),
+    u = { "%a+://[%w_%.%?%.:/%+=&#-]+" },
+    p = { "%.?%.?/[%w_%.%-%/]+" },
   },
 })
 require("nvim-autopairs").setup({
@@ -424,22 +830,22 @@ require("nvim-ts-autotag").setup({
 })
 require("ts-comments").setup({ lang = { cuda = "// %s" } })
 require("treesj").setup({ use_default_keymaps = false, max_join_length = 0xffffffff })
-require("ex-colors").setup()
-require("nord").setup({
-  transparent = false,
-  terminal_colors = true,
-  diff = { mode = "fg" },
-  borders = true,
-  search = { theme = "vscode" },
-  errors = { mode = "none" },
-  cache = false,
-  styles = {
-    comments = { italic = true },
-    keywords = { bold = true },
-    functions = { italic = true },
-    variables = {},
-  },
-})
+-- require("ex-colors").setup()
+-- require("nord").setup({
+--   transparent = false,
+--   terminal_colors = true,
+--   diff = { mode = "fg" },
+--   borders = true,
+--   search = { theme = "vscode" },
+--   errors = { mode = "none" },
+--   cache = false,
+--   styles = {
+--     comments = { italic = true },
+--     keywords = { bold = true },
+--     functions = { italic = true },
+--     variables = {},
+--   },
+-- })
 
 --- }}}
 
@@ -484,12 +890,8 @@ vim.lsp.config("lua_ls", {
   filetypes = { "lua" },
   settings = {
     Lua = {
-      runtime = {
-        version = "LuaJIT",
-      },
-      diagnostics = {
-        globals = { "vim" },
-      },
+      runtime = { version = "LuaJIT" },
+      diagnostics = { globals = { "vim" } },
       format = {
         enable = true,
         defaultConfig = {
@@ -553,9 +955,19 @@ vim.lsp.enable({
 -- ==========================================
 -- Options {{{
 -- ==========================================
---
-local opt = vim.opt
-local g = vim.g
+
+_G.custom_foldtext = function()
+  local line = vim.fn.getline(vim.v.foldstart)
+  local line_count = vim.v.foldend - vim.v.foldstart + 1
+  local icon = "󰇘"
+  local ok, ts_text = pcall(vim.treesitter.foldtext)
+  if ok and type(ts_text) == "table" then
+    table.insert(ts_text, { "  " .. icon .. "  " .. line_count .. " lines ", "Comment" })
+    return ts_text
+  end
+
+  return { { line .. "  " .. icon .. "  " .. line_count .. " lines ", "Comment" } }
+end
 
 opt.autocomplete = true
 opt.autoindent = true
@@ -596,7 +1008,7 @@ opt.foldenable = true
 opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldlevelstart = 99
 opt.foldmethod = "expr"
-opt.foldtext = "v:lua.require('isrothy.utils.fold').foldtext()"
+vim.opt.foldtext = "v:lua.custom_foldtext()"
 opt.grepprg = "rg"
 opt.hidden = true
 opt.history = 2000
@@ -682,8 +1094,6 @@ vim.diagnostic.config({
 -- Keymaps {{{
 -- ==========================================
 
-local map = vim.keymap.set
-
 -- ==========================================
 -- Core Motions & Edits
 -- ==========================================
@@ -750,26 +1160,99 @@ map("n", "<leader>ws", "<c-w>s", { desc = "Horizantal split window" })
 map("n", "<leader>wo", "<c-w>o", { desc = "Close all other windows" })
 
 -- Window resizing (via custom utils)
-local win_utils = function() return require("isrothy.utils.window") end
-map("n", "<c-w>>", function() vim.cmd("vertical resize +2") end, { desc = "Increase window width" })
+local function window_resize_trigger()
+  local text = "  Resize Mode:  h/l/k/j or < > + -  (Any other key to exit)  "
+  vim.api.nvim_echo({ { text, "CursorLine" } }, false, {})
+
+  while true do
+    local char = vim.fn.getchar()
+    if char == 27 then
+      break
+    end
+
+    local key = vim.fn.nr2char(char)
+    local cmd = nil
+    local step = 2
+
+    if key == ">" or key == "." then
+      cmd = "vertical resize +" .. step
+    elseif key == "<" or key == "," then
+      cmd = "vertical resize -" .. step
+    elseif key == "+" or key == "=" then
+      cmd = "resize +" .. step
+    elseif key == "-" or key == "_" then
+      cmd = "resize -" .. step
+    else
+      vim.api.nvim_echo({ { "", "None" } }, false, {})
+      vim.cmd("redraw")
+      break
+    end
+
+    if cmd then
+      pcall(vim.cmd, cmd)
+      vim.cmd("redraw")
+      vim.api.nvim_echo({ { text, "CursorLine" } }, false, {})
+    end
+  end
+end
+map("n", "<c-w>>", function()
+  vim.cmd("vertical resize +2")
+  window_resize_trigger()
+end, { desc = "Increase window width" })
 map("n", "<c-w><", function()
   vim.cmd("vertical resize -2")
-  win_utils().trigger()
+  window_resize_trigger()
 end, { desc = "Decrease window width" })
 map("n", "<c-w>+", function()
   vim.cmd("resize +2")
-  win_utils().trigger()
+  window_resize_trigger()
 end, { desc = "Increase window height" })
 map("n", "<c-w>-", function()
   vim.cmd("resize -2")
-  win_utils().trigger()
+  window_resize_trigger()
 end, { desc = "Decrease window height" })
 
 -- Window swapping
-map("n", "<leader>bh", function() win_utils().swap_with_window("h") end, { desc = "Swap with left window" })
-map("n", "<leader>bl", function() win_utils().swap_with_window("l") end, { desc = "Swap with right window" })
-map("n", "<leader>bj", function() win_utils().swap_with_window("j") end, { desc = "Swap with below window" })
-map("n", "<leader>bk", function() win_utils().swap_with_window("k") end, { desc = "Swap with above window" })
+local function swap_with_window(direction)
+  local current_win = vim.fn.winnr()
+  local current_buf = vim.fn.bufnr("%")
+
+  vim.cmd("wincmd " .. direction)
+
+  if current_win ~= vim.fn.winnr() then
+    local target_buf = vim.fn.bufnr("%")
+    local target_ft = vim.bo[target_buf].filetype
+
+    local block_ft = {
+      "aerial",
+      "codecompanion",
+      "edgy",
+      "help",
+      "neo-tree",
+      "neominimap",
+      "qf",
+      "quickfix",
+      "toggleterm",
+      "undotree",
+    }
+
+    if vim.tbl_contains(block_ft, target_ft) then
+      vim.notify("Cannot swap with file type: " .. target_ft, vim.log.levels.WARN)
+      vim.cmd("wincmd p")
+      return
+    end
+
+    vim.api.nvim_win_set_buf(0, current_buf)
+    vim.cmd("wincmd p")
+    vim.api.nvim_win_set_buf(0, target_buf)
+  else
+    vim.notify("No window to swap with in that direction.", vim.log.levels.WARN)
+  end
+end
+map("n", "<leader>bh", function() swap_with_window("h") end, { desc = "Swap with left window" })
+map("n", "<leader>bl", function() swap_with_window("l") end, { desc = "Swap with right window" })
+map("n", "<leader>bj", function() swap_with_window("j") end, { desc = "Swap with below window" })
+map("n", "<leader>bk", function() swap_with_window("k") end, { desc = "Swap with above window" })
 
 -- Buffer navigation
 map("n", "<leader>ba", "<c-^>", { desc = "Alternate buffer" })
@@ -809,6 +1292,14 @@ end, { desc = "Pick a tab" })
 -- ==========================================
 -- Jumps
 -- ==========================================
+local function diagnostic_goto(count, severity)
+  return function()
+    vim.diagnostic.jump({
+      count = count,
+      severity = severity and vim.diagnostic.severity[severity] or nil,
+    })
+  end
+end
 map("n", "]e", diagnostic_goto(1, "ERROR"), { desc = "Next error" })
 map("n", "[e", diagnostic_goto(-1, "ERROR"), { desc = "Prev error" })
 map("n", "]w", diagnostic_goto(1, "WARN"), { desc = "Next warning" })
@@ -870,23 +1361,16 @@ map(
   { expr = true, replace_keycodes = false, desc = "Select changed text" }
 )
 
-local txt_obj = function() return require("isrothy.utils.text-obj") end
-map({ "o", "x" }, "iS", function() txt_obj().subword_inner() end, { desc = "Inside subword" })
-map({ "o", "x" }, "aS", function() txt_obj().subword_outer() end, { desc = "Around subword" })
-map({ "o", "x" }, "L", function() txt_obj().url() end, { desc = "URL" })
-map({ "o", "x" }, "F", function() txt_obj().filepath() end, { desc = "Filepath" })
-
 -- ==========================================
 -- Project & Misc (Session, Files, Whitespace)
 -- ==========================================
-local sess = function() return require("isrothy.utils.session") end
-map("n", "<leader>qs", function() sess().save() end, { desc = "Save session" })
-map("n", "<leader>ql", function() sess().load_current() end, { desc = "Load session" })
-map("n", "<leader>q/", function() sess().select() end, { desc = "Select session" })
+map("n", "<leader>qs", function() session_manager.save() end, { desc = "Save session" })
+map("n", "<leader>ql", function() session_manager.load_current() end, { desc = "Load session" })
+map("n", "<leader>q/", function() session_manager.select() end, { desc = "Select session" })
 
 map("n", "<leader>fd", "<cmd>DeleteFile<cr>", { desc = "Delete file" })
 map("n", "<leader>uu", function() require("undotree").open() end, { desc = "Toggle undo tree" })
-map("n", "<leader>l", function() require("isrothy.utils.context").show() end, { desc = "Show context" })
+map("n", "<leader>l", function() context.show() end, { desc = "Show context" })
 
 map({ "n", "x" }, "<leader><space>t", function()
   local current_view = vim.fn.winsaveview()
@@ -932,14 +1416,8 @@ Snacks.toggle.inlay_hints({ name = "inlay hints" }):map("<leader>ci")
 
 Snacks.toggle({
   name = "autosave session",
-  get = function()
-    local session = require("isrothy.utils.session")
-    return session.auto_save_enabled
-  end,
-  set = function(state)
-    local session = require("isrothy.utils.session")
-    session.auto_save_enabled = state
-  end,
+  get = function() return session_manager.auto_save_enabled end,
+  set = function(state) session_manager.auto_save_enabled = state end,
 }):map("<leader>qq")
 
 Snacks.toggle({
@@ -1114,6 +1592,25 @@ end, { desc = "Format injected langs" })
 -- ==========================================
 -- Auto Commands  {{{
 -- ==========================================
+--
+vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
+  group = vim.api.nvim_create_augroup("DynamicIndentGuide", { clear = true }),
+  callback = function()
+    local sw = vim.bo.shiftwidth
+    if sw == 0 then
+      sw = vim.bo.tabstop
+    end
+
+    if sw > 1 then
+      -- If sw=4, it generates "│   "
+      -- If sw=2, it generates "│ "
+      vim.opt_local.listchars:append({ leadmultispace = "│" .. string.rep(" ", sw - 1) })
+    else
+      -- Disable for sw=1 to prevent UI glitches
+      vim.opt_local.listchars:append({ leadmultispace = "" })
+    end
+  end,
+})
 
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
@@ -1365,7 +1862,7 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
   group = vim.api.nvim_create_augroup("detect_indentation", { clear = true }),
   callback = function(args)
     if should_detect_indentation(args.buf) then
-      require("isrothy.utils.indent-detector").detect(args.buf)
+      detect_indentation(args.buf)
     end
   end,
 })
@@ -1373,7 +1870,7 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
 vim.api.nvim_create_autocmd("VimLeavePre", {
   group = vim.api.nvim_create_augroup("auto_save", { clear = true }),
   callback = function()
-    local session = require("isrothy.utils.session")
+    local session = session_manager
     if not session.auto_save_enabled then
       return
     end
@@ -1668,7 +2165,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 -- ==========================================
 -- Commands  {{{
 -- ==========================================
---
+
 vim.api.nvim_create_user_command("DeleteFile", function()
   local file = vim.api.nvim_buf_get_name(0)
   if file == "" then
