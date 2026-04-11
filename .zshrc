@@ -55,8 +55,8 @@ alias neofetch='macchina'
 alias preview="open -a preview"
 alias typora="open -a typora"
 
-alias vq='nvim +":lua require(\"isrothy.utils.session\").load_current()"'
-alias vs='nvim -c "autocmd User VeryLazy lua require(\"isrothy.utils.session\").select()"'
+alias vq='nvim -c "LoadSession"'
+alias vs='nvim -c "SelectSession"'
 alias vo='nvim +":lua Snacks.picker.recent()"'
 alias vo='nvim +":lua Snacks.picker.recent()"'
 alias vc='nvim +":lua Snacks.picker.files({ cwd = vim.fn.stdpath(\"config\") })"'

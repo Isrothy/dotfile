@@ -449,6 +449,8 @@ vim.pack.add({
   { src = "https://github.com/nvim-tree/nvim-web-devicons" },
   { src = "https://github.com/nvim-lua/plenary.nvim" },
   { src = "https://github.com/neovim/nvim-lspconfig" },
+  { src = "https://github.com/folke/lazydev.nvim" },
+  { src = "https://github.com/Bilal2453/luvit-meta" },
   { src = "https://github.com/stevearc/conform.nvim" },
   { src = "https://github.com/mfussenegger/nvim-lint" },
   {
@@ -514,7 +516,7 @@ require("snacks").setup({
   },
   bigfile = {
     enabled = true,
-    setup = function(ctx)
+    setup = function(_)
       Snacks.util.wo(0, {
         foldmethod = "manual",
         statuscolumn = "",
@@ -594,6 +596,9 @@ require("oil").setup({
     ["g?"] = { "actions.show_help", mode = "n" },
     ["<CR>"] = "actions.select",
     ["<C-h>"] = {},
+    ["<C-j>"] = {},
+    ["<C-k>"] = {},
+    ["<C-l>"] = {},
     ["<C-s>"] = {},
     ["<localleader>s"] = { "actions.select", opts = { vertical = true } },
     ["<localleader>h"] = { "actions.select", opts = { horizontal = true } },
@@ -676,7 +681,7 @@ require("gitsigns").setup({
     map("n", "<leader>hs", gs.stage_hunk, { buffer = bufnr, desc = "Stage hunk" })
     map("n", "<leader>hS", gs.stage_buffer, { buffer = bufnr, desc = "Stage buffer" })
     map("n", "<leader>hr", gs.reset_hunk, { buffer = bufnr, desc = "Reset hunk" })
-    map("n", "<leader>hv", gs.preview_hunk, { buffer = bufnr, desc = "Preview hunk" })
+    map("n", "<leader>hp", gs.preview_hunk, { buffer = bufnr, desc = "Preview hunk" })
     map("n", "]h", function()
       if vim.wo.diff then
         vim.cmd.normal({ "]c", bang = true })
@@ -728,6 +733,7 @@ require("conform").setup({
             return true
           end
         end
+        return false
       end,
     },
     ["markdownlint-cli2"] = {
@@ -830,22 +836,26 @@ require("nvim-ts-autotag").setup({
 })
 require("ts-comments").setup({ lang = { cuda = "// %s" } })
 require("treesj").setup({ use_default_keymaps = false, max_join_length = 0xffffffff })
--- require("ex-colors").setup()
--- require("nord").setup({
---   transparent = false,
---   terminal_colors = true,
---   diff = { mode = "fg" },
---   borders = true,
---   search = { theme = "vscode" },
---   errors = { mode = "none" },
---   cache = false,
---   styles = {
---     comments = { italic = true },
---     keywords = { bold = true },
---     functions = { italic = true },
---     variables = {},
---   },
--- })
+require("lazydev").setup({
+  { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+  { path = "snacks.nvim", words = { "Snacks" } },
+})
+require("ex-colors").setup()
+require("nord").setup({
+  transparent = false,
+  terminal_colors = true,
+  diff = { mode = "fg" },
+  borders = true,
+  search = { theme = "vscode" },
+  errors = { mode = "none" },
+  cache = false,
+  styles = {
+    comments = { italic = true },
+    keywords = { bold = true },
+    functions = { italic = true },
+    variables = {},
+  },
+})
 
 --- }}}
 
@@ -953,9 +963,8 @@ vim.lsp.enable({
 -- }}}
 
 -- ==========================================
--- Options {{{
+-- Customize UI {{{
 -- ==========================================
-
 _G.custom_foldtext = function()
   local line = vim.fn.getline(vim.v.foldstart)
   local line_count = vim.v.foldend - vim.v.foldstart + 1
@@ -968,6 +977,39 @@ _G.custom_foldtext = function()
 
   return { { line .. "  " .. icon .. "  " .. line_count .. " lines ", "Comment" } }
 end
+
+_G.custom_statusline = function()
+  local file_str = [[%f%m %r %h]]
+  local diag_str = [[%{%v:lua.vim.diagnostic.status()%}]]
+  -- LSP Clients
+  local lsp_str = ""
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  if next(clients) then
+    local names = {}
+    for _, c in ipairs(clients) do
+      table.insert(names, c.name)
+    end
+    lsp_str = string.format("%s%%*", table.concat(names, ","))
+  end
+
+  -- Exception-based Encoding & Format
+  local enc_err = ""
+  local f_enc = (vim.bo.fenc ~= "" and vim.bo.fenc) or vim.o.enc
+  local f_fmt = vim.bo.fileformat
+  if f_enc ~= "utf-8" or f_fmt ~= "unix" then
+    enc_err = string.format(" %%#DiagnosticError#%s[%s]%%* ", f_enc:upper(), f_fmt:upper())
+  end
+
+  -- Position & Percentage
+  local pos_str = [[%l,%c%5.5p%%]]
+
+  return string.format("%s  %%= %s %s %s %%y  %s", file_str, diag_str, enc_err, lsp_str, pos_str)
+end
+--- }}}
+
+-- ==========================================
+-- Options {{{
+-- ==========================================
 
 opt.autocomplete = true
 opt.autoindent = true
@@ -1047,6 +1089,7 @@ opt.sessionoptions = {
 }
 opt.shiftwidth = 4
 opt.showcmd = false
+opt.showcmdloc = "statusline"
 opt.sidescrolloff = 16
 opt.signcolumn = "yes"
 opt.smartcase = true
@@ -1056,6 +1099,8 @@ opt.smoothscroll = true
 opt.softtabstop = -1
 opt.splitbelow = true
 opt.splitright = false
+-- opt.statusline = "%f%m%r%h  %= %{%v:lua.vim.diagnostic.status()%} %y %l,%c%8.8p%%"
+opt.statusline = "%!v:lua.custom_statusline()"
 opt.swapfile = false
 opt.syntax = "on"
 opt.tabstop = 4
@@ -1065,6 +1110,7 @@ opt.updatetime = 500
 opt.virtualedit = { "block", "onemore" }
 opt.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 opt.wildmenu = true
+opt.winbar = "%f"
 opt.winborder = "rounded"
 opt.wrap = false
 
@@ -1370,7 +1416,7 @@ map("n", "<leader>q/", function() session_manager.select() end, { desc = "Select
 
 map("n", "<leader>fd", "<cmd>DeleteFile<cr>", { desc = "Delete file" })
 map("n", "<leader>uu", function() require("undotree").open() end, { desc = "Toggle undo tree" })
-map("n", "<leader>l", function() context.show() end, { desc = "Show context" })
+map("n", "<leader>r", function() context.show() end, { desc = "Show context" })
 
 map({ "n", "x" }, "<leader><space>t", function()
   local current_view = vim.fn.winsaveview()
@@ -1896,7 +1942,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup("YankHighlightAndRestore", { clear = true }),
+  group = vim.api.nvim_create_augroup("YankHighlight", { clear = true }),
   callback = function() vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 }) end,
 })
 
@@ -1924,10 +1970,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
       callback = function()
         local params = vim.lsp.util.make_range_params(0, "utf-16")
         local lnum = vim.fn.line(".") - 1
+        ---@diagnostic disable-next-line: inject-field
         params.context = { diagnostics = vim.diagnostic.get(bufnr, { lnum = lnum }) }
 
         vim.fn.sign_unplace("LspCodeActionSign", { buffer = bufnr })
-        vim.lsp.buf_request(bufnr, "textDocument/codeAction", params, function(err, result, ctx, config)
+        vim.lsp.buf_request(bufnr, "textDocument/codeAction", params, function(err, result, ctx, _)
           if err or ctx.bufnr ~= bufnr or not vim.api.nvim_buf_is_loaded(bufnr) then
             return
           end
@@ -2145,14 +2192,14 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       PmenuThumb = { bg = palette.polar_night.light },
 
       QuickFixLine = { bg = "NONE" },
-      SnacksIndentScope = { fg = palette.frost.ice },
-      SnacksStatusColumnMark = { fg = palette.aurora.green },
       TSDefinitionUsage = { bg = palette.polar_night.brightest },
       VertSplit = { fg = palette.polar_night.brighter },
       VirtColumn = { fg = palette.polar_night.brightest },
       VisualNonText = { fg = palette.polar_night.light, bg = palette.polar_night.brighter },
       WarningMsg = { link = "Normal" },
       WinSeparator = { fg = palette.polar_night.brighter },
+      WinBar = { bg = palette.polar_night.brighter },
+      WinBarNc = { bg = palette.polar_night.bright },
       ["@error"] = {},
     }
     for k, v in pairs(highlights) do
@@ -2199,10 +2246,10 @@ vim.api.nvim_create_user_command("SetTabLength", function(opts)
   vim.opt.shiftwidth = len
   print("Tab length set to: " .. len)
 end, { nargs = 1 })
-
-vim.api.nvim_create_user_command("DetectIndent", function() require("indent_detect").detect() end, {})
-
+vim.api.nvim_create_user_command("DetectIndent", function() detect_indentation() end, {})
+vim.api.nvim_create_user_command("LoadSession", function() session_manager.load_current() end, {})
+vim.api.nvim_create_user_command("SelectSession", function() session_manager.select() end, {})
 -- }}}
 
-vim.cmd.colorscheme("ex-nord")
+vim.cmd.colorscheme("nord")
 -- vim: set foldmethod=marker:

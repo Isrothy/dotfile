@@ -16,6 +16,10 @@
       "rev": "0f00d07c2c3106ba6abd594ac1c17f211141b7b5",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
+    "lazydev.nvim": {
+      "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
+      "src": "https://github.com/folke/lazydev.nvim"
+    },
     "lualine-diagnostic-message": {
       "rev": "e8244c4d1f088e21bb05021f164ed903093b168b",
       "src": "https://github.com/Isrothy/lualine-diagnostic-message"
@@ -23,6 +27,10 @@
     "lualine.nvim": {
       "rev": "47f91c416daef12db467145e16bed5bbfe00add8",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
+    },
+    "luvit-meta": {
+      "rev": "cc9b2d412d2fbd30b94a70cfc214c2a3be27a0a2",
+      "src": "https://github.com/Bilal2453/luvit-meta"
     },
     "mason.nvim": {
       "rev": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65",
